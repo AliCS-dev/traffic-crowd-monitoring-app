@@ -3,6 +3,7 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+.pytest_cache/
 
 # Virtual environment
 .venv/
@@ -14,12 +15,14 @@ data/input/*
 data/output/*
 !data/input/.gitkeep
 !data/output/.gitkeep
+!data/input/sample_image.jpg
 
 # Model files
 models/*
 !models/.gitkeep
 *.pt
 *.onnx
+*.engine
 
 # Environment variables
 .env
