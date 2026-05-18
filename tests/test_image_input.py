@@ -1,5 +1,5 @@
 import pytest
-from src.image_input import load_input_image
+from app.services.image_service import load_input_image
 
 
 def test_missing_image_file_raises_error():
