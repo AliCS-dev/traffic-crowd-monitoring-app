@@ -1,7 +1,7 @@
 import cv2
 
 
-def preprocess_image_for_detection(image, scale_factor=2):
+def preprocess_image_for_detection(image, scale_factor=3):
     """
 
     This function increases the image size to make small objects easier for YOLO to detect.
