@@ -2,7 +2,11 @@ import argparse
 
 from app.services.image_service import load_input_image
 from app.services.preprocessing_service import preprocess_image_for_detection
-from app.services.detection_service import detect_objects
+from app.services.detection_service import (
+    detect_objects,
+    count_detected_objects,
+    print_object_summary,
+)
 from app.services.output_service import save_detection_output
 from app.config import MODEL_PATH, SAMPLE_IMAGE_PATH, SAMPLE_OUTPUT_PATH
 
@@ -11,28 +15,33 @@ def parse_arguments():
     parser = argparse.ArgumentParser(
         description="Run object detection on an input image."
     )
+
     parser.add_argument(
         "--image",
         default=SAMPLE_IMAGE_PATH,
         help="Path to the input image."
     )
+
     parser.add_argument(
         "--output",
         default=SAMPLE_OUTPUT_PATH,
         help="Path where the annotated output image will be saved."
     )
+
     parser.add_argument(
         "--confidence",
         type=float,
         default=0.10,
         help="Minimum detection confidence threshold."
     )
+
     parser.add_argument(
         "--image-size",
         type=int,
         default=1280,
         help="YOLO inference image size."
     )
+
     parser.add_argument(
         "--scale-factor",
         type=int,
@@ -47,7 +56,12 @@ def main():
     args = parse_arguments()
 
     image = load_input_image(args.image)
+    height, width = image.shape[:2]
 
+    print("Image loaded successfully.")
+    print(f"Input image: {args.image}")
+    print(f"Width: {width}")
+    print(f"Height: {height}")
     print("Image is ready for preprocessing.")
 
     processed_image = preprocess_image_for_detection(
@@ -66,18 +80,10 @@ def main():
     )
 
     first_result = results[0]
-    number_of_detections = len(first_result.boxes)
+    object_counts = count_detected_objects(first_result)
 
     print("Object detection completed.")
-    print(f"Number of detections: {number_of_detections}")
-
-    if number_of_detections > 0:
-        for box in first_result.boxes:
-            class_id = int(box.cls[0])
-            class_name = first_result.names[class_id]
-            confidence = float(box.conf[0])
-
-            print(f"Detected: {class_name} with confidence {confidence:.2f}")
+    print_object_summary(object_counts)
 
     save_detection_output(first_result, args.output)
 
