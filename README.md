@@ -6,12 +6,16 @@ This project is developed as part of a BSc thesis. The application processes aer
 
 The aim of this project is to design and implement an application that converts aerial visual data into structured monitoring information. The system detects objects such as vehicles and people, counts them, groups them spatially, and stores the results for further analysis.
 
-## Main Features
+## Current Features
 
 - Image input processing
-- Video frame extraction
 - Object detection
 - Class-wise object counting
+- Annotated image output
+
+## Planned Features
+
+- Video frame extraction
 - Grid-based spatial aggregation
 - Relational database storage
 - Threshold-based alert generation
