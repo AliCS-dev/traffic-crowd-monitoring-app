@@ -35,4 +35,4 @@ The application is developed incrementally. The first stage focuses on image-bas
 
 ## Current Status
 
-The current development focus is the basic image detection prototype.
+The current development focus is the basic image detection prototype. Also added CI/CD workflows git hub actions.
