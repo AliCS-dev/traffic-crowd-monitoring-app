@@ -27,3 +27,8 @@ models/*
 .DS_Store
 Thumbs.db
 *:Zone.Identifier
+
+# Coverage reports
+htmlcov/
+.coverage
+coverage.xml
