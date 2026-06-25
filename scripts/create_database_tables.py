@@ -7,7 +7,9 @@ sys.path.insert(0, str(PROJECT_ROOT))
 from app.database.connection import open_database_connection
 
 
-SCHEMA_FILE = PROJECT_ROOT / "app" / "database" / "migrations" / "001_create_initial_tables.sql"
+SCHEMA_FILE = (
+    PROJECT_ROOT / "app" / "database" / "migrations" / "001_create_initial_tables.sql"
+)
 
 
 def create_database_tables():

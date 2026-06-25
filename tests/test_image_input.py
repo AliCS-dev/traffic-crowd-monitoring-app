@@ -1,4 +1,5 @@
 import pytest
+
 from app.services.image_service import load_input_image
 
 

@@ -1,5 +1,6 @@
-import cv2
 from pathlib import Path
+
+import cv2
 
 
 def save_detection_output(result, output_path):
