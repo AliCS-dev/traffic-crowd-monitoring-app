@@ -34,6 +34,17 @@ The aim of this project is to design and implement an application that converts 
 
 The application is developed incrementally. The first stage focuses on image-based object detection. Later stages will add video processing, database storage, grid-based aggregation and alert logic.
 
+## Database Setup
+
+The local PostgreSQL database runs with Docker Compose.
+
+```bash
+cp .env.example .env
+docker compose up -d postgres
+.venv/bin/python scripts/check_db_connection.py
+.venv/bin/python scripts/create_database_tables.py
+```
+
 ## Current Status
 
 The current development focus is the image detection prototype and the first PostgreSQL integration step. CI is configured with GitHub Actions.

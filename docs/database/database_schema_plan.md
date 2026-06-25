@@ -18,6 +18,12 @@ The initial database will include the following planned tables:
 - `grid_cells`
 - `alerts`
 
+The first version of these tables is implemented in:
+
+- `app/database/migrations/001_create_initial_tables.sql`
+
+The schema is intentionally simple and uses clear foreign key relationships so that later implementation steps can store detection results, count summaries, grid counts, and alerts without changing the whole structure.
+
 PostgreSQL will be used as the relational database system for this project. It is suitable because the application needs to store structured detection results, frame information, object counts, and monitoring sessions in separate but related tables.
 
 Using PostgreSQL also makes the project closer to a real application environment compared with a simple file-based database.
