@@ -1,6 +1,6 @@
 from pathlib import Path
-import cv2
 
+import cv2
 
 SUPPORTED_IMAGE_FORMATS = [".jpg", ".jpeg", ".png"]
 
