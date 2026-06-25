@@ -25,7 +25,8 @@ The aim of this project is to design and implement an application that converts 
 - Python
 - OpenCV
 - YOLO object detection
-- MySQL
+- PostgreSQL
+- Docker Compose for the local PostgreSQL database
 - Ubuntu under WSL2
 - Git and GitHub
 
@@ -35,4 +36,4 @@ The application is developed incrementally. The first stage focuses on image-bas
 
 ## Current Status
 
-The current development focus is the basic image detection prototype. Also added CI/CD workflows git hub actions.
+The current development focus is the image detection prototype and the first PostgreSQL integration step. CI is configured with GitHub Actions.
