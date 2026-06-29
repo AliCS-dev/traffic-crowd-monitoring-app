@@ -45,6 +45,12 @@ docker compose up -d postgres
 .venv/bin/python scripts/create_database_tables.py
 ```
 
+Detection results can be stored after running object detection:
+
+```bash
+.venv/bin/python -m app.main --save-to-db --session-name "sample image run"
+```
+
 ## Current Status
 
 The current development focus is the image detection prototype and the first PostgreSQL integration step. CI is configured with GitHub Actions.
