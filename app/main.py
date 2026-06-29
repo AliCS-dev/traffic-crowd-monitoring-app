@@ -1,9 +1,11 @@
 import argparse
 
 from app.config import MODEL_PATH, SAMPLE_IMAGE_PATH, SAMPLE_OUTPUT_PATH
+from app.database.detection_repository import save_image_detection_results
 from app.services.detection_service import (
     count_detected_objects,
     detect_objects,
+    extract_detection_records,
     print_object_summary,
 )
 from app.services.image_service import load_input_image
@@ -44,6 +46,18 @@ def parse_arguments():
         help="Image resize scale factor before detection.",
     )
 
+    parser.add_argument(
+        "--save-to-db",
+        action="store_true",
+        help="Save detection results to the PostgreSQL database.",
+    )
+
+    parser.add_argument(
+        "--session-name",
+        default=None,
+        help="Optional name for the monitoring session stored in the database.",
+    )
+
     return parser.parse_args()
 
 
@@ -62,6 +76,7 @@ def main():
     processed_image = preprocess_image_for_detection(
         image, scale_factor=args.scale_factor
     )
+    processed_height, processed_width = processed_image.shape[:2]
 
     print("Image preprocessing completed.")
     print("Image is ready for object detection.")
@@ -80,6 +95,21 @@ def main():
     print_object_summary(object_counts)
 
     save_detection_output(first_result, args.output)
+
+    if args.save_to_db:
+        detection_records = extract_detection_records(first_result)
+        stored_result = save_image_detection_results(
+            image_path=args.image,
+            image_width=processed_width,
+            image_height=processed_height,
+            detection_records=detection_records,
+            session_name=args.session_name,
+        )
+
+        print("Detection results saved to database.")
+        print(f"Monitoring session ID: {stored_result['session_id']}")
+        print(f"Processed frame ID: {stored_result['processed_frame_id']}")
+        print(f"Stored detections: {stored_result['detection_count']}")
 
 
 if __name__ == "__main__":
