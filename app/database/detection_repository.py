@@ -8,9 +8,11 @@ def save_image_detection_results(
     image_width,
     image_height,
     detection_records,
+    object_count_summary_records=None,
     session_name=None,
 ):
     image_path = Path(image_path)
+    object_count_summary_records = object_count_summary_records or []
 
     with open_database_connection() as connection:
         with connection.cursor() as cursor:
@@ -24,6 +26,11 @@ def save_image_detection_results(
                 image_height,
             )
             create_detection_results(cursor, processed_frame_id, detection_records)
+            create_object_count_summaries(
+                cursor,
+                processed_frame_id,
+                object_count_summary_records,
+            )
             mark_monitoring_session_completed(cursor, session_id)
 
     return {
@@ -31,6 +38,7 @@ def save_image_detection_results(
         "input_source_id": input_source_id,
         "processed_frame_id": processed_frame_id,
         "detection_count": len(detection_records),
+        "object_count_summary_count": len(object_count_summary_records),
     }
 
 
@@ -134,6 +142,37 @@ def create_detection_results(cursor, processed_frame_id, detection_records):
                 **detection_record,
             }
             for detection_record in detection_records
+        ],
+    )
+
+
+def create_object_count_summaries(
+    cursor,
+    processed_frame_id,
+    object_count_summary_records,
+):
+    if not object_count_summary_records:
+        return
+
+    cursor.executemany(
+        """
+        INSERT INTO object_count_summaries (
+            processed_frame_id,
+            object_class,
+            object_count
+        )
+        VALUES (
+            %(processed_frame_id)s,
+            %(object_class)s,
+            %(object_count)s
+        );
+        """,
+        [
+            {
+                "processed_frame_id": processed_frame_id,
+                **object_count_summary_record,
+            }
+            for object_count_summary_record in object_count_summary_records
         ],
     )
 
