@@ -1,16 +1,29 @@
 ---
-name: Feature Request
-about: Suggest a new feature
+name: Feature request
+about: Propose one focused application improvement
+title: ""
+labels: enhancement
+assignees: ""
 ---
 
-## Description
+## What Are We Adding?
 
-Describe the feature.
+What problem will this feature solve?
 
-## Motivation
+## What Is Part of This Issue?
 
-Why is this feature useful?
 
-## Expected Outcome
+## What Are We Leaving for Later?
 
-What should happen?
+
+## When Is It Complete?
+
+- [ ]
+- [ ]
+
+## How Will We Check It?
+
+
+## Notes
+
+Relevant design constraints, research considerations, or dependencies.
