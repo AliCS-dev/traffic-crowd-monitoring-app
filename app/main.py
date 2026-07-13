@@ -3,6 +3,7 @@ import argparse
 from app.config import MODEL_PATH, SAMPLE_IMAGE_PATH, SAMPLE_OUTPUT_PATH
 from app.database.detection_repository import save_image_detection_results
 from app.services.detection_service import (
+    build_object_count_summary_records,
     count_detected_objects,
     detect_objects,
     extract_detection_records,
@@ -98,11 +99,13 @@ def main():
 
     if args.save_to_db:
         detection_records = extract_detection_records(first_result)
+        object_count_summary_records = build_object_count_summary_records(object_counts)
         stored_result = save_image_detection_results(
             image_path=args.image,
             image_width=processed_width,
             image_height=processed_height,
             detection_records=detection_records,
+            object_count_summary_records=object_count_summary_records,
             session_name=args.session_name,
         )
 
@@ -110,6 +113,10 @@ def main():
         print(f"Monitoring session ID: {stored_result['session_id']}")
         print(f"Processed frame ID: {stored_result['processed_frame_id']}")
         print(f"Stored detections: {stored_result['detection_count']}")
+        print(
+            "Stored object count summaries: "
+            f"{stored_result['object_count_summary_count']}"
+        )
 
 
 if __name__ == "__main__":

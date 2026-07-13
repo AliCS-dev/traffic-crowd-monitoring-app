@@ -44,6 +44,16 @@ def extract_detection_records(result):
     return detection_records
 
 
+def build_object_count_summary_records(object_counts):
+    return [
+        {
+            "object_class": object_class,
+            "object_count": count,
+        }
+        for object_class, count in sorted(object_counts.items())
+    ]
+
+
 def print_object_summary(object_counts):
     print("\nObject Summary")
     print("--------------")

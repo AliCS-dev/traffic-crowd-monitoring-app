@@ -45,7 +45,7 @@ docker compose up -d postgres
 .venv/bin/python scripts/create_database_tables.py
 ```
 
-Detection results can be stored after running object detection:
+Detection results and object count summaries can be stored after running object detection:
 
 ```bash
 .venv/bin/python -m app.main --save-to-db --session-name "sample image run"
