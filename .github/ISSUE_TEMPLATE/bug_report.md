@@ -1,22 +1,36 @@
 ---
-name: Bug Report
-about: Report a problem
+name: Bug report
+about: Report incorrect or unexpected application behavior
+title: ""
+labels: bug
+assignees: ""
 ---
 
-## Problem
+## What Went Wrong?
 
-Describe the problem.
+Which part of the application behaved unexpectedly?
 
-## Steps to Reproduce
+## How Can We Reproduce It?
 
 1.
 2.
 3.
 
-## Expected Behaviour
+## What Did We Expect?
 
-What should happen?
 
-## Actual Behaviour
+## What Happened Instead?
 
-What actually happened?
+Include the error message or incorrect output when available.
+
+## Environment
+
+- Operating system:
+- Python version:
+- Application commit:
+- Model name and version, when relevant:
+
+## Additional Evidence
+
+Logs, screenshots, and input details can help us understand the problem. Private
+data, secrets, and large model files do not belong in the issue.
