@@ -87,16 +87,31 @@ We extended the same transaction to store class-wise count summaries beside the
 individual detections. The command-line result now reports how many detections
 and summaries were stored, and we added unit tests for the summary conversion.
 
-We merged this implementation into `main` on 13 July 2026. The GitHub issue is
-still open and can be closed separately after we confirm the merged result.
+We merged this implementation into `main` on 13 July 2026 and closed the related
+issue after confirming the merged result.
+
+## July 2026: Adding Video Input
+
+### Issue #22: Video Input Handling
+
+We added a video reader around OpenCV's `VideoCapture`. It validates MP4, AVI,
+MOV, and MKV files, then exposes the video dimensions, frame rate, frame count,
+and duration. Frames can be read in sequence, and the reader releases the OpenCV
+resource when processing finishes or an error occurs.
+
+We added five tests covering missing files, unsupported formats, unreadable
+videos, metadata extraction, frame order, and resource cleanup. We kept frame
+sampling, video detection, and database storage outside this issue so they can be
+developed as separate steps.
 
 ## Where We Are Now
 
-As of 13 July 2026, we have verified that:
+As of 22 July 2026, we have verified that:
 
 - the single-image pipeline runs from input to annotated output;
+- supported video files can be opened and read frame by frame;
 - results can be stored when PostgreSQL is running;
-- all six current automated tests pass locally;
+- all eleven current automated tests pass locally;
 - Ruff linting and formatting checks pass;
 - the latest GitHub Actions workflow on `main` passes.
 
@@ -107,8 +122,9 @@ solve before using the detections for meaningful traffic analysis.
 
 ## What We Plan to Work on Next
 
-Our next stages are to improve and evaluate aerial detection, add video input and
-frame sampling, divide frames into spatial grids, and store counts for those
-regions. After that, we plan to add alert rules, broader automated tests, and the
-user-facing application interface. The thesis evaluation will bring these parts
-together by measuring both detection quality and system performance.
+Our next stages are to improve and evaluate aerial detection, sample selected
+video frames, pass those frames through detection, divide them into spatial
+grids, and store counts for those regions. After that, we plan to add alert rules,
+broader automated tests, and the user-facing application interface. The thesis
+evaluation will bring these parts together by measuring both detection quality
+and system performance.

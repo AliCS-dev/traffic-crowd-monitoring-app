@@ -5,10 +5,10 @@ monitoring from aerial images and videos. Our goal is to turn visual data into
 structured information that can be inspected, stored, and later used for
 monitoring and analysis.
 
-At this stage, we have a working pipeline for a single image. We can load and
-preprocess an image, run object detection, count the detected classes, generate
-an annotated output image, and optionally store the results in PostgreSQL. Video
-processing, spatial grid analysis, and alerts are the next parts of the project.
+At this stage, we have a working detection pipeline for a single image. We can
+also open video files, read their metadata, and access their frames through the
+video service. Frame sampling and detection on those frames are the next parts
+of the project, followed by spatial grid analysis and alerts.
 
 ## Where the Project Stands
 
@@ -21,7 +21,8 @@ processing, spatial grid analysis, and alerts are the next parts of the project.
 | Annotated image output | Implemented |
 | PostgreSQL connection and initial schema | Implemented |
 | Detection and count-summary storage | Implemented |
-| Video input and frame sampling | Planned |
+| Video input and metadata | Implemented |
+| Video frame sampling and detection | Planned |
 | Grid-based spatial counting | Planned |
 | Threshold-based alerts | Planned |
 
@@ -124,6 +125,23 @@ The complete list of command-line options is available with:
 .venv/bin/python -m app.main --help
 ```
 
+## Reading Video Input
+
+The video service validates common video formats, reads basic metadata, and gives
+us sequential access to frames. We can use it from Python like this:
+
+```python
+from app.services.video_service import VideoReader
+
+with VideoReader("data/input/example.mp4") as video:
+    print(video.metadata)
+    first_frame = video.read_next_frame()
+```
+
+Supported formats are MP4, AVI, MOV, and MKV. The context manager closes the
+OpenCV video resource when we finish reading. Video input is not connected to the
+detection command yet; frame sampling and detection belong to the next issue.
+
 ## Working with PostgreSQL
 
 For now, PostgreSQL is the only part that we run in Docker. Python, OpenCV, and
@@ -192,7 +210,8 @@ is still under development:
 - we have not yet completed a formal evaluation of detection quality;
 - the general pretrained model can misclassify small aerial objects;
 - we currently store counts for a complete image, not for individual grid cells;
-- we do not yet process video or generate alerts;
+- we can read video files, but we do not yet sample or detect their frames;
+- we do not yet generate alerts;
 - the project does not yet have a user interface;
 - we do not calculate physical crowd density.
 
