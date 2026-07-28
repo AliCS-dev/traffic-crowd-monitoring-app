@@ -7,8 +7,9 @@ monitoring and analysis.
 
 At this stage, we have a working detection pipeline for a single image. We can
 also open video files, read their metadata, and sample frames at controlled time
-intervals. Detection on those sampled frames is the next part of the project,
-followed by spatial grid analysis and alerts.
+intervals. Sampled frames can pass through the same preprocessing and detection
+logic while the model is reused across frames. Video database storage is the
+next integration step, followed by spatial grid analysis and alerts.
 
 ## Where the Project Stands
 
@@ -23,7 +24,8 @@ followed by spatial grid analysis and alerts.
 | Detection and count-summary storage | Implemented |
 | Video input and metadata | Implemented |
 | Time-based video frame sampling | Implemented |
-| Detection on sampled video frames | Planned |
+| Detection on sampled video frames | Implemented |
+| Video result storage | Planned |
 | Grid-based spatial counting | Planned |
 | Threshold-based alerts | Planned |
 
@@ -131,26 +133,31 @@ The complete list of command-line options is available with:
 The video service validates common video formats, reads basic metadata, and gives
 us sequential access to frames. The sampling service selects frames at a
 user-defined interval while preserving each selected frame's number and
-timestamp:
+timestamp. The video detection service reuses one model instance across those
+frames:
 
 ```python
+from app.config import MODEL_PATH
+from app.services.detection_service import ObjectDetector
 from app.services.frame_sampling_service import sample_video_frames
+from app.services.video_detection_service import process_sampled_video_frames
 from app.services.video_service import VideoReader
 
-with VideoReader("data/input/example.mp4") as video:
-    print(video.metadata)
+detector = ObjectDetector(MODEL_PATH)
 
-    for sampled_frame in sample_video_frames(
+with VideoReader("data/input/example.mp4") as video:
+    sampled_frames = sample_video_frames(
         video,
         sampling_interval_seconds=1.0,
-    ):
-        print(sampled_frame.frame_number, sampled_frame.timestamp_seconds)
+    )
+
+    for result in process_sampled_video_frames(sampled_frames, detector):
+        print(result.frame_number, result.timestamp_seconds, result.object_counts)
 ```
 
 Supported formats are MP4, AVI, MOV, and MKV. The context manager closes the
-OpenCV video resource when we finish reading. Video input is not connected to the
-detection command yet, so sampled frames are not currently sent through YOLO or
-stored in PostgreSQL.
+OpenCV video resource when we finish reading. Video processing is not connected
+to the command-line application or PostgreSQL yet.
 
 ## Working with PostgreSQL
 
@@ -220,7 +227,8 @@ is still under development:
 - we have not yet completed a formal evaluation of detection quality;
 - the general pretrained model can misclassify small aerial objects;
 - we currently store counts for a complete image, not for individual grid cells;
-- we can sample video frames, but we do not yet detect or store their objects;
+- we can detect objects in sampled video frames, but we do not yet store complete
+  video sessions;
 - we do not yet generate alerts;
 - the project does not yet have a user interface;
 - we do not calculate physical crowd density.

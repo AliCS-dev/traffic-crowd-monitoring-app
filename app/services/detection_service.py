@@ -1,12 +1,25 @@
 from ultralytics import YOLO
 
 
+class ObjectDetector:
+    def __init__(self, model_path):
+        self._model = YOLO(str(model_path))
+
+    def detect(self, image, confidence_threshold=0.15, image_size=1280):
+        return self._model(
+            image,
+            conf=confidence_threshold,
+            imgsz=image_size,
+        )
+
+
 def detect_objects(image, model_path, confidence_threshold=0.15, image_size=1280):
-    model = YOLO(str(model_path))
-
-    results = model(image, conf=confidence_threshold, imgsz=image_size)
-
-    return results
+    detector = ObjectDetector(model_path)
+    return detector.detect(
+        image,
+        confidence_threshold=confidence_threshold,
+        image_size=image_size,
+    )
 
 
 def count_detected_objects(result):
