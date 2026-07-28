@@ -57,7 +57,12 @@ Select frames at a time interval
     +---------------------> Frame number and timestamp
     |
     v
-Future detection and storage
+Preprocess and detect sampled frames
+    |
+    +---------------------> Detections and class counts
+    |
+    v
+Future video result storage
 ```
 
 ## Main Components
@@ -70,7 +75,8 @@ Future detection and storage
 | `app/services/video_service.py` | Opens videos, reads metadata, and provides frames |
 | `app/services/frame_sampling_service.py` | Selects video frames at controlled time intervals |
 | `app/services/preprocessing_service.py` | Resizes images before inference |
-| `app/services/detection_service.py` | Runs YOLO and converts its output into counts and records |
+| `app/services/detection_service.py` | Loads YOLO, runs inference, and converts output into counts and records |
+| `app/services/video_detection_service.py` | Processes sampled frames while preserving frame metadata |
 | `app/services/output_service.py` | Creates the annotated output image |
 | `app/database/connection.py` | Reads `DATABASE_URL` and opens PostgreSQL connections |
 | `app/database/detection_repository.py` | Stores one image result in a transaction |
@@ -116,7 +122,7 @@ video as one source with many sampled frames.
 Our planned sequence is:
 
 1. improve and evaluate the aerial-object detection baseline;
-2. send sampled video frames through the detection pipeline;
+2. store sampled video frame results as one monitoring session;
 3. assign detected-object centres to grid cells;
 4. store count summaries for each grid cell;
 5. generate threshold-based alerts;
@@ -124,8 +130,9 @@ Our planned sequence is:
 
 We want each step to remain independently testable. The video reader now supplies
 frames without knowing how they will be sampled or detected. The sampling service
-selects frames without knowing how detection works. This lets the next stage
-reuse the existing detection service instead of creating a separate pipeline.
+selects frames without knowing how detection works. The video detection service
+then reuses one detector instance and converts each sampled frame into records
+that later stages can store or aggregate.
 
 ## How We Use Important Terms
 
@@ -140,10 +147,9 @@ reuse the existing detection service instead of creating a separate pipeline.
 
 ## Limitations We Already Know About
 
-- We currently load the model once for every application run. For video, we will
-  need to load it once and reuse it across frames.
-- The frame sampling service is not yet connected to the command-line detection
-  pipeline.
+- The reusable detector supports processing multiple frames with one model
+  instance, but video processing is not yet connected to the command-line
+  application.
 - We do not yet store model identity, inference settings, or processing time with
   a database result.
 - Our migration script currently applies only the first migration file.

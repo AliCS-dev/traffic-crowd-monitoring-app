@@ -121,14 +121,35 @@ invalid values, missing frame-rate information, and empty input.
 Video detection and database storage remain outside this issue. They will use
 the sampled frames in a later processing step.
 
+### Issue #36: Detection on Sampled Video Frames
+
+We introduced a reusable detector that owns one YOLO model instance. The existing
+single-image helper remains compatible, while video processing can now reuse the
+same loaded model for every sampled frame instead of loading the weights
+repeatedly.
+
+We also added a video detection service that consumes sampled frames and composes
+preprocessing, inference, detection-record extraction, and class-wise counting.
+Each result preserves its original frame number and timestamp together with the
+processed dimensions, detection records, and object counts.
+
+Five new tests verify model reuse, frame metadata, preprocessing dimensions,
+record and count extraction, empty input, valid frames with no detections, and
+missing model results. The tests mock model inference, so the automated suite
+does not depend on model weights or GPU availability.
+
+Database storage, annotated video export, grid counting, and alerts remain
+separate tasks.
+
 ## Where We Are Now
 
 As of 28 July 2026, we have verified that:
 
 - the single-image pipeline runs from input to annotated output;
-- supported video files can be opened, read, and sampled at time intervals;
+- supported video files can be opened, sampled, and processed with one reusable
+  detector;
 - results can be stored when PostgreSQL is running;
-- all twenty-two current automated tests pass locally;
+- all twenty-seven current automated tests pass locally;
 - Ruff linting and formatting checks pass;
 - the latest GitHub Actions workflow on `main` passes.
 
@@ -139,9 +160,8 @@ solve before using the detections for meaningful traffic analysis.
 
 ## What We Plan to Work on Next
 
-Our next stages are to improve and evaluate aerial detection, pass sampled video
-frames through detection, divide detections into spatial grids, and store counts
-for those regions. After that, we plan to add alert rules, broader automated
-tests, and the user-facing application interface. The thesis evaluation will
-bring these parts together by measuring both detection quality and system
-performance.
+Our next stages are to improve and evaluate aerial detection, store sampled video
+results, divide detections into spatial grids, and store counts for those
+regions. After that, we plan to add alert rules, broader automated tests, and the
+user-facing application interface. The thesis evaluation will bring these parts
+together by measuring both detection quality and system performance.
