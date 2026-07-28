@@ -52,7 +52,12 @@ Validate and open with OpenCV
 Read frames in sequence
     |
     v
-Future frame sampling and detection
+Select frames at a time interval
+    |
+    +---------------------> Frame number and timestamp
+    |
+    v
+Future detection and storage
 ```
 
 ## Main Components
@@ -63,6 +68,7 @@ Future frame sampling and detection
 | `app/config.py` | Keeps project paths and local defaults in one place |
 | `app/services/image_service.py` | Checks the input path and loads supported images |
 | `app/services/video_service.py` | Opens videos, reads metadata, and provides frames |
+| `app/services/frame_sampling_service.py` | Selects video frames at controlled time intervals |
 | `app/services/preprocessing_service.py` | Resizes images before inference |
 | `app/services/detection_service.py` | Runs YOLO and converts its output into counts and records |
 | `app/services/output_service.py` | Creates the annotated output image |
@@ -110,17 +116,16 @@ video as one source with many sampled frames.
 Our planned sequence is:
 
 1. improve and evaluate the aerial-object detection baseline;
-2. sample video frames at controlled time intervals;
-3. send selected frames through the detection pipeline;
-4. assign detected-object centres to grid cells;
-5. store count summaries for each grid cell;
-6. generate threshold-based alerts;
-7. add a user-facing interface and result views.
+2. send sampled video frames through the detection pipeline;
+3. assign detected-object centres to grid cells;
+4. store count summaries for each grid cell;
+5. generate threshold-based alerts;
+6. add a user-facing interface and result views.
 
 We want each step to remain independently testable. The video reader now supplies
-frames without knowing how they will be sampled or detected. This lets the next
-stage reuse the existing detection service instead of creating a separate
-pipeline.
+frames without knowing how they will be sampled or detected. The sampling service
+selects frames without knowing how detection works. This lets the next stage
+reuse the existing detection service instead of creating a separate pipeline.
 
 ## How We Use Important Terms
 
@@ -137,7 +142,8 @@ pipeline.
 
 - We currently load the model once for every application run. For video, we will
   need to load it once and reuse it across frames.
-- The video reader is not yet connected to the command-line detection pipeline.
+- The frame sampling service is not yet connected to the command-line detection
+  pipeline.
 - We do not yet store model identity, inference settings, or processing time with
   a database result.
 - Our migration script currently applies only the first migration file.

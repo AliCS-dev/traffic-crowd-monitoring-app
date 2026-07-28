@@ -104,14 +104,31 @@ videos, metadata extraction, frame order, and resource cleanup. We kept frame
 sampling, video detection, and database storage outside this issue so they can be
 developed as separate steps.
 
+## July 2026: Sampling Video Frames
+
+### Issue #23: Frame Sampling
+
+We added a separate frame sampling service that selects video frames at
+user-defined time intervals. Each sampled frame carries its zero-based frame
+number, timestamp in seconds, and image data. Keeping this policy outside the
+video reader means that file handling and sampling can be tested independently.
+
+The sampler validates its interval and the video's frame rate, always includes
+the first available frame, and reads until the end of the video. We added eleven
+focused tests covering whole-second and fractional intervals, short intervals,
+invalid values, missing frame-rate information, and empty input.
+
+Video detection and database storage remain outside this issue. They will use
+the sampled frames in a later processing step.
+
 ## Where We Are Now
 
-As of 22 July 2026, we have verified that:
+As of 28 July 2026, we have verified that:
 
 - the single-image pipeline runs from input to annotated output;
-- supported video files can be opened and read frame by frame;
+- supported video files can be opened, read, and sampled at time intervals;
 - results can be stored when PostgreSQL is running;
-- all eleven current automated tests pass locally;
+- all twenty-two current automated tests pass locally;
 - Ruff linting and formatting checks pass;
 - the latest GitHub Actions workflow on `main` passes.
 
@@ -122,9 +139,9 @@ solve before using the detections for meaningful traffic analysis.
 
 ## What We Plan to Work on Next
 
-Our next stages are to improve and evaluate aerial detection, sample selected
-video frames, pass those frames through detection, divide them into spatial
-grids, and store counts for those regions. After that, we plan to add alert rules,
-broader automated tests, and the user-facing application interface. The thesis
-evaluation will bring these parts together by measuring both detection quality
-and system performance.
+Our next stages are to improve and evaluate aerial detection, pass sampled video
+frames through detection, divide detections into spatial grids, and store counts
+for those regions. After that, we plan to add alert rules, broader automated
+tests, and the user-facing application interface. The thesis evaluation will
+bring these parts together by measuring both detection quality and system
+performance.
