@@ -2,8 +2,8 @@
 
 ## Why We Use PostgreSQL
 
-We use PostgreSQL to keep the structured information produced during image and,
-later, video processing. Instead of storing everything in one record, we separate
+We use PostgreSQL to keep the structured information produced during image and
+video processing. Instead of storing everything in one record, we separate
 processing sessions, input sources, frames, detections, count summaries, grid
 cells, and alerts. This gives us a clear history of how each result was produced.
 
@@ -88,7 +88,7 @@ This table is ready for future threshold-based warnings. It can hold the alert
 type, severity, message, measured value, threshold, and resolution time. We have
 not implemented the alert rules yet.
 
-## What Happens During One Image Run
+## What Happens During a Stored Run
 
 When we use `--save-to-db`, we create the records in this order:
 
@@ -102,13 +102,20 @@ When we use `--save-to-db`, we create the records in this order:
 All six steps are part of one transaction. If one step fails, PostgreSQL rolls
 back the transaction and we do not keep a partially stored run.
 
+For a video, we follow the same transaction pattern, but create one
+`processed_frames` row for every sampled frame. Each row keeps the original frame
+number and timestamp. Its detections and class summaries use that frame's ID, so
+results from different moments in the video do not become mixed. A sampled frame
+is still stored when it has no detections.
+
 ## What We Still Need to Improve
 
 - Our setup script applies only migration `001`; it does not yet discover or
   track later migrations.
 - We do not store the model identity, model version, inference settings, or
   processing duration with a result yet.
-- We have not added automated integration tests for database storage.
+- Our repository tests verify transaction behavior with test doubles, but CI
+  does not yet query persisted detection rows from PostgreSQL.
 - The schema does not yet enforce one count summary per frame, grid cell, and
   object class.
 - Session status values are not restricted by a database check constraint.

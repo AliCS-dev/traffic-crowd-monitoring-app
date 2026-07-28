@@ -8,8 +8,8 @@ monitoring and analysis.
 At this stage, we have a working detection pipeline for a single image. We can
 also open video files, read their metadata, and sample frames at controlled time
 intervals. Sampled frames can pass through the same preprocessing and detection
-logic while the model is reused across frames. Video database storage is the
-next integration step, followed by spatial grid analysis and alerts.
+logic while the model is reused across frames. The resulting frame metadata,
+detections, and class counts can be stored together as one video session.
 
 ## Where the Project Stands
 
@@ -25,14 +25,15 @@ next integration step, followed by spatial grid analysis and alerts.
 | Video input and metadata | Implemented |
 | Time-based video frame sampling | Implemented |
 | Detection on sampled video frames | Implemented |
-| Video result storage | Planned |
+| Video result storage | Implemented |
 | Grid-based spatial counting | Planned |
 | Threshold-based alerts | Planned |
 
 The current detector gives us a useful starting point, but it is not yet reliable
-enough for final conclusions about aerial traffic. We still need to evaluate the
-model properly, restrict the relevant classes, and decide whether an
-aerial-specific or fine-tuned model is needed.
+enough for final conclusions about aerial traffic. Our next phase is a formal
+quality gate: we will build a small labelled evaluation set, measure the
+baseline, tune relevant settings, and decide whether an aerial-specific or
+fine-tuned model is needed before adding more analysis features.
 
 ## What We Use
 
@@ -138,6 +139,7 @@ frames:
 
 ```python
 from app.config import MODEL_PATH
+from app.database.detection_repository import save_video_detection_results
 from app.services.detection_service import ObjectDetector
 from app.services.frame_sampling_service import sample_video_frames
 from app.services.video_detection_service import process_sampled_video_frames
@@ -150,14 +152,23 @@ with VideoReader("data/input/example.mp4") as video:
         video,
         sampling_interval_seconds=1.0,
     )
+    frame_results = list(
+        process_sampled_video_frames(sampled_frames, detector)
+    )
 
-    for result in process_sampled_video_frames(sampled_frames, detector):
-        print(result.frame_number, result.timestamp_seconds, result.object_counts)
+stored_result = save_video_detection_results(
+    "data/input/example.mp4",
+    frame_results,
+    session_name="sample video run",
+)
+print(stored_result)
 ```
 
 Supported formats are MP4, AVI, MOV, and MKV. The context manager closes the
-OpenCV video resource when we finish reading. Video processing is not connected
-to the command-line application or PostgreSQL yet.
+OpenCV video resource when we finish reading. Video persistence stores one
+session and input source for the video, followed by one processed-frame row for
+each sampled frame. The command-line application still handles image runs only;
+a later interface can compose the same video services.
 
 ## Working with PostgreSQL
 
@@ -227,8 +238,8 @@ is still under development:
 - we have not yet completed a formal evaluation of detection quality;
 - the general pretrained model can misclassify small aerial objects;
 - we currently store counts for a complete image, not for individual grid cells;
-- we can detect objects in sampled video frames, but we do not yet store complete
-  video sessions;
+- video processing is available through services but not through the
+  command-line entry point;
 - we do not yet generate alerts;
 - the project does not yet have a user interface;
 - we do not calculate physical crowd density.

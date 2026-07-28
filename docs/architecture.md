@@ -7,8 +7,8 @@ image prototype into a monitoring application for images and videos. We separate
 parts that have different responsibilities, but we avoid adding layers that the
 project does not yet need.
 
-The current structure lets us work on image input, detection, database storage,
-and later video processing without placing everything in one large script.
+The current structure lets us combine image and video processing with detection
+and database storage without placing everything in one large script.
 
 ## Current Processing Flow
 
@@ -62,7 +62,11 @@ Preprocess and detect sampled frames
     +---------------------> Detections and class counts
     |
     v
-Future video result storage
+Optional PostgreSQL transaction
+  - one monitoring session
+  - one video input source
+  - one processed row per sampled frame
+  - per-frame detections and class counts
 ```
 
 ## Main Components
@@ -79,7 +83,7 @@ Future video result storage
 | `app/services/video_detection_service.py` | Processes sampled frames while preserving frame metadata |
 | `app/services/output_service.py` | Creates the annotated output image |
 | `app/database/connection.py` | Reads `DATABASE_URL` and opens PostgreSQL connections |
-| `app/database/detection_repository.py` | Stores one image result in a transaction |
+| `app/database/detection_repository.py` | Stores complete image or sampled-video results in a transaction |
 | `scripts/` | Contains explicit database setup and diagnostic commands |
 
 `app/main.py` brings these pieces together, while the service modules contain
@@ -89,8 +93,10 @@ today and leaves room for a future interface to reuse the same logic.
 ## How We Store a Result
 
 When we use `--save-to-db`, we store the records for one image inside a single
-database transaction. If one insert fails, the transaction is rolled back, so we
-do not keep an incomplete processing run.
+database transaction. Video storage follows the same rule: one transaction
+contains the session, source, every sampled frame, and all related detections
+and summaries. If one insert fails, the transaction is rolled back, so we do not
+keep an incomplete processing run.
 
 We use parameterised SQL throughout the repository. Values are passed separately
 from the SQL statements, which keeps the queries clear and avoids building SQL
@@ -114,15 +120,17 @@ and hardware while keeping the database setup repeatable.
 ### Treating one image as one session
 
 For the current image pipeline, one stored image creates one monitoring session,
-one input source, and one processed frame. The same schema can later represent a
-video as one source with many sampled frames.
+one input source, and one processed frame. A stored video also creates one
+session and source, but it has one processed-frame row for each sampled frame.
+Detection and summary rows therefore remain linked to the correct frame number
+and timestamp.
 
 ## Where We Plan to Extend It
 
 Our planned sequence is:
 
-1. improve and evaluate the aerial-object detection baseline;
-2. store sampled video frame results as one monitoring session;
+1. evaluate the aerial-object detection baseline against labelled examples;
+2. decide whether to tune, replace, or train the model;
 3. assign detected-object centres to grid cells;
 4. store count summaries for each grid cell;
 5. generate threshold-based alerts;
@@ -153,5 +161,6 @@ that later stages can store or aggregate.
 - We do not yet store model identity, inference settings, or processing time with
   a database result.
 - Our migration script currently applies only the first migration file.
-- We do not yet have integration tests for database storage.
+- Repository tests cover transaction behavior with controlled test doubles, but
+  CI does not yet run stored-result queries against PostgreSQL.
 - `app/ui` is reserved for later work and does not contain an interface yet.

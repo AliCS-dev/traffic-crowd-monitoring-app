@@ -141,6 +141,25 @@ does not depend on model weights or GPU availability.
 Database storage, annotated video export, grid counting, and alerts remain
 separate tasks.
 
+### Issue #38: Video Detection Storage
+
+We extended the existing PostgreSQL repository to store a sampled-video run as
+one transaction. A run creates one monitoring session and one video input source,
+then stores each sampled frame with its original frame number, timestamp, and
+processed dimensions. Detection rows and class-wise summaries remain associated
+with the frame that produced them.
+
+The repository collects the lightweight frame results before opening the
+transaction. This keeps model inference outside the transaction and avoids
+holding a database connection while a video is still being processed. Frames
+with no detections are recorded normally, while an empty frame sequence is
+rejected before any database records are created.
+
+Five focused tests cover multi-frame associations, empty-detection frames,
+empty input, transaction rollback, and compatibility with existing image
+storage. No schema change was needed because the initial design already supports
+one video source with many processed frames.
+
 ## Where We Are Now
 
 As of 28 July 2026, we have verified that:
@@ -148,8 +167,8 @@ As of 28 July 2026, we have verified that:
 - the single-image pipeline runs from input to annotated output;
 - supported video files can be opened, sampled, and processed with one reusable
   detector;
-- results can be stored when PostgreSQL is running;
-- all twenty-seven current automated tests pass locally;
+- image and sampled-video results can be stored when PostgreSQL is running;
+- all current automated tests pass locally;
 - Ruff linting and formatting checks pass;
 - the latest GitHub Actions workflow on `main` passes.
 
@@ -160,8 +179,10 @@ solve before using the detections for meaningful traffic analysis.
 
 ## What We Plan to Work on Next
 
-Our next stages are to improve and evaluate aerial detection, store sampled video
-results, divide detections into spatial grids, and store counts for those
-regions. After that, we plan to add alert rules, broader automated tests, and the
-user-facing application interface. The thesis evaluation will bring these parts
-together by measuring both detection quality and system performance.
+Our next stage is a model-quality gate rather than another application feature.
+We will collect legally usable aerial examples, label a representative subset,
+measure precision, recall, count error, and inference time, then decide whether
+the current model should be tuned, replaced, or fine-tuned. Grid counting and
+alerts will resume only after the detector produces evidence we can defend in
+the thesis. Broader automated tests and the user-facing interface will follow
+the remaining analysis features.

@@ -1,6 +1,12 @@
+from collections.abc import Iterable
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from app.database.connection import open_database_connection
+from app.services.detection_service import build_object_count_summary_records
+
+if TYPE_CHECKING:
+    from app.services.video_detection_service import VideoFrameDetectionResult
 
 
 def save_image_detection_results(
@@ -17,13 +23,20 @@ def save_image_detection_results(
     with open_database_connection() as connection:
         with connection.cursor() as cursor:
             session_id = create_monitoring_session(cursor, session_name)
-            input_source_id = create_input_source(cursor, session_id, image_path)
+            input_source_id = create_input_source(
+                cursor,
+                session_id,
+                image_path,
+                source_type="image",
+            )
             processed_frame_id = create_processed_frame(
                 cursor,
                 session_id,
                 input_source_id,
                 image_width,
                 image_height,
+                frame_number=0,
+                frame_timestamp_seconds=0,
             )
             create_detection_results(cursor, processed_frame_id, detection_records)
             create_object_count_summaries(
@@ -42,6 +55,73 @@ def save_image_detection_results(
     }
 
 
+def save_video_detection_results(
+    video_path,
+    frame_results: Iterable["VideoFrameDetectionResult"],
+    session_name=None,
+):
+    video_path = Path(video_path)
+    frame_results = list(frame_results)
+
+    if not frame_results:
+        raise ValueError("At least one processed video frame is required.")
+
+    processed_frame_ids = []
+    detection_count = 0
+    object_count_summary_count = 0
+
+    with open_database_connection() as connection:
+        with connection.cursor() as cursor:
+            session_id = create_monitoring_session(cursor, session_name)
+            input_source_id = create_input_source(
+                cursor,
+                session_id,
+                video_path,
+                source_type="video",
+            )
+
+            for frame_result in frame_results:
+                processed_frame_id = create_processed_frame(
+                    cursor,
+                    session_id,
+                    input_source_id,
+                    frame_result.image_width,
+                    frame_result.image_height,
+                    frame_number=frame_result.frame_number,
+                    frame_timestamp_seconds=frame_result.timestamp_seconds,
+                )
+                processed_frame_ids.append(processed_frame_id)
+
+                create_detection_results(
+                    cursor,
+                    processed_frame_id,
+                    frame_result.detection_records,
+                )
+
+                summary_records = build_object_count_summary_records(
+                    frame_result.object_counts
+                )
+                create_object_count_summaries(
+                    cursor,
+                    processed_frame_id,
+                    summary_records,
+                )
+
+                detection_count += len(frame_result.detection_records)
+                object_count_summary_count += len(summary_records)
+
+            mark_monitoring_session_completed(cursor, session_id)
+
+    return {
+        "session_id": session_id,
+        "input_source_id": input_source_id,
+        "processed_frame_ids": processed_frame_ids,
+        "frame_count": len(processed_frame_ids),
+        "detection_count": detection_count,
+        "object_count_summary_count": object_count_summary_count,
+    }
+
+
 def create_monitoring_session(cursor, session_name):
     cursor.execute(
         """
@@ -55,7 +135,7 @@ def create_monitoring_session(cursor, session_name):
     return cursor.fetchone()[0]
 
 
-def create_input_source(cursor, session_id, image_path):
+def create_input_source(cursor, session_id, source_path, source_type):
     cursor.execute(
         """
         INSERT INTO input_sources (
@@ -69,9 +149,9 @@ def create_input_source(cursor, session_id, image_path):
         """,
         (
             session_id,
-            "image",
-            str(image_path),
-            image_path.name,
+            source_type,
+            str(source_path),
+            source_path.name,
         ),
     )
 
@@ -84,6 +164,8 @@ def create_processed_frame(
     input_source_id,
     image_width,
     image_height,
+    frame_number,
+    frame_timestamp_seconds,
 ):
     cursor.execute(
         """
@@ -101,8 +183,8 @@ def create_processed_frame(
         (
             session_id,
             input_source_id,
-            0,
-            0,
+            frame_number,
+            frame_timestamp_seconds,
             image_width,
             image_height,
         ),
