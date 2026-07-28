@@ -152,9 +152,7 @@ with VideoReader("data/input/example.mp4") as video:
         video,
         sampling_interval_seconds=1.0,
     )
-    frame_results = list(
-        process_sampled_video_frames(sampled_frames, detector)
-    )
+    frame_results = list(process_sampled_video_frames(sampled_frames, detector))
 
 stored_result = save_video_detection_results(
     "data/input/example.mp4",
