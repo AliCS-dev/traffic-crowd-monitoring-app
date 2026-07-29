@@ -129,8 +129,10 @@ and timestamp.
 
 Our planned sequence is:
 
-1. evaluate the aerial-object detection baseline against labelled examples;
-2. decide whether to tune, replace, or train the model;
+1. curate and annotate aerial evaluation data under the fixed
+   [evaluation protocol](evaluation/evaluation_protocol.md);
+2. evaluate the baseline and decide whether to tune, replace, or train the
+   model;
 3. assign detected-object centres to grid cells;
 4. store count summaries for each grid cell;
 5. generate threshold-based alerts;
