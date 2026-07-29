@@ -160,9 +160,29 @@ empty input, transaction rollback, and compatibility with existing image
 storage. No schema change was needed because the initial design already supports
 one video source with many processed frames.
 
+## July 2026: Establishing Evaluation Rules
+
+### Issue #40: Aerial Detection Evaluation Protocol
+
+Before collecting or tuning against a new dataset, we fixed the rules for the
+model-quality gate. The protocol defines six operational classes, source-grouped
+training, validation, and held-out test partitions, COCO-style detection
+metrics, frame-level count errors, synchronized GPU timing, and the information
+required to reproduce each run.
+
+We also predeclared the confidence thresholds and image sizes that may be tested
+on validation data. The final gate combines precision, recall, average
+precision, normalized count error, and processing latency, with separate pass,
+conditional-pass, and fail outcomes. These thresholds are project engineering
+targets rather than general safety claims.
+
+The protocol records the current RTX 5060 development environment and explains
+how future changes must be versioned. No model was evaluated or trained in this
+issue. Dataset curation and licensing are the next task.
+
 ## Where We Are Now
 
-As of 28 July 2026, we have verified that:
+As of 29 July 2026, we have verified that:
 
 - the single-image pipeline runs from input to annotated output;
 - supported video files can be opened, sampled, and processed with one reusable
@@ -177,12 +197,15 @@ sample, the general pretrained model misses many vehicles and labels two large
 road regions as trains. This is a model and evaluation problem that we need to
 solve before using the detections for meaningful traffic analysis.
 
+The model-quality gate now has a fixed protocol. No result has passed that gate
+yet.
+
 ## What We Plan to Work on Next
 
 Our next stage is a model-quality gate rather than another application feature.
-We will collect legally usable aerial examples, label a representative subset,
-measure precision, recall, count error, and inference time, then decide whether
-the current model should be tuned, replaced, or fine-tuned. Grid counting and
-alerts will resume only after the detector produces evidence we can defend in
-the thesis. Broader automated tests and the user-facing interface will follow
-the remaining analysis features.
+We will now collect legally usable aerial examples, label a representative
+subset, measure precision, recall, count error, and inference time, then decide
+whether the current model should be tuned, replaced, or fine-tuned. Grid
+counting and alerts will resume only after the detector produces evidence we can
+defend in the thesis. Broader automated tests and the user-facing interface will
+follow the remaining analysis features.

@@ -26,14 +26,18 @@ detections, and class counts can be stored together as one video session.
 | Time-based video frame sampling | Implemented |
 | Detection on sampled video frames | Implemented |
 | Video result storage | Implemented |
+| Aerial detection evaluation protocol | Implemented |
+| Labelled aerial evaluation dataset | Planned |
+| Baseline model evaluation | Planned |
 | Grid-based spatial counting | Planned |
 | Threshold-based alerts | Planned |
 
 The current detector gives us a useful starting point, but it is not yet reliable
-enough for final conclusions about aerial traffic. Our next phase is a formal
-quality gate: we will build a small labelled evaluation set, measure the
-baseline, tune relevant settings, and decide whether an aerial-specific or
-fine-tuned model is needed before adding more analysis features.
+enough for final conclusions about aerial traffic. We have now defined a formal
+evaluation protocol. Our next step is to build a licensed, labelled aerial
+dataset, measure the baseline under that fixed protocol, and decide whether an
+aerial-specific or fine-tuned model is needed before adding more analysis
+features.
 
 ## What We Use
 
@@ -222,6 +226,7 @@ integration tests are still part of our planned work.
 
 - [Architecture](docs/architecture.md)
 - [Database schema](docs/database/database_schema.md)
+- [Aerial detection evaluation protocol](docs/evaluation/evaluation_protocol.md)
 - [Development log](docs/development_log.md)
 - [Development workflow](docs/development_workflow.md)
 
