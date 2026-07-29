@@ -59,6 +59,7 @@ app/
   config.py              Project paths and local defaults
   main.py                Command-line application entry point
 data/
+  evaluation/             Evaluation metadata; raw media excluded from Git
   input/                  Local input images and videos
   output/                 Generated annotated output
 docs/                     Architecture and development documentation
@@ -69,6 +70,11 @@ tests/                    Automated tests
 
 The reasoning behind this structure is described in our
 [architecture document](docs/architecture.md).
+
+The model-quality gate is described in the
+[evaluation protocol](docs/evaluation/evaluation_protocol.md). The selected data
+sources, licences, intended uses, and known limitations are recorded in the
+[dataset card](docs/evaluation/dataset_card.md).
 
 ## Running the Project Locally
 
