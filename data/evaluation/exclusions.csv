@@ -1,0 +1,5 @@
+asset_id,excluded_on,decision_stage,reason
+wikimedia_jane_byrne_f000609,2026-08-03,before_benchmarking,Manual ground-truth annotation was not completed; partial draft boxes cannot be used for quantitative evaluation
+wikimedia_jane_byrne_f000702,2026-08-03,before_benchmarking,Manual ground-truth annotation was not completed; partial draft boxes cannot be used for quantitative evaluation
+wikimedia_jane_byrne_f000796,2026-08-03,before_benchmarking,Manual ground-truth annotation was not completed; partial draft boxes cannot be used for quantitative evaluation
+wikimedia_jane_byrne_f000890,2026-08-03,before_benchmarking,Manual ground-truth annotation was not completed; partial draft boxes cannot be used for quantitative evaluation

@@ -17,6 +17,7 @@ data/output/*
 !data/input/.gitkeep
 !data/output/.gitkeep
 data/evaluation/raw/
+data/evaluation/derived/
 
 # Model files
 models/*

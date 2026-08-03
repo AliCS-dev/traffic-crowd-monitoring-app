@@ -1,0 +1,2 @@
+annotation_set_id,archive_path,archive_sha256,annotation_sha256,exported_on,tool,format,review_status,notes
+wikimedia_manual_v1,data/evaluation/derived/manual_annotation/reviewed/wikimedia_manual_v1_reviewed_coco.zip,f5e1266fab1c6f0da0ab6a79dd2671d534291532a59dcc2b485905a788494f2a,37af42139f6d555a88775473a83741c38f5dd7741783967e50d9144adff99f2d,2026-08-03,CVAT Online,COCO 1.0,retained_images_first_pass_complete,Four partial Jane Byrne frames are recorded in exclusions.csv and omitted from metrics

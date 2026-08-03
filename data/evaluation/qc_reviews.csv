@@ -1,0 +1,347 @@
+asset_id,reviewer,reviewed_on,decision,changes_made,notes
+wikimedia_jane_byrne_f000046,Ali,2026-08-03,confirmed,0,Second visual pass completed; no further changes required
+wikimedia_jane_byrne_f000140,Ali,2026-08-03,corrected,1,Removed one duplicate car or van box
+wikimedia_jane_byrne_f000234,Ali,2026-08-03,confirmed,0,Second visual pass completed; no further changes required
+wikimedia_jane_byrne_f000327,Ali,2026-08-03,confirmed,0,Second visual pass completed; no further changes required
+wikimedia_jane_byrne_f000421,Ali,2026-08-03,corrected,1,Removed a conflicting truck label from a retained car or van box
+wikimedia_jane_byrne_f000515,Ali,2026-08-03,corrected,1,Removed one duplicate car or van box
+wikimedia_renai_day_renai_dunhua_traffic_circle_202006,Ali,2026-08-03,corrected,2,Removed two duplicate car or van boxes
+wikimedia_renai_night_renai_roundabout_at_night_from_the_air,Ali,2026-08-03,corrected,8,Removed five duplicate boxes and corrected three vehicle classes
+okutama_1_1_2_f000666,Ali,2026-08-03,confirmed,0,Overlay checked; boundary boxes correspond to visible partial people
+okutama_1_1_2_f001998,Ali,2026-08-03,confirmed,0,Overlay checked; boundary boxes correspond to visible partial people
+okutama_1_1_1_f002044,Ali,2026-08-03,confirmed,0,Overlay checked; boundary box corresponds to a visible partial person
+okutama_1_1_5_f000468,Ali,2026-08-03,confirmed,0,Overlay checked; boundary box corresponds to a visible partial person
+okutama_1_2_4_f000197,Ali,2026-08-03,confirmed,0,Overlay checked; boundary box corresponds to a visible partial person
+okutama_1_2_4_f000591,Ali,2026-08-03,confirmed,0,Overlay checked; boundary box corresponds to a visible partial person
+okutama_2_1_1_f000375,Ali,2026-08-03,confirmed,0,Overlay checked; boundary box corresponds to a visible partial person
+okutama_2_1_2_f000978,Ali,2026-08-03,confirmed,0,Overlay checked; boundary box corresponds to a visible partial person
+okutama_2_2_10_f001284,Ali,2026-08-03,confirmed,0,Overlay checked; boundary box corresponds to a visible partial person
+traffic_roundabout_near_3_f000097,Ali,2026-08-03,confirmed,0,Overlay checked; boundary box corresponds to a visible partial vehicle
+traffic_roundabout_near_3_f000109,Ali,2026-08-03,confirmed,0,Overlay checked; boundary box corresponds to a visible partial vehicle
+traffic_roundabout_near_3_f000143,Ali,2026-08-03,confirmed,0,Overlay checked; boundary box corresponds to a visible partial vehicle
+traffic_roundabout_near_3_f000211,Ali,2026-08-03,confirmed,0,Overlay checked; boundary box corresponds to a visible partial vehicle
+traffic_roundabout_near_3_f000303,Ali,2026-08-03,confirmed,0,Overlay checked; boundary box corresponds to a visible partial vehicle
+traffic_roundabout_near_3_f000314,Ali,2026-08-03,confirmed,0,Overlay checked; boundary box corresponds to a visible partial vehicle
+traffic_roundabout_near_3_f000325,Ali,2026-08-03,confirmed,0,Overlay checked; boundary box corresponds to a visible partial vehicle
+traffic_urban_intersection_2_f000346,Ali,2026-08-03,confirmed,0,Overlay checked; boundary box corresponds to a visible partial vehicle
+traffic_urban_intersection_4_f000104,Ali,2026-08-03,confirmed,0,Overlay checked; boundary box corresponds to a visible partial vehicle
+traffic_roundabout_near_3_f000006,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_roundabout_near_3_f000018,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_roundabout_near_3_f000029,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_roundabout_near_3_f000040,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_roundabout_near_3_f000052,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_roundabout_near_3_f000063,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_roundabout_near_3_f000075,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_roundabout_near_3_f000086,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_roundabout_near_3_f000120,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_roundabout_near_3_f000132,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_roundabout_near_3_f000154,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_roundabout_near_3_f000166,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_roundabout_near_3_f000177,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_roundabout_near_3_f000189,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_roundabout_near_3_f000200,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_roundabout_near_3_f000223,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_roundabout_near_3_f000234,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_roundabout_near_3_f000246,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_roundabout_near_3_f000257,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_roundabout_near_3_f000268,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_roundabout_near_3_f000280,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_roundabout_near_3_f000291,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_roundabout_near_3_f000337,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000008,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000024,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000039,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000054,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000070,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000085,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000100,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000116,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000131,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000146,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000162,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000177,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000193,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000208,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000223,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000239,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000254,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000269,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000285,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000300,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000316,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000331,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000362,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000377,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000392,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000408,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000423,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000438,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_2_f000454,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000008,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000024,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000040,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000056,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000072,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000088,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000120,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000135,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000151,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000167,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000183,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000199,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000215,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000231,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000246,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000262,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000278,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000294,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000310,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000326,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000342,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000358,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000373,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000389,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000405,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000421,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000437,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000453,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+traffic_urban_intersection_4_f000469,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher vehicle boxes align within supported class scope
+okutama_1_1_1_f000227,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_1_f000681,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_1_f001136,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_1_f001590,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_1_f000125,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_1_f000626,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_1_f000876,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_1_f001126,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_2_f000222,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_2_f001110,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_2_f001554,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_2_f000139,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_2_f000419,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_2_f000699,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_2_f001258,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_3_f000196,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_3_f000589,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_3_f000983,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_3_f001376,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_3_f001769,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_3_f000287,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_3_f000863,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_3_f001439,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_3_f002014,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_3_f002590,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_4_f000195,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_4_f000585,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_4_f000975,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_4_f001365,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_4_f001755,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_4_f000210,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_4_f000632,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_4_f001054,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_4_f001475,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_4_f001897,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_5_f000156,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_5_f000780,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_5_f001092,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_5_f001404,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_5_f000185,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_5_f000555,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_5_f000925,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_5_f001295,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_5_f001665,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_6_f000238,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_6_f000714,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_6_f001191,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_6_f001667,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_6_f002143,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_6_f000251,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_6_f000755,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_6_f001259,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_6_f001763,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_6_f002267,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_7_f000251,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_7_f000755,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_7_f001259,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_7_f001763,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_7_f002267,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_7_f000251,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_7_f000755,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_7_f001258,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_7_f001761,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_7_f002265,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_10_f000263,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_10_f000789,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_10_f001315,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_10_f001841,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_10_f002367,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_10_f000271,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_10_f000813,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_10_f001356,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_10_f001899,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_10_f002441,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_11_f000060,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_11_f000181,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_11_f000302,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_11_f000422,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_11_f000543,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_2_f000109,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_2_f000329,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_2_f000549,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_2_f000768,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_2_f000988,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_2_f000146,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_2_f000439,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_2_f000733,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_2_f001026,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_2_f001319,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_4_f000986,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_4_f001381,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_4_f001775,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_4_f000205,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_4_f000615,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_4_f001025,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_4_f001435,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_4_f001845,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_5_f000102,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_5_f000308,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_5_f000514,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_5_f000719,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_5_f000925,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_5_f000106,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_5_f000318,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_5_f000531,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_5_f000743,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_5_f000955,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_6_f000101,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_6_f000304,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_6_f000507,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_6_f000709,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_6_f000912,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_6_f000226,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_6_f000678,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_6_f001131,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_6_f001583,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_6_f002035,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_7_f000184,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_7_f000553,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_7_f000923,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_7_f001292,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_7_f001661,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_7_f000155,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_7_f000466,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_7_f000778,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_7_f001089,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_7_f001400,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_8_f000154,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_8_f000462,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_8_f000770,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_8_f001078,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_8_f001386,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_8_f000177,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_8_f000531,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_8_f000886,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_8_f001240,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_8_f001594,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_9_f000139,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_9_f000419,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_9_f000699,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_9_f000979,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_9_f001259,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_9_f000150,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_9_f000450,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_9_f000751,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_9_f001052,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_9_f001352,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_11_f000182,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_11_f000546,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_11_f000911,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_11_f001275,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_11_f001639,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_11_f000130,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_11_f000392,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_11_f000653,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_11_f000914,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_11_f001176,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_8_f000152,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_8_f000456,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_8_f000760,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_8_f001064,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_8_f001368,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_8_f000222,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_8_f000668,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_8_f001113,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_8_f001558,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_8_f002004,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_9_f000264,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_9_f000792,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_9_f001320,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_9_f001848,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_1_9_f002376,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_9_f000181,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_9_f000544,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_9_f000907,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_9_f001269,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_1_9_f001632,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_1_f000144,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_1_f000432,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_1_f000721,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_1_f001009,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_1_f001297,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_1_f000139,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_1_f000419,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_1_f000699,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_1_f000978,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_1_f001258,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_3_f000083,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_3_f000251,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_3_f000418,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_3_f000585,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_3_f000753,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_3_f000192,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_3_f000576,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_3_f000961,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_3_f001345,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_3_f001729,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_10_f000169,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_10_f000507,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_10_f000845,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_10_f001183,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_1_2_10_f001521,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_10_f000183,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_10_f000550,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_10_f000917,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+okutama_2_2_10_f001651,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; publisher person boxes align with visible people
+dlr_train_i_2,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_train_i_3,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_train_i_5,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_train_i_6,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_train_i_7,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_train_i_8,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_train_i_15,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_train_i_17,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_train_i_18,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_train_i_19,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_train_i_20,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_train_i_22,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_train_i_23,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_train_i_24,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_train_i_28,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_train_i_29,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_train_i_30,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_train_i_32,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_train_i_33,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_test_i_1,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_test_i_4,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_test_i_9,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_test_i_10,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_test_i_11,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_test_i_12,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_test_i_13,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_test_i_14,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_test_i_16,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_test_i_21,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_test_i_25,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_test_i_26,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_test_i_27,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
+dlr_test_i_31,Ali,2026-08-03,confirmed,0,Contact-sheet review completed; point mask aligns with visible crowd locations
