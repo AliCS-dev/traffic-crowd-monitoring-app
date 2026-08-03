@@ -1,0 +1,14 @@
+annotation_set_id,source_annotation_id,action,replacement_category,reviewed_on,reason
+wikimedia_manual_v1,257,remove_duplicate,,2026-08-03,Duplicate car or van box confirmed in second visual pass
+wikimedia_manual_v1,992,remove_duplicate,,2026-08-03,Duplicate truck label overlaps the retained car or van box
+wikimedia_manual_v1,1335,remove_duplicate,,2026-08-03,Duplicate car or van box confirmed in focused overlap review
+wikimedia_manual_v1,1453,remove_duplicate,,2026-08-03,Duplicate car or van box confirmed in focused overlap review
+wikimedia_manual_v1,1458,remove_duplicate,,2026-08-03,Duplicate car or van box confirmed in second visual pass
+wikimedia_manual_v1,1502,relabel,bus,2026-08-03,Long passenger vehicle was labelled as a truck
+wikimedia_manual_v1,1524,remove_duplicate,,2026-08-03,Duplicate bus box confirmed in second visual pass
+wikimedia_manual_v1,1525,remove_duplicate,,2026-08-03,Duplicate truck label overlaps the retained bus box
+wikimedia_manual_v1,1529,relabel,bus,2026-08-03,Passenger bus was labelled as a car or van
+wikimedia_manual_v1,1530,remove_duplicate,,2026-08-03,Duplicate car or van box confirmed in focused overlap review
+wikimedia_manual_v1,1533,remove_duplicate,,2026-08-03,Duplicate car or van box confirmed in focused overlap review
+wikimedia_manual_v1,1538,remove_duplicate,,2026-08-03,Duplicate car or van box confirmed in focused overlap review
+wikimedia_manual_v1,1552,relabel,bus,2026-08-03,Passenger bus was labelled as a car or van

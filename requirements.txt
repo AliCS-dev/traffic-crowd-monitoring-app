@@ -1,5 +1,6 @@
 opencv-python
 numpy
+Pillow
 ultralytics
 psycopg[binary]
 python-dotenv
