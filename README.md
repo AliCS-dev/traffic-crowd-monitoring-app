@@ -27,17 +27,18 @@ detections, and class counts can be stored together as one video session.
 | Detection on sampled video frames | Implemented |
 | Video result storage | Implemented |
 | Aerial detection evaluation protocol | Implemented |
-| Labelled aerial evaluation dataset | Planned |
+| Labelled aerial evaluation dataset | Implemented |
+| Reproducible evaluation command | Implemented |
 | Baseline model evaluation | Planned |
 | Grid-based spatial counting | Planned |
 | Threshold-based alerts | Planned |
 
 The current detector gives us a useful starting point, but it is not yet reliable
-enough for final conclusions about aerial traffic. We have now defined a formal
-evaluation protocol. Our next step is to build a licensed, labelled aerial
-dataset, measure the baseline under that fixed protocol, and decide whether an
-aerial-specific or fine-tuned model is needed before adding more analysis
-features.
+enough for final conclusions about aerial traffic. We have defined a formal
+evaluation protocol and prepared a licensed, labelled evaluation dataset. Our
+next step is to measure the baseline under that fixed protocol and decide
+whether an aerial-specific or fine-tuned model is needed before adding more
+analysis features.
 
 ## What We Use
 
@@ -64,7 +65,7 @@ data/
   output/                 Generated annotated output
 docs/                     Architecture and development documentation
 models/                   Local model weights, excluded from Git
-scripts/                  Database setup and connection checks
+scripts/                  Setup, validation, evaluation, and diagnostic commands
 tests/                    Automated tests
 ```
 
@@ -213,6 +214,40 @@ persistent data:
 docker compose down
 ```
 
+## Running the Detector Evaluation
+
+The evaluation dataset must pass its quality checks before we create a formal
+model result:
+
+```bash
+.venv/bin/python scripts/validate_evaluation_dataset.py
+```
+
+We then run the configured validation protocol with one command:
+
+```bash
+.venv/bin/python scripts/run_detector_evaluation.py \
+  --config configs/evaluation/yolo26n_validation.json
+```
+
+The command reads the dataset split, model settings, thresholds, timing policy,
+and random seed from the configuration. Each run is stored under
+`data/evaluation/derived/runs/<run-id>/`. The directory contains raw
+predictions, metrics, timing measurements, environment provenance, checksums,
+and a concise `summary.md` table.
+
+The summary is derived entirely from the saved JSON files. We can rebuild it
+without loading the model or rerunning inference:
+
+```bash
+.venv/bin/python scripts/render_evaluation_report.py \
+  data/evaluation/derived/runs/<run-id>
+```
+
+Formal results should be created from a committed working tree on the same
+documented hardware and power configuration. Generated run directories remain
+outside Git because they contain large prediction and timing records.
+
 ## Checks We Run
 
 Before opening a pull request, we run the same basic checks that are used in CI:
@@ -221,7 +256,7 @@ Before opening a pull request, we run the same basic checks that are used in CI:
 .venv/bin/python -m pytest
 .venv/bin/python -m ruff check .
 .venv/bin/python -m ruff format --check .
-.venv/bin/python -m compileall app scripts
+.venv/bin/python -m compileall app evaluation scripts
 ```
 
 GitHub Actions also starts PostgreSQL and checks that the application can connect

@@ -94,6 +94,44 @@ def test_object_detector_loads_model_once_and_reuses_it(monkeypatch):
     ]
 
 
+def test_object_detector_forwards_explicit_evaluation_options(monkeypatch):
+    calls = []
+
+    class FakeModel:
+        def __call__(self, image, **options):
+            calls.append((image, options))
+            return ["result"]
+
+    monkeypatch.setattr(detection_service, "YOLO", lambda _path: FakeModel())
+    detector = ObjectDetector("models/test-model.pt")
+    image = np.zeros((2, 2, 3), dtype=np.uint8)
+
+    result = detector.detect(
+        image,
+        confidence_threshold=0.001,
+        image_size=1280,
+        device="cuda:0",
+        max_detections=300,
+        half_precision=True,
+        verbose=False,
+    )
+
+    assert result == ["result"]
+    assert calls == [
+        (
+            image,
+            {
+                "conf": 0.001,
+                "imgsz": 1280,
+                "device": "cuda:0",
+                "max_det": 300,
+                "half": True,
+                "verbose": False,
+            },
+        )
+    ]
+
+
 def test_sampled_frames_are_processed_with_metadata_and_counts():
     first_image = np.zeros((2, 3, 3), dtype=np.uint8)
     second_image = np.ones((2, 3, 3), dtype=np.uint8)

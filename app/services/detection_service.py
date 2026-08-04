@@ -5,12 +5,30 @@ class ObjectDetector:
     def __init__(self, model_path):
         self._model = YOLO(str(model_path))
 
-    def detect(self, image, confidence_threshold=0.15, image_size=1280):
-        return self._model(
-            image,
-            conf=confidence_threshold,
-            imgsz=image_size,
-        )
+    def detect(
+        self,
+        image,
+        confidence_threshold=0.15,
+        image_size=1280,
+        *,
+        device=None,
+        max_detections=None,
+        half_precision=False,
+        verbose=None,
+    ):
+        options = {
+            "conf": confidence_threshold,
+            "imgsz": image_size,
+        }
+        if device is not None:
+            options["device"] = device
+        if max_detections is not None:
+            options["max_det"] = max_detections
+        if half_precision:
+            options["half"] = True
+        if verbose is not None:
+            options["verbose"] = verbose
+        return self._model(image, **options)
 
 
 def detect_objects(image, model_path, confidence_threshold=0.15, image_size=1280):
