@@ -257,6 +257,17 @@ The tracked sweep configuration contains only the five values declared in the
 evaluation protocol. The command verifies every source-run checksum and refuses
 held-out data before calculating the comparison.
 
+The three predeclared inference image sizes are evaluated with:
+
+```bash
+.venv/bin/python scripts/run_image_size_benchmark.py
+```
+
+This runs the complete validation and timing protocol at `640`, `960`, and
+`1280`. Each size receives its own normal evaluation run, and the command then
+creates one checksum-backed comparison report. The configurations are checked
+to ensure that only the image size and descriptive run name changed.
+
 Formal results should be created from a committed working tree on the same
 documented hardware and power configuration. Generated run directories remain
 outside Git because they contain large prediction and timing records.

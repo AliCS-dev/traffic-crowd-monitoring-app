@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "benchmark_name": "yolo26n-validation-image-size-benchmark",
+  "protocol_version": "1.0",
+  "base_evaluation_config": "configs/evaluation/yolo26n_validation.json",
+  "image_sizes": [640, 960, 1280],
+  "output_directory": "data/evaluation/derived/comparisons"
+}
