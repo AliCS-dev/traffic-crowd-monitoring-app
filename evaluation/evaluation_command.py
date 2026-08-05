@@ -7,7 +7,7 @@ import numpy as np
 
 from app.services.detection_service import ObjectDetector
 from evaluation.dataset_validation import validate_dataset
-from evaluation.evaluation_config import load_evaluation_config
+from evaluation.evaluation_config import EvaluationConfig, load_evaluation_config
 from evaluation.evaluation_data import load_evaluation_dataset
 from evaluation.evaluation_metrics import (
     calculate_count_metrics,
@@ -51,6 +51,24 @@ def run_detector_evaluation(
         config_path if config_path.is_absolute() else repository_root / config_path
     )
     config = load_evaluation_config(resolved_config_path)
+    return execute_detector_evaluation(
+        repository_root,
+        config,
+        detector_factory=detector_factory,
+        progress=progress,
+        created_at=created_at,
+    )
+
+
+def execute_detector_evaluation(
+    repository_root: Path,
+    config: EvaluationConfig,
+    *,
+    detector_factory: Callable[[Path], ObjectDetector] | None = None,
+    progress: Callable[[str], None] = print,
+    created_at: datetime | None = None,
+) -> SavedEvaluationRun:
+    """Run the complete evaluation pipeline from an already validated config."""
     dataset_validation = validate_dataset(repository_root)
     if not dataset_validation.dataset_ready:
         details = (*dataset_validation.errors, *dataset_validation.incomplete)
