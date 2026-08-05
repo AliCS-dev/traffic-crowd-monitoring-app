@@ -244,6 +244,19 @@ without loading the model or rerunning inference:
   data/evaluation/derived/runs/<run-id>
 ```
 
+For validation tuning, confidence thresholds are compared from the saved
+confidence-floor predictions. This keeps model inference fixed while changing
+only the operating threshold:
+
+```bash
+.venv/bin/python scripts/run_confidence_sweep.py \
+  --source-run data/evaluation/derived/runs/<run-id>
+```
+
+The tracked sweep configuration contains only the five values declared in the
+evaluation protocol. The command verifies every source-run checksum and refuses
+held-out data before calculating the comparison.
+
 Formal results should be created from a committed working tree on the same
 documented hardware and power configuration. Generated run directories remain
 outside Git because they contain large prediction and timing records.
