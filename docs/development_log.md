@@ -182,7 +182,7 @@ issue. Dataset curation and licensing are the next task.
 
 ## Where We Are Now
 
-As of 29 July 2026, we have verified that:
+As of 5 August 2026, we have verified that:
 
 - the single-image pipeline runs from input to annotated output;
 - supported video files can be opened, sampled, and processed with one reusable
@@ -200,12 +200,37 @@ solve before using the detections for meaningful traffic analysis.
 The model-quality gate now has a fixed protocol. No result has passed that gate
 yet.
 
+## August 2026: Selecting The YOLO26n Baseline
+
+### Issue #44: Benchmark And Tune The Current YOLO Baseline
+
+We preserved the unchanged YOLO26n result and then compared the confidence
+thresholds and image sizes declared in the evaluation protocol. We also
+generated a deterministic qualitative review of false positives, false
+negatives, class confusions, and the largest crowd-count errors. Every formal
+experiment used validation data only and stored provenance and artifact
+checksums.
+
+We selected image size `1280` and confidence `0.25` as the baseline reference.
+The larger image size produced the strongest detection and object-size results,
+while confidence `0.25` gave the lowest road-vehicle count error among the
+tested thresholds. We centralized these values as the application defaults and
+added a separate executable evaluation configuration, while preserving the
+original pre-tuning configuration.
+
+The selected baseline failed the quality gate. Detection precision, recall,
+average precision, and person-count error remain outside the required ranges,
+although runtime passed and vehicle-count error was conditional. Dense DLR
+crowd examples containing thousands of people received zero detections. This
+result gives us an honest reference for the next aerial-model comparison rather
+than evidence that the present model is ready for deployment.
+
 ## What We Plan to Work on Next
 
-Our next stage is a model-quality gate rather than another application feature.
-We will now collect legally usable aerial examples, label a representative
-subset, measure precision, recall, count error, and inference time, then decide
-whether the current model should be tuned, replaced, or fine-tuned. Grid
+Our next stage is to compare a small set of credible aerial-specific pretrained
+models against the frozen YOLO26n baseline. We will use the same validation
+partition, taxonomy, metrics, and runtime procedure, then decide whether an
+available model is sufficient or fine-tuning is justified. The held-out test
+split remains untouched until the final model and settings are frozen. Grid
 counting and alerts will resume only after the detector produces evidence we can
-defend in the thesis. Broader automated tests and the user-facing interface will
-follow the remaining analysis features.
+defend in the thesis.

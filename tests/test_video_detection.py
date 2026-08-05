@@ -47,12 +47,13 @@ def test_object_detector_loads_model_once_and_reuses_it(monkeypatch):
     model_calls = []
 
     class FakeModel:
-        def __call__(self, image, conf, imgsz):
+        def __call__(self, image, conf, imgsz, max_det):
             model_calls.append(
                 {
                     "image": image,
                     "confidence_threshold": conf,
                     "image_size": imgsz,
+                    "max_detections": max_det,
                 }
             )
             return ["result"]
@@ -85,11 +86,13 @@ def test_object_detector_loads_model_once_and_reuses_it(monkeypatch):
             "image": first_image,
             "confidence_threshold": 0.2,
             "image_size": 640,
+            "max_detections": 300,
         },
         {
             "image": second_image,
             "confidence_threshold": 0.3,
             "image_size": 1280,
+            "max_detections": 300,
         },
     ]
 
@@ -206,6 +209,8 @@ def test_frame_with_no_detections_still_produces_result():
     assert processed_frames[0].frame_number == 30
     assert processed_frames[0].detection_records == []
     assert processed_frames[0].object_counts == {}
+    assert detector.calls[0]["confidence_threshold"] == 0.25
+    assert detector.calls[0]["image_size"] == 1280
 
 
 def test_missing_model_result_identifies_frame():

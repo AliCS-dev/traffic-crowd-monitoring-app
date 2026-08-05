@@ -29,16 +29,16 @@ detections, and class counts can be stored together as one video session.
 | Aerial detection evaluation protocol | Implemented |
 | Labelled aerial evaluation dataset | Implemented |
 | Reproducible evaluation command | Implemented |
-| Baseline model evaluation | Planned |
+| Baseline model evaluation | Completed; quality gate failed |
 | Grid-based spatial counting | Planned |
 | Threshold-based alerts | Planned |
 
-The current detector gives us a useful starting point, but it is not yet reliable
-enough for final conclusions about aerial traffic. We have defined a formal
-evaluation protocol and prepared a licensed, labelled evaluation dataset. Our
-next step is to measure the baseline under that fixed protocol and decide
-whether an aerial-specific or fine-tuned model is needed before adding more
-analysis features.
+The current detector gives us a measured starting point, but it is not reliable
+enough for final conclusions about aerial traffic or crowds. We evaluated and
+tuned the baseline under the fixed protocol, selected one reproducible operating
+configuration, and recorded why it failed the quality gate. Our next step is to
+compare credible aerial-specific models before deciding whether fine-tuning is
+needed.
 
 ## What We Use
 
@@ -73,7 +73,9 @@ The reasoning behind this structure is described in our
 [architecture document](docs/architecture.md).
 
 The model-quality gate is described in the
-[evaluation protocol](docs/evaluation/evaluation_protocol.md). The selected data
+[evaluation protocol](docs/evaluation/evaluation_protocol.md), and the measured
+baseline decision is recorded in the
+[baseline selection](docs/evaluation/baseline_selection.md). The selected data
 sources, licences, intended uses, and known limitations are recorded in the
 [dataset card](docs/evaluation/dataset_card.md).
 
@@ -283,6 +285,18 @@ annotation scope. It keeps count-only crowd failures separate from box-level
 errors and saves the complete machine-readable error list, deterministic
 example images, contact sheets, a summary, and checksums under
 `data/evaluation/derived/error_analysis/`.
+
+The selected baseline can be reproduced as one complete validation run with:
+
+```bash
+.venv/bin/python scripts/run_detector_evaluation.py \
+  --config configs/evaluation/yolo26n_selected_validation.json
+```
+
+Its confidence, image size, and preprocessing defaults are also used by the
+image and video detection services. The configuration is a comparison baseline;
+it did not pass the quality gate and must not be treated as a deployment-ready
+model.
 
 Formal results should be created from a committed working tree on the same
 documented hardware and power configuration. Generated run directories remain
