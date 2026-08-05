@@ -268,6 +268,22 @@ This runs the complete validation and timing protocol at `640`, `960`, and
 creates one checksum-backed comparison report. The configurations are checked
 to ensure that only the image size and descriptive run name changed.
 
+Representative detection and count errors are generated from a saved validation
+run without repeating model inference:
+
+```bash
+.venv/bin/python scripts/run_error_analysis.py \
+  --source-run data/evaluation/derived/runs/<run-id>
+```
+
+The analysis uses `pycocotools` operating matches for false positives and false
+negatives, links overlapping wrong-class predictions as class confusions, and
+also retains confusions with raw labels excluded by the taxonomy or an asset's
+annotation scope. It keeps count-only crowd failures separate from box-level
+errors and saves the complete machine-readable error list, deterministic
+example images, contact sheets, a summary, and checksums under
+`data/evaluation/derived/error_analysis/`.
+
 Formal results should be created from a committed working tree on the same
 documented hardware and power configuration. Generated run directories remain
 outside Git because they contain large prediction and timing records.
