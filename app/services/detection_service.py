@@ -1,5 +1,11 @@
 from ultralytics import YOLO
 
+from app.config import (
+    DEFAULT_DETECTION_CONFIDENCE,
+    DEFAULT_INFERENCE_IMAGE_SIZE,
+    DEFAULT_MAX_DETECTIONS,
+)
+
 
 class ObjectDetector:
     def __init__(self, model_path):
@@ -8,11 +14,11 @@ class ObjectDetector:
     def detect(
         self,
         image,
-        confidence_threshold=0.15,
-        image_size=1280,
+        confidence_threshold=DEFAULT_DETECTION_CONFIDENCE,
+        image_size=DEFAULT_INFERENCE_IMAGE_SIZE,
         *,
         device=None,
-        max_detections=None,
+        max_detections=DEFAULT_MAX_DETECTIONS,
         half_precision=False,
         verbose=None,
     ):
@@ -31,7 +37,12 @@ class ObjectDetector:
         return self._model(image, **options)
 
 
-def detect_objects(image, model_path, confidence_threshold=0.15, image_size=1280):
+def detect_objects(
+    image,
+    model_path,
+    confidence_threshold=DEFAULT_DETECTION_CONFIDENCE,
+    image_size=DEFAULT_INFERENCE_IMAGE_SIZE,
+):
     detector = ObjectDetector(model_path)
     return detector.detect(
         image,

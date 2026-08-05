@@ -3,6 +3,12 @@ from pathlib import Path
 
 import pytest
 
+from app.config import (
+    DEFAULT_DETECTION_CONFIDENCE,
+    DEFAULT_INFERENCE_IMAGE_SIZE,
+    DEFAULT_MAX_DETECTIONS,
+    DEFAULT_PREPROCESSING_SCALE_FACTOR,
+)
 from evaluation.evaluation_config import (
     EvaluationConfigError,
     load_evaluation_config,
@@ -10,6 +16,7 @@ from evaluation.evaluation_config import (
 )
 
 CONFIG_PATH = Path("configs/evaluation/yolo26n_validation.json")
+SELECTED_CONFIG_PATH = Path("configs/evaluation/yolo26n_selected_validation.json")
 
 
 def load_values() -> dict:
@@ -26,8 +33,22 @@ def test_baseline_evaluation_configuration_is_valid():
     assert config.model.class_mapping.map("train") is None
     assert config.inference.confidence_floor == pytest.approx(0.001)
     assert config.inference.operating_confidence == pytest.approx(0.15)
-    assert config.inference.max_detections == 300
+    assert config.inference.max_detections == DEFAULT_MAX_DETECTIONS
     assert config.timing.warmup_frames == 20
+
+
+def test_selected_baseline_configuration_matches_application_defaults():
+    config = load_evaluation_config(SELECTED_CONFIG_PATH)
+
+    assert config.run_name == "yolo26n-validation-selected-baseline"
+    assert config.dataset.role == "validation"
+    assert config.inference.operating_confidence == pytest.approx(
+        DEFAULT_DETECTION_CONFIDENCE
+    )
+    assert config.inference.image_size == DEFAULT_INFERENCE_IMAGE_SIZE
+    assert config.inference.scale_factor == DEFAULT_PREPROCESSING_SCALE_FACTOR
+    assert config.inference.confidence_floor == pytest.approx(0.001)
+    assert config.inference.max_detections == 300
 
 
 def test_confidence_floor_cannot_exceed_operating_threshold():

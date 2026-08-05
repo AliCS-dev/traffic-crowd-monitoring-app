@@ -1,6 +1,13 @@
 import argparse
 
-from app.config import MODEL_PATH, SAMPLE_IMAGE_PATH, SAMPLE_OUTPUT_PATH
+from app.config import (
+    DEFAULT_DETECTION_CONFIDENCE,
+    DEFAULT_INFERENCE_IMAGE_SIZE,
+    DEFAULT_PREPROCESSING_SCALE_FACTOR,
+    MODEL_PATH,
+    SAMPLE_IMAGE_PATH,
+    SAMPLE_OUTPUT_PATH,
+)
 from app.database.detection_repository import save_image_detection_results
 from app.services.detection_service import (
     build_object_count_summary_records,
@@ -32,18 +39,21 @@ def parse_arguments():
     parser.add_argument(
         "--confidence",
         type=float,
-        default=0.10,
+        default=DEFAULT_DETECTION_CONFIDENCE,
         help="Minimum detection confidence threshold.",
     )
 
     parser.add_argument(
-        "--image-size", type=int, default=1280, help="YOLO inference image size."
+        "--image-size",
+        type=int,
+        default=DEFAULT_INFERENCE_IMAGE_SIZE,
+        help="YOLO inference image size.",
     )
 
     parser.add_argument(
         "--scale-factor",
         type=int,
-        default=2,
+        default=DEFAULT_PREPROCESSING_SCALE_FACTOR,
         help="Image resize scale factor before detection.",
     )
 

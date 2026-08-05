@@ -1,6 +1,11 @@
 from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 
+from app.config import (
+    DEFAULT_DETECTION_CONFIDENCE,
+    DEFAULT_INFERENCE_IMAGE_SIZE,
+    DEFAULT_PREPROCESSING_SCALE_FACTOR,
+)
 from app.services.detection_service import (
     ObjectDetector,
     count_detected_objects,
@@ -23,9 +28,9 @@ class VideoFrameDetectionResult:
 def process_sampled_video_frames(
     sampled_frames: Iterable[SampledFrame],
     detector: ObjectDetector,
-    confidence_threshold: float = 0.15,
-    image_size: int = 1280,
-    scale_factor: int = 2,
+    confidence_threshold: float = DEFAULT_DETECTION_CONFIDENCE,
+    image_size: int = DEFAULT_INFERENCE_IMAGE_SIZE,
+    scale_factor: int = DEFAULT_PREPROCESSING_SCALE_FACTOR,
 ) -> Iterator[VideoFrameDetectionResult]:
     for sampled_frame in sampled_frames:
         processed_image = preprocess_image_for_detection(
