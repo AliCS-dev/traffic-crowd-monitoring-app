@@ -84,6 +84,17 @@ The next aerial detectors are fixed before benchmarking in the
 versioned sources, expected weight hashes, licences, and class mappings are also
 stored in `configs/evaluation/aerial_model_candidates.json`.
 
+We can download, verify, and smoke-test the predeclared candidate checkpoints on
+the local GPU with:
+
+```bash
+.venv/bin/python scripts/preflight_model_candidates.py --download
+```
+
+The checkpoints remain under the ignored `models/candidates/` directory. The
+command verifies their pinned size and SHA-256 digest before loading them, then
+runs one validation image without calculating benchmark metrics.
+
 ## Running the Project Locally
 
 We use a virtual environment so that the project dependencies stay separate from

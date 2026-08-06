@@ -44,6 +44,7 @@ class ModelCandidate:
     license_id: str
     license_url: str
     parameters_millions: float
+    source_classes: tuple[str, ...]
     class_mapping: tuple[tuple[str, str], ...]
     excluded_source_classes: tuple[str, ...]
     source_reported_metrics: SourceReportedMetrics
@@ -183,6 +184,7 @@ def _parse_candidate(values: dict[str, Any], index: int) -> ModelCandidate:
         "license_id",
         "license_url",
         "parameters_millions",
+        "source_classes",
         "class_mapping",
         "excluded_source_classes",
         "source_reported_metrics",
@@ -218,12 +220,18 @@ def _parse_candidate(values: dict[str, Any], index: int) -> ModelCandidate:
         )
 
     mapping = _parse_mapping(values["class_mapping"], f"{field}.class_mapping")
+    source_classes = _string_list(values["source_classes"], f"{field}.source_classes")
     excluded = _string_list(
         values["excluded_source_classes"], f"{field}.excluded_source_classes"
     )
     if set(excluded) & {source for source, _ in mapping}:
         raise ModelCandidateError(
             f"{field}.excluded_source_classes overlaps the class mapping"
+        )
+    declared_classes = {source for source, _ in mapping} | set(excluded)
+    if declared_classes != set(source_classes):
+        raise ModelCandidateError(
+            f"{field}.source_classes must match the mapped and excluded classes"
         )
 
     return ModelCandidate(
@@ -248,6 +256,7 @@ def _parse_candidate(values: dict[str, Any], index: int) -> ModelCandidate:
         parameters_millions=_positive_number(
             values["parameters_millions"], f"{field}.parameters_millions"
         ),
+        source_classes=source_classes,
         class_mapping=mapping,
         excluded_source_classes=excluded,
         source_reported_metrics=_parse_metrics(

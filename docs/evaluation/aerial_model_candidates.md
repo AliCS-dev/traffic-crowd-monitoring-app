@@ -70,8 +70,9 @@ advance.
 
 ## Class Mapping
 
-Both candidates use the ten VisDrone detection labels. We apply the same mapping
-to each model:
+Both candidates use eleven source labels derived from VisDrone. Their ordered
+source taxonomy is stored with each candidate so the preflight can compare it
+with the checkpoint metadata. We apply the same mapping to each model:
 
 | VisDrone label | Project class |
 | --- | --- |
@@ -82,10 +83,11 @@ to each model:
 | `bus` | `bus` |
 | `truck` | `truck` |
 
-`tricycle` and `awning-tricycle` remain outside the current project taxonomy.
-Their raw predictions will be retained for traceability but excluded from
-project counts and detection metrics, following the same policy used for the
-baseline.
+`tricycle`, `awning-tricycle`, and `others` remain outside the current project
+taxonomy. Their raw predictions will be retained for traceability but excluded
+from project counts and detection metrics, following the same policy used for
+the baseline. The `others` label was confirmed from the embedded checkpoint
+metadata during the technical preflight.
 
 ## Licensing And Evidence Limits
 
@@ -116,10 +118,25 @@ decision.
 These are methodological exclusions, not claims that the models are poor. They
 may be useful in another project or after a deliberate protocol revision.
 
-## Next Step
+## Checkpoint Preflight
 
-The next separate step is a technical preflight. We will download only the two
-pinned checkpoint files, verify their SHA-256 digests, confirm that the current
-Ultralytics version can load them, inspect their embedded class names, and run
-one validation asset through each model. Full benchmarking begins only after
-both candidates pass that preflight.
+The checkpoint preflight is deliberately smaller than the model comparison. It
+downloads only these two pinned files into separate ignored directories,
+verifies their recorded byte sizes and SHA-256 digests before loading them,
+checks their embedded VisDrone class names, and runs one fixed validation image
+through each model. It does not calculate evaluation metrics or inspect the
+held-out test split.
+
+We run the preflight with:
+
+```bash
+.venv/bin/python scripts/preflight_model_candidates.py --download
+```
+
+The command writes a local machine-readable report to
+`data/evaluation/derived/reports/aerial_model_preflight.json`. The report records
+the checkpoint identities, environment versions, validation image identity, and
+pass status. Model weights and this machine-specific report remain outside Git.
+
+Full validation benchmarking begins only after both candidates pass this
+preflight.
