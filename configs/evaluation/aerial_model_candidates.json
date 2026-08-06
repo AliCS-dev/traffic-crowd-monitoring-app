@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "selection_name": "aerial-detector-candidates",
+  "selection_date": "2026-08-06",
+  "protocol_version": "1.0",
+  "dataset_role": "validation",
+  "maximum_candidates": 3,
+  "candidates": [
+    {
+      "candidate_id": "yolo26m-visdrone",
+      "name": "YOLO26m fine-tuned on VisDrone",
+      "selection_role": "practical-medium-model",
+      "framework": "ultralytics",
+      "training_dataset": "VisDrone2019-DET",
+      "repository_id": "dronefreak/visdrone-yolov26m",
+      "repository_revision": "20879fa2d2f351d1e032bfd0a38a5a6b735b0f03",
+      "source_url": "https://huggingface.co/dronefreak/visdrone-yolov26m",
+      "weights_filename": "best.pt",
+      "weights_url": "https://huggingface.co/dronefreak/visdrone-yolov26m/resolve/20879fa2d2f351d1e032bfd0a38a5a6b735b0f03/best.pt",
+      "weights_sha256": "e57204b8d77b5b22ea9253cbd5664b707623aeb7c19dbaa9034fe5a60bed6571",
+      "weights_size_bytes": 44055513,
+      "license_id": "AGPL-3.0",
+      "license_url": "https://huggingface.co/dronefreak/visdrone-yolov26m/blob/20879fa2d2f351d1e032bfd0a38a5a6b735b0f03/README.md",
+      "parameters_millions": 21.9,
+      "class_mapping": {
+        "pedestrian": "person",
+        "people": "person",
+        "bicycle": "bicycle",
+        "car": "car_or_van",
+        "van": "car_or_van",
+        "truck": "truck",
+        "bus": "bus",
+        "motor": "motorcycle"
+      },
+      "excluded_source_classes": ["tricycle", "awning-tricycle"],
+      "source_reported_metrics": {
+        "evaluation_partition": "VisDrone test-dev",
+        "map50": 0.3667,
+        "map50_95": 0.2122,
+        "precision": 0.5103,
+        "recall": 0.3979
+      }
+    },
+    {
+      "candidate_id": "yolo11x-visdrone",
+      "name": "YOLO11x fine-tuned on VisDrone",
+      "selection_role": "quality-oriented-large-model",
+      "framework": "ultralytics",
+      "training_dataset": "VisDrone2019-DET",
+      "repository_id": "dronefreak/visdrone-yolov11x",
+      "repository_revision": "6832bcfa92a6c71facc8af41de0b1981a19ac7a0",
+      "source_url": "https://huggingface.co/dronefreak/visdrone-yolov11x",
+      "weights_filename": "best.pt",
+      "weights_url": "https://huggingface.co/dronefreak/visdrone-yolov11x/resolve/6832bcfa92a6c71facc8af41de0b1981a19ac7a0/best.pt",
+      "weights_sha256": "df07e65a78e97358def3d70265d3ab2b4426a969aedee01472cd9555294aedce",
+      "weights_size_bytes": 114410009,
+      "license_id": "AGPL-3.0",
+      "license_url": "https://huggingface.co/dronefreak/visdrone-yolov11x/blob/6832bcfa92a6c71facc8af41de0b1981a19ac7a0/README.md",
+      "parameters_millions": 57.0,
+      "class_mapping": {
+        "pedestrian": "person",
+        "people": "person",
+        "bicycle": "bicycle",
+        "car": "car_or_van",
+        "van": "car_or_van",
+        "truck": "truck",
+        "bus": "bus",
+        "motor": "motorcycle"
+      },
+      "excluded_source_classes": ["tricycle", "awning-tricycle"],
+      "source_reported_metrics": {
+        "evaluation_partition": "VisDrone test-dev",
+        "map50": 0.3844,
+        "map50_95": 0.226,
+        "precision": 0.5241,
+        "recall": 0.4143
+      }
+    }
+  ]
+}

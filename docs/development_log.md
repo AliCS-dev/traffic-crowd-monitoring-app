@@ -225,6 +225,21 @@ crowd examples containing thousands of people received zero detections. This
 result gives us an honest reference for the next aerial-model comparison rather
 than evidence that the present model is ready for deployment.
 
+### Issue #45: Selecting Aerial Model Candidates
+
+Before downloading or comparing another model, we selected two traceable
+VisDrone-tuned candidates. YOLO26m represents a practical medium-size option,
+while YOLO11x represents a larger quality-oriented option. Both use the current
+Ultralytics integration and cover the operational taxonomy through one shared
+class mapping.
+
+We pinned each Hugging Face repository revision, expected checkpoint hash, file
+size, licence metadata, and source-reported metrics in a strict configuration.
+The reported scores are used only to justify that the candidates are plausible;
+our validation protocol will produce the evidence used for the actual decision.
+We also recorded why several academically interesting models were excluded when
+weights, class compatibility, or a maintainable local environment were missing.
+
 ## What We Plan to Work on Next
 
 Our next stage is to compare a small set of credible aerial-specific pretrained
