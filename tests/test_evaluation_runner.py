@@ -10,6 +10,7 @@ from evaluation.evaluation_config import load_evaluation_config
 from evaluation.evaluation_data import EvaluationAsset, EvaluationDataset
 from evaluation.evaluation_runner import (
     EvaluationRunnerError,
+    convert_evaluation_result,
     generate_predictions,
 )
 
@@ -135,3 +136,35 @@ def test_runner_rejects_dataset_role_mismatch(tmp_path: Path):
             FakeDetector([]),
             load_evaluation_config(CONFIG_PATH),
         )
+
+
+def test_result_conversion_discards_degenerate_detector_boxes(tmp_path: Path):
+    asset = create_dataset(tmp_path).assets[0]
+    result = SimpleNamespace(
+        names={0: "car"},
+        boxes=[
+            SimpleNamespace(cls=[0], conf=[0.9], xyxy=[[2.0, 2.0, 6.0, 4.0]]),
+            SimpleNamespace(cls=[0], conf=[0.8], xyxy=[[4.0, 2.0, 4.0, 3.0]]),
+            SimpleNamespace(cls=[0], conf=[0.7], xyxy=[[3.0, 5.0, 2.0, 5.0]]),
+        ],
+    )
+
+    predictions = convert_evaluation_result(
+        result, asset, load_evaluation_config(CONFIG_PATH)
+    )
+
+    assert len(predictions) == 1
+    assert predictions[0].box.as_xyxy() == pytest.approx((1.0, 1.0, 3.0, 2.0))
+
+
+def test_result_conversion_rejects_non_finite_detector_boxes(tmp_path: Path):
+    asset = create_dataset(tmp_path).assets[0]
+    result = SimpleNamespace(
+        names={0: "car"},
+        boxes=[
+            SimpleNamespace(cls=[0], conf=[0.9], xyxy=[[0.0, 0.0, float("nan"), 2.0]])
+        ],
+    )
+
+    with pytest.raises(EvaluationRunnerError, match="asset first"):
+        convert_evaluation_result(result, asset, load_evaluation_config(CONFIG_PATH))
