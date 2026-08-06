@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "comparison_name": "yolo11x-visdrone-validation-confidence-sweep",
+  "protocol_version": "1.0",
+  "operating_confidences": [0.10, 0.15, 0.25, 0.40, 0.50],
+  "output_directory": "data/evaluation/derived/comparisons"
+}
