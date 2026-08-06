@@ -1,3 +1,4 @@
+import math
 from dataclasses import dataclass
 from typing import Protocol
 
@@ -93,6 +94,28 @@ def _prediction_from_record(
         ) from error
 
 
+def _has_degenerate_box(record: dict, asset_id: str) -> bool:
+    try:
+        x_min, y_min, x_max, y_max = (
+            float(record[field])
+            for field in (
+                "bbox_x_min",
+                "bbox_y_min",
+                "bbox_x_max",
+                "bbox_y_max",
+            )
+        )
+    except (KeyError, TypeError, ValueError) as error:
+        raise EvaluationRunnerError(
+            f"Detector returned an invalid prediction for asset {asset_id}"
+        ) from error
+    if not all(math.isfinite(value) for value in (x_min, y_min, x_max, y_max)):
+        raise EvaluationRunnerError(
+            f"Detector returned an invalid prediction for asset {asset_id}"
+        )
+    return x_max <= x_min or y_max <= y_min
+
+
 def load_evaluation_image(asset: EvaluationAsset):
     image = load_input_image(asset.image_path)
     _validate_image_dimensions(asset.asset_id, image, asset.width, asset.height)
@@ -135,9 +158,11 @@ def convert_evaluation_result(
     asset: EvaluationAsset,
     config: EvaluationConfig,
 ) -> tuple[PredictionRecord, ...]:
+    records = extract_detection_records(result)
     return tuple(
         _prediction_from_record(record, asset=asset, config=config)
-        for record in extract_detection_records(result)
+        for record in records
+        if not _has_degenerate_box(record, asset.asset_id)
     )
 
 

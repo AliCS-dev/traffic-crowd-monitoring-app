@@ -140,3 +140,10 @@ pass status. Model weights and this machine-specific report remain outside Git.
 
 Full validation benchmarking begins only after both candidates pass this
 preflight.
+
+## Outcome
+
+Both candidates passed preflight and were evaluated with the fixed validation
+protocol. Neither pretrained checkpoint satisfied the quality gate. The full
+comparison and the YOLO26m fine-tuning decision are recorded in the
+[aerial model decision](aerial_model_decision.md).

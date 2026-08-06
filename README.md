@@ -95,6 +95,11 @@ The checkpoints remain under the ignored `models/candidates/` directory. The
 command verifies their pinned size and SHA-256 digest before loading them, then
 runs one validation image without calculating benchmark metrics.
 
+The completed validation comparison and the reason we are proceeding to a
+fine-tuning pilot are recorded in the
+[aerial model decision](docs/evaluation/aerial_model_decision.md). The held-out
+test split remains unused until a final checkpoint is frozen.
+
 ## Running the Project Locally
 
 We use a virtual environment so that the project dependencies stay separate from
