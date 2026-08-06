@@ -114,3 +114,7 @@ The model, threshold, image size, class mapping, and other inference settings
 remain frozen for baseline comparisons. The held-out test split will remain
 unused until a final model configuration, rather than only this baseline, has
 been selected.
+
+Issue #45 later reran this frozen baseline alongside two aerial-specific models
+from the same clean commit. The result and training decision are recorded in the
+[aerial model comparison](aerial_model_decision.md).

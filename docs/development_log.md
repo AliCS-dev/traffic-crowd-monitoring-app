@@ -262,12 +262,30 @@ remain outside Git because they are machine-specific or large generated
 artifacts; the reproducible sources and expected identities remain in the
 tracked candidate configuration.
 
+### Issue #45: Comparing The Aerial Models
+
+We evaluated the frozen YOLO26n baseline, YOLO26m VisDrone, and YOLO11x
+VisDrone from the same clean commit and against the same 86 validation assets.
+All runs used image size 1280, scale factor 2, confidence 0.25, `max_det` 300,
+and the complete timing protocol. Their dataset and annotation hashes matched,
+and every generated artifact passed its manifest checksum.
+
+The aerial models improved recall and mAP50, but neither met the quality gate.
+Person normalized error remained above 0.98 for both candidates, while several
+other core measures also failed. Testing the five predeclared confidence values
+changed the precision and vehicle-count trade-off but did not change the
+overall result.
+
+We selected YOLO26m VisDrone as the starting point for a fine-tuning pilot. It
+gave a more practical balance than YOLO11x: lower vehicle-count error, smaller
+weights, lower GPU memory, and higher throughput, with only a modest reduction
+in aggregate detection quality. The held-out split remains untouched, and the
+pilot belongs to Issue #46 rather than this comparison.
+
 ## What We Plan to Work on Next
 
-Our next stage is to compare a small set of credible aerial-specific pretrained
-models against the frozen YOLO26n baseline. We will use the same validation
-partition, taxonomy, metrics, and runtime procedure, then decide whether an
-available model is sufficient or fine-tuning is justified. The held-out test
-split remains untouched until the final model and settings are frozen. Grid
-counting and alerts will resume only after the detector produces evidence we can
-defend in the thesis.
+Our next stage is a small, reproducible YOLO26m fine-tuning pilot. We will first
+audit the training partition for usable boxes and class coverage, then freeze
+the training settings before starting. The held-out test split remains untouched
+until the final model and settings are frozen. Grid counting and alerts will
+resume only after the detector produces evidence we can defend in the thesis.
