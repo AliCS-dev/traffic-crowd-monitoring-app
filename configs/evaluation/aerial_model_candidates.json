@@ -22,6 +22,19 @@
       "license_id": "AGPL-3.0",
       "license_url": "https://huggingface.co/dronefreak/visdrone-yolov26m/blob/20879fa2d2f351d1e032bfd0a38a5a6b735b0f03/README.md",
       "parameters_millions": 21.9,
+      "source_classes": [
+        "pedestrian",
+        "people",
+        "bicycle",
+        "car",
+        "van",
+        "truck",
+        "tricycle",
+        "awning-tricycle",
+        "bus",
+        "motor",
+        "others"
+      ],
       "class_mapping": {
         "pedestrian": "person",
         "people": "person",
@@ -32,7 +45,7 @@
         "bus": "bus",
         "motor": "motorcycle"
       },
-      "excluded_source_classes": ["tricycle", "awning-tricycle"],
+      "excluded_source_classes": ["tricycle", "awning-tricycle", "others"],
       "source_reported_metrics": {
         "evaluation_partition": "VisDrone test-dev",
         "map50": 0.3667,
@@ -57,6 +70,19 @@
       "license_id": "AGPL-3.0",
       "license_url": "https://huggingface.co/dronefreak/visdrone-yolov11x/blob/6832bcfa92a6c71facc8af41de0b1981a19ac7a0/README.md",
       "parameters_millions": 57.0,
+      "source_classes": [
+        "pedestrian",
+        "people",
+        "bicycle",
+        "car",
+        "van",
+        "truck",
+        "tricycle",
+        "awning-tricycle",
+        "bus",
+        "motor",
+        "others"
+      ],
       "class_mapping": {
         "pedestrian": "person",
         "people": "person",
@@ -67,7 +93,7 @@
         "bus": "bus",
         "motor": "motorcycle"
       },
-      "excluded_source_classes": ["tricycle", "awning-tricycle"],
+      "excluded_source_classes": ["tricycle", "awning-tricycle", "others"],
       "source_reported_metrics": {
         "evaluation_partition": "VisDrone test-dev",
         "map50": 0.3844,

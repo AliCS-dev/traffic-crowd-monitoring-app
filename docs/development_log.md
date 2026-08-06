@@ -240,6 +240,28 @@ our validation protocol will produce the evidence used for the actual decision.
 We also recorded why several academically interesting models were excluded when
 weights, class compatibility, or a maintainable local environment were missing.
 
+### Issue #45: Preflighting The Candidate Checkpoints
+
+We downloaded the two pinned checkpoints into separate local model directories
+and verified their recorded file sizes and SHA-256 digests before loading them.
+Both models loaded with Ultralytics 8.4.51 and completed one inference on the
+same validation asset using the NVIDIA GeForce RTX 5060 Laptop GPU. This was a
+technical compatibility check only; we did not calculate model-quality metrics
+or inspect the held-out test split.
+
+The first preflight attempt exposed one useful metadata mistake. Both
+checkpoints contain an `others` source label in addition to the ten named
+VisDrone object classes. We added it to the explicit exclusion list so future
+evaluation keeps its raw predictions for traceability without treating them as
+one of our six operational classes. The rerun passed checkpoint identity, model
+loading, class-taxonomy, and single-image inference checks for both candidates.
+
+The local report records the package versions, GPU, candidate revisions,
+checkpoint hashes, and validation image hash. The report and model binaries
+remain outside Git because they are machine-specific or large generated
+artifacts; the reproducible sources and expected identities remain in the
+tracked candidate configuration.
+
 ## What We Plan to Work on Next
 
 Our next stage is to compare a small set of credible aerial-specific pretrained

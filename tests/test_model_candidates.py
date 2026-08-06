@@ -35,7 +35,12 @@ def test_candidates_cover_the_operational_taxonomy_and_pin_weights():
 
     for candidate in selection.candidates:
         mapped_classes = {project_class for _, project_class in candidate.class_mapping}
+        declared_source_classes = {
+            source_class for source_class, _ in candidate.class_mapping
+        } | set(candidate.excluded_source_classes)
         assert mapped_classes == set(PROJECT_CLASSES)
+        assert declared_source_classes == set(candidate.source_classes)
+        assert candidate.source_classes[-1] == "others"
         assert candidate.repository_revision in candidate.weights_url
         assert candidate.weights_url.endswith(f"/{candidate.weights_filename}")
         assert len(candidate.weights_sha256) == 64
@@ -80,4 +85,12 @@ def test_unknown_candidate_field_is_rejected():
     values["candidates"][0]["unreviewed_option"] = True
 
     with pytest.raises(ModelCandidateError, match="unknown fields"):
+        parse_model_candidate_selection(values)
+
+
+def test_source_classes_must_match_mapping_and_exclusions():
+    values = load_values()
+    values["candidates"][0]["source_classes"].remove("others")
+
+    with pytest.raises(ModelCandidateError, match="mapped and excluded"):
         parse_model_candidate_selection(values)
