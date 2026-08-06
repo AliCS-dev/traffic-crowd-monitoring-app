@@ -79,6 +79,11 @@ baseline decision is recorded in the
 sources, licences, intended uses, and known limitations are recorded in the
 [dataset card](docs/evaluation/dataset_card.md).
 
+The next aerial detectors are fixed before benchmarking in the
+[candidate selection record](docs/evaluation/aerial_model_candidates.md). Their
+versioned sources, expected weight hashes, licences, and class mappings are also
+stored in `configs/evaluation/aerial_model_candidates.json`.
+
 ## Running the Project Locally
 
 We use a virtual environment so that the project dependencies stay separate from
@@ -301,6 +306,13 @@ model.
 Formal results should be created from a committed working tree on the same
 documented hardware and power configuration. Generated run directories remain
 outside Git because they contain large prediction and timing records.
+
+We can validate the predeclared aerial-model shortlist without downloading any
+weights:
+
+```bash
+.venv/bin/python scripts/validate_model_candidates.py
+```
 
 ## Checks We Run
 
