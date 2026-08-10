@@ -30,15 +30,16 @@ detections, and class counts can be stored together as one video session.
 | Labelled aerial evaluation dataset | Implemented |
 | Reproducible evaluation command | Implemented |
 | Baseline model evaluation | Completed; quality gate failed |
+| Fine-tuning pilot | Completed; person-only checkpoint rejected |
 | Grid-based spatial counting | Planned |
 | Threshold-based alerts | Planned |
 
 The current detector gives us a measured starting point, but it is not reliable
-enough for final conclusions about aerial traffic or crowds. We evaluated and
-tuned the baseline under the fixed protocol, selected one reproducible operating
-configuration, and recorded why it failed the quality gate. Our next step is to
-compare credible aerial-specific models before deciding whether fine-tuning is
-needed.
+enough for final conclusions about aerial traffic or crowds. We compared three
+pretrained candidates and ran a source-group-clean fine-tuning pilot. The pilot
+improved person detection but removed useful vehicle performance, so we rejected
+its checkpoint. Another combined-detector run now requires independent vehicle
+training boxes; dense crowds may need a dedicated counting method.
 
 ## What We Use
 
@@ -95,10 +96,17 @@ The checkpoints remain under the ignored `models/candidates/` directory. The
 command verifies their pinned size and SHA-256 digest before loading them, then
 runs one validation image without calculating benchmark metrics.
 
-The completed validation comparison and the reason we are proceeding to a
-fine-tuning pilot are recorded in the
+The completed validation comparison and the decision that led to fine-tuning
+are recorded in the
 [aerial model decision](docs/evaluation/aerial_model_decision.md). The held-out
 test split remains unused until a final checkpoint is frozen.
+
+The completed pilot, its person-detection gain, its vehicle-class regression,
+and the decision not to promote it are recorded in the
+[fine-tuning pilot report](docs/evaluation/fine_tuning_pilot.md). Its compact
+machine-readable provenance is stored in
+`data/evaluation/training_experiments.json`; generated datasets, logs, plots,
+and checkpoints remain outside Git.
 
 ## Running the Project Locally
 

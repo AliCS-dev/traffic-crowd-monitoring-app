@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "experiments": [
+    {
+      "experiment_id": "yolo26m-okutama-finetune-20260810",
+      "issue": 46,
+      "status": "completed_rejected",
+      "started_at_utc": "2026-08-10T13:03:39Z",
+      "completed_at_utc": "2026-08-10T13:18:52Z",
+      "training_config": {
+        "path": "configs/training/yolo26m_okutama_finetune.json",
+        "sha256": "458746da005d151a1eb52df8f6aab5ca02bb41d97539dc45ba3173c83071679c"
+      },
+      "starting_checkpoint": {
+        "path": "models/candidates/yolo26m-visdrone/best.pt",
+        "sha256": "e57204b8d77b5b22ea9253cbd5664b707623aeb7c19dbaa9034fe5a60bed6571",
+        "repository": "dronefreak/visdrone-yolov26m",
+        "revision": "20879fa2d2f351d1e032bfd0a38a5a6b735b0f03"
+      },
+      "dataset": {
+        "collection": "okutama_action",
+        "role": "training",
+        "frame_stride": 30,
+        "training_images": 1610,
+        "training_boxes": 9175,
+        "training_classes": ["person"],
+        "training_source_groups": [
+          "okutama_morning_01",
+          "okutama_morning_02",
+          "okutama_morning_03",
+          "okutama_morning_05",
+          "okutama_morning_06",
+          "okutama_morning_07",
+          "okutama_morning_10",
+          "okutama_noon_02",
+          "okutama_noon_05",
+          "okutama_noon_06",
+          "okutama_noon_07",
+          "okutama_noon_09",
+          "okutama_noon_11"
+        ],
+        "validation_images": 67,
+        "validation_boxes": 773,
+        "source_group_overlap": 0,
+        "held_out_test_used": false
+      },
+      "environment": {
+        "python": "3.10.12",
+        "ultralytics": "8.4.51",
+        "torch": "2.12.0+cu130",
+        "cuda_runtime": "13.0",
+        "opencv": "4.13.0",
+        "numpy": "2.2.6",
+        "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU",
+        "gpu_memory_mib": 8151,
+        "driver": "610.88"
+      },
+      "training_result": {
+        "maximum_epochs": 30,
+        "completed_epochs": 9,
+        "early_stopping_patience": 7,
+        "selected_epoch": 2,
+        "selection_metric": "validation mAP50-95",
+        "best_map50": 0.15943,
+        "best_map50_95": 0.06655,
+        "duration_seconds": 900.423,
+        "best_checkpoint_sha256": "2757a226edb5fb4b95403e5b7a389312f2315978dacba2a772db6ef4aa2455f6",
+        "best_checkpoint_size_bytes": 44081561
+      },
+      "augmentations": {
+        "hsv_h": 0.015,
+        "hsv_s": 0.7,
+        "hsv_v": 0.4,
+        "translate": 0.1,
+        "scale": 0.5,
+        "fliplr": 0.5,
+        "mosaic": 1.0,
+        "close_mosaic": 10,
+        "degrees": 0.0,
+        "shear": 0.0,
+        "perspective": 0.0,
+        "flipud": 0.0,
+        "mixup": 0.0
+      },
+      "application_validation": {
+        "operating_confidence": 0.25,
+        "baseline_run_id": "20260810T132010Z-yolo26m-visdrone-validation",
+        "baseline_run_manifest_sha256": "8fcb2b844526cd0b92c9398511f20bd356312a241bfd21e17240b6ca2c86e27b",
+        "fine_tuned_run_id": "20260810T132137Z-yolo26m-okutama-finetuned-validation",
+        "fine_tuned_run_manifest_sha256": "368a6f29d84c86f816bc3cb6e5149a1bec40417797eb0f81883e8200aa6fa4e6",
+        "baseline": {
+          "map50": 0.4301,
+          "map50_95": 0.2189,
+          "person_ap50": 0.5394,
+          "person_recall": 0.5444,
+          "road_vehicle_nae": 0.2852
+        },
+        "fine_tuned": {
+          "map50": 0.164,
+          "map50_95": 0.0666,
+          "person_ap50": 0.7248,
+          "person_recall": 0.7611,
+          "road_vehicle_nae": 1.0
+        }
+      },
+      "artifact_storage": {
+        "tracked_record": "data/evaluation/training_experiments.json",
+        "local_dataset": "data/evaluation/derived/training/yolo26m-okutama",
+        "local_run": "data/evaluation/derived/training/runs/yolo26m-okutama-finetune",
+        "git_ignored": true
+      },
+      "decision": "Rejected for the combined application because person detection improved while vehicle detection collapsed. The original YOLO26m VisDrone checkpoint remains the selected application candidate."
+    }
+  ]
+}

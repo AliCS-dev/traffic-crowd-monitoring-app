@@ -1,6 +1,7 @@
 opencv-python
 numpy
 Pillow
+PyYAML
 ultralytics
 pycocotools
 psycopg[binary]
