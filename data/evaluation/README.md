@@ -174,6 +174,32 @@ support. We will report unsupported or low-support classes and will not make
 persuasive per-class claims for them. The completed visual quality-control pass
 is recorded separately from annotation preparation.
 
+## Fine-Tuning Data
+
+The fine-tuning workflow expands only the Okutama source groups already assigned
+to the training role. It samples every thirtieth downloaded frame, converts the
+publisher tracking boxes to YOLO labels, and creates symlinks instead of copying
+the images. The current configuration prepares 1,610 training images with 9,175
+person boxes and keeps all validation and held-out source groups separate.
+
+We prepare the local dataset with:
+
+```bash
+.venv/bin/python scripts/prepare_finetuning_dataset.py
+```
+
+We run the declared experiment with:
+
+```bash
+.venv/bin/python scripts/run_finetuning.py
+```
+
+Both commands use `configs/training/yolo26m_okutama_finetune.json`. Generated
+data and model artifacts stay under `data/evaluation/derived/training/` and are
+ignored by Git. The tracked experiment outcome and checkpoint hashes are stored
+in `training_experiments.json`, while the interpretation is documented in
+`docs/evaluation/fine_tuning_pilot.md`.
+
 ## Validation And Visual Review
 
 We run the complete technical validation while annotation work is still in

@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "run_name": "yolo26m-okutama-finetune",
+  "random_seed": 2026,
+  "base_checkpoint": "models/candidates/yolo26m-visdrone/best.pt",
+  "base_checkpoint_sha256": "e57204b8d77b5b22ea9253cbd5664b707623aeb7c19dbaa9034fe5a60bed6571",
+  "source_classes": [
+    "pedestrian",
+    "people",
+    "bicycle",
+    "car",
+    "van",
+    "truck",
+    "tricycle",
+    "awning-tricycle",
+    "bus",
+    "motor",
+    "others"
+  ],
+  "project_class_mapping": {
+    "person": "pedestrian",
+    "bicycle": "bicycle",
+    "motorcycle": "motor",
+    "car_or_van": "car",
+    "truck": "truck",
+    "bus": "bus"
+  },
+  "dataset": {
+    "selection_plan_path": "data/evaluation/selection_plan.csv",
+    "validation_annotations_path": "data/evaluation/derived/annotations/instances_validation.json",
+    "output_directory": "data/evaluation/derived/training/yolo26m-okutama",
+    "collection_id": "okutama_action",
+    "role": "training",
+    "frame_stride": 30
+  },
+  "training": {
+    "epochs": 30,
+    "patience": 7,
+    "image_size": 960,
+    "batch_size": 2,
+    "device": "cuda:0",
+    "workers": 4,
+    "freeze_layers": 10,
+    "optimizer": "AdamW",
+    "learning_rate": 0.001,
+    "amp": true,
+    "cache": false
+  },
+  "output_directory": "data/evaluation/derived/training/runs"
+}

@@ -8,6 +8,11 @@ We selected the VisDrone-trained YOLO26m checkpoint as the pilot starting point
 because it provides the strongest practical balance of aerial detection quality,
 vehicle counting, throughput, memory use, and model size.
 
+The follow-up pilot was completed on 10 August 2026. It improved person
+detection but caused severe vehicle-class forgetting, so its checkpoint was not
+promoted. The setup, measurements, and rejection decision are recorded in the
+[fine-tuning pilot report](fine_tuning_pilot.md).
+
 This is a validation-only decision. We did not run, inspect, or use the held-out
 test split.
 
