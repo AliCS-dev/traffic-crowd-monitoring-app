@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "status": "frozen_for_held_out_test",
+  "freeze_date": "2026-08-10",
+  "issue": 47,
+  "protocol_version": "1.0",
+  "dataset_version": "1.0-draft",
+  "dataset_manifest_sha256": "8dabfe690a0aa162da3172bb46842216d4eac5ef7f73a6e6ba5ad48a2892f37d",
+  "held_out_evaluation_config": "configs/evaluation/yolo26m_visdrone_held_out_test.json",
+  "selected_candidate_id": "yolo26m-visdrone",
+  "checkpoint": {
+    "path": "models/candidates/yolo26m-visdrone/best.pt",
+    "sha256": "e57204b8d77b5b22ea9253cbd5664b707623aeb7c19dbaa9034fe5a60bed6571",
+    "size_bytes": 44055513,
+    "repository": "dronefreak/visdrone-yolov26m",
+    "revision": "20879fa2d2f351d1e032bfd0a38a5a6b735b0f03"
+  },
+  "inference": {
+    "confidence_floor": 0.001,
+    "operating_confidence": 0.25,
+    "image_size": 1280,
+    "scale_factor": 2,
+    "device": "cuda:0",
+    "max_detections": 300,
+    "batch_size": 1,
+    "numeric_precision": "float32"
+  },
+  "class_mapping": {
+    "pedestrian": "person",
+    "people": "person",
+    "bicycle": "bicycle",
+    "car": "car_or_van",
+    "van": "car_or_van",
+    "truck": "truck",
+    "bus": "bus",
+    "motor": "motorcycle"
+  },
+  "selection_evidence": {
+    "validation_run_id": "20260810T132010Z-yolo26m-visdrone-validation",
+    "validation_run_manifest_sha256": "8fcb2b844526cd0b92c9398511f20bd356312a241bfd21e17240b6ca2c86e27b",
+    "validation_map50": 0.4301,
+    "validation_map50_95": 0.2189,
+    "validation_person_nae": 0.9878,
+    "validation_road_vehicle_nae": 0.2852,
+    "fine_tuning_experiment_id": "yolo26m-okutama-finetune-20260810",
+    "fine_tuning_decision": "rejected"
+  },
+  "held_out_predictions_available_at_freeze": false,
+  "selection_reason": "The original YOLO26m VisDrone checkpoint provided the best practical validation trade-off. The person-only fine-tuned checkpoint improved person detection but caused vehicle-class forgetting and was rejected."
+}
