@@ -31,6 +31,7 @@ detections, and class counts can be stored together as one video session.
 | Reproducible evaluation command | Implemented |
 | Baseline model evaluation | Completed; quality gate failed |
 | Fine-tuning pilot | Completed; person-only checkpoint rejected |
+| Final held-out evaluation | Completed; quality gate failed |
 | Grid-based spatial counting | Planned |
 | Threshold-based alerts | Planned |
 
@@ -73,12 +74,11 @@ tests/                    Automated tests
 The reasoning behind this structure is described in our
 [architecture document](docs/architecture.md).
 
-The model-quality gate is described in the
-[evaluation protocol](docs/evaluation/evaluation_protocol.md), and the measured
-baseline decision is recorded in the
-[baseline selection](docs/evaluation/baseline_selection.md). The selected data
-sources, licences, intended uses, and known limitations are recorded in the
-[dataset card](docs/evaluation/dataset_card.md).
+Our model results are collected in the
+[evaluation results index](docs/evaluation/results_index.md). It links the
+protocol, dataset evidence, model comparisons, fine-tuning record, and final
+held-out report so that the metrics remain easy to find while we write the
+thesis.
 
 The next aerial detectors are fixed before benchmarking in the
 [candidate selection record](docs/evaluation/aerial_model_candidates.md). Their
@@ -98,8 +98,10 @@ runs one validation image without calculating benchmark metrics.
 
 The completed validation comparison and the decision that led to fine-tuning
 are recorded in the
-[aerial model decision](docs/evaluation/aerial_model_decision.md). The held-out
-test split remains unused until a final checkpoint is frozen.
+[aerial model decision](docs/evaluation/aerial_model_decision.md). The final
+checkpoint was frozen before the held-out split was opened, and the resulting
+quality-gate decision is recorded in the
+[final report](docs/evaluation/final_quality_gate.md).
 
 The completed pilot, its person-detection gain, its vehicle-class regression,
 and the decision not to promote it are recorded in the

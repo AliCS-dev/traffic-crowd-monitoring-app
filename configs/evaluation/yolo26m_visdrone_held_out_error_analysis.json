@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "analysis_name": "yolo26n-validation-error-analysis",
+  "analysis_name": "yolo26m-visdrone-held-out-error-analysis",
   "protocol_version": "1.0",
-  "dataset_role": "validation",
+  "dataset_role": "held_out_test",
   "operating_confidence": 0.25,
   "operating_iou": 0.50,
   "cases_per_error_type": 6,
-  "count_error_cases": 4,
+  "count_error_cases": 6,
   "crop_size": 640,
   "context_multiplier": 3.0,
   "output_directory": "data/evaluation/derived/error_analysis"

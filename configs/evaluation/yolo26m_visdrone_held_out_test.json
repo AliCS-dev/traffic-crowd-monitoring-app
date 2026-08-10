@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "run_name": "yolo26m-visdrone-held-out-test",
+  "protocol_version": "1.0",
+  "random_seed": 2026,
+  "dataset": {
+    "version": "1.0-draft",
+    "role": "held_out_test",
+    "manifest_path": "data/evaluation/manifest.csv"
+  },
+  "model": {
+    "name": "YOLO26m fine-tuned on VisDrone",
+    "task": "detection",
+    "weights_path": "models/candidates/yolo26m-visdrone/best.pt",
+    "source_url": "https://huggingface.co/dronefreak/visdrone-yolov26m",
+    "license_id": "AGPL-3.0",
+    "license_url": "https://huggingface.co/dronefreak/visdrone-yolov26m/blob/20879fa2d2f351d1e032bfd0a38a5a6b735b0f03/README.md",
+    "class_mapping": {
+      "pedestrian": "person",
+      "people": "person",
+      "bicycle": "bicycle",
+      "car": "car_or_van",
+      "van": "car_or_van",
+      "truck": "truck",
+      "bus": "bus",
+      "motor": "motorcycle"
+    }
+  },
+  "inference": {
+    "confidence_floor": 0.001,
+    "operating_confidence": 0.25,
+    "image_size": 1280,
+    "scale_factor": 2,
+    "device": "cuda:0",
+    "max_detections": 300,
+    "batch_size": 1,
+    "numeric_precision": "float32"
+  },
+  "metrics": {
+    "operating_iou": 0.5,
+    "low_support_threshold": 20
+  },
+  "timing": {
+    "warmup_frames": 20,
+    "measured_frames": 100,
+    "repetitions": 3
+  },
+  "output_directory": "data/evaluation/derived/runs"
+}

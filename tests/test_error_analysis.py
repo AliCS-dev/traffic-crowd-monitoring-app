@@ -36,6 +36,7 @@ ANALYSIS_CONFIG_PATH = Path("configs/evaluation/yolo26n_error_analysis.json")
 def test_tracked_error_analysis_configuration_is_strict():
     config = load_error_analysis_config(ANALYSIS_CONFIG_PATH)
 
+    assert config.dataset_role == "validation"
     assert config.operating_confidence == 0.25
     assert config.operating_iou == 0.5
     assert config.cases_per_error_type == 6
@@ -86,7 +87,7 @@ def test_count_only_errors_remain_separate_from_box_matching(tmp_path):
     assert errors[0].normalized_absolute_error == pytest.approx(0.99)
 
 
-def test_complete_analysis_matches_metrics_and_refuses_held_out_data(tmp_path):
+def test_complete_analysis_matches_metrics_and_enforces_configured_role(tmp_path):
     dataset, predictions = create_fixture(tmp_path)
     source = create_source(predictions)
     config = load_error_analysis_config(ANALYSIS_CONFIG_PATH)
@@ -98,8 +99,35 @@ def test_complete_analysis_matches_metrics_and_refuses_held_out_data(tmp_path):
     assert result.selected_count_asset_ids == ("crowd-scene",)
 
     held_out = replace(dataset, role="held_out_test")
-    with pytest.raises(ErrorAnalysisError, match="validation data only"):
+    with pytest.raises(ErrorAnalysisError, match="must use the same role"):
         create_error_analysis_result(held_out, source, config)
+
+
+def test_complete_analysis_accepts_explicit_held_out_configuration(tmp_path):
+    dataset, predictions = create_fixture(tmp_path)
+    held_out_dataset = replace(
+        dataset,
+        role="held_out_test",
+        assets=tuple(
+            replace(asset, dataset_role="held_out_test") for asset in dataset.assets
+        ),
+    )
+    source = create_source(predictions)
+    held_out_source = replace(
+        source,
+        config=replace(
+            source.config,
+            dataset=replace(source.config.dataset, role="held_out_test"),
+        ),
+    )
+    config = replace(
+        load_error_analysis_config(ANALYSIS_CONFIG_PATH),
+        dataset_role="held_out_test",
+    )
+
+    result = create_error_analysis_result(held_out_dataset, held_out_source, config)
+
+    assert result.dataset_role == "held_out_test"
 
 
 def test_error_analysis_saves_images_report_and_checksums(tmp_path):

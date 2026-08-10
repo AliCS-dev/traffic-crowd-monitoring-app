@@ -1,0 +1,493 @@
+{
+  "collection_breakdown": [
+    {
+      "collection_id": "dlr_acd",
+      "counts": [
+        {
+          "bias": -6271.714285714285,
+          "class_name": "person",
+          "examples": 14,
+          "ground_truth_total": 88140,
+          "mean_absolute_error": 6271.714285714285,
+          "normalized_absolute_error": 0.9961878829135467,
+          "predicted_total": 336
+        }
+      ],
+      "detection": null,
+      "images": 14,
+      "source_groups": 1
+    },
+    {
+      "collection_id": "okutama_action",
+      "counts": [
+        {
+          "bias": -0.78,
+          "class_name": "person",
+          "examples": 50,
+          "ground_truth_total": 247,
+          "mean_absolute_error": 1.5,
+          "normalized_absolute_error": 0.30364372469635625,
+          "predicted_total": 208
+        }
+      ],
+      "detection": {
+        "ap_large": null,
+        "ap_medium": 0.24117509183501498,
+        "ap_small": 0.16716355096430088,
+        "evaluated_images": 50,
+        "ground_truth_instances": 247,
+        "macro_precision": 0.6586538461538461,
+        "macro_recall": 0.5546558704453441,
+        "map50": 0.5775519189072919,
+        "map50_95": 0.18981007792335786
+      },
+      "images": 50,
+      "source_groups": 5
+    },
+    {
+      "collection_id": "traffic_uav",
+      "counts": [
+        {
+          "bias": 0.95,
+          "class_name": "car_or_van",
+          "examples": 60,
+          "ground_truth_total": 303,
+          "mean_absolute_error": 1.0166666666666666,
+          "normalized_absolute_error": 0.20132013201320131,
+          "predicted_total": 360
+        },
+        {
+          "bias": 0.95,
+          "class_name": "road_vehicle_total",
+          "examples": 60,
+          "ground_truth_total": 303,
+          "mean_absolute_error": 1.0166666666666666,
+          "normalized_absolute_error": 0.20132013201320131,
+          "predicted_total": 360
+        }
+      ],
+      "detection": {
+        "ap_large": 0.7754134675421804,
+        "ap_medium": 0.5753545142145499,
+        "ap_small": 0.7504950495049505,
+        "evaluated_images": 60,
+        "ground_truth_instances": 303,
+        "macro_precision": 0.8166666666666667,
+        "macro_recall": 0.9702970297029703,
+        "map50": 0.9705519907053173,
+        "map50_95": 0.5826903990637037
+      },
+      "images": 60,
+      "source_groups": 1
+    },
+    {
+      "collection_id": "wikimedia",
+      "counts": [
+        {
+          "bias": 0.16666666666666666,
+          "class_name": "bicycle",
+          "examples": 6,
+          "ground_truth_total": 0,
+          "mean_absolute_error": 0.16666666666666666,
+          "normalized_absolute_error": null,
+          "predicted_total": 1
+        },
+        {
+          "bias": 3.1666666666666665,
+          "class_name": "motorcycle",
+          "examples": 6,
+          "ground_truth_total": 0,
+          "mean_absolute_error": 3.1666666666666665,
+          "normalized_absolute_error": null,
+          "predicted_total": 19
+        },
+        {
+          "bias": -46.166666666666664,
+          "class_name": "car_or_van",
+          "examples": 6,
+          "ground_truth_total": 1284,
+          "mean_absolute_error": 46.166666666666664,
+          "normalized_absolute_error": 0.21573208722741433,
+          "predicted_total": 1007
+        },
+        {
+          "bias": 0.16666666666666666,
+          "class_name": "bus",
+          "examples": 6,
+          "ground_truth_total": 4,
+          "mean_absolute_error": 0.5,
+          "normalized_absolute_error": 0.75,
+          "predicted_total": 5
+        },
+        {
+          "bias": -4.5,
+          "class_name": "truck",
+          "examples": 6,
+          "ground_truth_total": 35,
+          "mean_absolute_error": 4.5,
+          "normalized_absolute_error": 0.7714285714285715,
+          "predicted_total": 8
+        },
+        {
+          "bias": -47.166666666666664,
+          "class_name": "road_vehicle_total",
+          "examples": 6,
+          "ground_truth_total": 1323,
+          "mean_absolute_error": 47.166666666666664,
+          "normalized_absolute_error": 0.21390778533635676,
+          "predicted_total": 1040
+        }
+      ],
+      "detection": {
+        "ap_large": 0.0,
+        "ap_medium": 0.18103135313531352,
+        "ap_small": 0.14180218432378486,
+        "evaluated_images": 6,
+        "ground_truth_instances": 1323,
+        "macro_precision": 0.5731794107911288,
+        "macro_recall": 0.4269025367156208,
+        "map50": 0.3865404193335995,
+        "map50_95": 0.14447858402603658
+      },
+      "images": 6,
+      "source_groups": 1
+    }
+  ],
+  "held_out_metrics": {
+    "counts": [
+      {
+        "bias": -1372.546875,
+        "class_name": "person",
+        "examples": 64,
+        "ground_truth_total": 88387,
+        "low_support": false,
+        "mean_absolute_error": 1373.109375,
+        "normalized_absolute_error": 0.9942525484516954,
+        "predicted_total": 544
+      },
+      {
+        "bias": 0.16666666666666666,
+        "class_name": "bicycle",
+        "examples": 6,
+        "ground_truth_total": 0,
+        "low_support": true,
+        "mean_absolute_error": 0.16666666666666666,
+        "normalized_absolute_error": null,
+        "predicted_total": 1
+      },
+      {
+        "bias": 3.1666666666666665,
+        "class_name": "motorcycle",
+        "examples": 6,
+        "ground_truth_total": 0,
+        "low_support": true,
+        "mean_absolute_error": 3.1666666666666665,
+        "normalized_absolute_error": null,
+        "predicted_total": 19
+      },
+      {
+        "bias": -3.3333333333333335,
+        "class_name": "car_or_van",
+        "examples": 66,
+        "ground_truth_total": 1587,
+        "low_support": false,
+        "mean_absolute_error": 5.121212121212121,
+        "normalized_absolute_error": 0.21298046628859482,
+        "predicted_total": 1367
+      },
+      {
+        "bias": 0.16666666666666666,
+        "class_name": "bus",
+        "examples": 6,
+        "ground_truth_total": 4,
+        "low_support": true,
+        "mean_absolute_error": 0.5,
+        "normalized_absolute_error": 0.75,
+        "predicted_total": 5
+      },
+      {
+        "bias": -4.5,
+        "class_name": "truck",
+        "examples": 6,
+        "ground_truth_total": 35,
+        "low_support": false,
+        "mean_absolute_error": 4.5,
+        "normalized_absolute_error": 0.7714285714285715,
+        "predicted_total": 8
+      },
+      {
+        "bias": -3.4242424242424243,
+        "class_name": "road_vehicle_total",
+        "examples": 66,
+        "ground_truth_total": 1626,
+        "low_support": false,
+        "mean_absolute_error": 5.212121212121212,
+        "normalized_absolute_error": 0.2115621156211562,
+        "predicted_total": 1400
+      }
+    ],
+    "detection": {
+      "ap_large": 0.37871793993309105,
+      "ap_medium": 0.28642375797988784,
+      "ap_small": 0.1482290094975165,
+      "evaluated_images": 116,
+      "ground_truth_instances": 1873,
+      "macro_precision": 0.6157561828259523,
+      "macro_recall": 0.48664195842959146,
+      "map50": 0.4730651424061755,
+      "map50_95": 0.1815756155187156,
+      "per_class": [
+        {
+          "ap50": 0.5775519189072919,
+          "ap50_95": 0.18981007792335786,
+          "class_name": "person",
+          "false_negatives": 110,
+          "false_positives": 71,
+          "ground_truth_instances": 247,
+          "low_support": false,
+          "precision": 0.6586538461538461,
+          "recall": 0.5546558704453441,
+          "true_positives": 137
+        },
+        {
+          "ap50": 0.4302199762860575,
+          "ap50_95": 0.18537794188020967,
+          "class_name": "car_or_van",
+          "false_negatives": 795,
+          "false_positives": 575,
+          "ground_truth_instances": 1587,
+          "low_support": false,
+          "precision": 0.5793708851499634,
+          "recall": 0.499054820415879,
+          "true_positives": 792
+        },
+        {
+          "ap50": 0.6958981612446957,
+          "ap50_95": 0.2716265912305516,
+          "class_name": "bus",
+          "false_negatives": 1,
+          "false_positives": 2,
+          "ground_truth_instances": 4,
+          "low_support": true,
+          "precision": 0.6,
+          "recall": 0.75,
+          "true_positives": 3
+        },
+        {
+          "ap50": 0.18859051318665704,
+          "ap50_95": 0.07948785104074317,
+          "class_name": "truck",
+          "false_negatives": 30,
+          "false_positives": 3,
+          "ground_truth_instances": 35,
+          "low_support": false,
+          "precision": 0.625,
+          "recall": 0.14285714285714285,
+          "true_positives": 5
+        }
+      ]
+    },
+    "run_id": "20260810T135010Z-yolo26m-visdrone-held-out-test",
+    "schema_version": 1
+  },
+  "provenance": {
+    "created_at_utc": "2026-08-10T13:50:10Z",
+    "dataset": {
+      "annotation_files": [
+        {
+          "path": "data/evaluation/derived/annotations/dlr_person_counts.csv",
+          "sha256": "91c0ad43fd8923bad2e5dc04bb4c388ec726d758946836010bdb955457c14070"
+        },
+        {
+          "path": "data/evaluation/derived/annotations/instances_held_out_test.json",
+          "sha256": "b4ddf1f4e28865083ded3e28c397b8d7473c714feccfd94b5a9379138029c24b"
+        }
+      ],
+      "manifest_path": "data/evaluation/manifest.csv",
+      "manifest_sha256": "8dabfe690a0aa162da3172bb46842216d4eac5ef7f73a6e6ba5ad48a2892f37d",
+      "role": "held_out_test",
+      "version": "1.0-draft"
+    },
+    "dependencies": {
+      "Pillow": "12.2.0",
+      "numpy": "2.2.6",
+      "opencv-python": "4.13.0.92",
+      "psycopg": "3.3.4",
+      "pycocotools": "2.0.11",
+      "python-dotenv": "1.2.2",
+      "torch": "2.12.0",
+      "ultralytics": "8.4.51"
+    },
+    "git": {
+      "commit": "d36a581aea1208b32a3c2a0b9a59192326b2bf25",
+      "dirty": false
+    },
+    "hardware": {
+      "gpu": {
+        "cuda_version": "13.0",
+        "cudnn_version": 92000,
+        "device": "cuda:0",
+        "driver_version": "610.88",
+        "name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+        "performance_state": "P8",
+        "power_draw_watts": 5.61,
+        "power_limit_watts": null,
+        "total_memory_bytes": 8546484224
+      },
+      "logical_cpu_count": 16,
+      "machine": "x86_64",
+      "processor": "x86_64",
+      "system_memory_bytes": 16613818368
+    },
+    "model": {
+      "name": "YOLO26m fine-tuned on VisDrone",
+      "weights_path": "models/candidates/yolo26m-visdrone/best.pt",
+      "weights_sha256": "e57204b8d77b5b22ea9253cbd5664b707623aeb7c19dbaa9034fe5a60bed6571",
+      "weights_size_bytes": 44055513
+    },
+    "operating_system": {
+      "release": "6.6.87.2-microsoft-standard-WSL2",
+      "system": "Linux",
+      "version": "#1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025"
+    },
+    "python": {
+      "implementation": "CPython",
+      "version": "3.10.12"
+    }
+  },
+  "quality_gate": {
+    "metrics": [
+      {
+        "conditional_threshold": 0.6,
+        "direction": "higher_is_better",
+        "metric": "macro_precision",
+        "pass_threshold": 0.7,
+        "status": "conditional",
+        "value": 0.6157561828259523
+      },
+      {
+        "conditional_threshold": 0.5,
+        "direction": "higher_is_better",
+        "metric": "macro_recall",
+        "pass_threshold": 0.6,
+        "status": "fail",
+        "value": 0.48664195842959146
+      },
+      {
+        "conditional_threshold": 0.5,
+        "direction": "higher_is_better",
+        "metric": "map50",
+        "pass_threshold": 0.6,
+        "status": "fail",
+        "value": 0.4730651424061755
+      },
+      {
+        "conditional_threshold": 0.25,
+        "direction": "higher_is_better",
+        "metric": "map50_95",
+        "pass_threshold": 0.35,
+        "status": "fail",
+        "value": 0.1815756155187156
+      },
+      {
+        "conditional_threshold": 0.35,
+        "direction": "lower_is_better",
+        "metric": "person_nae",
+        "pass_threshold": 0.25,
+        "status": "fail",
+        "value": 0.9942525484516954
+      },
+      {
+        "conditional_threshold": 0.35,
+        "direction": "lower_is_better",
+        "metric": "road_vehicle_total_nae",
+        "pass_threshold": 0.25,
+        "status": "pass",
+        "value": 0.2115621156211562
+      },
+      {
+        "conditional_threshold": 1.0,
+        "direction": "lower_is_better",
+        "metric": "median_in_memory_latency_seconds",
+        "pass_threshold": 0.5,
+        "status": "pass",
+        "value": 0.07104194899989125
+      }
+    ],
+    "overall_status": "fail"
+  },
+  "runtime": {
+    "measured_frames_per_repetition": 100,
+    "repetitions": 3,
+    "summary": {
+      "conversion": {
+        "median_seconds": 0.03630202099975577,
+        "p95_seconds": 0.08499910344971796,
+        "total_seconds": 12.32004731300367
+      },
+      "end_to_end": {
+        "median_seconds": 0.07885350399965319,
+        "p95_seconds": 0.12754258165055038,
+        "total_seconds": 25.923713494002186
+      },
+      "end_to_end_throughput_fps": 11.572416122767644,
+      "in_memory": {
+        "median_seconds": 0.07104194899989125,
+        "p95_seconds": 0.12051100274973123,
+        "total_seconds": 22.790525273003823
+      },
+      "in_memory_throughput_fps": 13.163364881078916,
+      "inference": {
+        "median_seconds": 0.030346821999955864,
+        "p95_seconds": 0.03495919749991572,
+        "total_seconds": 9.212673059002555
+      },
+      "loading": {
+        "median_seconds": 0.015412366500186181,
+        "p95_seconds": 0.016551783149793664,
+        "total_seconds": 3.1331882209983632
+      },
+      "peak_gpu_memory_bytes": 307683328,
+      "preprocessing": {
+        "median_seconds": 0.004150871500087305,
+        "p95_seconds": 0.004518639450270712,
+        "total_seconds": 1.2578049009975985
+      },
+      "sample_count": 300
+    },
+    "warmup_frames": 20
+  },
+  "schema_version": 1,
+  "source_group_bootstrap_95": {
+    "macro_precision": {
+      "bootstrap_iterations": 2000,
+      "lower_95": 0.5831103645449595,
+      "seed": 2026,
+      "source_groups": 7,
+      "upper_95": 0.7528241824501666
+    },
+    "macro_recall": {
+      "bootstrap_iterations": 2000,
+      "lower_95": 0.4376187630018319,
+      "seed": 2026,
+      "source_groups": 7,
+      "upper_95": 0.7954500223891736
+    },
+    "person_nae": {
+      "bootstrap_iterations": 2000,
+      "lower_95": 0.21865889212827988,
+      "seed": 2026,
+      "source_groups": 6,
+      "upper_95": 0.9958948383072823
+    },
+    "road_vehicle_total_nae": {
+      "bootstrap_iterations": 2000,
+      "lower_95": 0.20132013201320131,
+      "seed": 2026,
+      "source_groups": 2,
+      "upper_95": 0.21390778533635676
+    }
+  },
+  "source_manifest_sha256": "4cf8cea0ec31ef520b128a0b02157c0cfd9d4dbff8e25ed8b333e86434cb9c32",
+  "source_run_id": "20260810T135010Z-yolo26m-visdrone-held-out-test"
+}
