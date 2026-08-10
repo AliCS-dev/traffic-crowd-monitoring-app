@@ -227,9 +227,7 @@ def parse_error_analysis_config(values: dict[str, Any]) -> ErrorAnalysisConfig:
     if not isinstance(protocol_version, str) or not protocol_version:
         raise ErrorAnalysisError("protocol_version must be a non-empty string")
     if dataset_role not in {"validation", "held_out_test"}:
-        raise ErrorAnalysisError(
-            "dataset_role must be validation or held_out_test"
-        )
+        raise ErrorAnalysisError("dataset_role must be validation or held_out_test")
     return ErrorAnalysisConfig(
         schema_version=1,
         analysis_name=name,

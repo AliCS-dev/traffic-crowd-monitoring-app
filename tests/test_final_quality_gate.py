@@ -24,9 +24,7 @@ from evaluation.final_quality_gate import (
 
 CONFIG_PATH = Path("configs/evaluation/final_quality_gate_report.json")
 FINAL_EVIDENCE_PATH = Path("data/evaluation/final_quality_gate.json")
-HELD_OUT_CONFIG_PATH = Path(
-    "configs/evaluation/yolo26m_visdrone_held_out_test.json"
-)
+HELD_OUT_CONFIG_PATH = Path("configs/evaluation/yolo26m_visdrone_held_out_test.json")
 
 
 def test_tracked_final_report_configuration_is_strict(tmp_path):
@@ -78,9 +76,7 @@ def test_tracked_final_evidence_matches_the_frozen_source_run():
 def test_source_group_intervals_are_reproducible():
     dataset, source = create_grouped_fixture()
 
-    first = calculate_source_group_intervals(
-        dataset, source, iterations=100, seed=2026
-    )
+    first = calculate_source_group_intervals(dataset, source, iterations=100, seed=2026)
     second = calculate_source_group_intervals(
         dataset, source, iterations=100, seed=2026
     )
@@ -94,44 +90,44 @@ def test_source_group_intervals_are_reproducible():
 def test_final_evidence_plots_and_manifest_are_saved(tmp_path):
     metrics = {
         "detection": {
-                "per_class": [
-                    {
-                        "class_name": "person",
-                        "ground_truth_instances": 10,
-                        "precision": 0.6,
-                        "recall": 0.4,
-                        "ap50": 0.5,
-                        "ap50_95": 0.3,
-                    },
-                    {
-                        "class_name": "car_or_van",
-                        "ground_truth_instances": 20,
-                        "precision": 0.9,
-                        "recall": 0.8,
-                        "ap50": 0.7,
-                        "ap50_95": 0.5,
-                    },
-                ]
-            },
-            "counts": [
+            "per_class": [
                 {
                     "class_name": "person",
-                    "examples": 2,
-                    "ground_truth_total": 10,
-                    "predicted_total": 4,
-                    "mean_absolute_error": 3.0,
-                    "normalized_absolute_error": 0.6,
-                    "bias": -3.0,
+                    "ground_truth_instances": 10,
+                    "precision": 0.6,
+                    "recall": 0.4,
+                    "ap50": 0.5,
+                    "ap50_95": 0.3,
                 },
                 {
-                    "class_name": "road_vehicle_total",
-                    "examples": 2,
-                    "ground_truth_total": 20,
-                    "predicted_total": 16,
-                    "mean_absolute_error": 2.0,
-                    "normalized_absolute_error": 0.2,
-                    "bias": -2.0,
+                    "class_name": "car_or_van",
+                    "ground_truth_instances": 20,
+                    "precision": 0.9,
+                    "recall": 0.8,
+                    "ap50": 0.7,
+                    "ap50_95": 0.5,
                 },
+            ]
+        },
+        "counts": [
+            {
+                "class_name": "person",
+                "examples": 2,
+                "ground_truth_total": 10,
+                "predicted_total": 4,
+                "mean_absolute_error": 3.0,
+                "normalized_absolute_error": 0.6,
+                "bias": -3.0,
+            },
+            {
+                "class_name": "road_vehicle_total",
+                "examples": 2,
+                "ground_truth_total": 20,
+                "predicted_total": 16,
+                "mean_absolute_error": 2.0,
+                "normalized_absolute_error": 0.2,
+                "bias": -2.0,
+            },
         ],
     }
     evidence = {

@@ -61,9 +61,7 @@ def main() -> None:
     evidence = build_final_evidence(
         dataset, source, metrics, timing, provenance, config
     )
-    output_directory = (
-        repository_root / config.output_directory / config.report_name
-    )
+    output_directory = repository_root / config.output_directory / config.report_name
     manifest = save_final_evidence(output_directory, evidence, metrics)
     print(f"Final quality-gate evidence saved to {output_directory}")
     print(f"Artifact manifest: {manifest}")

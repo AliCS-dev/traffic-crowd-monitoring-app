@@ -488,9 +488,7 @@ def build_final_summary(evidence: dict[str, Any]) -> str:
         ]
     )
     for collection in evidence["collection_breakdown"]:
-        collection_counts = {
-            row["class_name"]: row for row in collection["counts"]
-        }
+        collection_counts = {row["class_name"]: row for row in collection["counts"]}
         collection_detection = collection["detection"] or {}
         person = collection_counts.get("person", {})
         vehicle = collection_counts.get(ROAD_VEHICLE_TOTAL, {})
