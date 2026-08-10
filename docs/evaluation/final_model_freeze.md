@@ -46,3 +46,7 @@ required by protocol version 1.0.
 The final report will state the measured outcome even if the model fails. A
 quality-gate failure is evidence about the limits of the application, not a
 reason to alter the experiment after opening the held-out results.
+
+The frozen run has now been completed. Its result is recorded in the
+[final quality-gate report](final_quality_gate.md); this page remains the
+pre-test selection record.

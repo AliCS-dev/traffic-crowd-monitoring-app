@@ -55,6 +55,7 @@ class ErrorAnalysisConfig:
     schema_version: int
     analysis_name: str
     protocol_version: str
+    dataset_role: str
     operating_confidence: float
     operating_iou: float
     cases_per_error_type: int
@@ -196,6 +197,7 @@ def parse_error_analysis_config(values: dict[str, Any]) -> ErrorAnalysisConfig:
         "schema_version",
         "analysis_name",
         "protocol_version",
+        "dataset_role",
         "operating_confidence",
         "operating_iou",
         "cases_per_error_type",
@@ -219,14 +221,20 @@ def parse_error_analysis_config(values: dict[str, Any]) -> ErrorAnalysisConfig:
         raise ErrorAnalysisError("Error-analysis schema_version must be 1")
     name = values["analysis_name"]
     protocol_version = values["protocol_version"]
+    dataset_role = values["dataset_role"]
     if not isinstance(name, str) or not name:
         raise ErrorAnalysisError("analysis_name must be a non-empty string")
     if not isinstance(protocol_version, str) or not protocol_version:
         raise ErrorAnalysisError("protocol_version must be a non-empty string")
+    if dataset_role not in {"validation", "held_out_test"}:
+        raise ErrorAnalysisError(
+            "dataset_role must be validation or held_out_test"
+        )
     return ErrorAnalysisConfig(
         schema_version=1,
         analysis_name=name,
         protocol_version=protocol_version,
+        dataset_role=dataset_role,
         operating_confidence=_probability(
             values["operating_confidence"], "operating_confidence"
         ),
@@ -705,8 +713,13 @@ def create_error_analysis_result(
     source: SourceEvaluationRun,
     config: ErrorAnalysisConfig,
 ) -> ErrorAnalysisResult:
-    if dataset.role != "validation" or source.config.dataset.role != "validation":
-        raise ErrorAnalysisError("Qualitative tuning may use validation data only")
+    if (
+        dataset.role != config.dataset_role
+        or source.config.dataset.role != config.dataset_role
+    ):
+        raise ErrorAnalysisError(
+            "Analysis config, loaded dataset, and source run must use the same role"
+        )
     if source.config.protocol_version != config.protocol_version:
         raise ErrorAnalysisError("Analysis and source protocol versions do not match")
     if config.operating_confidence < source.config.inference.confidence_floor:
@@ -947,9 +960,14 @@ def build_error_analysis_report(
             "Count-only annotations contain a total person count but no person "
             "locations. They demonstrate undercounting at scene level and cannot "
             "identify spatial false-negative boxes.",
-            "No held-out data or new model inference is used in this analysis.",
+            "This analysis reuses saved predictions and does not run model inference.",
         ]
     )
+    if result.dataset_role == "held_out_test":
+        lines.append(
+            "Held-out findings are descriptive only and must not be used to tune "
+            "the frozen model or inference settings."
+        )
     if contact_sheet_paths:
         lines.extend(["", "## Contact Sheets", ""])
         for path in contact_sheet_paths:
