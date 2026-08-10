@@ -176,8 +176,10 @@ positives, and 936 metric false negatives. Its representative cases showed:
 - almost complete undercounting in the densest DLR crowd images.
 
 The analysis reused the frozen run's predictions and did not perform inference
-or tuning. Its manifest SHA-256 is
-`ee40c29c48c7aaf4614cc0dccda2732cd7561f1d3403c9d89ff2f4427e9cfb83`.
+or tuning. The clean analysis record is
+`20260810T140714Z-yolo26m-visdrone-held-out-error-analysis`, and its manifest
+SHA-256 is
+`55cb798b30e95751ebfd47041cbd7e00cb3ad634513e29a8b2a611305b6147c4`.
 
 ## Reproducing The Evidence
 
