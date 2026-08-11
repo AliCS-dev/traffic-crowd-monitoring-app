@@ -110,6 +110,22 @@ def print_grid_summary(grid_result: GridCountResult) -> None:
         print(f"Row {cell.row_index + 1}, column {cell.column_index + 1}: {counts}")
 
 
+def print_database_storage_summary(stored_result) -> None:
+    print("Detection results saved to database.")
+    print(f"Monitoring session ID: {stored_result['session_id']}")
+    print(f"Processed frame ID: {stored_result['processed_frame_id']}")
+    print(f"Stored detections: {stored_result['detection_count']}")
+    print(
+        f"Stored object count summaries: {stored_result['object_count_summary_count']}"
+    )
+    if stored_result["grid_cell_count"]:
+        print(f"Stored grid cells: {stored_result['grid_cell_count']}")
+        print(
+            "Stored grid object count summaries: "
+            f"{stored_result['grid_object_count_summary_count']}"
+        )
+
+
 def main():
     args = parse_arguments()
 
@@ -144,6 +160,7 @@ def main():
     print("Object detection completed.")
     print_object_summary(object_counts)
 
+    grid_result = None
     if args.grid:
         grid_rows, grid_columns = args.grid
         grid_result = count_detections_by_grid(
@@ -165,17 +182,11 @@ def main():
             image_height=processed_height,
             detection_records=detection_records,
             object_count_summary_records=object_count_summary_records,
+            grid_count_result=grid_result,
             session_name=args.session_name,
         )
 
-        print("Detection results saved to database.")
-        print(f"Monitoring session ID: {stored_result['session_id']}")
-        print(f"Processed frame ID: {stored_result['processed_frame_id']}")
-        print(f"Stored detections: {stored_result['detection_count']}")
-        print(
-            "Stored object count summaries: "
-            f"{stored_result['object_count_summary_count']}"
-        )
+        print_database_storage_summary(stored_result)
 
 
 if __name__ == "__main__":

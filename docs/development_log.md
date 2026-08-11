@@ -310,3 +310,17 @@ The unit tests establish that the spatial assignment code is correct for known
 detections. They do not override the detector's failed quality gate, and the
 result is not physical crowd density. Database persistence, overlays, and alert
 rules remain separate work.
+
+### Issue #63: Grid-Cell Database Persistence
+
+We connected image grid results to the existing PostgreSQL schema without adding
+new tables. A stored grid now creates one `grid_cells` row for every configured
+region, including empty regions, and links each non-zero per-class count through
+`object_count_summaries.grid_cell_id`. Complete-frame summaries keep a null grid
+reference, so the two aggregation levels remain easy to distinguish.
+
+Grid records use the same transaction as the session, source, processed frame,
+detections, and complete-frame counts. A failure therefore rolls back the whole
+image result. Repository tests cover mapping and rollback, while the PostgreSQL
+CI job creates the schema, stores a controlled grid, queries the real foreign-key
+relationships, and removes its temporary session.

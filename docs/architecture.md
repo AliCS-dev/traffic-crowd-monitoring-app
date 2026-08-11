@@ -37,7 +37,8 @@ Optional PostgreSQL transaction
   - input source
   - processed frame
   - detection results
-  - object count summaries
+  - complete-frame object count summaries
+  - optional grid cells and per-cell summaries
 ```
 
 Video input currently has its own smaller flow:
@@ -98,8 +99,10 @@ today and leaves room for a future interface to reuse the same logic.
 When we use `--save-to-db`, we store the records for one image inside a single
 database transaction. Video storage follows the same rule: one transaction
 contains the session, source, every sampled frame, and all related detections
-and summaries. If one insert fails, the transaction is rolled back, so we do not
-keep an incomplete processing run.
+and summaries. An image grid joins the same transaction when requested. Every
+cell is stored, while only non-zero per-class counts create summary rows. If one
+insert fails, the transaction is rolled back, so we do not keep an incomplete
+processing run.
 
 We use parameterised SQL throughout the repository. Values are passed separately
 from the SQL statements, which keeps the queries clear and avoids building SQL
@@ -132,11 +135,12 @@ and timestamp.
 
 The evaluation protocol, labelled data, model comparison, fine-tuning pilot,
 and held-out quality gate are complete. The grid service now assigns detected
-object centres to image cells independently of YOLO and PostgreSQL. Our next
+object centres to image cells independently of YOLO. Image runs can now persist
+those cells and summaries through the existing repository. Our next
 planned extensions are:
 
-1. decide how per-cell summaries should be stored using the existing schema;
-2. evaluate grid behavior separately from detector accuracy;
+1. evaluate grid behavior separately from detector accuracy;
+2. connect grid processing to sampled video frames when the application needs it;
 3. generate threshold-based alerts only after their input limitations are
    explicit;
 4. add a user-facing interface and result views.
@@ -171,8 +175,8 @@ below, while the outer image edges remain part of the final row and column.
   application.
 - We do not yet store model identity, inference settings, or processing time with
   a database result.
-- Grid counts are printed for image runs but are not drawn on output images or
-  stored in PostgreSQL yet.
+- Grid counts can be printed and stored for image runs, but they are not drawn on
+  output images or connected to sampled video frames yet.
 - Our migration script currently applies only the first migration file.
 - Repository tests cover transaction behavior with controlled test doubles, but
   CI does not yet run stored-result queries against PostgreSQL.

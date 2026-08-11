@@ -6,6 +6,7 @@ from app.database.connection import open_database_connection
 from app.services.detection_service import build_object_count_summary_records
 
 if TYPE_CHECKING:
+    from app.services.grid_counting_service import GridCountResult
     from app.services.video_detection_service import VideoFrameDetectionResult
 
 
@@ -16,9 +17,14 @@ def save_image_detection_results(
     detection_records,
     object_count_summary_records=None,
     session_name=None,
+    grid_count_result: "GridCountResult | None" = None,
 ):
     image_path = Path(image_path)
     object_count_summary_records = object_count_summary_records or []
+    _validate_grid_image_dimensions(grid_count_result, image_width, image_height)
+
+    grid_cell_count = 0
+    grid_object_count_summary_count = 0
 
     with open_database_connection() as connection:
         with connection.cursor() as cursor:
@@ -44,6 +50,15 @@ def save_image_detection_results(
                 processed_frame_id,
                 object_count_summary_records,
             )
+            if grid_count_result is not None:
+                (
+                    grid_cell_count,
+                    grid_object_count_summary_count,
+                ) = create_grid_count_results(
+                    cursor,
+                    processed_frame_id,
+                    grid_count_result,
+                )
             mark_monitoring_session_completed(cursor, session_id)
 
     return {
@@ -52,6 +67,8 @@ def save_image_detection_results(
         "processed_frame_id": processed_frame_id,
         "detection_count": len(detection_records),
         "object_count_summary_count": len(object_count_summary_records),
+        "grid_cell_count": grid_cell_count,
+        "grid_object_count_summary_count": grid_object_count_summary_count,
     }
 
 
@@ -240,11 +257,13 @@ def create_object_count_summaries(
         """
         INSERT INTO object_count_summaries (
             processed_frame_id,
+            grid_cell_id,
             object_class,
             object_count
         )
         VALUES (
             %(processed_frame_id)s,
+            %(grid_cell_id)s,
             %(object_class)s,
             %(object_count)s
         );
@@ -252,11 +271,75 @@ def create_object_count_summaries(
         [
             {
                 "processed_frame_id": processed_frame_id,
+                "grid_cell_id": object_count_summary_record.get("grid_cell_id"),
                 **object_count_summary_record,
             }
             for object_count_summary_record in object_count_summary_records
         ],
     )
+
+
+def create_grid_count_results(cursor, processed_frame_id, grid_count_result):
+    summary_records = []
+
+    for cell in grid_count_result.cells:
+        grid_cell_id = create_grid_cell(cursor, processed_frame_id, cell)
+        summary_records.extend(
+            {
+                "grid_cell_id": grid_cell_id,
+                "object_class": object_class,
+                "object_count": object_count,
+            }
+            for object_class, object_count in cell.object_counts.items()
+            if object_count > 0
+        )
+
+    create_object_count_summaries(
+        cursor,
+        processed_frame_id,
+        summary_records,
+    )
+    return len(grid_count_result.cells), len(summary_records)
+
+
+def create_grid_cell(cursor, processed_frame_id, cell):
+    cursor.execute(
+        """
+        INSERT INTO grid_cells (
+            processed_frame_id,
+            row_index,
+            column_index,
+            x_min,
+            y_min,
+            x_max,
+            y_max
+        )
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        RETURNING id;
+        """,
+        (
+            processed_frame_id,
+            cell.row_index,
+            cell.column_index,
+            cell.x_min,
+            cell.y_min,
+            cell.x_max,
+            cell.y_max,
+        ),
+    )
+    return cursor.fetchone()[0]
+
+
+def _validate_grid_image_dimensions(grid_count_result, image_width, image_height):
+    if grid_count_result is None:
+        return
+    if (
+        grid_count_result.image_width != image_width
+        or grid_count_result.image_height != image_height
+    ):
+        raise ValueError(
+            "Grid dimensions must match the dimensions of the processed image."
+        )
 
 
 def mark_monitoring_session_completed(cursor, session_id):
