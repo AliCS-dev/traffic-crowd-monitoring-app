@@ -10,6 +10,8 @@ also open video files, read their metadata, and sample frames at controlled time
 intervals. Sampled frames can pass through the same preprocessing and detection
 logic while the model is reused across frames. The resulting frame metadata,
 detections, and class counts can be stored together as one video session.
+For image runs, we can also divide the processed image into a configurable grid
+and report class counts for each occupied cell.
 
 ## Where the Project Stands
 
@@ -32,7 +34,7 @@ detections, and class counts can be stored together as one video session.
 | Baseline model evaluation | Completed; quality gate failed |
 | Fine-tuning pilot | Completed; person-only checkpoint rejected |
 | Final held-out evaluation | Completed; quality gate failed |
-| Grid-based spatial counting | Planned |
+| Grid-based spatial counting | Implemented as an experimental component |
 | Threshold-based alerts | Planned |
 
 The current detector gives us a measured starting point, but it is not reliable
@@ -172,6 +174,27 @@ The complete list of command-line options is available with:
 ```bash
 .venv/bin/python -m app.main --help
 ```
+
+## Counting Objects In Grid Cells
+
+We can divide the processed image into a grid and count detections according to
+the centre of each bounding box. For example, this command uses three rows and
+four columns:
+
+```bash
+.venv/bin/python -m app.main \
+  --image data/input/example.jpg \
+  --grid 3 4
+```
+
+The terminal summary reports only occupied cells. The grid service itself
+returns every cell, including empty cells, in stable row-major order so that a
+later interface can render a complete grid without rebuilding it.
+
+Grid counts are relative image-region counts. They depend on the detector's
+predictions and do not represent people or vehicles per square metre. The
+current command does not draw the grid on the output image or store per-cell
+counts in PostgreSQL.
 
 ## Reading And Sampling Video Input
 
@@ -371,8 +394,8 @@ are not trying to control traffic directly or make autonomous interventions.
 There are several limitations that we are keeping visible while the application
 is still under development:
 
-- we have not yet completed a formal evaluation of detection quality;
-- the general pretrained model can misclassify small aerial objects;
+- the final held-out detector evaluation failed the overall quality gate;
+- the detector can miss or misclassify small aerial objects and dense crowds;
 - we currently store counts for a complete image, not for individual grid cells;
 - video processing is available through services but not through the
   command-line entry point;
