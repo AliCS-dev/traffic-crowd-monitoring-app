@@ -72,16 +72,16 @@ dimensions in the same coordinate space so that the values remain meaningful.
 
 ### `object_count_summaries`
 
-We use this table for class-wise counts. Current image runs store one summary per
-detected class for the complete frame. The optional `grid_cell_id` will later let
-us store the same type of summary for individual grid cells.
+We use this table for class-wise counts. A complete-frame summary has a null
+`grid_cell_id`. A per-cell summary references its related grid cell. This keeps
+both levels in one table while allowing queries to distinguish them directly.
 
 ### `grid_cells`
 
 This table describes rectangular regions inside a processed frame. Each region
-has a row, column, and image-coordinate boundary. The application can now
-generate these regions and count detections in memory, but the repository does
-not yet insert grid cells or their per-cell summaries into PostgreSQL.
+has a row, column, and image-coordinate boundary. For stored image grids, the
+repository inserts every configured cell in row-major order, including empty
+cells. It then stores one linked summary for each non-zero class count.
 
 ### `alerts`
 
@@ -97,10 +97,11 @@ When we use `--save-to-db`, we create the records in this order:
 2. an image input source;
 3. a processed frame;
 4. the individual detection results;
-5. the class-wise count summaries;
-6. the completed session status.
+5. the complete-frame class summaries;
+6. optional grid cells and their per-cell summaries;
+7. the completed session status.
 
-All six steps are part of one transaction. If one step fails, PostgreSQL rolls
+All seven steps are part of one transaction. If one step fails, PostgreSQL rolls
 back the transaction and we do not keep a partially stored run.
 
 For a video, we follow the same transaction pattern, but create one
@@ -115,8 +116,8 @@ is still stored when it has no detections.
   track later migrations.
 - We do not store the model identity, model version, inference settings, or
   processing duration with a result yet.
-- Our repository tests verify transaction behavior with test doubles, but CI
-  does not yet query persisted detection rows from PostgreSQL.
+- CI verifies grid-cell and per-cell summary relationships in PostgreSQL, but it
+  does not yet cover every repository path with live database queries.
 - The schema does not yet enforce one count summary per frame, grid cell, and
   object class.
 - Session status values are not restricted by a database check constraint.

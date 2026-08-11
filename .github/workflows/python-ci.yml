@@ -70,6 +70,7 @@ jobs:
 
     env:
       DATABASE_URL: postgresql://traffic_user:test_password@127.0.0.1:5432/traffic_monitoring
+      RUN_DATABASE_INTEGRATION_TESTS: "1"
 
     steps:
       - name: Checkout repository
@@ -89,3 +90,7 @@ jobs:
       - name: Check database connection
         run: |
           python scripts/check_db_connection.py
+
+      - name: Test grid persistence
+        run: |
+          python -m pytest tests/integration/test_grid_persistence.py

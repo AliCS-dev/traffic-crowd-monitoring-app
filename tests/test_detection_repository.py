@@ -1,6 +1,7 @@
 import pytest
 
 import app.database.detection_repository as detection_repository
+from app.services.grid_counting_service import count_detections_by_grid
 from app.services.video_detection_service import VideoFrameDetectionResult
 
 CAR_DETECTION = {
@@ -67,6 +68,8 @@ class FakeCursor:
             return "input_source"
         if "INSERT INTO processed_frames" in normalized_query:
             return "processed_frame"
+        if "INSERT INTO grid_cells" in normalized_query:
+            return "grid_cells"
         if "INSERT INTO detection_results" in normalized_query:
             return "detection_results"
         if "INSERT INTO object_count_summaries" in normalized_query:
@@ -159,6 +162,7 @@ def test_save_video_results_associates_multiple_frames_and_records(monkeypatch):
             [
                 {
                     "processed_frame_id": 30,
+                    "grid_cell_id": None,
                     "object_class": "car",
                     "object_count": 1,
                 }
@@ -173,6 +177,7 @@ def test_save_video_results_associates_multiple_frames_and_records(monkeypatch):
             [
                 {
                     "processed_frame_id": 31,
+                    "grid_cell_id": None,
                     "object_class": "person",
                     "object_count": 1,
                 }
@@ -263,3 +268,137 @@ def test_existing_image_storage_uses_image_source_and_zero_frame(monkeypatch):
         cursor.execute_calls
     )
     assert ("processed_frame", (10, 20, 0, 0, 640, 480)) in cursor.execute_calls
+
+
+def test_image_storage_keeps_session_name_positional_compatibility(monkeypatch):
+    cursor, _connection = use_fake_database(
+        monkeypatch,
+        generated_ids=[10, 20, 30],
+    )
+
+    detection_repository.save_image_detection_results(
+        "data/input/image.jpg",
+        640,
+        480,
+        [],
+        [],
+        "existing positional call",
+    )
+
+    assert ("monitoring_session", ("existing positional call", "processing")) in (
+        cursor.execute_calls
+    )
+
+
+def test_save_image_results_stores_grid_cells_and_linked_summaries(monkeypatch):
+    cursor, _connection = use_fake_database(
+        monkeypatch,
+        generated_ids=[10, 20, 30, 40, 41, 42, 43],
+    )
+    grid_result = count_detections_by_grid(
+        [CAR_DETECTION, PERSON_DETECTION],
+        image_width=200,
+        image_height=200,
+        rows=2,
+        columns=2,
+    )
+
+    stored_result = detection_repository.save_image_detection_results(
+        "data/input/image.jpg",
+        image_width=200,
+        image_height=200,
+        detection_records=[CAR_DETECTION, PERSON_DETECTION],
+        object_count_summary_records=[
+            {"object_class": "car", "object_count": 1},
+            {"object_class": "person", "object_count": 1},
+        ],
+        grid_count_result=grid_result,
+    )
+
+    assert stored_result["grid_cell_count"] == 4
+    assert stored_result["grid_object_count_summary_count"] == 2
+    assert [
+        parameters
+        for operation, parameters in cursor.execute_calls
+        if operation == "grid_cells"
+    ] == [
+        (30, 0, 0, 0.0, 0.0, 100.0, 100.0),
+        (30, 0, 1, 100.0, 0.0, 200.0, 100.0),
+        (30, 1, 0, 0.0, 100.0, 100.0, 200.0),
+        (30, 1, 1, 100.0, 100.0, 200.0, 200.0),
+    ]
+    assert cursor.executemany_calls[-1] == (
+        "object_count_summaries",
+        [
+            {
+                "processed_frame_id": 30,
+                "grid_cell_id": 40,
+                "object_class": "car",
+                "object_count": 1,
+            },
+            {
+                "processed_frame_id": 30,
+                "grid_cell_id": 43,
+                "object_class": "person",
+                "object_count": 1,
+            },
+        ],
+    )
+
+
+def test_save_image_results_rejects_grid_for_different_image(monkeypatch):
+    grid_result = count_detections_by_grid(
+        [],
+        image_width=100,
+        image_height=100,
+        rows=2,
+        columns=2,
+    )
+
+    def fail_if_connection_opens():
+        pytest.fail("Database connection opened for incompatible grid dimensions.")
+
+    monkeypatch.setattr(
+        detection_repository,
+        "open_database_connection",
+        fail_if_connection_opens,
+    )
+
+    with pytest.raises(ValueError, match="Grid dimensions must match"):
+        detection_repository.save_image_detection_results(
+            "data/input/image.jpg",
+            image_width=200,
+            image_height=100,
+            detection_records=[],
+            grid_count_result=grid_result,
+        )
+
+
+def test_grid_insert_failure_rolls_back_complete_image_transaction(monkeypatch):
+    cursor, connection = use_fake_database(
+        monkeypatch,
+        generated_ids=[10, 20, 30],
+        fail_on="grid_cells",
+    )
+    grid_result = count_detections_by_grid(
+        [],
+        image_width=100,
+        image_height=100,
+        rows=1,
+        columns=1,
+    )
+
+    with pytest.raises(RuntimeError, match="Failed to insert grid_cells"):
+        detection_repository.save_image_detection_results(
+            "data/input/image.jpg",
+            image_width=100,
+            image_height=100,
+            detection_records=[],
+            grid_count_result=grid_result,
+        )
+
+    assert connection.exit_exception_type is RuntimeError
+    assert not any(
+        operation == "complete_session"
+        for operation, _parameters in cursor.execute_calls
+    )

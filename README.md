@@ -11,7 +11,9 @@ intervals. Sampled frames can pass through the same preprocessing and detection
 logic while the model is reused across frames. The resulting frame metadata,
 detections, and class counts can be stored together as one video session.
 For image runs, we can also divide the processed image into a configurable grid
-and report class counts for each occupied cell.
+and report class counts for each occupied cell. When database storage is enabled,
+the application keeps the complete grid and its per-cell counts with the image
+result.
 
 ## Where the Project Stands
 
@@ -35,6 +37,7 @@ and report class counts for each occupied cell.
 | Fine-tuning pilot | Completed; person-only checkpoint rejected |
 | Final held-out evaluation | Completed; quality gate failed |
 | Grid-based spatial counting | Implemented as an experimental component |
+| Grid-cell database storage | Implemented for image runs |
 | Threshold-based alerts | Planned |
 
 The current detector gives us a measured starting point, but it is not reliable
@@ -191,10 +194,25 @@ The terminal summary reports only occupied cells. The grid service itself
 returns every cell, including empty cells, in stable row-major order so that a
 later interface can render a complete grid without rebuilding it.
 
+We can store the same grid together with the image result by combining the grid
+and database options:
+
+```bash
+.venv/bin/python -m app.main \
+  --image data/input/example.jpg \
+  --grid 3 4 \
+  --save-to-db \
+  --session-name "three-by-four grid example"
+```
+
+Every cell is stored so its layout can be reconstructed later. Per-cell summary
+rows are created only for classes actually counted in a cell; empty cells do not
+receive artificial zero-count rows. Complete-frame summaries remain separate
+and have no grid-cell reference.
+
 Grid counts are relative image-region counts. They depend on the detector's
 predictions and do not represent people or vehicles per square metre. The
-current command does not draw the grid on the output image or store per-cell
-counts in PostgreSQL.
+current command does not draw the grid on the output image.
 
 ## Reading And Sampling Video Input
 
@@ -255,7 +273,7 @@ initial tables:
 .venv/bin/python scripts/create_database_tables.py
 ```
 
-To keep the results from an image run, we add the database option:
+To keep the complete-frame results from an image run, we add the database option:
 
 ```bash
 .venv/bin/python -m app.main \
@@ -374,9 +392,10 @@ Before opening a pull request, we run the same basic checks that are used in CI:
 .venv/bin/python -m compileall app evaluation scripts
 ```
 
-GitHub Actions also starts PostgreSQL and checks that the application can connect
-to it. At the moment, this is only a connection smoke test. Full database
-integration tests are still part of our planned work.
+GitHub Actions starts PostgreSQL, checks the application connection, creates the
+schema, and runs a grid-persistence integration test. The test queries the stored
+cells and summaries through their real PostgreSQL relationships and removes its
+temporary session afterwards.
 
 ## Project Documents
 
@@ -396,7 +415,7 @@ is still under development:
 
 - the final held-out detector evaluation failed the overall quality gate;
 - the detector can miss or misclassify small aerial objects and dense crowds;
-- we currently store counts for a complete image, not for individual grid cells;
+- grid storage is connected to image runs but not yet to sampled video frames;
 - video processing is available through services but not through the
   command-line entry point;
 - we do not yet generate alerts;
