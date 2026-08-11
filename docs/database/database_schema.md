@@ -79,8 +79,9 @@ us store the same type of summary for individual grid cells.
 ### `grid_cells`
 
 This table describes rectangular regions inside a processed frame. Each region
-has a row, column, and image-coordinate boundary. We have created the table, but
-we have not implemented grid generation or object assignment yet.
+has a row, column, and image-coordinate boundary. The application can now
+generate these regions and count detections in memory, but the repository does
+not yet insert grid cells or their per-cell summaries into PostgreSQL.
 
 ### `alerts`
 

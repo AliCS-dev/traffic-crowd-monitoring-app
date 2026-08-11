@@ -29,6 +29,8 @@ Run YOLO object detection
        v
 Extract detections and class counts
        |
+       +---------------------> Optional grid-cell counts
+       |
        v
 Optional PostgreSQL transaction
   - monitoring session
@@ -80,6 +82,7 @@ Optional PostgreSQL transaction
 | `app/services/frame_sampling_service.py` | Selects video frames at controlled time intervals |
 | `app/services/preprocessing_service.py` | Resizes images before inference |
 | `app/services/detection_service.py` | Loads YOLO, runs inference, and converts output into counts and records |
+| `app/services/grid_counting_service.py` | Assigns detection centres to configurable image cells and counts classes per cell |
 | `app/services/video_detection_service.py` | Processes sampled frames while preserving frame metadata |
 | `app/services/output_service.py` | Creates the annotated output image |
 | `app/database/connection.py` | Reads `DATABASE_URL` and opens PostgreSQL connections |
@@ -127,22 +130,28 @@ and timestamp.
 
 ## Where We Plan to Extend It
 
-Our planned sequence is:
+The evaluation protocol, labelled data, model comparison, fine-tuning pilot,
+and held-out quality gate are complete. The grid service now assigns detected
+object centres to image cells independently of YOLO and PostgreSQL. Our next
+planned extensions are:
 
-1. curate and annotate aerial evaluation data under the fixed
-   [evaluation protocol](evaluation/evaluation_protocol.md);
-2. evaluate the baseline and decide whether to tune, replace, or train the
-   model;
-3. assign detected-object centres to grid cells;
-4. store count summaries for each grid cell;
-5. generate threshold-based alerts;
-6. add a user-facing interface and result views.
+1. decide how per-cell summaries should be stored using the existing schema;
+2. evaluate grid behavior separately from detector accuracy;
+3. generate threshold-based alerts only after their input limitations are
+   explicit;
+4. add a user-facing interface and result views.
 
 We want each step to remain independently testable. The video reader now supplies
 frames without knowing how they will be sampled or detected. The sampling service
 selects frames without knowing how detection works. The video detection service
 then reuses one detector instance and converts each sampled frame into records
 that later stages can store or aggregate.
+
+The grid service follows the same rule. It accepts ordinary detection records
+and image dimensions, so controlled tests can verify spatial assignment without
+loading a model. It uses the bounding-box centre as the assignment point. A
+centre exactly on an internal boundary belongs to the cell on the right or
+below, while the outer image edges remain part of the final row and column.
 
 ## How We Use Important Terms
 
@@ -162,6 +171,8 @@ that later stages can store or aggregate.
   application.
 - We do not yet store model identity, inference settings, or processing time with
   a database result.
+- Grid counts are printed for image runs but are not drawn on output images or
+  stored in PostgreSQL yet.
 - Our migration script currently applies only the first migration file.
 - Repository tests cover transaction behavior with controlled test doubles, but
   CI does not yet run stored-result queries against PostgreSQL.

@@ -282,10 +282,31 @@ weights, lower GPU memory, and higher throughput, with only a modest reduction
 in aggregate detection quality. The held-out split remains untouched, and the
 pilot belongs to Issue #46 rather than this comparison.
 
-## What We Plan to Work on Next
+## August 2026: Completing Evaluation And Resuming Application Work
 
-Our next stage is a small, reproducible YOLO26m fine-tuning pilot. We will first
-audit the training partition for usable boxes and class coverage, then freeze
-the training settings before starting. The held-out test split remains untouched
-until the final model and settings are frozen. Grid counting and alerts will
-resume only after the detector produces evidence we can defend in the thesis.
+### Issues #46-#48: Fine-Tuning And The Final Quality Gate
+
+We ran a controlled YOLO26m fine-tuning pilot on source-group-clean Okutama
+person boxes. Person detection improved, but vehicle detection collapsed because
+the training partition contained no vehicle boxes, so we rejected the new
+checkpoint. We then froze the original VisDrone YOLO26m configuration before
+running the held-out split once.
+
+The final model passed road-vehicle-total count error and runtime, but failed
+recall, average precision, and dense-crowd person counting. We kept this result
+rather than tuning after the test. The central metrics and limitations are
+linked from `docs/evaluation/results_index.md`.
+
+### Issue #24: Grid-Based Object Counting
+
+We added a model-independent service that divides an image into configurable
+rows and columns and assigns each detection according to its bounding-box
+centre. It returns stable records for occupied and empty cells, validates image
+dimensions and bounding boxes, and defines deterministic behavior at cell
+boundaries. The image command can print an experimental grid summary with
+`--grid ROWS COLUMNS`.
+
+The unit tests establish that the spatial assignment code is correct for known
+detections. They do not override the detector's failed quality gate, and the
+result is not physical crowd density. Database persistence, overlays, and alert
+rules remain separate work.
