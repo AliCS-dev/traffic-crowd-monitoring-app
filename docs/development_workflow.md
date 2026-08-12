@@ -89,7 +89,7 @@ For database changes, we also check the connection and apply the current schema:
 
 ```bash
 .venv/bin/python scripts/check_db_connection.py
-.venv/bin/python scripts/create_database_tables.py
+.venv/bin/python scripts/migrate_database.py
 ```
 
 When we change the processing pipeline, we run it on a known image and inspect

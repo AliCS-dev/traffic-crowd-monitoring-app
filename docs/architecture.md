@@ -87,6 +87,7 @@ Optional PostgreSQL transaction
 | `app/services/video_detection_service.py` | Processes sampled frames while preserving frame metadata |
 | `app/services/output_service.py` | Creates the annotated output image |
 | `app/database/connection.py` | Reads `DATABASE_URL` and opens PostgreSQL connections |
+| `app/database/migration_runner.py` | Discovers, verifies, and applies ordered SQL migrations |
 | `app/database/detection_repository.py` | Stores complete image or sampled-video results in a transaction |
 | `scripts/` | Contains explicit database setup and diagnostic commands |
 
@@ -177,7 +178,6 @@ below, while the outer image edges remain part of the final row and column.
   a database result.
 - Grid counts can be printed and stored for image runs, but they are not drawn on
   output images or connected to sampled video frames yet.
-- Our migration script currently applies only the first migration file.
 - Repository tests cover transaction behavior with controlled test doubles, but
-  CI does not yet run stored-result queries against PostgreSQL.
+  live PostgreSQL coverage does not yet include every future API query path.
 - `app/ui` is reserved for later work and does not contain an interface yet.
