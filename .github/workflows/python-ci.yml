@@ -91,6 +91,6 @@ jobs:
         run: |
           python scripts/check_db_connection.py
 
-      - name: Test grid persistence
+      - name: Test database migrations and grid persistence
         run: |
-          python -m pytest tests/integration/test_grid_persistence.py
+          python -m pytest tests/integration

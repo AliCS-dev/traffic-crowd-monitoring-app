@@ -324,3 +324,18 @@ detections, and complete-frame counts. A failure therefore rolls back the whole
 image result. Repository tests cover mapping and rollback, while the PostgreSQL
 CI job creates the schema, stores a controlled grid, queries the real foreign-key
 relationships, and removes its temporary session.
+
+### Issue #65: Ordered Database Migrations
+
+We replaced the one-file database setup behavior with a small ordered migration
+runner. It discovers strictly named SQL files, records their versions and
+SHA-256 checksums in `schema_migrations`, skips verified migrations, and rejects
+changed or missing migration history. All pending migrations and their history
+rows share one PostgreSQL transaction, protected by an advisory transaction lock.
+
+The original `001` migration remains idempotent, so databases created by the old
+setup script can be adopted without deleting their stored sessions. Isolated
+PostgreSQL integration tests verify fresh setup, repeated execution, legacy-data
+preservation, and rollback when a later migration fails. The old table-creation
+script remains as a compatibility wrapper, while the documented command is now
+`scripts/migrate_database.py`.

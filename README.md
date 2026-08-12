@@ -265,13 +265,20 @@ docker compose up -d postgres
 docker compose ps
 ```
 
-Once PostgreSQL is ready, these scripts check the connection and create the
-initial tables:
+Once PostgreSQL is ready, these scripts check the connection and apply every
+pending database migration:
 
 ```bash
 .venv/bin/python scripts/check_db_connection.py
-.venv/bin/python scripts/create_database_tables.py
+.venv/bin/python scripts/migrate_database.py
 ```
+
+Migration files use names such as `001_create_initial_tables.sql` and run in
+numerical order. PostgreSQL records each applied version, name, checksum, and
+timestamp in `schema_migrations`. Repeating the command is safe: verified
+migrations are skipped. We keep `scripts/create_database_tables.py` as a
+compatibility wrapper for earlier project instructions, but new documentation
+uses the migration command.
 
 To keep the complete-frame results from an image run, we add the database option:
 
@@ -392,10 +399,10 @@ Before opening a pull request, we run the same basic checks that are used in CI:
 .venv/bin/python -m compileall app evaluation scripts
 ```
 
-GitHub Actions starts PostgreSQL, checks the application connection, creates the
-schema, and runs a grid-persistence integration test. The test queries the stored
-cells and summaries through their real PostgreSQL relationships and removes its
-temporary session afterwards.
+GitHub Actions starts PostgreSQL, checks the application connection, exercises
+fresh, repeated, legacy, and failed migration paths, and runs a grid-persistence
+integration test. The tests query real PostgreSQL relationships and remove their
+temporary records and schemas afterwards.
 
 ## Project Documents
 

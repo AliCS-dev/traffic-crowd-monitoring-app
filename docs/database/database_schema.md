@@ -7,17 +7,36 @@ video processing. Instead of storing everything in one record, we separate
 processing sessions, input sources, frames, detections, count summaries, grid
 cells, and alerts. This gives us a clear history of how each result was produced.
 
-Our first schema is defined in:
+Schema changes are stored as numbered SQL files under:
 
 ```text
-app/database/migrations/001_create_initial_tables.sql
+app/database/migrations/
 ```
 
-After PostgreSQL is running, we apply it with:
+After PostgreSQL is running, we apply all pending migrations with:
 
 ```bash
-.venv/bin/python scripts/create_database_tables.py
+.venv/bin/python scripts/migrate_database.py
 ```
+
+The runner accepts strict names in the form `NNN_lowercase_name.sql`, orders
+them by version, and applies all pending files in one transaction. It also takes
+a PostgreSQL advisory transaction lock so two application processes cannot
+migrate the same database simultaneously.
+
+### `schema_migrations`
+
+This metadata table records each applied migration's version, name, SHA-256
+checksum, and application time. A repeated migration command verifies the
+recorded files and skips them. If an applied file has been renamed, edited, or
+removed, the command stops rather than pretending the database still matches
+the repository.
+
+Databases created before the runner existed have the `001` tables but no history
+row. Because `001_create_initial_tables.sql` uses idempotent `CREATE ... IF NOT
+EXISTS` statements, the first migration run can execute it again, preserve the
+existing rows, and then record its checksum. Later schema changes must be added
+as new migration files; applied files are immutable.
 
 ## How the Tables Are Connected
 
@@ -112,8 +131,6 @@ is still stored when it has no detections.
 
 ## What We Still Need to Improve
 
-- Our setup script applies only migration `001`; it does not yet discover or
-  track later migrations.
 - We do not store the model identity, model version, inference settings, or
   processing duration with a result yet.
 - CI verifies grid-cell and per-cell summary relationships in PostgreSQL, but it

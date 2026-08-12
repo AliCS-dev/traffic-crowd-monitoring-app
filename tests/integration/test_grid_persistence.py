@@ -1,20 +1,15 @@
 import os
-from pathlib import Path
 
 import pytest
 
 from app.database.connection import open_database_connection
 from app.database.detection_repository import save_image_detection_results
+from app.database.migration_runner import apply_pending_migrations
 from app.services.grid_counting_service import count_detections_by_grid
 
 pytestmark = pytest.mark.skipif(
     os.getenv("RUN_DATABASE_INTEGRATION_TESTS") != "1",
     reason="PostgreSQL integration tests are not enabled.",
-)
-
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-SCHEMA_FILE = (
-    PROJECT_ROOT / "app" / "database" / "migrations" / "001_create_initial_tables.sql"
 )
 
 
@@ -45,9 +40,7 @@ def test_grid_cells_and_summaries_are_persisted_with_correct_relationships():
         columns=2,
     )
 
-    with open_database_connection() as connection:
-        with connection.cursor() as cursor:
-            cursor.execute(SCHEMA_FILE.read_text(encoding="utf-8"))
+    apply_pending_migrations()
 
     stored_result = save_image_detection_results(
         "data/input/integration-grid.jpg",
