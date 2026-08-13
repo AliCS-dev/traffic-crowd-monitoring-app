@@ -5,6 +5,7 @@
   "selection_date": "2026-08-13",
   "random_seed": 2026,
   "dataset": {
+    "version": "1.0-draft",
     "manifest_path": "data/evaluation/manifest.csv",
     "count_reference_path": "data/evaluation/derived/annotations/dlr_person_counts.csv",
     "collection_id": "dlr_acd",
@@ -34,6 +35,7 @@
     "batch_size": 1,
     "tile_size": 1024,
     "tile_overlap": 0,
+    "edge_tile_policy": "pad-right-bottom-to-multiple-of-16-and-discard-padding-points",
     "resize_policy": "preserve-original-pixel-scale",
     "normalization": "imagenet",
     "operating_confidence": 0.5,

@@ -55,16 +55,21 @@ configuration pass validation checks.
 
 DLR images are much larger than ordinary model inputs. We preserve their
 original pixel scale and divide each image into deterministic, non-overlapping
-`1024 x 1024` tiles. Edge tiles keep their natural smaller dimensions. We do
-not overlap tiles because summing overlapping predictions could count the same
-person twice. Each tile is converted to RGB and normalized with ImageNet mean
-and standard deviation, matching the official P2PNet demo.
+`1024 x 1024` tiles. Edge tiles retain their natural image content and are
+padded on the right and bottom to the next multiple of 16 required by P2PNet's
+feature pyramid. Predictions whose point lies in this padding are discarded.
+We do not overlap tiles because summing overlapping predictions could count the
+same person twice. Each tile is converted to RGB and normalized with ImageNet
+mean and standard deviation, matching the official P2PNet demo.
 
 Inference uses batch size `1`, float32 precision, and `cuda:0`. Five tiles are
 used for GPU warm-up before timing. The adapter verifies the checkpoint size
 and SHA-256 digest before loading it. It also bypasses an obsolete private
 ImageNet-checkpoint path in the upstream model builder; the complete released
 P2PNet state is loaded immediately afterwards without changing the architecture.
+The adapter also bypasses a legacy torchvision version check that reads version
+`0.27` as decimal `0.2` and attempts to import a removed empty-tensor helper.
+That helper is not used by inference.
 
 ## Measures
 

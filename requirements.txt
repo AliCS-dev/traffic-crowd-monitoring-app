@@ -6,3 +6,5 @@ ultralytics
 pycocotools
 psycopg[binary]
 python-dotenv
+torch
+torchvision
