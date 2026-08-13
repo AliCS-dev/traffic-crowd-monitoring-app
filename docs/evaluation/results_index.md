@@ -26,6 +26,25 @@ intervals, runtime, error review, limitations, and artifact hashes are in the
 [final quality-gate report](final_quality_gate.md). A compact machine-readable
 copy is stored in `data/evaluation/final_quality_gate.json`.
 
+## Dense-Crowd Follow-Up
+
+We evaluated one dedicated point-based crowd counter after the detector failed
+on dense aerial scenes. P2PNet reduced same-image DLR person NAE from `0.9962`
+to `0.7275`, but it remained above the predeclared defer limit of `0.70`.
+We therefore rejected this checkpoint for application integration.
+
+| Held-out DLR measure | YOLO | P2PNet |
+| --- | ---: | ---: |
+| Predicted / reference people | 336 / 88,140 | 24,016 / 88,140 |
+| MAE, people/image | 6,271.71 | 4,580.29 |
+| NAE | 0.9962 | 0.7275 |
+| NAE 95% interval | 0.9879-0.9999 | 0.6322-0.8251 |
+
+The [dedicated crowd-counting result](dedicated_crowd_counting_result.md)
+contains the protocol, runtime, interpretation, limitations, and explicit
+decision. Exact compact evidence is in
+`data/evaluation/dedicated_crowd_counting.json`.
+
 ## Evidence Map
 
 | Question | Main record |
@@ -38,6 +57,7 @@ copy is stored in `data/evaluation/final_quality_gate.json`.
 | Did fine-tuning help? | [Fine-tuning pilot](fine_tuning_pilot.md) |
 | What was frozen before final testing? | [Final model freeze](final_model_freeze.md) |
 | What did the untouched held-out test show? | [Final quality gate](final_quality_gate.md) |
+| Did a dedicated counter solve dense crowds? | [Crowd-counting result](dedicated_crowd_counting_result.md) |
 
 ## Thesis Use
 

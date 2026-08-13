@@ -17,6 +17,7 @@ from evaluation.crowd_counting import (
 from evaluation.p2pnet_adapter import iter_image_tiles
 
 CONFIG_PATH = Path("configs/evaluation/dedicated_crowd_counting.json")
+RESULT_PATH = Path("data/evaluation/dedicated_crowd_counting.json")
 
 
 def load_values():
@@ -106,3 +107,25 @@ def test_decision_rules_are_applied_in_order():
     assert classify_candidate(0.30, 0.99, 0.2, settings)["decision"] == "integrate"
     assert classify_candidate(0.60, 0.99, 0.7, settings)["decision"] == "defer"
     assert classify_candidate(0.90, 0.99, 0.2, settings)["decision"] == "reject"
+
+
+def test_tracked_result_matches_the_frozen_decision_rule():
+    result = json.loads(RESULT_PATH.read_text(encoding="utf-8"))
+    settings = load_crowd_counting_config(CONFIG_PATH).decision
+    held_out = result["held_out_test"]
+    baseline = result["same_image_yolo_baseline"]
+
+    classified = classify_candidate(
+        held_out["normalized_absolute_error"],
+        baseline["normalized_absolute_error"],
+        held_out["runtime"]["median_seconds_per_megapixel"],
+        settings,
+    )
+
+    assert classified["decision"] == result["comparison"]["decision"] == "reject"
+    assert classified["relative_nae_reduction"] == pytest.approx(
+        result["comparison"]["relative_nae_reduction"]
+    )
+    assert result["candidate"]["weights_sha256"] == (
+        load_crowd_counting_config(CONFIG_PATH).candidate.weights_sha256
+    )

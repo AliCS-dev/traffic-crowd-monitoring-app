@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "evaluation_name": "p2pnet-dlr-acd-crowd-counting",
+  "protocol_version": "1.0",
+  "candidate": {
+    "candidate_id": "p2pnet-shtecha",
+    "repository_revision": "5c91a81ca062b1c7fd3db3ad1c55b1c21f0a7455",
+    "weights_sha256": "506047732b128ff09efef18e94bfacbe35fcfef300e5e9eeeece259b0488c63f"
+  },
+  "validation": {
+    "run_id": "20260813T112348Z-p2pnet-shtecha-validation",
+    "images": 19,
+    "ground_truth_total": 138196,
+    "predicted_total": 55508,
+    "mean_absolute_error": 4487.263157894737,
+    "root_mean_squared_error": 5728.960500915731,
+    "normalized_absolute_error": 0.6169353671596862,
+    "normalized_absolute_error_95_interval": {
+      "lower": 0.5526695627146491,
+      "upper": 0.7068474304321231
+    },
+    "bias": -4352.0
+  },
+  "held_out_test": {
+    "run_id": "20260813T112446Z-p2pnet-shtecha-held_out_test",
+    "images": 14,
+    "ground_truth_total": 88140,
+    "predicted_total": 24016,
+    "mean_absolute_error": 4580.285714285715,
+    "mean_absolute_error_95_interval": {
+      "lower": 2560.3125,
+      "upper": 7135.489285714285
+    },
+    "root_mean_squared_error": 6397.576862710265,
+    "root_mean_squared_error_95_interval": {
+      "lower": 3450.4149926802597,
+      "upper": 9165.77617800536
+    },
+    "normalized_absolute_error": 0.7275243930111187,
+    "normalized_absolute_error_95_interval": {
+      "lower": 0.632172172918548,
+      "upper": 0.8250827175960068
+    },
+    "bias": -4580.285714285715,
+    "bias_95_interval": {
+      "lower": -7135.489285714286,
+      "upper": -2560.3125000000036
+    },
+    "runtime": {
+      "median_seconds_per_image": 2.0813066185000935,
+      "median_seconds_per_megapixel": 0.11593744877662349,
+      "peak_allocated_gpu_memory_mib": 1119.376953125,
+      "total_seconds": 29.33807430800016,
+      "total_tiles": 318
+    }
+  },
+  "same_image_yolo_baseline": {
+    "source_run_id": "20260810T135010Z-yolo26m-visdrone-held-out-test",
+    "operating_confidence": 0.25,
+    "images": 14,
+    "ground_truth_total": 88140,
+    "predicted_total": 336,
+    "mean_absolute_error": 6271.714285714285,
+    "root_mean_squared_error": 8615.806321606155,
+    "normalized_absolute_error": 0.9961878829135467,
+    "normalized_absolute_error_95_interval": {
+      "lower": 0.9878885555564023,
+      "upper": 0.9999116993589913
+    },
+    "bias": -6271.714285714285
+  },
+  "comparison": {
+    "relative_nae_reduction": 0.2696915858047469,
+    "decision": "reject",
+    "decision_reason": "The candidate improved on the same-image YOLO baseline and met the runtime threshold, but its held-out NAE exceeded the predeclared defer limit of 0.70."
+  },
+  "provenance": {
+    "git_commit": "6c66c5ae8fc4a31d3a6373659a7154a7b7b6298d",
+    "configuration_sha256": "924a5182ab0eeedc41184fd8e06acea6c7e0bd2ecbc026c4dc29229f2c57cd45",
+    "manifest_sha256": "8dabfe690a0aa162da3172bb46842216d4eac5ef7f73a6e6ba5ad48a2892f37d",
+    "count_reference_sha256": "91c0ad43fd8923bad2e5dc04bb4c388ec726d758946836010bdb955457c14070",
+    "python": "3.10.12",
+    "torch": "2.12.0",
+    "torchvision": "0.27.0",
+    "device": "cuda:0",
+    "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "bootstrap_iterations": 2000,
+    "bootstrap_seed": 2026
+  }
+}
