@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "evaluation_name": "p2pnet-dlr-acd-crowd-counting",
+  "protocol_version": "1.0",
+  "selection_date": "2026-08-13",
+  "random_seed": 2026,
+  "dataset": {
+    "version": "1.0-draft",
+    "manifest_path": "data/evaluation/manifest.csv",
+    "count_reference_path": "data/evaluation/derived/annotations/dlr_person_counts.csv",
+    "collection_id": "dlr_acd",
+    "development_role": "validation",
+    "final_role": "held_out_test",
+    "expected_development_images": 19,
+    "expected_final_images": 14
+  },
+  "candidate": {
+    "candidate_id": "p2pnet-shtecha",
+    "name": "P2PNet pretrained on ShanghaiTech Part A",
+    "task": "point-based crowd counting",
+    "training_dataset": "ShanghaiTech Part A",
+    "repository_url": "https://github.com/TencentYoutuResearch/CrowdCounting-P2PNet",
+    "repository_revision": "5c91a81ca062b1c7fd3db3ad1c55b1c21f0a7455",
+    "weights_path": "models/crowd-counting/p2pnet-shtecha/SHTechA.pth",
+    "weights_url": "https://raw.githubusercontent.com/TencentYoutuResearch/CrowdCounting-P2PNet/5c91a81ca062b1c7fd3db3ad1c55b1c21f0a7455/weights/SHTechA.pth",
+    "weights_sha256": "506047732b128ff09efef18e94bfacbe35fcfef300e5e9eeeece259b0488c63f",
+    "weights_size_bytes": 86372926,
+    "license_id": "P2PNet-academic-research-only",
+    "license_url": "https://github.com/TencentYoutuResearch/CrowdCounting-P2PNet/blob/5c91a81ca062b1c7fd3db3ad1c55b1c21f0a7455/LICENSE"
+  },
+  "inference": {
+    "source_directory": ".cache/crowd-counting/CrowdCounting-P2PNet",
+    "device": "cuda:0",
+    "numeric_precision": "float32",
+    "batch_size": 1,
+    "tile_size": 1024,
+    "tile_overlap": 0,
+    "edge_tile_policy": "pad-right-bottom-to-multiple-of-16-and-discard-padding-points",
+    "resize_policy": "preserve-original-pixel-scale",
+    "normalization": "imagenet",
+    "operating_confidence": 0.5,
+    "warmup_tiles": 5
+  },
+  "metrics": {
+    "bootstrap_iterations": 2000,
+    "bootstrap_seed": 2026,
+    "reported_count_metrics": [
+      "mean_absolute_error",
+      "root_mean_squared_error",
+      "normalized_absolute_error",
+      "bias"
+    ],
+    "reported_runtime_metrics": [
+      "median_seconds_per_image",
+      "median_seconds_per_megapixel",
+      "peak_allocated_gpu_memory_mib"
+    ]
+  },
+  "comparison": {
+    "baseline_run_id": "20260810T135010Z-yolo26m-visdrone-held-out-test",
+    "baseline_operating_confidence": 0.25,
+    "comparison_class": "person",
+    "comparison_policy": "same-dlr-held-out-images"
+  },
+  "decision": {
+    "integrate_maximum_nae": 0.35,
+    "integrate_maximum_seconds_per_megapixel": 0.5,
+    "defer_maximum_nae": 0.7,
+    "defer_minimum_relative_nae_reduction": 0.1,
+    "defer_maximum_seconds_per_megapixel": 1.0,
+    "otherwise": "reject"
+  },
+  "output_directory": "data/evaluation/derived/crowd_counting"
+}
