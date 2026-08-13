@@ -25,6 +25,9 @@ models/*
 *.pt
 *.onnx
 
+# Downloaded third-party evaluation tools
+.cache/
+
 # VS Code
 .vscode/
 
