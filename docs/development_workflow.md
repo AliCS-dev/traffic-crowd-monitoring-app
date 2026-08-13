@@ -99,6 +99,12 @@ both the terminal summary and annotated output:
 .venv/bin/python -m app.main
 ```
 
+The image command reads the tracked runtime model profile and verifies the local
+checkpoint before inference. We do not change runtime confidence, image size, or
+class mapping with ad hoc command-line options because stored results must match
+the profile recorded with their monitoring session. Experimental comparisons use
+the separate evaluation configurations instead.
+
 ## Keeping the Documents Current
 
 We update documentation in the same pull request as the related behavior. The

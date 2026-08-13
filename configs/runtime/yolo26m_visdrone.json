@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "profile_id": "yolo26m-visdrone-experimental-v1",
+  "model_id": "yolo26m-visdrone",
+  "quality_gate_status": "failed",
+  "evaluation_reference": "configs/evaluation/final_model_selection.json",
+  "checkpoint": {
+    "path": "models/candidates/yolo26m-visdrone/best.pt",
+    "sha256": "e57204b8d77b5b22ea9253cbd5664b707623aeb7c19dbaa9034fe5a60bed6571",
+    "size_bytes": 44055513
+  },
+  "class_mapping": {
+    "pedestrian": "person",
+    "people": "person",
+    "bicycle": "bicycle",
+    "car": "car_or_van",
+    "van": "car_or_van",
+    "truck": "truck",
+    "bus": "bus",
+    "motor": "motorcycle"
+  },
+  "inference": {
+    "confidence": 0.25,
+    "image_size": 1280,
+    "scale_factor": 2,
+    "device": "cuda:0",
+    "max_detections": 300,
+    "numeric_precision": "float32"
+  }
+}

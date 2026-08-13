@@ -1,12 +1,17 @@
+import hashlib
+from dataclasses import replace
 from types import SimpleNamespace
 
 import numpy as np
 import pytest
 
 import app.services.detection_service as detection_service
+from app.model_profile import load_runtime_model_profile
 from app.services.detection_service import ObjectDetector
 from app.services.frame_sampling_service import SampledFrame
 from app.services.video_detection_service import process_sampled_video_frames
+
+MODEL_PROFILE = load_runtime_model_profile()
 
 
 class FakeDetector:
@@ -14,12 +19,24 @@ class FakeDetector:
         self.results = results
         self.calls = []
 
-    def detect(self, image, confidence_threshold, image_size):
+    def detect(
+        self,
+        image,
+        *,
+        confidence_threshold,
+        image_size,
+        device,
+        max_detections,
+        half_precision,
+    ):
         self.calls.append(
             {
                 "image": image,
                 "confidence_threshold": confidence_threshold,
                 "image_size": image_size,
+                "device": device,
+                "max_detections": max_detections,
+                "half_precision": half_precision,
             }
         )
         return self.results
@@ -27,7 +44,7 @@ class FakeDetector:
 
 def create_detection_result():
     return SimpleNamespace(
-        names={0: "person", 2: "car"},
+        names={0: "pedestrian", 2: "car", 10: "others"},
         boxes=[
             SimpleNamespace(
                 cls=[2],
@@ -38,6 +55,11 @@ def create_detection_result():
                 cls=[0],
                 conf=[0.75],
                 xyxy=[[100.0, 120.0, 140.0, 180.0]],
+            ),
+            SimpleNamespace(
+                cls=[10],
+                conf=[0.99],
+                xyxy=[[0.0, 0.0, 10.0, 10.0]],
             ),
         ],
     )
@@ -70,12 +92,16 @@ def test_object_detector_loads_model_once_and_reuses_it(monkeypatch):
     second_image = np.ones((2, 2, 3), dtype=np.uint8)
 
     first_result = detector.detect(
-        first_image, confidence_threshold=0.2, image_size=640
+        first_image,
+        confidence_threshold=0.2,
+        image_size=640,
+        max_detections=300,
     )
     second_result = detector.detect(
         second_image,
         confidence_threshold=0.3,
         image_size=1280,
+        max_detections=300,
     )
 
     assert loaded_model_paths == ["models/test-model.pt"]
@@ -135,6 +161,28 @@ def test_object_detector_forwards_explicit_evaluation_options(monkeypatch):
     ]
 
 
+def test_runtime_detector_verifies_checkpoint_before_loading_model(tmp_path):
+    checkpoint = tmp_path / "model.pt"
+    content = b"known model weights"
+    checkpoint.write_bytes(content)
+    profile = replace(
+        MODEL_PROFILE,
+        checkpoint_path=checkpoint.relative_to(tmp_path),
+        checkpoint_size_bytes=len(content),
+        checkpoint_sha256=hashlib.sha256(content).hexdigest(),
+    )
+    loaded_paths = []
+
+    detector = ObjectDetector.from_runtime_profile(
+        profile,
+        repository_root=tmp_path,
+        model_factory=lambda path: loaded_paths.append(path) or object(),
+    )
+
+    assert isinstance(detector, ObjectDetector)
+    assert loaded_paths == [str(checkpoint)]
+
+
 def test_sampled_frames_are_processed_with_metadata_and_counts():
     first_image = np.zeros((2, 3, 3), dtype=np.uint8)
     second_image = np.ones((2, 3, 3), dtype=np.uint8)
@@ -148,9 +196,7 @@ def test_sampled_frames_are_processed_with_metadata_and_counts():
         process_sampled_video_frames(
             sampled_frames,
             detector,
-            confidence_threshold=0.25,
-            image_size=640,
-            scale_factor=2,
+            replace(MODEL_PROFILE, image_size=640),
         )
     )
 
@@ -161,10 +207,10 @@ def test_sampled_frames_are_processed_with_metadata_and_counts():
         (6, 4),
         (6, 4),
     ]
-    assert processed_frames[0].object_counts == {"car": 1, "person": 1}
+    assert processed_frames[0].object_counts == {"car_or_van": 1, "person": 1}
     assert processed_frames[0].detection_records == [
         {
-            "object_class": "car",
+            "object_class": "car_or_van",
             "confidence": 0.91,
             "bbox_x_min": 10.0,
             "bbox_y_min": 20.0,
@@ -184,12 +230,15 @@ def test_sampled_frames_are_processed_with_metadata_and_counts():
     assert detector.calls[0]["image"].shape == (4, 6, 3)
     assert detector.calls[0]["confidence_threshold"] == 0.25
     assert detector.calls[0]["image_size"] == 640
+    assert detector.calls[0]["device"] == "cuda:0"
+    assert detector.calls[0]["max_detections"] == 300
+    assert detector.calls[0]["half_precision"] is False
 
 
 def test_empty_sample_sequence_produces_no_results():
     detector = FakeDetector([create_detection_result()])
 
-    processed_frames = list(process_sampled_video_frames([], detector))
+    processed_frames = list(process_sampled_video_frames([], detector, MODEL_PROFILE))
 
     assert processed_frames == []
     assert detector.calls == []
@@ -203,7 +252,9 @@ def test_frame_with_no_detections_still_produces_result():
     )
     detector = FakeDetector([SimpleNamespace(names={}, boxes=[])])
 
-    processed_frames = list(process_sampled_video_frames([sampled_frame], detector))
+    processed_frames = list(
+        process_sampled_video_frames([sampled_frame], detector, MODEL_PROFILE)
+    )
 
     assert len(processed_frames) == 1
     assert processed_frames[0].frame_number == 30
@@ -222,4 +273,4 @@ def test_missing_model_result_identifies_frame():
     detector = FakeDetector([])
 
     with pytest.raises(ValueError, match="frame 60"):
-        list(process_sampled_video_frames([sampled_frame], detector))
+        list(process_sampled_video_frames([sampled_frame], detector, MODEL_PROFILE))

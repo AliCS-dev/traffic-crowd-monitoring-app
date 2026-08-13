@@ -1,14 +1,11 @@
 import argparse
 
 from app.config import (
-    DEFAULT_DETECTION_CONFIDENCE,
-    DEFAULT_INFERENCE_IMAGE_SIZE,
-    DEFAULT_PREPROCESSING_SCALE_FACTOR,
-    MODEL_PATH,
     SAMPLE_IMAGE_PATH,
     SAMPLE_OUTPUT_PATH,
 )
 from app.database.detection_repository import save_image_detection_results
+from app.model_profile import load_runtime_model_profile
 from app.services.detection_service import (
     build_object_count_summary_records,
     count_detected_objects,
@@ -38,27 +35,6 @@ def parse_arguments():
         "--output",
         default=SAMPLE_OUTPUT_PATH,
         help="Path where the annotated output image will be saved.",
-    )
-
-    parser.add_argument(
-        "--confidence",
-        type=float,
-        default=DEFAULT_DETECTION_CONFIDENCE,
-        help="Minimum detection confidence threshold.",
-    )
-
-    parser.add_argument(
-        "--image-size",
-        type=int,
-        default=DEFAULT_INFERENCE_IMAGE_SIZE,
-        help="YOLO inference image size.",
-    )
-
-    parser.add_argument(
-        "--scale-factor",
-        type=int,
-        default=DEFAULT_PREPROCESSING_SCALE_FACTOR,
-        help="Image resize scale factor before detection.",
     )
 
     parser.add_argument(
@@ -128,6 +104,11 @@ def print_database_storage_summary(stored_result) -> None:
 
 def main():
     args = parse_arguments()
+    model_profile = load_runtime_model_profile()
+    class_mapping = model_profile.class_mapping_dict()
+
+    print(f"Runtime model profile: {model_profile.profile_id}")
+    print(f"Model quality-gate status: {model_profile.quality_gate_status}")
 
     image = load_input_image(args.image)
     height, width = image.shape[:2]
@@ -139,7 +120,7 @@ def main():
     print("Image is ready for preprocessing.")
 
     processed_image = preprocess_image_for_detection(
-        image, scale_factor=args.scale_factor
+        image, scale_factor=model_profile.scale_factor
     )
     processed_height, processed_width = processed_image.shape[:2]
 
@@ -148,14 +129,12 @@ def main():
 
     results = detect_objects(
         processed_image,
-        MODEL_PATH,
-        confidence_threshold=args.confidence,
-        image_size=args.image_size,
+        model_profile,
     )
 
     first_result = results[0]
-    object_counts = count_detected_objects(first_result)
-    detection_records = extract_detection_records(first_result)
+    object_counts = count_detected_objects(first_result, class_mapping)
+    detection_records = extract_detection_records(first_result, class_mapping)
 
     print("Object detection completed.")
     print_object_summary(object_counts)
@@ -184,6 +163,7 @@ def main():
             object_count_summary_records=object_count_summary_records,
             grid_count_result=grid_result,
             session_name=args.session_name,
+            model_profile=model_profile,
         )
 
         print_database_storage_summary(stored_result)

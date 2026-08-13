@@ -1,24 +1,39 @@
+from pathlib import Path
+from typing import Any
+
 from ultralytics import YOLO
 
-from app.config import (
-    DEFAULT_DETECTION_CONFIDENCE,
-    DEFAULT_INFERENCE_IMAGE_SIZE,
-    DEFAULT_MAX_DETECTIONS,
+from app.config import BASE_DIR
+from app.model_profile import (
+    RuntimeModelProfile,
+    verify_runtime_checkpoint,
 )
 
 
 class ObjectDetector:
-    def __init__(self, model_path):
-        self._model = YOLO(str(model_path))
+    def __init__(self, model_path, *, model_factory=None):
+        model_factory = model_factory or YOLO
+        self._model = model_factory(str(model_path))
+
+    @classmethod
+    def from_runtime_profile(
+        cls,
+        profile: RuntimeModelProfile,
+        *,
+        repository_root: Path = BASE_DIR,
+        model_factory=None,
+    ):
+        checkpoint_path = verify_runtime_checkpoint(profile, repository_root)
+        return cls(checkpoint_path, model_factory=model_factory)
 
     def detect(
         self,
         image,
-        confidence_threshold=DEFAULT_DETECTION_CONFIDENCE,
-        image_size=DEFAULT_INFERENCE_IMAGE_SIZE,
         *,
+        confidence_threshold,
+        image_size,
         device=None,
-        max_detections=DEFAULT_MAX_DETECTIONS,
+        max_detections=None,
         half_precision=False,
         verbose=None,
     ):
@@ -39,36 +54,55 @@ class ObjectDetector:
 
 def detect_objects(
     image,
-    model_path,
-    confidence_threshold=DEFAULT_DETECTION_CONFIDENCE,
-    image_size=DEFAULT_INFERENCE_IMAGE_SIZE,
+    profile: RuntimeModelProfile,
 ):
-    detector = ObjectDetector(model_path)
+    detector = ObjectDetector.from_runtime_profile(profile)
+    return detect_objects_with_profile(image, detector, profile)
+
+
+def detect_objects_with_profile(
+    image,
+    detector: ObjectDetector,
+    profile: RuntimeModelProfile,
+):
     return detector.detect(
         image,
-        confidence_threshold=confidence_threshold,
-        image_size=image_size,
+        confidence_threshold=profile.confidence,
+        image_size=profile.image_size,
+        device=profile.device,
+        max_detections=profile.max_detections,
+        half_precision=profile.half_precision,
     )
 
 
-def count_detected_objects(result):
+def count_detected_objects(
+    result,
+    class_mapping: dict[str, str] | None = None,
+):
     object_counts = {}
 
     for box in result.boxes:
         class_id = int(box.cls[0])
-        class_name = result.names[class_id]
+        class_name = _project_class_name(result.names[class_id], class_mapping)
+        if class_name is None:
+            continue
 
         object_counts[class_name] = object_counts.get(class_name, 0) + 1
 
     return object_counts
 
 
-def extract_detection_records(result):
+def extract_detection_records(
+    result,
+    class_mapping: dict[str, str] | None = None,
+):
     detection_records = []
 
     for box in result.boxes:
         class_id = int(box.cls[0])
-        class_name = result.names[class_id]
+        class_name = _project_class_name(result.names[class_id], class_mapping)
+        if class_name is None:
+            continue
         confidence = float(box.conf[0])
         x_min, y_min, x_max, y_max = [float(value) for value in box.xyxy[0]]
 
@@ -84,6 +118,16 @@ def extract_detection_records(result):
         )
 
     return detection_records
+
+
+def _project_class_name(
+    source_class: Any,
+    class_mapping: dict[str, str] | None,
+) -> str | None:
+    source_class = str(source_class)
+    if class_mapping is None:
+        return source_class
+    return class_mapping.get(source_class)
 
 
 def build_object_count_summary_records(object_counts):

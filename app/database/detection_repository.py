@@ -1,8 +1,10 @@
+import json
 from collections.abc import Iterable
 from pathlib import Path
 from typing import TYPE_CHECKING
 
 from app.database.connection import open_database_connection
+from app.model_profile import RuntimeModelProfile
 from app.services.detection_service import build_object_count_summary_records
 
 if TYPE_CHECKING:
@@ -18,6 +20,8 @@ def save_image_detection_results(
     object_count_summary_records=None,
     session_name=None,
     grid_count_result: "GridCountResult | None" = None,
+    *,
+    model_profile: RuntimeModelProfile,
 ):
     image_path = Path(image_path)
     object_count_summary_records = object_count_summary_records or []
@@ -29,6 +33,7 @@ def save_image_detection_results(
     with open_database_connection() as connection:
         with connection.cursor() as cursor:
             session_id = create_monitoring_session(cursor, session_name)
+            create_model_run_profile(cursor, session_id, model_profile)
             input_source_id = create_input_source(
                 cursor,
                 session_id,
@@ -76,6 +81,8 @@ def save_video_detection_results(
     video_path,
     frame_results: Iterable["VideoFrameDetectionResult"],
     session_name=None,
+    *,
+    model_profile: RuntimeModelProfile,
 ):
     video_path = Path(video_path)
     frame_results = list(frame_results)
@@ -90,6 +97,7 @@ def save_video_detection_results(
     with open_database_connection() as connection:
         with connection.cursor() as cursor:
             session_id = create_monitoring_session(cursor, session_name)
+            create_model_run_profile(cursor, session_id, model_profile)
             input_source_id = create_input_source(
                 cursor,
                 session_id,
@@ -150,6 +158,49 @@ def create_monitoring_session(cursor, session_name):
     )
 
     return cursor.fetchone()[0]
+
+
+def create_model_run_profile(cursor, session_id, model_profile):
+    cursor.execute(
+        """
+        INSERT INTO model_run_profiles (
+            session_id,
+            profile_id,
+            model_id,
+            quality_gate_status,
+            evaluation_reference,
+            checkpoint_path,
+            checkpoint_sha256,
+            class_mapping,
+            confidence,
+            image_size,
+            scale_factor,
+            max_detections,
+            numeric_precision,
+            device
+        )
+        VALUES (
+            %s, %s, %s, %s, %s, %s, %s, CAST(%s AS JSONB),
+            %s, %s, %s, %s, %s, %s
+        );
+        """,
+        (
+            session_id,
+            model_profile.profile_id,
+            model_profile.model_id,
+            model_profile.quality_gate_status,
+            model_profile.evaluation_reference.as_posix(),
+            model_profile.checkpoint_path.as_posix(),
+            model_profile.checkpoint_sha256,
+            json.dumps(model_profile.class_mapping_dict(), sort_keys=True),
+            model_profile.confidence,
+            model_profile.image_size,
+            model_profile.scale_factor,
+            model_profile.max_detections,
+            model_profile.numeric_precision,
+            model_profile.device,
+        ),
+    )
 
 
 def create_input_source(cursor, session_id, source_path, source_type):
