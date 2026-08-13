@@ -56,18 +56,26 @@ def test_fresh_database_applies_migrations_once(isolated_database_schema):
         connection_factory=connection_factory,
     )
 
-    assert [migration.version for migration in first_result.applied] == [1]
+    assert [migration.version for migration in first_result.applied] == [1, 2]
     assert second_result.applied == ()
-    assert [migration.version for migration in second_result.previously_applied] == [1]
+    assert [migration.version for migration in second_result.previously_applied] == [
+        1,
+        2,
+    ]
 
     with connection_factory() as connection:
         with connection.cursor() as cursor:
             cursor.execute(
                 "SELECT version, name FROM schema_migrations ORDER BY version;"
             )
-            assert cursor.fetchall() == [(1, "create_initial_tables")]
+            assert cursor.fetchall() == [
+                (1, "create_initial_tables"),
+                (2, "add_model_run_profiles"),
+            ]
             cursor.execute("SELECT to_regclass('monitoring_sessions');")
             assert cursor.fetchone() == ("monitoring_sessions",)
+            cursor.execute("SELECT to_regclass('model_run_profiles');")
+            assert cursor.fetchone() == ("model_run_profiles",)
 
 
 def test_existing_initial_schema_is_adopted_without_data_loss(
@@ -93,7 +101,7 @@ def test_existing_initial_schema_is_adopted_without_data_loss(
 
     result = apply_pending_migrations(connection_factory=connection_factory)
 
-    assert [migration.version for migration in result.applied] == [1]
+    assert [migration.version for migration in result.applied] == [1, 2]
     with connection_factory() as connection:
         with connection.cursor() as cursor:
             cursor.execute(
@@ -101,8 +109,8 @@ def test_existing_initial_schema_is_adopted_without_data_loss(
                 (session_id,),
             )
             assert cursor.fetchone() == ("legacy session", "completed")
-            cursor.execute("SELECT version FROM schema_migrations;")
-            assert cursor.fetchall() == [(1,)]
+            cursor.execute("SELECT version FROM schema_migrations ORDER BY version;")
+            assert cursor.fetchall() == [(1,), (2,)]
 
 
 def test_failed_pending_migration_rolls_back_every_change(

@@ -16,13 +16,16 @@ and database storage without placing everything in one large script.
 Command-line input
        |
        v
+Load runtime model profile
+       |
+       v
 Load and validate image
        |
        v
 Resize image for detection
        |
        v
-Run YOLO object detection
+Verify checkpoint identity and run YOLO object detection
        |
        +---------------------> Save annotated image
        |
@@ -34,6 +37,7 @@ Extract detections and class counts
        v
 Optional PostgreSQL transaction
   - monitoring session
+  - model and inference profile snapshot
   - input source
   - processed frame
   - detection results
@@ -45,6 +49,9 @@ Video input currently has its own smaller flow:
 
 ```text
 Video file
+    |
+    v
+Load runtime model profile and verify checkpoint identity
     |
     v
 Validate and open with OpenCV
@@ -67,6 +74,7 @@ Preprocess and detect sampled frames
     v
 Optional PostgreSQL transaction
   - one monitoring session
+  - one model and inference profile snapshot
   - one video input source
   - one processed row per sampled frame
   - per-frame detections and class counts
@@ -77,7 +85,8 @@ Optional PostgreSQL transaction
 | Component | Role in the application |
 | --- | --- |
 | `app/main.py` | Coordinates one image-processing run |
-| `app/config.py` | Keeps project paths and local defaults in one place |
+| `app/config.py` | Keeps project paths in one place |
+| `app/model_profile.py` | Validates the runtime profile and verifies checkpoint identity |
 | `app/services/image_service.py` | Checks the input path and loads supported images |
 | `app/services/video_service.py` | Opens videos, reads metadata, and provides frames |
 | `app/services/frame_sampling_service.py` | Selects video frames at controlled time intervals |
@@ -99,11 +108,18 @@ today and leaves room for a future interface to reuse the same logic.
 
 When we use `--save-to-db`, we store the records for one image inside a single
 database transaction. Video storage follows the same rule: one transaction
-contains the session, source, every sampled frame, and all related detections
-and summaries. An image grid joins the same transaction when requested. Every
-cell is stored, while only non-zero per-class counts create summary rows. If one
-insert fails, the transaction is rolled back, so we do not keep an incomplete
-processing run.
+contains the session, its model-profile snapshot, source, every sampled frame,
+and all related detections and summaries. An image grid joins the same
+transaction when requested. Every cell is stored, while only non-zero per-class
+counts create summary rows. If one insert fails, the transaction is rolled back,
+so we do not keep an incomplete processing run.
+
+The tracked runtime profile is aligned with the frozen YOLO26m VisDrone
+evaluation configuration. It includes the checkpoint hash, class mapping, and
+inference settings. The application verifies the local weights before inference
+and maps the model's source labels into the six project classes. The profile's
+stored quality-gate status is `failed`; alignment improves traceability but does
+not imply acceptable model accuracy.
 
 We use parameterised SQL throughout the repository. Values are passed separately
 from the SQL statements, which keeps the queries clear and avoids building SQL
@@ -174,8 +190,7 @@ below, while the outer image edges remain part of the final row and column.
 - The reusable detector supports processing multiple frames with one model
   instance, but video processing is not yet connected to the command-line
   application.
-- We do not yet store model identity, inference settings, or processing time with
-  a database result.
+- We do not yet store processing duration with a database result.
 - Grid counts can be printed and stored for image runs, but they are not drawn on
   output images or connected to sampled video frames yet.
 - Repository tests cover transaction behavior with controlled test doubles, but

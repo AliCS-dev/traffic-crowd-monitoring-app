@@ -43,6 +43,8 @@ as new migration files; applied files are immutable.
 ```text
 monitoring_sessions
   |
+  +-- model_run_profiles
+  |
   +-- input_sources
   |     |
   |     +-- processed_frames
@@ -65,6 +67,19 @@ session and input-source relationships consistent.
 
 We create a monitoring session for each processing run. It keeps the session
 name, current status, start time, completion time, and optional notes.
+
+### `model_run_profiles`
+
+Each newly stored monitoring session has one snapshot of the runtime model
+profile used to produce it. The record includes the profile and model IDs,
+quality-gate status, evaluation reference, checkpoint path and SHA-256, class
+mapping, confidence, image size, preprocessing scale factor, maximum detections,
+numeric precision, and device. We store this snapshot rather than only a pointer
+to the current configuration, so later configuration changes do not erase how an
+older result was produced.
+
+Sessions created before migration `002` do not have a profile row. They remain
+valid historical records, but their exact model provenance was not captured.
 
 ### `input_sources`
 
@@ -113,14 +128,15 @@ not implemented the alert rules yet.
 When we use `--save-to-db`, we create the records in this order:
 
 1. a monitoring session;
-2. an image input source;
-3. a processed frame;
-4. the individual detection results;
-5. the complete-frame class summaries;
-6. optional grid cells and their per-cell summaries;
-7. the completed session status.
+2. its model and inference profile snapshot;
+3. an image input source;
+4. a processed frame;
+5. the individual detection results;
+6. the complete-frame class summaries;
+7. optional grid cells and their per-cell summaries;
+8. the completed session status.
 
-All seven steps are part of one transaction. If one step fails, PostgreSQL rolls
+All eight steps are part of one transaction. If one step fails, PostgreSQL rolls
 back the transaction and we do not keep a partially stored run.
 
 For a video, we follow the same transaction pattern, but create one
@@ -131,8 +147,7 @@ is still stored when it has no detections.
 
 ## What We Still Need to Improve
 
-- We do not store the model identity, model version, inference settings, or
-  processing duration with a result yet.
+- We do not store processing duration with a result yet.
 - CI verifies grid-cell and per-cell summary relationships in PostgreSQL, but it
   does not yet cover every repository path with live database queries.
 - The schema does not yet enforce one count summary per frame, grid cell, and

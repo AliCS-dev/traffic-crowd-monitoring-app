@@ -36,6 +36,8 @@ result.
 | Baseline model evaluation | Completed; quality gate failed |
 | Fine-tuning pilot | Completed; person-only checkpoint rejected |
 | Final held-out evaluation | Completed; quality gate failed |
+| Validated runtime model profile | Implemented; experimental YOLO26m profile |
+| Per-session model provenance | Implemented |
 | Grid-based spatial counting | Implemented as an experimental component |
 | Grid-cell database storage | Implemented for image runs |
 | Threshold-based alerts | Planned |
@@ -64,8 +66,11 @@ app/
   database/              Database connection, repository, and migrations
   services/              Image, preprocessing, detection, and output logic
   ui/                    Reserved for the future user interface
-  config.py              Project paths and local defaults
+  config.py              Project paths
+  model_profile.py       Runtime-profile validation and checkpoint verification
   main.py                Command-line application entry point
+configs/
+  runtime/               Application model and inference profile
 data/
   evaluation/             Evaluation metadata; raw media excluded from Git
   input/                  Local input images and videos
@@ -127,25 +132,28 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements-dev.txt
 ```
 
-Our current baseline is the COCO-pretrained YOLO26n detection model described in
-the [official Ultralytics YOLO26 documentation](https://docs.ultralytics.com/models/yolo26/).
-For a clean local setup, we can download the model through Ultralytics and place
-it in the project model directory:
+The runnable application uses the experimental profile in
+`configs/runtime/yolo26m_visdrone.json`. It points to the original
+VisDrone-trained YOLO26m checkpoint selected before held-out testing and records
+its class mapping, confidence, image size, preprocessing scale, device,
+`max_det`, and numeric precision. We can download and verify the pinned candidate
+weights with:
 
 ```bash
-.venv/bin/python -c "from ultralytics import YOLO; YOLO('yolo26n.pt')"
-mv yolo26n.pt models/yolo26n.pt
+.venv/bin/python scripts/preflight_model_candidates.py --download
 ```
 
-The application then loads the weights from:
+The runtime profile expects the selected checkpoint at:
 
 ```text
-models/yolo26n.pt
+models/candidates/yolo26m-visdrone/best.pt
 ```
 
-We keep model weights out of Git because they are large binary artifacts. For
-formal thesis experiments, we will record the exact model source and version so
-that the results can be reproduced.
+Before loading YOLO, the application verifies the checkpoint size and SHA-256.
+It stops with a clear error if the file is missing or has changed. Model weights
+remain outside Git because they are large binary artifacts. Selecting this
+profile aligns runtime provenance with the evaluation record; it does not change
+the failed quality-gate result or make the detector deployment-ready.
 
 Local database values are stored in `.env`. We create it from the safe example:
 
@@ -223,26 +231,30 @@ timestamp. The video detection service reuses one model instance across those
 frames:
 
 ```python
-from app.config import MODEL_PATH
 from app.database.detection_repository import save_video_detection_results
+from app.model_profile import load_runtime_model_profile
 from app.services.detection_service import ObjectDetector
 from app.services.frame_sampling_service import sample_video_frames
 from app.services.video_detection_service import process_sampled_video_frames
 from app.services.video_service import VideoReader
 
-detector = ObjectDetector(MODEL_PATH)
+profile = load_runtime_model_profile()
+detector = ObjectDetector.from_runtime_profile(profile)
 
 with VideoReader("data/input/example.mp4") as video:
     sampled_frames = sample_video_frames(
         video,
         sampling_interval_seconds=1.0,
     )
-    frame_results = list(process_sampled_video_frames(sampled_frames, detector))
+    frame_results = list(
+        process_sampled_video_frames(sampled_frames, detector, profile)
+    )
 
 stored_result = save_video_detection_results(
     "data/input/example.mp4",
     frame_results,
     session_name="sample video run",
+    model_profile=profile,
 )
 print(stored_result)
 ```
@@ -365,17 +377,18 @@ errors and saves the complete machine-readable error list, deterministic
 example images, contact sheets, a summary, and checksums under
 `data/evaluation/derived/error_analysis/`.
 
-The selected baseline can be reproduced as one complete validation run with:
+The earlier YOLO26n selected baseline can still be reproduced as one complete
+validation run with:
 
 ```bash
 .venv/bin/python scripts/run_detector_evaluation.py \
   --config configs/evaluation/yolo26n_selected_validation.json
 ```
 
-Its confidence, image size, and preprocessing defaults are also used by the
-image and video detection services. The configuration is a comparison baseline;
-it did not pass the quality gate and must not be treated as a deployment-ready
-model.
+It remains historical comparison evidence rather than the application runtime
+configuration. Image and video processing now use the separate validated
+YOLO26m runtime profile described above. Neither evaluated model passed the
+quality gate, and neither should be presented as deployment-ready.
 
 Formal results should be created from a committed working tree on the same
 documented hardware and power configuration. Generated run directories remain
@@ -400,9 +413,9 @@ Before opening a pull request, we run the same basic checks that are used in CI:
 ```
 
 GitHub Actions starts PostgreSQL, checks the application connection, exercises
-fresh, repeated, legacy, and failed migration paths, and runs a grid-persistence
-integration test. The tests query real PostgreSQL relationships and remove their
-temporary records and schemas afterwards.
+fresh, repeated, legacy, and failed migration paths, and verifies grid and model
+provenance persistence. The tests query real PostgreSQL relationships and remove
+their temporary records and schemas afterwards.
 
 ## Project Documents
 

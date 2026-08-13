@@ -339,3 +339,20 @@ PostgreSQL integration tests verify fresh setup, repeated execution, legacy-data
 preservation, and rollback when a later migration fails. The old table-creation
 script remains as a compatibility wrapper, while the documented command is now
 `scripts/migrate_database.py`.
+
+### Issue #66: Runtime Model Profile And Session Provenance
+
+We replaced the application's hard-coded YOLO26n path and duplicated inference
+defaults with one strict runtime profile for the frozen VisDrone-trained
+YOLO26m checkpoint. The profile records the exact checkpoint identity, project
+class mapping, confidence, image size, preprocessing scale, maximum detections,
+device, numeric precision, evaluation reference, and failed quality-gate status.
+The application verifies the local checkpoint before YOLO is loaded and uses the
+same settings for image and sampled-video processing.
+
+Migration `002` adds one `model_run_profiles` record for each newly stored
+monitoring session. This snapshot is written in the same transaction as the
+session and its detections, so a result cannot be stored without its declared
+runtime provenance. Existing sessions remain intact and are documented as
+legacy records without complete model provenance. Alignment makes future
+results reproducible; it does not change the detector's failed held-out result.

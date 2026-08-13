@@ -1,8 +1,11 @@
 import pytest
 
 import app.database.detection_repository as detection_repository
+from app.model_profile import load_runtime_model_profile
 from app.services.grid_counting_service import count_detections_by_grid
 from app.services.video_detection_service import VideoFrameDetectionResult
+
+MODEL_PROFILE = load_runtime_model_profile()
 
 CAR_DETECTION = {
     "object_class": "car",
@@ -64,6 +67,8 @@ class FakeCursor:
 
         if "INSERT INTO monitoring_sessions" in normalized_query:
             return "monitoring_session"
+        if "INSERT INTO model_run_profiles" in normalized_query:
+            return "model_run_profile"
         if "INSERT INTO input_sources" in normalized_query:
             return "input_source"
         if "INSERT INTO processed_frames" in normalized_query:
@@ -137,6 +142,7 @@ def test_save_video_results_associates_multiple_frames_and_records(monkeypatch):
         "data/input/traffic.mp4",
         frame_results,
         session_name="sample video",
+        model_profile=MODEL_PROFILE,
     )
 
     assert stored_result == {
@@ -152,6 +158,17 @@ def test_save_video_results_associates_multiple_frames_and_records(monkeypatch):
     )
     assert ("processed_frame", (10, 20, 0, 0.0, 1280, 720)) in cursor.execute_calls
     assert ("processed_frame", (10, 20, 120, 4.0, 1280, 720)) in cursor.execute_calls
+    assert any(
+        operation == "model_run_profile"
+        and parameters[0:4]
+        == (
+            10,
+            "yolo26m-visdrone-experimental-v1",
+            "yolo26m-visdrone",
+            "failed",
+        )
+        for operation, parameters in cursor.execute_calls
+    )
     assert cursor.executemany_calls == [
         (
             "detection_results",
@@ -198,6 +215,7 @@ def test_save_video_result_records_frame_without_detections(monkeypatch):
     stored_result = detection_repository.save_video_detection_results(
         "data/input/empty-frame.mp4",
         [frame_result],
+        model_profile=MODEL_PROFILE,
     )
 
     assert stored_result["frame_count"] == 1
@@ -221,6 +239,7 @@ def test_save_video_results_rejects_empty_frame_sequence(monkeypatch):
         detection_repository.save_video_detection_results(
             "data/input/no-frames.mp4",
             [],
+            model_profile=MODEL_PROFILE,
         )
 
 
@@ -241,6 +260,7 @@ def test_save_video_results_rolls_back_complete_transaction_on_failure(monkeypat
         detection_repository.save_video_detection_results(
             "data/input/traffic.mp4",
             [frame_result],
+            model_profile=MODEL_PROFILE,
         )
 
     assert connection.exit_exception_type is RuntimeError
@@ -261,6 +281,7 @@ def test_existing_image_storage_uses_image_source_and_zero_frame(monkeypatch):
         image_width=640,
         image_height=480,
         detection_records=[],
+        model_profile=MODEL_PROFILE,
     )
 
     assert stored_result["processed_frame_id"] == 30
@@ -268,6 +289,29 @@ def test_existing_image_storage_uses_image_source_and_zero_frame(monkeypatch):
         cursor.execute_calls
     )
     assert ("processed_frame", (10, 20, 0, 0, 640, 480)) in cursor.execute_calls
+
+
+def test_model_profile_failure_rolls_back_before_source_storage(monkeypatch):
+    cursor, connection = use_fake_database(
+        monkeypatch,
+        generated_ids=[10],
+        fail_on="model_run_profile",
+    )
+
+    with pytest.raises(RuntimeError, match="Failed to insert model_run_profile"):
+        detection_repository.save_image_detection_results(
+            "data/input/image.jpg",
+            image_width=640,
+            image_height=480,
+            detection_records=[],
+            model_profile=MODEL_PROFILE,
+        )
+
+    assert connection.exit_exception_type is RuntimeError
+    assert [operation for operation, _parameters in cursor.execute_calls] == [
+        "monitoring_session",
+        "model_run_profile",
+    ]
 
 
 def test_image_storage_keeps_session_name_positional_compatibility(monkeypatch):
@@ -283,6 +327,7 @@ def test_image_storage_keeps_session_name_positional_compatibility(monkeypatch):
         [],
         [],
         "existing positional call",
+        model_profile=MODEL_PROFILE,
     )
 
     assert ("monitoring_session", ("existing positional call", "processing")) in (
@@ -313,6 +358,7 @@ def test_save_image_results_stores_grid_cells_and_linked_summaries(monkeypatch):
             {"object_class": "person", "object_count": 1},
         ],
         grid_count_result=grid_result,
+        model_profile=MODEL_PROFILE,
     )
 
     assert stored_result["grid_cell_count"] == 4
@@ -371,6 +417,7 @@ def test_save_image_results_rejects_grid_for_different_image(monkeypatch):
             image_height=100,
             detection_records=[],
             grid_count_result=grid_result,
+            model_profile=MODEL_PROFILE,
         )
 
 
@@ -395,6 +442,7 @@ def test_grid_insert_failure_rolls_back_complete_image_transaction(monkeypatch):
             image_height=100,
             detection_records=[],
             grid_count_result=grid_result,
+            model_profile=MODEL_PROFILE,
         )
 
     assert connection.exit_exception_type is RuntimeError

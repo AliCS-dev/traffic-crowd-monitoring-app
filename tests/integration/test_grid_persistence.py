@@ -5,6 +5,7 @@ import pytest
 from app.database.connection import open_database_connection
 from app.database.detection_repository import save_image_detection_results
 from app.database.migration_runner import apply_pending_migrations
+from app.model_profile import load_runtime_model_profile
 from app.services.grid_counting_service import count_detections_by_grid
 
 pytestmark = pytest.mark.skipif(
@@ -53,6 +54,7 @@ def test_grid_cells_and_summaries_are_persisted_with_correct_relationships():
         ],
         grid_count_result=grid_result,
         session_name="grid persistence integration test",
+        model_profile=load_runtime_model_profile(),
     )
 
     try:
@@ -97,6 +99,17 @@ def test_grid_cells_and_summaries_are_persisted_with_correct_relationships():
                     (stored_result["processed_frame_id"],),
                 )
                 frame_summaries = cursor.fetchall()
+
+                cursor.execute(
+                    """
+                    SELECT model_id, checkpoint_sha256, confidence, image_size,
+                           scale_factor, max_detections, numeric_precision, device
+                    FROM model_run_profiles
+                    WHERE session_id = %s;
+                    """,
+                    (stored_result["session_id"],),
+                )
+                model_profile = cursor.fetchone()
     finally:
         with open_database_connection() as connection:
             with connection.cursor() as cursor:
@@ -116,5 +129,15 @@ def test_grid_cells_and_summaries_are_persisted_with_correct_relationships():
         (1, 1, "person", 1),
     ]
     assert frame_summaries == [("car", 1), ("person", 1)]
+    assert model_profile == (
+        "yolo26m-visdrone",
+        "e57204b8d77b5b22ea9253cbd5664b707623aeb7c19dbaa9034fe5a60bed6571",
+        0.25,
+        1280,
+        2,
+        300,
+        "float32",
+        "cuda:0",
+    )
     assert stored_result["grid_cell_count"] == 4
     assert stored_result["grid_object_count_summary_count"] == 2
