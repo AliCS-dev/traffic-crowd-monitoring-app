@@ -10,6 +10,10 @@ project does not yet need.
 The current structure lets us combine image and video processing with detection
 and database storage without placing everything in one large script.
 
+The application now has two entry points. `app/main.py` remains the image CLI,
+while `app/api/application.py` exposes reusable services through HTTP. Neither
+entry point contains detection or persistence logic of its own.
+
 ## Current Processing Flow
 
 ```text
@@ -80,11 +84,39 @@ Optional PostgreSQL transaction
   - per-frame detections and class counts
 ```
 
+The HTTP foundation currently has a smaller service-status flow:
+
+```text
+HTTP request
+    |
+    v
+FastAPI routing and typed response schema
+    |
+    +---------------------> /api/health: process responds
+    |
+    v
+Injected application services
+    |
+    +---------------------> PostgreSQL connection probe
+    |
+    +---------------------> Runtime checkpoint identity probe
+    |
+    v
+/api/ready: 200 ready or 503 not ready
+```
+
+The detector itself is created lazily through the same dependency container.
+Health checks, OpenAPI generation, and API unit tests do not load YOLO.
+
 ## Main Components
 
 | Component | Role in the application |
 | --- | --- |
 | `app/main.py` | Coordinates one image-processing run |
+| `app/api/application.py` | Creates the FastAPI application and manages its lifecycle |
+| `app/api/dependencies.py` | Provides readiness probes and lazy detector access |
+| `app/api/errors.py` | Converts API failures into one public JSON error format |
+| `app/api/routes/health.py` | Exposes process health and dependency readiness |
 | `app/config.py` | Keeps project paths in one place |
 | `app/model_profile.py` | Validates the runtime profile and verifies checkpoint identity |
 | `app/services/image_service.py` | Checks the input path and loads supported images |
@@ -102,7 +134,8 @@ Optional PostgreSQL transaction
 
 `app/main.py` brings these pieces together, while the service modules contain
 the individual processing steps. This gives us a simple command-line application
-today and leaves room for a future interface to reuse the same logic.
+and an HTTP application that can be used by the future frontend without
+reimplementing the processing pipeline.
 
 ## How We Store a Result
 
@@ -139,6 +172,21 @@ reimplementing image detection or database storage.
 At this stage, we run PostgreSQL in Docker and keep Python, OpenCV, and YOLO in a
 local virtual environment. This makes it easier for us to experiment with models
 and hardware while keeping the database setup repeatable.
+
+### Keeping health separate from readiness
+
+Process health answers only whether the HTTP server is running. Readiness checks
+whether PostgreSQL is reachable and whether the runtime checkpoint matches its
+recorded identity. A missing dependency therefore returns `503` from readiness
+without making the health route unavailable. Checkpoint readiness is an
+operational state, not evidence of model accuracy.
+
+### Loading the detector lazily
+
+The API dependency container loads the runtime profile at startup but constructs
+YOLO only when an analysis route requests it. This keeps startup and API tests
+lightweight while still giving future routes one shared detector instance. The
+container clears its reference during application shutdown.
 
 ### Treating one image as one session
 
@@ -196,3 +244,5 @@ below, while the outer image edges remain part of the final row and column.
 - Repository tests cover transaction behavior with controlled test doubles, but
   live PostgreSQL coverage does not yet include every future API query path.
 - `app/ui` is reserved for later work and does not contain an interface yet.
+- The API exposes only service health and readiness. Upload, analysis, history,
+  and result routes are not implemented yet.

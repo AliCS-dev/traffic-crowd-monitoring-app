@@ -40,6 +40,7 @@ result.
 | Per-session model provenance | Implemented |
 | Grid-based spatial counting | Implemented as an experimental component |
 | Grid-cell database storage | Implemented for image runs |
+| FastAPI backend foundation | Implemented with health and readiness endpoints |
 | Threshold-based alerts | Planned |
 
 The current detector gives us a measured starting point, but it is not reliable
@@ -55,6 +56,7 @@ training boxes; dense crowds may need a dedicated counting method.
 - OpenCV and NumPy
 - Ultralytics YOLO
 - PostgreSQL 16 and Psycopg 3
+- FastAPI and Uvicorn
 - Docker Compose for the local database
 - Pytest and Ruff
 - GitHub Actions and Dependabot
@@ -63,6 +65,7 @@ training boxes; dense crowds may need a dedicated counting method.
 
 ```text
 app/
+  api/                   HTTP application, dependencies, routes, and schemas
   database/              Database connection, repository, and migrations
   services/              Image, preprocessing, detection, and output logic
   ui/                    Reserved for the future user interface
@@ -163,6 +166,45 @@ cp .env.example .env
 
 The example credentials are only for local development, and `.env` remains
 outside version control.
+
+## Running the API
+
+The FastAPI backend is a separate entry point from the existing image CLI. We
+start it locally with:
+
+```bash
+.venv/bin/uvicorn app.api.application:app \
+  --host 127.0.0.1 \
+  --port 8000 \
+  --reload
+```
+
+The first API routes are deliberately small:
+
+- `GET /api/health` confirms that the HTTP process can respond;
+- `GET /api/ready` checks PostgreSQL and verifies the configured checkpoint;
+- `GET /docs` opens the generated interactive OpenAPI documentation;
+- `GET /openapi.json` returns the machine-readable API contract.
+
+Readiness returns HTTP `503` when a dependency is unavailable. Detector
+readiness means that the configured checkpoint exists and matches its recorded
+identity. It does not change the failed model quality-gate result or claim that
+the detector is accurate enough for operational monitoring.
+
+The detector is loaded only when a future analysis route requests it. Starting
+the server, checking health, and generating documentation therefore do not
+allocate GPU model memory. PostgreSQL remains the only Docker service at this
+stage.
+
+Development browser origins are configured as a comma-separated list in
+`.env`:
+
+```text
+API_CORS_ORIGINS=http://localhost:5173
+```
+
+Wildcard CORS is rejected. Media uploads, video jobs, and result endpoints are
+added in their own issues after this foundation.
 
 ## Trying the Image Pipeline
 
@@ -439,6 +481,7 @@ is still under development:
 - video processing is available through services but not through the
   command-line entry point;
 - we do not yet generate alerts;
+- the API currently exposes health and readiness but no analysis routes;
 - the project does not yet have a user interface;
 - we do not calculate physical crowd density.
 

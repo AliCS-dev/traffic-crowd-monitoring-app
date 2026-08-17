@@ -14,12 +14,15 @@ def get_database_url():
     return database_url
 
 
-def open_database_connection():
-    return psycopg.connect(get_database_url())
+def open_database_connection(**connection_options):
+    return psycopg.connect(get_database_url(), **connection_options)
 
 
-def check_database_connection():
-    with open_database_connection() as connection:
+def check_database_connection(*, connect_timeout=None):
+    options = {}
+    if connect_timeout is not None:
+        options["connect_timeout"] = connect_timeout
+    with open_database_connection(**options) as connection:
         with connection.cursor() as cursor:
             cursor.execute("SELECT 1")
             result = cursor.fetchone()
