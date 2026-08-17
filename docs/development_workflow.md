@@ -105,6 +105,19 @@ class mapping with ad hoc command-line options because stored results must match
 the profile recorded with their monitoring session. Experimental comparisons use
 the separate evaluation configurations instead.
 
+For API changes, tests replace database and detector dependencies with controlled
+probes. This keeps route and schema tests independent of Docker and model files.
+We can run the local server and inspect its generated contract with:
+
+```bash
+.venv/bin/uvicorn app.api.application:app --host 127.0.0.1 --port 8000
+curl http://127.0.0.1:8000/api/health
+curl http://127.0.0.1:8000/openapi.json
+```
+
+Readiness is checked separately because it requires the local database and
+verified runtime checkpoint.
+
 ## Keeping the Documents Current
 
 We update documentation in the same pull request as the related behavior. The
