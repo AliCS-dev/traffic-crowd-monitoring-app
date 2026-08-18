@@ -356,3 +356,35 @@ session and its detections, so a result cannot be stored without its declared
 runtime provenance. Existing sessions remain intact and are documented as
 legacy records without complete model provenance. Alignment makes future
 results reproducible; it does not change the detector's failed held-out result.
+
+### Issue #67: Dedicated Dense-Crowd Evaluation
+
+We added a reproducible evaluation path for a dedicated crowd-counting model and
+tested the selected checkpoint against the prepared crowd evidence. The result did
+not meet the declared acceptance criteria, so we rejected the checkpoint instead
+of integrating it into the application. This keeps the limitation visible: the
+current system can report detector-based person counts, but it cannot claim a
+validated dense-crowd counting capability.
+
+### Issue #69: FastAPI Backend Foundation
+
+We added a separate FastAPI entry point without changing the existing command-line
+pipeline. The API now distinguishes basic process health from dependency
+readiness, verifies PostgreSQL and checkpoint availability, provides typed error
+responses and OpenAPI documentation, and loads the detector only when a future
+analysis route requests it. Database and detector dependencies can be replaced in
+tests, so API checks do not need to load model weights.
+
+### Issue #73: Stored-Result Query Models
+
+We added the read side that was missing from PostgreSQL persistence. Session
+history now has validated page-number pagination and deterministic ordering by
+start time and ID. A complete session read reconstructs model provenance, input
+metadata, ordered frames, detections, complete-frame summaries, grid cells,
+per-cell summaries, and alerts into typed models.
+
+The detail read uses a fixed number of bulk queries rather than one query for each
+video frame. Migration `003` adds the matching session-history index. Unit tests
+cover pagination, missing and legacy sessions, nested result grouping, and query
+count. The PostgreSQL integration test stores and reads both a gridded image and
+an intentionally out-of-order sampled video, then removes its controlled records.

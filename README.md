@@ -41,6 +41,7 @@ result.
 | Grid-based spatial counting | Implemented as an experimental component |
 | Grid-cell database storage | Implemented for image runs |
 | FastAPI backend foundation | Implemented with health and readiness endpoints |
+| Stored-session query layer | Implemented with typed paginated result models |
 | Threshold-based alerts | Planned |
 
 The current detector gives us a measured starting point, but it is not reliable
@@ -66,7 +67,8 @@ training boxes; dense crowds may need a dedicated counting method.
 ```text
 app/
   api/                   HTTP application, dependencies, routes, and schemas
-  database/              Database connection, repository, and migrations
+  database/              Database connections, repositories, and migrations
+  schemas/               Typed monitoring history and result models
   services/              Image, preprocessing, detection, and output logic
   ui/                    Reserved for the future user interface
   config.py              Project paths

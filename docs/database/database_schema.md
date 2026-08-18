@@ -123,6 +123,31 @@ This table is ready for future threshold-based warnings. It can hold the alert
 type, severity, message, measured value, threshold, and resolution time. We have
 not implemented the alert rules yet.
 
+## How We Read Stored Results
+
+The write repository creates complete processing transactions. The monitoring
+query repository provides the matching read side for application history and
+result views. It returns typed application schemas instead of exposing PostgreSQL
+rows to API or interface code. The result schema identifies a source by its ID,
+type, original filename, and creation time without exposing the server's internal
+file path.
+
+Session history uses page numbers and a bounded page size. We order sessions by
+`started_at DESC, id DESC`; the ID is the deterministic tie-breaker when two runs
+have the same timestamp. Migration `003` adds an index in this order so PostgreSQL
+can support the history query as the number of sessions grows.
+
+A complete result is reconstructed with a fixed set of bulk queries. We load the
+session and model profile, sources, frames, detections, grid cells, summaries, and
+alerts by relationship. The number of queries does not grow with the number of
+sampled video frames. Complete-frame summaries and per-cell summaries remain in
+separate fields in the returned schema, even though PostgreSQL stores them in the
+same table.
+
+Sessions created before model-profile snapshots were introduced remain readable.
+Their `model_profile` field is null, which preserves the historical record without
+inventing provenance that was not stored at the time.
+
 ## What Happens During a Stored Run
 
 When we use `--save-to-db`, we create the records in this order:
@@ -148,8 +173,9 @@ is still stored when it has no detections.
 ## What We Still Need to Improve
 
 - We do not store processing duration with a result yet.
-- CI verifies grid-cell and per-cell summary relationships in PostgreSQL, but it
-  does not yet cover every repository path with live database queries.
+- CI verifies database migrations, grid persistence, deterministic history
+  pagination, complete image reconstruction, and ordered sampled-video reads
+  against PostgreSQL. Future write and query paths will need matching coverage.
 - The schema does not yet enforce one count summary per frame, grid cell, and
   object class.
 - Session status values are not restricted by a database check constraint.
