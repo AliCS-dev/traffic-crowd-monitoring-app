@@ -22,10 +22,14 @@ def save_image_detection_results(
     grid_count_result: "GridCountResult | None" = None,
     *,
     model_profile: RuntimeModelProfile,
+    original_filename=None,
+    output_asset_id=None,
+    output_file_path=None,
 ):
     image_path = Path(image_path)
     object_count_summary_records = object_count_summary_records or []
     _validate_grid_image_dimensions(grid_count_result, image_width, image_height)
+    _validate_output_reference(output_asset_id, output_file_path)
 
     grid_cell_count = 0
     grid_object_count_summary_count = 0
@@ -39,6 +43,7 @@ def save_image_detection_results(
                 session_id,
                 image_path,
                 source_type="image",
+                original_filename=original_filename,
             )
             processed_frame_id = create_processed_frame(
                 cursor,
@@ -48,6 +53,8 @@ def save_image_detection_results(
                 image_height,
                 frame_number=0,
                 frame_timestamp_seconds=0,
+                output_asset_id=output_asset_id,
+                output_file_path=output_file_path,
             )
             create_detection_results(cursor, processed_frame_id, detection_records)
             create_object_count_summaries(
@@ -203,7 +210,13 @@ def create_model_run_profile(cursor, session_id, model_profile):
     )
 
 
-def create_input_source(cursor, session_id, source_path, source_type):
+def create_input_source(
+    cursor,
+    session_id,
+    source_path,
+    source_type,
+    original_filename=None,
+):
     cursor.execute(
         """
         INSERT INTO input_sources (
@@ -219,7 +232,7 @@ def create_input_source(cursor, session_id, source_path, source_type):
             session_id,
             source_type,
             str(source_path),
-            source_path.name,
+            original_filename or source_path.name,
         ),
     )
 
@@ -234,6 +247,8 @@ def create_processed_frame(
     image_height,
     frame_number,
     frame_timestamp_seconds,
+    output_asset_id=None,
+    output_file_path=None,
 ):
     cursor.execute(
         """
@@ -243,9 +258,11 @@ def create_processed_frame(
             frame_number,
             frame_timestamp_seconds,
             image_width,
-            image_height
+            image_height,
+            output_asset_id,
+            output_file_path
         )
-        VALUES (%s, %s, %s, %s, %s, %s)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         RETURNING id;
         """,
         (
@@ -255,6 +272,8 @@ def create_processed_frame(
             frame_timestamp_seconds,
             image_width,
             image_height,
+            output_asset_id,
+            str(output_file_path) if output_file_path is not None else None,
         ),
     )
 
@@ -390,6 +409,13 @@ def _validate_grid_image_dimensions(grid_count_result, image_width, image_height
     ):
         raise ValueError(
             "Grid dimensions must match the dimensions of the processed image."
+        )
+
+
+def _validate_output_reference(output_asset_id, output_file_path):
+    if (output_asset_id is None) != (output_file_path is None):
+        raise ValueError(
+            "Output asset ID and output file path must be provided together."
         )
 
 

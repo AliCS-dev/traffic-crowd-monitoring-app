@@ -161,6 +161,7 @@ def _load_frames(cursor, session_id):
             frame_timestamp_seconds,
             image_width,
             image_height,
+            output_asset_id,
             processed_at
         FROM processed_frames
         WHERE session_id = %s
@@ -351,6 +352,7 @@ def _build_frame(values):
         frame_timestamp_seconds=row["frame_timestamp_seconds"],
         image_width=row["image_width"],
         image_height=row["image_height"],
+        output_asset_id=row["output_asset_id"],
         processed_at=row["processed_at"],
         detections=values["detections"],
         frame_summaries=values["frame_summaries"],

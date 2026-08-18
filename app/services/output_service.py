@@ -12,7 +12,8 @@ def save_detection_output(result, output_path):
 
     annotated_image = result.plot()
 
-    cv2.imwrite(str(output_path), annotated_image)
+    if not cv2.imwrite(str(output_path), annotated_image):
+        raise OSError(f"Detection output could not be written: {output_path}")
 
     print(f"Output image saved to: {output_path}")
 

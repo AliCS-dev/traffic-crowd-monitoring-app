@@ -42,6 +42,7 @@ result.
 | Grid-cell database storage | Implemented for image runs |
 | FastAPI backend foundation | Implemented with health and readiness endpoints |
 | Stored-session query layer | Implemented with typed paginated result models |
+| Image upload and analysis API | Implemented for validated JPG and PNG files |
 | Threshold-based alerts | Planned |
 
 The current detector gives us a measured starting point, but it is not reliable
@@ -185,6 +186,8 @@ The first API routes are deliberately small:
 
 - `GET /api/health` confirms that the HTTP process can respond;
 - `GET /api/ready` checks PostgreSQL and verifies the configured checkpoint;
+- `POST /api/analyses/images` validates, processes, and stores one image;
+- `GET /api/analyses/{session_id}` returns one complete stored result;
 - `GET /docs` opens the generated interactive OpenAPI documentation;
 - `GET /openapi.json` returns the machine-readable API contract.
 
@@ -193,7 +196,7 @@ readiness means that the configured checkpoint exists and matches its recorded
 identity. It does not change the failed model quality-gate result or claim that
 the detector is accurate enough for operational monitoring.
 
-The detector is loaded only when a future analysis route requests it. Starting
+The detector is loaded only when the first analysis request needs it. Starting
 the server, checking health, and generating documentation therefore do not
 allocate GPU model memory. PostgreSQL remains the only Docker service at this
 stage.
@@ -203,10 +206,40 @@ Development browser origins are configured as a comma-separated list in
 
 ```text
 API_CORS_ORIGINS=http://localhost:5173
+API_MAX_IMAGE_UPLOAD_MB=10
+API_MAX_IMAGE_PIXELS=40000000
+API_MAX_GRID_DIMENSION=20
 ```
 
-Wildcard CORS is rejected. Media uploads, video jobs, and result endpoints are
-added in their own issues after this foundation.
+Wildcard CORS and non-positive upload limits are rejected. The image endpoint
+accepts JPG, JPEG, and PNG only. It checks the extension, MIME type, encoded byte
+size, actual image format, decoded dimensions, and OpenCV decoding before
+inference. Uploaded paths are never trusted as storage paths.
+
+With PostgreSQL running and migrations applied, we can submit a controlled image
+analysis from the terminal:
+
+```bash
+curl -X POST http://127.0.0.1:8000/api/analyses/images \
+  -F "image=@data/input/sample_image.jpg;type=image/jpeg" \
+  -F "session_name=sample API image" \
+  -F "grid_rows=3" \
+  -F "grid_columns=4"
+```
+
+The response contains the database session ID and a result URL. The request uses
+the tracked runtime model profile; it does not accept ad hoc confidence, image
+size, class-mapping, or checkpoint overrides. A completed result can then be read
+with:
+
+```bash
+curl http://127.0.0.1:8000/api/analyses/<session-id>
+```
+
+Successful uploads and annotated images use generated UUID filenames under the
+ignored `data/input/uploads/` and `data/output/analyses/` directories. The API
+returns the public output-asset UUID, not the server's private path. Serving the
+image bytes through that UUID belongs to the later visual-assets issue.
 
 ## Trying the Image Pipeline
 
@@ -457,9 +490,9 @@ Before opening a pull request, we run the same basic checks that are used in CI:
 ```
 
 GitHub Actions starts PostgreSQL, checks the application connection, exercises
-fresh, repeated, legacy, and failed migration paths, and verifies grid and model
-provenance persistence. The tests query real PostgreSQL relationships and remove
-their temporary records and schemas afterwards.
+fresh, repeated, legacy, and failed migration paths, and verifies grid, model
+provenance, query, and image API persistence. The tests query real PostgreSQL
+relationships and remove their temporary records and schemas afterwards.
 
 ## Project Documents
 
@@ -483,7 +516,8 @@ is still under development:
 - video processing is available through services but not through the
   command-line entry point;
 - we do not yet generate alerts;
-- the API currently exposes health and readiness but no analysis routes;
+- image analysis is synchronous; background progress is reserved for video jobs;
+- output asset IDs are stored, but image-download routes are not implemented yet;
 - the project does not yet have a user interface;
 - we do not calculate physical crowd density.
 

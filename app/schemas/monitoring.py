@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Literal
+from uuid import UUID
 
 from pydantic import BaseModel, Field
 
@@ -97,6 +98,7 @@ class ProcessedFrameResult(BaseModel):
     frame_timestamp_seconds: float | None = Field(ge=0)
     image_width: int | None = Field(gt=0)
     image_height: int | None = Field(gt=0)
+    output_asset_id: UUID | None
     processed_at: datetime
     detections: list[DetectionResult]
     frame_summaries: list[ObjectCountSummaryResult]

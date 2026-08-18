@@ -1,4 +1,5 @@
 from typing import Literal
+from uuid import UUID
 
 from pydantic import BaseModel
 
@@ -25,3 +26,13 @@ class ErrorDetail(BaseModel):
 
 class ErrorResponse(BaseModel):
     error: ErrorDetail
+
+
+class ImageAnalysisCreatedResponse(BaseModel):
+    session_id: int
+    status: Literal["completed"]
+    result_url: str
+    output_asset_id: UUID
+    detection_count: int
+    grid_rows: int | None
+    grid_columns: int | None
