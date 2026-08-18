@@ -108,6 +108,34 @@ Injected application services
 The detector itself is created lazily through the same dependency container.
 Health checks, OpenAPI generation, and API unit tests do not load YOLO.
 
+Image requests now add one synchronous application flow:
+
+```text
+Multipart JPG or PNG
+    |
+    v
+Bounded byte, MIME, format, dimension, and decode validation
+    |
+    v
+Generated input and output asset names
+    |
+    v
+Fixed runtime profile -> preprocessing -> shared detector
+    |
+    +---------------------> Optional validated grid counts
+    |
+    v
+Annotated output + one PostgreSQL transaction
+    |
+    v
+Session ID and typed result URL
+```
+
+The endpoint runs blocking inference in FastAPI's worker thread and serialises use
+of the shared detector. This is appropriate for the current single-user image
+workflow. Video processing will use a separate background-job design rather than
+holding an HTTP request open.
+
 ## Main Components
 
 | Component | Role in the application |
@@ -117,9 +145,12 @@ Health checks, OpenAPI generation, and API unit tests do not load YOLO.
 | `app/api/dependencies.py` | Provides readiness probes and lazy detector access |
 | `app/api/errors.py` | Converts API failures into one public JSON error format |
 | `app/api/routes/health.py` | Exposes process health and dependency readiness |
+| `app/api/routes/image_analyses.py` | Creates image analyses and returns complete stored results |
 | `app/config.py` | Keeps project paths in one place |
 | `app/model_profile.py` | Validates the runtime profile and verifies checkpoint identity |
 | `app/services/image_service.py` | Checks the input path and loads supported images |
+| `app/services/image_upload_service.py` | Validates uploaded image metadata, bytes, format, and decoded dimensions |
+| `app/services/image_analysis_service.py` | Coordinates upload storage, inference, grids, output, persistence, and cleanup |
 | `app/services/video_service.py` | Opens videos, reads metadata, and provides frames |
 | `app/services/frame_sampling_service.py` | Selects video frames at controlled time intervals |
 | `app/services/preprocessing_service.py` | Resizes images before inference |
@@ -166,6 +197,13 @@ Session pages use the stable order `started_at DESC, id DESC`. A detail read use
 bulk child queries across all frame IDs, so a video with many sampled frames does
 not cause one database query per frame. Missing sessions return `None` for the
 future API layer to translate into a consistent not-found response.
+
+For uploaded images, one generated UUID names both the private files and the
+public output-asset reference. PostgreSQL stores the UUID and private output path
+as a required pair. Result schemas expose only the UUID. If validation,
+inference, output writing, or database persistence fails, the orchestration
+service removes any partial input and output files; the repository transaction
+rolls back incomplete database records.
 
 ## Decisions We Have Made So Far
 
@@ -253,5 +291,5 @@ below, while the outer image edges remain part of the final row and column.
 - Repository tests cover transaction behavior with controlled test doubles, but
   live PostgreSQL coverage does not yet include every future API query path.
 - `app/ui` is reserved for later work and does not contain an interface yet.
-- The API exposes only service health and readiness. Upload, analysis, history,
-  and result routes are not implemented yet.
+- The API supports synchronous image creation and detail reads, but not video
+  jobs, session-history routes, or output-file serving yet.

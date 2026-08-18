@@ -128,6 +128,12 @@ RUN_DATABASE_INTEGRATION_TESTS=1 .venv/bin/python -m pytest tests/integration
 The query tests create controlled image and sampled-video sessions, read them back
 through typed schemas, and remove those test sessions afterward.
 
+Image upload changes also need tests at three boundaries. Validation tests use
+small encoded JPG and PNG files, service tests use a controlled detector and
+persistence function, and the PostgreSQL integration test sends a real multipart
+request through FastAPI. This verifies cleanup and storage behavior without using
+the experimental model's predictions as expected test data.
+
 ## Keeping the Documents Current
 
 We update documentation in the same pull request as the related behavior. The

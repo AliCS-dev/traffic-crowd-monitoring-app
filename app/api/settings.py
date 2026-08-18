@@ -1,8 +1,13 @@
 import os
 from dataclasses import dataclass
+from pathlib import Path
 from urllib.parse import urlparse
 
 from dotenv import load_dotenv
+
+from app.config import API_IMAGE_OUTPUT_DIR, API_IMAGE_UPLOAD_DIR
+
+BYTES_PER_MEGABYTE = 1024 * 1024
 
 
 class ApiSettingsError(ValueError):
@@ -14,6 +19,11 @@ class ApiSettings:
     title: str = "Traffic and Crowd Monitoring API"
     version: str = "0.1.0"
     cors_origins: tuple[str, ...] = ("http://localhost:5173",)
+    image_upload_directory: Path = API_IMAGE_UPLOAD_DIR
+    image_output_directory: Path = API_IMAGE_OUTPUT_DIR
+    max_image_upload_bytes: int = 10 * BYTES_PER_MEGABYTE
+    max_image_pixels: int = 40_000_000
+    max_grid_dimension: int = 20
 
     @classmethod
     def from_environment(cls) -> "ApiSettings":
@@ -32,4 +42,29 @@ class ApiSettings:
                 raise ApiSettingsError(
                     "API_CORS_ORIGINS must contain explicit HTTP or HTTPS origins"
                 )
-        return cls(cors_origins=origins)
+        max_upload_mb = _positive_environment_integer(
+            "API_MAX_IMAGE_UPLOAD_MB", default=10
+        )
+        max_image_pixels = _positive_environment_integer(
+            "API_MAX_IMAGE_PIXELS", default=40_000_000
+        )
+        max_grid_dimension = _positive_environment_integer(
+            "API_MAX_GRID_DIMENSION", default=20
+        )
+        return cls(
+            cors_origins=origins,
+            max_image_upload_bytes=max_upload_mb * BYTES_PER_MEGABYTE,
+            max_image_pixels=max_image_pixels,
+            max_grid_dimension=max_grid_dimension,
+        )
+
+
+def _positive_environment_integer(name: str, *, default: int) -> int:
+    raw_value = os.getenv(name, str(default))
+    try:
+        value = int(raw_value)
+    except ValueError as error:
+        raise ApiSettingsError(f"{name} must be a positive integer") from error
+    if value < 1:
+        raise ApiSettingsError(f"{name} must be a positive integer")
+    return value

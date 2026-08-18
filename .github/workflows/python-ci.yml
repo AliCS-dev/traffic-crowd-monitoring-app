@@ -50,7 +50,7 @@ jobs:
           python -m pytest
 
   database-smoke-test:
-    name: PostgreSQL connection smoke test
+    name: PostgreSQL integration tests
     runs-on: ubuntu-latest
 
     services:

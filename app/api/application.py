@@ -10,19 +10,24 @@ from app.api.dependencies import (
 )
 from app.api.errors import register_error_handlers
 from app.api.routes.health import create_health_router
+from app.api.routes.image_analyses import create_image_analysis_router
 from app.api.settings import ApiSettings
 
 
 def create_app(
     *,
     settings: ApiSettings | None = None,
-    service_factory: Callable[[], ApplicationServices] = create_application_services,
+    service_factory: Callable[[], ApplicationServices] | None = None,
 ) -> FastAPI:
     settings = settings or ApiSettings.from_environment()
 
     @asynccontextmanager
     async def lifespan(application: FastAPI):
-        services = service_factory()
+        services = (
+            service_factory()
+            if service_factory is not None
+            else create_application_services(settings)
+        )
         application.state.services = services
         try:
             yield
@@ -45,6 +50,10 @@ def create_app(
     register_error_handlers(application)
     application.include_router(
         create_health_router(settings),
+        prefix="/api",
+    )
+    application.include_router(
+        create_image_analysis_router(),
         prefix="/api",
     )
     return application

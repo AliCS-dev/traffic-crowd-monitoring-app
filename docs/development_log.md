@@ -388,3 +388,21 @@ video frame. Migration `003` adds the matching session-history index. Unit tests
 cover pagination, missing and legacy sessions, nested result grouping, and query
 count. The PostgreSQL integration test stores and reads both a gridded image and
 an intentionally out-of-order sampled video, then removes its controlled records.
+
+### Issue #70: Safe Image Analysis API
+
+We connected the existing image pipeline to FastAPI without duplicating detection
+or grid logic. The new endpoint accepts JPG and PNG uploads, applies bounded byte
+and decoded-pixel limits, checks extension, MIME type, actual format, and OpenCV
+decoding, and replaces uploaded paths with generated UUID filenames. Inference
+continues to use the tracked runtime profile, so requests cannot silently change
+the checkpoint or evaluated settings.
+
+The orchestration service writes the validated input, processes it with the shared
+lazy detector, optionally creates a bounded grid, saves the annotated output, and
+persists the complete result and model provenance. Migration `004` stores a public
+output-asset UUID with its private path while result schemas expose only the UUID.
+A failed validation, detector call, output write, or database transaction does not
+leave partial files or a completed session. Controlled API tests cover success,
+empty detections, malformed and oversized uploads, invalid grids, and failures;
+the PostgreSQL test exercises the complete create-and-read workflow.

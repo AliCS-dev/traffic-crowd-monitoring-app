@@ -1,3 +1,5 @@
+from uuid import UUID
+
 import pytest
 
 import app.database.detection_repository as detection_repository
@@ -156,8 +158,12 @@ def test_save_video_results_associates_multiple_frames_and_records(monkeypatch):
     assert ("input_source", (10, "video", "data/input/traffic.mp4", "traffic.mp4")) in (
         cursor.execute_calls
     )
-    assert ("processed_frame", (10, 20, 0, 0.0, 1280, 720)) in cursor.execute_calls
-    assert ("processed_frame", (10, 20, 120, 4.0, 1280, 720)) in cursor.execute_calls
+    assert ("processed_frame", (10, 20, 0, 0.0, 1280, 720, None, None)) in (
+        cursor.execute_calls
+    )
+    assert ("processed_frame", (10, 20, 120, 4.0, 1280, 720, None, None)) in (
+        cursor.execute_calls
+    )
     assert any(
         operation == "model_run_profile"
         and parameters[0:4]
@@ -221,7 +227,9 @@ def test_save_video_result_records_frame_without_detections(monkeypatch):
     assert stored_result["frame_count"] == 1
     assert stored_result["detection_count"] == 0
     assert stored_result["object_count_summary_count"] == 0
-    assert ("processed_frame", (10, 20, 30, 1.0, 1280, 720)) in cursor.execute_calls
+    assert ("processed_frame", (10, 20, 30, 1.0, 1280, 720, None, None)) in (
+        cursor.execute_calls
+    )
     assert cursor.executemany_calls == []
 
 
@@ -288,7 +296,71 @@ def test_existing_image_storage_uses_image_source_and_zero_frame(monkeypatch):
     assert ("input_source", (10, "image", "data/input/image.jpg", "image.jpg")) in (
         cursor.execute_calls
     )
-    assert ("processed_frame", (10, 20, 0, 0, 640, 480)) in cursor.execute_calls
+    assert ("processed_frame", (10, 20, 0, 0, 640, 480, None, None)) in (
+        cursor.execute_calls
+    )
+
+
+def test_image_storage_persists_public_and_private_output_references(monkeypatch):
+    cursor, _connection = use_fake_database(
+        monkeypatch,
+        generated_ids=[10, 20, 30],
+    )
+    asset_id = UUID("12345678-1234-5678-1234-567812345678")
+
+    detection_repository.save_image_detection_results(
+        "data/input/image.jpg",
+        image_width=640,
+        image_height=480,
+        detection_records=[],
+        model_profile=MODEL_PROFILE,
+        original_filename="drone-original.jpg",
+        output_asset_id=asset_id,
+        output_file_path="data/output/analyses/result.jpg",
+    )
+
+    assert (
+        "processed_frame",
+        (
+            10,
+            20,
+            0,
+            0,
+            640,
+            480,
+            asset_id,
+            "data/output/analyses/result.jpg",
+        ),
+    ) in cursor.execute_calls
+    assert (
+        "input_source",
+        (10, "image", "data/input/image.jpg", "drone-original.jpg"),
+    ) in cursor.execute_calls
+
+
+@pytest.mark.parametrize(
+    ("output_asset_id", "output_file_path"),
+    [(UUID("12345678-1234-5678-1234-567812345678"), None), (None, "result.jpg")],
+)
+def test_image_storage_rejects_incomplete_output_reference(
+    monkeypatch, output_asset_id, output_file_path
+):
+    monkeypatch.setattr(
+        detection_repository,
+        "open_database_connection",
+        lambda: pytest.fail("Database connection opened."),
+    )
+
+    with pytest.raises(ValueError, match="must be provided together"):
+        detection_repository.save_image_detection_results(
+            "data/input/image.jpg",
+            image_width=640,
+            image_height=480,
+            detection_records=[],
+            model_profile=MODEL_PROFILE,
+            output_asset_id=output_asset_id,
+            output_file_path=output_file_path,
+        )
 
 
 def test_model_profile_failure_rolls_back_before_source_storage(monkeypatch):

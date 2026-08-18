@@ -151,7 +151,12 @@ def test_openapi_and_interactive_documentation_are_available():
         "title": "Traffic and Crowd Monitoring API",
         "version": "0.1.0",
     }
-    assert set(schema.json()["paths"]) == {"/api/health", "/api/ready"}
+    assert set(schema.json()["paths"]) == {
+        "/api/analyses/images",
+        "/api/analyses/{session_id}",
+        "/api/health",
+        "/api/ready",
+    }
     assert documentation.status_code == 200
 
 
@@ -250,4 +255,29 @@ def test_api_settings_reject_wildcard_cors(monkeypatch):
     monkeypatch.setenv("API_CORS_ORIGINS", "*")
 
     with pytest.raises(ApiSettingsError, match="explicit HTTP or HTTPS origins"):
+        ApiSettings.from_environment()
+
+
+def test_api_settings_parse_positive_image_limits(monkeypatch):
+    monkeypatch.setenv("API_MAX_IMAGE_UPLOAD_MB", "2")
+    monkeypatch.setenv("API_MAX_IMAGE_PIXELS", "12345")
+    monkeypatch.setenv("API_MAX_GRID_DIMENSION", "8")
+
+    settings = ApiSettings.from_environment()
+
+    assert settings.max_image_upload_bytes == 2 * 1024 * 1024
+    assert settings.max_image_pixels == 12345
+    assert settings.max_grid_dimension == 8
+
+
+@pytest.mark.parametrize(
+    "variable",
+    ["API_MAX_IMAGE_UPLOAD_MB", "API_MAX_IMAGE_PIXELS", "API_MAX_GRID_DIMENSION"],
+)
+def test_api_settings_reject_non_positive_image_limits(monkeypatch, variable):
+    monkeypatch.setenv(variable, "0")
+
+    with pytest.raises(
+        ApiSettingsError, match=f"{variable} must be a positive integer"
+    ):
         ApiSettings.from_environment()

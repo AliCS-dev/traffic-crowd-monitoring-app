@@ -92,6 +92,12 @@ A processed frame represents either one image or one selected frame from a
 video. It contains the frame number, video timestamp, image dimensions, and
 processing time. For a still image, we use frame number `0` and timestamp `0`.
 
+Migration `004` adds an optional output-asset UUID and private output path. A
+constraint requires both values together, and a partial unique index prevents
+two frames from sharing the same public asset identifier. Existing image and
+video records remain valid with both fields null. The read schema exposes the
+UUID but not the server path.
+
 ### `detection_results`
 
 We store one row for each detected object. A row contains:

@@ -1,5 +1,6 @@
 from datetime import datetime, timezone
 from decimal import Decimal
+from uuid import UUID
 
 import pytest
 
@@ -187,6 +188,7 @@ def test_complete_result_is_grouped_by_frame_and_grid_level():
         "frame_timestamp_seconds": Decimal("0.000"),
         "image_width": 200,
         "image_height": 100,
+        "output_asset_id": UUID("12345678-1234-5678-1234-567812345678"),
         "processed_at": NOW,
     }
     detection = {
@@ -258,6 +260,7 @@ def test_complete_result_is_grouped_by_frame_and_grid_level():
     assert len(result.frames) == 1
     result_frame = result.frames[0]
     assert result_frame.detections[0].bounds.x_max == 50
+    assert str(result_frame.output_asset_id) == "12345678-1234-5678-1234-567812345678"
     assert [summary.id for summary in result_frame.frame_summaries] == [61]
     assert [summary.id for summary in result_frame.grid_cells[0].summaries] == [62]
     assert result_frame.alerts[0].grid_cell_id == 51
@@ -275,6 +278,7 @@ def test_detail_query_count_does_not_grow_with_video_frames():
             "frame_timestamp_seconds": frame_number / 30,
             "image_width": 1280,
             "image_height": 720,
+            "output_asset_id": None,
             "processed_at": NOW,
         }
         for frame_id, frame_number in [(31, 0), (32, 30), (33, 60)]
