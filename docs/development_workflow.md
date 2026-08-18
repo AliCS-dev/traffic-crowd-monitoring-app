@@ -118,6 +118,16 @@ curl http://127.0.0.1:8000/openapi.json
 Readiness is checked separately because it requires the local database and
 verified runtime checkpoint.
 
+For database read changes, the integration suite checks the public repositories
+against PostgreSQL:
+
+```bash
+RUN_DATABASE_INTEGRATION_TESTS=1 .venv/bin/python -m pytest tests/integration
+```
+
+The query tests create controlled image and sampled-video sessions, read them back
+through typed schemas, and remove those test sessions afterward.
+
 ## Keeping the Documents Current
 
 We update documentation in the same pull request as the related behavior. The

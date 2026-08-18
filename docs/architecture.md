@@ -130,6 +130,8 @@ Health checks, OpenAPI generation, and API unit tests do not load YOLO.
 | `app/database/connection.py` | Reads `DATABASE_URL` and opens PostgreSQL connections |
 | `app/database/migration_runner.py` | Discovers, verifies, and applies ordered SQL migrations |
 | `app/database/detection_repository.py` | Stores complete image or sampled-video results in a transaction |
+| `app/database/monitoring_query_repository.py` | Lists sessions and reconstructs complete stored results with fixed bulk queries |
+| `app/schemas/monitoring.py` | Defines database-independent history and result models for later API and frontend use |
 | `scripts/` | Contains explicit database setup and diagnostic commands |
 
 `app/main.py` brings these pieces together, while the service modules contain
@@ -157,6 +159,13 @@ not imply acceptable model accuracy.
 We use parameterised SQL throughout the repository. Values are passed separately
 from the SQL statements, which keeps the queries clear and avoids building SQL
 from user-provided strings.
+
+The monitoring query repository is the read boundary for stored results. It
+returns typed nested models rather than cursor tuples or column dictionaries.
+Session pages use the stable order `started_at DESC, id DESC`. A detail read uses
+bulk child queries across all frame IDs, so a video with many sampled frames does
+not cause one database query per frame. Missing sessions return `None` for the
+future API layer to translate into a consistent not-found response.
 
 ## Decisions We Have Made So Far
 
