@@ -3,6 +3,7 @@ from datetime import datetime, timezone
 
 import pytest
 
+from app.crowd_analysis import load_dense_crowd_analysis_decision
 from app.database.connection import open_database_connection
 from app.database.detection_repository import (
     save_image_detection_results,
@@ -35,6 +36,7 @@ CAR_DETECTION = {
 def test_reads_complete_image_and_ordered_video_sessions_from_postgresql():
     apply_pending_migrations()
     model_profile = load_runtime_model_profile()
+    crowd_analysis_decision = load_dense_crowd_analysis_decision()
     grid_result = count_detections_by_grid(
         [CAR_DETECTION],
         image_width=200,
@@ -53,6 +55,7 @@ def test_reads_complete_image_and_ordered_video_sessions_from_postgresql():
         session_name="query repository image",
         grid_count_result=grid_result,
         model_profile=model_profile,
+        crowd_analysis_decision=crowd_analysis_decision,
     )
     video_result = save_video_detection_results(
         "data/input/query-integration.mp4",
@@ -76,6 +79,7 @@ def test_reads_complete_image_and_ordered_video_sessions_from_postgresql():
         ],
         session_name="query repository video",
         model_profile=model_profile,
+        crowd_analysis_decision=crowd_analysis_decision,
     )
     session_ids = [image_result["session_id"], video_result["session_id"]]
 
@@ -135,6 +139,9 @@ def test_reads_complete_image_and_ordered_video_sessions_from_postgresql():
     assert image_session is not None
     assert image_session.sources[0].source_type == "image"
     assert image_session.model_profile.model_id == model_profile.model_id
+    assert image_session.dense_crowd_analysis.status == "unsupported"
+    assert image_session.dense_crowd_analysis.count is None
+    assert image_session.dense_crowd_analysis.model_id is None
     assert len(image_session.frames) == 1
     image_frame = image_session.frames[0]
     assert len(image_frame.detections) == 1
@@ -148,6 +155,7 @@ def test_reads_complete_image_and_ordered_video_sessions_from_postgresql():
 
     assert video_session is not None
     assert video_session.sources[0].source_type == "video"
+    assert video_session.dense_crowd_analysis.status == "unsupported"
     assert [frame.frame_number for frame in video_session.frames] == [0, 120]
     assert [len(frame.detections) for frame in video_session.frames] == [1, 0]
 

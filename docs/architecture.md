@@ -127,6 +127,8 @@ Fixed runtime profile -> preprocessing -> shared detector
     v
 Annotated output + one PostgreSQL transaction
     |
+    +---------------------> Persisted dense-crowd capability: unsupported
+    |
     v
 Session ID and typed result URL
 ```
@@ -147,6 +149,7 @@ holding an HTTP request open.
 | `app/api/routes/health.py` | Exposes process health and dependency readiness |
 | `app/api/routes/image_analyses.py` | Creates image analyses and returns complete stored results |
 | `app/config.py` | Keeps project paths in one place |
+| `app/crowd_analysis.py` | Converts the recorded crowd evaluation rejection into a validated runtime decision |
 | `app/model_profile.py` | Validates the runtime profile and verifies checkpoint identity |
 | `app/services/image_service.py` | Checks the input path and loads supported images |
 | `app/services/image_upload_service.py` | Validates uploaded image metadata, bytes, format, and decoded dimensions |
@@ -177,7 +180,10 @@ database transaction. Video storage follows the same rule: one transaction
 contains the session, its model-profile snapshot, source, every sampled frame,
 and all related detections and summaries. An image grid joins the same
 transaction when requested. Every cell is stored, while only non-zero per-class
-counts create summary rows. If one insert fails, the transaction is rolled back,
+counts create summary rows. The same transaction stores the dense-crowd
+capability state. It currently records no active crowd method, no model, and no
+count because the evaluated candidate was rejected. If one insert fails, the
+transaction is rolled back,
 so we do not keep an incomplete processing run.
 
 The tracked runtime profile is aligned with the frozen YOLO26m VisDrone
@@ -235,6 +241,20 @@ YOLO only when an analysis route requests it. This keeps startup and API tests
 lightweight while still giving future routes one shared detector instance. The
 container clears its reference during application shutdown.
 
+### Keeping object detection and dense-crowd analysis separate
+
+The runtime YOLO profile produces object detections and class summaries. Its
+`person` values are counts of accepted bounding-box predictions, not a dedicated
+crowd estimate. Dense-crowd analysis has its own typed result and persisted
+record so the two meanings cannot be merged accidentally.
+
+`app/crowd_analysis.py` reads the tracked evaluation outcome at startup. Because
+the outcome is `reject`, it creates only the rejection path: `unsupported`, a
+null count, no active method or model, and the evaluation reference. It raises an
+error if the evidence no longer records that decision, forcing us to implement
+and review a new path before any future accepted model can enter the application.
+We do not infer whether an upload is a dense crowd and we do not load P2PNet.
+
 ### Treating one image as one session
 
 For the current image pipeline, one stored image creates one monitoring session,
@@ -288,6 +308,9 @@ below, while the outer image edges remain part of the final row and column.
 - We do not yet store processing duration with a database result.
 - Grid counts can be printed and stored for image runs, but they are not drawn on
   output images or connected to sampled video frames yet.
+- Detector-based person summaries are not dense-crowd estimates. The dedicated
+  crowd result is explicitly unsupported and has a null count because no tested
+  candidate passed the evaluation decision rule.
 - Repository tests cover transaction behavior with controlled test doubles, but
   live PostgreSQL coverage does not yet include every future API query path.
 - `app/ui` is reserved for later work and does not contain an interface yet.

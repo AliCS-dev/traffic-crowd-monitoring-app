@@ -43,14 +43,17 @@ result.
 | FastAPI backend foundation | Implemented with health and readiness endpoints |
 | Stored-session query layer | Implemented with typed paginated result models |
 | Image upload and analysis API | Implemented for validated JPG and PNG files |
+| Dense-crowd analysis | Explicitly unsupported; rejected candidate is not loaded |
 | Threshold-based alerts | Planned |
 
 The current detector gives us a measured starting point, but it is not reliable
 enough for final conclusions about aerial traffic or crowds. We compared three
 pretrained candidates and ran a source-group-clean fine-tuning pilot. The pilot
 improved person detection but removed useful vehicle performance, so we rejected
-its checkpoint. Another combined-detector run now requires independent vehicle
-training boxes; dense crowds may need a dedicated counting method.
+its checkpoint. The dedicated P2PNet candidate also failed its predeclared
+dense-crowd threshold. The application therefore returns an explicit unsupported
+state and a null crowd count instead of loading that checkpoint or reporting a
+misleading zero.
 
 ## What We Use
 
@@ -229,8 +232,12 @@ curl -X POST http://127.0.0.1:8000/api/analyses/images \
 
 The response contains the database session ID and a result URL. The request uses
 the tracked runtime model profile; it does not accept ad hoc confidence, image
-size, class-mapping, or checkpoint overrides. A completed result can then be read
-with:
+size, class-mapping, or checkpoint overrides. It also includes a
+`dense_crowd_analysis` object. Its current status is `unsupported`, its `count`
+is null, and it links to the evaluation that rejected the tested P2PNet
+checkpoint. Detector-based person summaries remain ordinary object detections;
+they are not presented as a dedicated dense-crowd estimate. A completed result
+can then be read with:
 
 ```bash
 curl http://127.0.0.1:8000/api/analyses/<session-id>
@@ -491,8 +498,9 @@ Before opening a pull request, we run the same basic checks that are used in CI:
 
 GitHub Actions starts PostgreSQL, checks the application connection, exercises
 fresh, repeated, legacy, and failed migration paths, and verifies grid, model
-provenance, query, and image API persistence. The tests query real PostgreSQL
-relationships and remove their temporary records and schemas afterwards.
+provenance, crowd-capability status, query, and image API persistence. The tests
+query real PostgreSQL relationships and remove their temporary records and
+schemas afterwards.
 
 ## Project Documents
 
@@ -511,7 +519,9 @@ There are several limitations that we are keeping visible while the application
 is still under development:
 
 - the final held-out detector evaluation failed the overall quality gate;
-- the detector can miss or misclassify small aerial objects and dense crowds;
+- the detector can miss or misclassify small aerial objects;
+- no evaluated model currently supports reliable dense-crowd counting, and the
+  API reports this with an unsupported state and null count;
 - grid storage is connected to image runs but not yet to sampled video frames;
 - video processing is available through services but not through the
   command-line entry point;

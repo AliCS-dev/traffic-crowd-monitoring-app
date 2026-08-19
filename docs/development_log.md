@@ -366,6 +366,22 @@ of integrating it into the application. This keeps the limitation visible: the
 current system can report detector-based person counts, but it cannot claim a
 validated dense-crowd counting capability.
 
+### Issue #68: Dense-Crowd Rejection Path
+
+We connected the dedicated crowd evaluation decision to application results
+without promoting the rejected P2PNet checkpoint. A strict loader reads the
+tracked machine-readable evidence and accepts only its recorded rejection path.
+The API now reports dense-crowd analysis as unsupported with a null count, no
+active method or model, the evaluated candidate ID, and a link to the decision
+record. Ordinary YOLO person detections remain separate frame summaries.
+
+Migration `005` stores the same capability state once per new session and uses a
+constraint to prevent unsupported records from containing a count or active
+model. Image and sampled-video repositories write it in the same transaction as
+model provenance and detections. Legacy sessions remain readable with a null
+capability field. Unit and PostgreSQL tests cover evidence validation,
+transaction rollback, persistence, retrieval, and the complete image API flow.
+
 ### Issue #69: FastAPI Backend Foundation
 
 We added a separate FastAPI entry point without changing the existing command-line

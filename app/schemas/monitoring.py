@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Literal
 from uuid import UUID
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 
 class Pagination(BaseModel):
@@ -47,6 +47,47 @@ class ModelRunProfileResult(BaseModel):
     numeric_precision: Literal["float16", "float32"]
     device: str
     created_at: datetime
+
+
+class DenseCrowdAnalysisResult(BaseModel):
+    status: Literal["completed", "unsupported"]
+    count: int | None = Field(default=None, ge=0)
+    method_id: str | None
+    model_id: str | None
+    evaluated_candidate_id: str
+    quality_gate_status: Literal["conditional", "passed", "failed"]
+    evaluation_reference: str
+    reason_code: str | None
+    message: str
+
+    @model_validator(mode="after")
+    def validate_status_fields(self) -> "DenseCrowdAnalysisResult":
+        if self.status == "unsupported":
+            if any(
+                value is not None
+                for value in (self.count, self.method_id, self.model_id)
+            ):
+                raise ValueError(
+                    "Unsupported dense-crowd analysis cannot contain a count, "
+                    "method, or model."
+                )
+            if self.quality_gate_status != "failed" or self.reason_code is None:
+                raise ValueError(
+                    "Unsupported dense-crowd analysis requires a failed quality "
+                    "gate and reason code."
+                )
+        elif (
+            self.count is None
+            or self.method_id is None
+            or self.model_id is None
+            or self.quality_gate_status == "failed"
+            or self.reason_code is not None
+        ):
+            raise ValueError(
+                "Completed dense-crowd analysis requires a count, method, accepted "
+                "model, and no failure reason."
+            )
+        return self
 
 
 class ImageBounds(BaseModel):
@@ -114,5 +155,6 @@ class MonitoringSessionResult(BaseModel):
     completed_at: datetime | None
     notes: str | None
     model_profile: ModelRunProfileResult | None
+    dense_crowd_analysis: DenseCrowdAnalysisResult | None
     sources: list[InputSourceResult]
     frames: list[ProcessedFrameResult]

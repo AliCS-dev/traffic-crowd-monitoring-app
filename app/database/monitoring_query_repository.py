@@ -6,6 +6,7 @@ from psycopg.rows import dict_row
 from app.database.connection import open_database_connection
 from app.schemas.monitoring import (
     AlertResult,
+    DenseCrowdAnalysisResult,
     DetectionResult,
     GridCellResult,
     ImageBounds,
@@ -81,6 +82,7 @@ def get_monitoring_session(
             if session_row is None:
                 return None
 
+            crowd_analysis_row = _load_dense_crowd_analysis(cursor, session_id)
             source_rows = _load_sources(cursor, session_id)
             frame_rows = _load_frames(cursor, session_id)
             frame_data = _prepare_frames(frame_rows)
@@ -99,6 +101,7 @@ def get_monitoring_session(
         completed_at=session_row["completed_at"],
         notes=session_row["notes"],
         model_profile=_build_model_profile(session_row),
+        dense_crowd_analysis=_build_dense_crowd_analysis(crowd_analysis_row),
         sources=[InputSourceResult.model_validate(row) for row in source_rows],
         frames=[_build_frame(values) for values in frame_data.values()],
     )
@@ -149,6 +152,27 @@ def _load_sources(cursor, session_id):
         (session_id,),
     )
     return cursor.fetchall()
+
+
+def _load_dense_crowd_analysis(cursor, session_id):
+    cursor.execute(
+        """
+        SELECT
+            status,
+            crowd_count AS count,
+            method_id,
+            model_id,
+            evaluated_candidate_id,
+            quality_gate_status,
+            evaluation_reference,
+            reason_code,
+            message
+        FROM dense_crowd_analysis_results
+        WHERE session_id = %s;
+        """,
+        (session_id,),
+    )
+    return cursor.fetchone()
 
 
 def _load_frames(cursor, session_id):
@@ -332,6 +356,12 @@ def _build_model_profile(row):
         device=row["device"],
         created_at=row["profile_created_at"],
     )
+
+
+def _build_dense_crowd_analysis(row):
+    if row is None:
+        return None
+    return DenseCrowdAnalysisResult.model_validate(row)
 
 
 def _build_bounds(row, prefix=""):

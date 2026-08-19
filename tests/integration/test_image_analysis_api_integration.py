@@ -9,6 +9,7 @@ from fastapi.testclient import TestClient
 from app.api.application import create_app
 from app.api.dependencies import ApplicationServices
 from app.api.settings import ApiSettings
+from app.crowd_analysis import load_dense_crowd_analysis_decision
 from app.database.connection import open_database_connection
 from app.database.migration_runner import apply_pending_migrations
 from app.database.monitoring_query_repository import get_monitoring_session
@@ -44,6 +45,7 @@ class ControlledDetector:
 def test_complete_image_api_workflow_persists_and_reads_result(tmp_path):
     apply_pending_migrations()
     profile = load_runtime_model_profile()
+    crowd_analysis_decision = load_dense_crowd_analysis_decision()
     settings = ApiSettings(
         image_upload_directory=tmp_path / "uploads",
         image_output_directory=tmp_path / "outputs",
@@ -58,6 +60,7 @@ def test_complete_image_api_workflow_persists_and_reads_result(tmp_path):
         image_analysis_factory=lambda detector: ImageAnalysisService(
             detector=detector,
             model_profile=profile,
+            crowd_analysis_decision=crowd_analysis_decision,
             upload_directory=settings.image_upload_directory,
             output_directory=settings.image_output_directory,
             upload_policy=ImageUploadPolicy(
@@ -100,6 +103,13 @@ def test_complete_image_api_workflow_persists_and_reads_result(tmp_path):
         assert values["status"] == "completed"
         assert values["sources"][0]["original_filename"] == ("original-drone-scene.jpg")
         assert values["model_profile"]["model_id"] == profile.model_id
+        assert values["dense_crowd_analysis"]["status"] == "unsupported"
+        assert values["dense_crowd_analysis"]["count"] is None
+        assert values["dense_crowd_analysis"]["method_id"] is None
+        assert values["dense_crowd_analysis"]["model_id"] is None
+        assert (
+            values["dense_crowd_analysis"]["evaluated_candidate_id"] == "p2pnet-shtecha"
+        )
         assert len(values["frames"]) == 1
         frame = values["frames"][0]
         assert frame["output_asset_id"] == created.json()["output_asset_id"]

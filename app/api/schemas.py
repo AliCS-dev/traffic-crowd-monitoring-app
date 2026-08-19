@@ -3,6 +3,8 @@ from uuid import UUID
 
 from pydantic import BaseModel
 
+from app.schemas.monitoring import DenseCrowdAnalysisResult
+
 
 class HealthResponse(BaseModel):
     status: Literal["ok"]
@@ -36,3 +38,4 @@ class ImageAnalysisCreatedResponse(BaseModel):
     detection_count: int
     grid_rows: int | None
     grid_columns: int | None
+    dense_crowd_analysis: DenseCrowdAnalysisResult

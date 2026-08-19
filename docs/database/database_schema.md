@@ -45,6 +45,8 @@ monitoring_sessions
   |
   +-- model_run_profiles
   |
+  +-- dense_crowd_analysis_results
+  |
   +-- input_sources
   |     |
   |     +-- processed_frames
@@ -80,6 +82,20 @@ older result was produced.
 
 Sessions created before migration `002` do not have a profile row. They remain
 valid historical records, but their exact model provenance was not captured.
+
+### `dense_crowd_analysis_results`
+
+Migration `005` adds one optional dense-crowd analysis record per monitoring
+session. For current sessions, the row stores `unsupported`, a null count, no
+active method or model, the rejected candidate ID, failed quality-gate status,
+the evaluation reference, and a stable reason code. A database constraint
+prevents an unsupported result from carrying a numeric count or pretending that
+a model was active.
+
+This record is separate from detector summaries. A `person` count in
+`object_count_summaries` is the number of YOLO detections, while
+`dense_crowd_analysis_results.crowd_count` belongs only to a dedicated crowd
+method. Existing sessions remain readable with no crowd-analysis record.
 
 ### `input_sources`
 
@@ -144,11 +160,11 @@ have the same timestamp. Migration `003` adds an index in this order so PostgreS
 can support the history query as the number of sessions grows.
 
 A complete result is reconstructed with a fixed set of bulk queries. We load the
-session and model profile, sources, frames, detections, grid cells, summaries, and
-alerts by relationship. The number of queries does not grow with the number of
-sampled video frames. Complete-frame summaries and per-cell summaries remain in
-separate fields in the returned schema, even though PostgreSQL stores them in the
-same table.
+session and model profile, dense-crowd capability, sources, frames, detections,
+grid cells, summaries, and alerts by relationship. The number of queries does not
+grow with the number of sampled video frames. Complete-frame summaries and
+per-cell summaries remain in separate fields in the returned schema, even though
+PostgreSQL stores them in the same table.
 
 Sessions created before model-profile snapshots were introduced remain readable.
 Their `model_profile` field is null, which preserves the historical record without
@@ -160,14 +176,15 @@ When we use `--save-to-db`, we create the records in this order:
 
 1. a monitoring session;
 2. its model and inference profile snapshot;
-3. an image input source;
-4. a processed frame;
-5. the individual detection results;
-6. the complete-frame class summaries;
-7. optional grid cells and their per-cell summaries;
-8. the completed session status.
+3. its dense-crowd capability result;
+4. an image input source;
+5. a processed frame;
+6. the individual detection results;
+7. the complete-frame class summaries;
+8. optional grid cells and their per-cell summaries;
+9. the completed session status.
 
-All eight steps are part of one transaction. If one step fails, PostgreSQL rolls
+All nine steps are part of one transaction. If one step fails, PostgreSQL rolls
 back the transaction and we do not keep a partially stored run.
 
 For a video, we follow the same transaction pattern, but create one

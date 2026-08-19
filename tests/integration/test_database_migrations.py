@@ -4,6 +4,7 @@ import uuid
 
 import pytest
 from psycopg import sql
+from psycopg.errors import CheckViolation
 
 from app.database.connection import open_database_connection
 from app.database.migration_runner import (
@@ -56,13 +57,14 @@ def test_fresh_database_applies_migrations_once(isolated_database_schema):
         connection_factory=connection_factory,
     )
 
-    assert [migration.version for migration in first_result.applied] == [1, 2, 3, 4]
+    assert [migration.version for migration in first_result.applied] == [1, 2, 3, 4, 5]
     assert second_result.applied == ()
     assert [migration.version for migration in second_result.previously_applied] == [
         1,
         2,
         3,
         4,
+        5,
     ]
 
     with connection_factory() as connection:
@@ -75,6 +77,7 @@ def test_fresh_database_applies_migrations_once(isolated_database_schema):
                 (2, "add_model_run_profiles"),
                 (3, "add_session_history_index"),
                 (4, "add_output_asset_references"),
+                (5, "add_dense_crowd_analysis_results"),
             ]
             cursor.execute("SELECT to_regclass('monitoring_sessions');")
             assert cursor.fetchone() == ("monitoring_sessions",)
@@ -86,6 +89,8 @@ def test_fresh_database_applies_migrations_once(isolated_database_schema):
                 "SELECT to_regclass('idx_processed_frames_output_asset_id');"
             )
             assert cursor.fetchone() == ("idx_processed_frames_output_asset_id",)
+            cursor.execute("SELECT to_regclass('dense_crowd_analysis_results');")
+            assert cursor.fetchone() == ("dense_crowd_analysis_results",)
 
 
 def test_existing_initial_schema_is_adopted_without_data_loss(
@@ -111,7 +116,7 @@ def test_existing_initial_schema_is_adopted_without_data_loss(
 
     result = apply_pending_migrations(connection_factory=connection_factory)
 
-    assert [migration.version for migration in result.applied] == [1, 2, 3, 4]
+    assert [migration.version for migration in result.applied] == [1, 2, 3, 4, 5]
     with connection_factory() as connection:
         with connection.cursor() as cursor:
             cursor.execute(
@@ -120,7 +125,69 @@ def test_existing_initial_schema_is_adopted_without_data_loss(
             )
             assert cursor.fetchone() == ("legacy session", "completed")
             cursor.execute("SELECT version FROM schema_migrations ORDER BY version;")
-            assert cursor.fetchall() == [(1,), (2,), (3,), (4,)]
+            assert cursor.fetchall() == [(1,), (2,), (3,), (4,), (5,)]
+
+
+def test_unsupported_crowd_result_cannot_store_a_false_zero_or_active_model(
+    isolated_database_schema,
+):
+    _schema_name, connection_factory = isolated_database_schema
+    apply_pending_migrations(connection_factory=connection_factory)
+
+    with connection_factory() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                """
+                INSERT INTO monitoring_sessions (session_name, status)
+                VALUES (%s, %s)
+                RETURNING id;
+                """,
+                ("invalid crowd result", "processing"),
+            )
+            session_id = cursor.fetchone()[0]
+            cursor.execute("SAVEPOINT invalid_crowd_result;")
+
+            with pytest.raises(CheckViolation):
+                cursor.execute(
+                    """
+                    INSERT INTO dense_crowd_analysis_results (
+                        session_id,
+                        status,
+                        crowd_count,
+                        method_id,
+                        model_id,
+                        evaluated_candidate_id,
+                        quality_gate_status,
+                        evaluation_reference,
+                        reason_code,
+                        message
+                    )
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+                    """,
+                    (
+                        session_id,
+                        "unsupported",
+                        0,
+                        "rejected-method",
+                        "rejected-model",
+                        "p2pnet-shtecha",
+                        "failed",
+                        "docs/evaluation/dedicated_crowd_counting_result.md",
+                        "no_accepted_dense_crowd_model",
+                        "Rejected candidate",
+                    ),
+                )
+
+            cursor.execute("ROLLBACK TO SAVEPOINT invalid_crowd_result;")
+            cursor.execute(
+                """
+                SELECT COUNT(*)
+                FROM dense_crowd_analysis_results
+                WHERE session_id = %s;
+                """,
+                (session_id,),
+            )
+            assert cursor.fetchone() == (0,)
 
 
 def test_failed_pending_migration_rolls_back_every_change(

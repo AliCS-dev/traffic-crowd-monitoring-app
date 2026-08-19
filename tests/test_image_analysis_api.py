@@ -6,6 +6,7 @@ from fastapi.testclient import TestClient
 from app.api.application import create_app
 from app.api.dependencies import ApplicationServices
 from app.api.settings import ApiSettings
+from app.crowd_analysis import load_dense_crowd_analysis_decision
 from app.model_profile import load_runtime_model_profile
 from app.services.image_analysis_service import (
     ImageAnalysisResult,
@@ -20,6 +21,7 @@ from app.services.image_upload_service import (
 )
 
 ASSET_ID = UUID("12345678-1234-5678-1234-567812345678")
+CROWD_ANALYSIS_DECISION = load_dense_crowd_analysis_decision()
 
 
 class FakeImageAnalysisService:
@@ -30,6 +32,7 @@ class FakeImageAnalysisService:
             detection_count=3,
             grid_rows=2,
             grid_columns=4,
+            dense_crowd_analysis=CROWD_ANALYSIS_DECISION,
         )
         self.error = error
         self.calls = []
@@ -86,6 +89,19 @@ def test_image_upload_returns_stable_completed_analysis_identifier():
         "detection_count": 3,
         "grid_rows": 2,
         "grid_columns": 4,
+        "dense_crowd_analysis": {
+            "status": "unsupported",
+            "count": None,
+            "method_id": None,
+            "model_id": None,
+            "evaluated_candidate_id": "p2pnet-shtecha",
+            "quality_gate_status": "failed",
+            "evaluation_reference": (
+                "docs/evaluation/dedicated_crowd_counting_result.md"
+            ),
+            "reason_code": "no_accepted_dense_crowd_model",
+            "message": CROWD_ANALYSIS_DECISION.message,
+        },
     }
     assert analysis_service.calls == [
         {
@@ -132,6 +148,7 @@ def test_unsafe_uploads_are_rejected_before_detection_or_file_creation(tmp_path)
     service = ImageAnalysisService(
         detector=detector,
         model_profile=load_runtime_model_profile(),
+        crowd_analysis_decision=CROWD_ANALYSIS_DECISION,
         upload_directory=tmp_path / "uploads",
         output_directory=tmp_path / "outputs",
         upload_policy=ImageUploadPolicy(max_bytes=32, max_pixels=10_000),
@@ -185,6 +202,19 @@ def result_record():
         "completed_at": "2026-08-18T12:00:01Z",
         "notes": None,
         "model_profile": None,
+        "dense_crowd_analysis": {
+            "status": "unsupported",
+            "count": None,
+            "method_id": None,
+            "model_id": None,
+            "evaluated_candidate_id": "p2pnet-shtecha",
+            "quality_gate_status": "failed",
+            "evaluation_reference": (
+                "docs/evaluation/dedicated_crowd_counting_result.md"
+            ),
+            "reason_code": "no_accepted_dense_crowd_model",
+            "message": CROWD_ANALYSIS_DECISION.message,
+        },
         "sources": [
             {
                 "id": 10,
@@ -227,6 +257,8 @@ def test_completed_analysis_is_available_through_read_route():
     assert response.status_code == 200
     assert response.json()["id"] == 42
     assert response.json()["frames"][0]["output_asset_id"] == str(ASSET_ID)
+    assert response.json()["dense_crowd_analysis"]["status"] == "unsupported"
+    assert response.json()["dense_crowd_analysis"]["count"] is None
     assert "file_path" not in response.text
     assert requested_ids == [42]
 

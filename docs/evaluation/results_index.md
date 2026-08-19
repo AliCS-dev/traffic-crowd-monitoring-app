@@ -45,6 +45,11 @@ contains the protocol, runtime, interpretation, limitations, and explicit
 decision. Exact compact evidence is in
 `data/evaluation/dedicated_crowd_counting.json`.
 
+The application consumes that tracked decision through `app/crowd_analysis.py`.
+New stored sessions and API results report dense-crowd analysis as unsupported,
+with a null count and no active crowd model. This prevents an empty list of
+ordinary person detections from being interpreted as a measured crowd of zero.
+
 ## Evidence Map
 
 | Question | Main record |
