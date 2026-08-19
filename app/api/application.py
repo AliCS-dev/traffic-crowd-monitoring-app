@@ -11,6 +11,7 @@ from app.api.dependencies import (
 from app.api.errors import register_error_handlers
 from app.api.routes.health import create_health_router
 from app.api.routes.image_analyses import create_image_analysis_router
+from app.api.routes.video_analyses import create_video_analysis_router
 from app.api.settings import ApiSettings
 
 
@@ -30,6 +31,7 @@ def create_app(
         )
         application.state.services = services
         try:
+            services.start()
             yield
         finally:
             services.close()
@@ -50,6 +52,10 @@ def create_app(
     register_error_handlers(application)
     application.include_router(
         create_health_router(settings),
+        prefix="/api",
+    )
+    application.include_router(
+        create_video_analysis_router(),
         prefix="/api",
     )
     application.include_router(

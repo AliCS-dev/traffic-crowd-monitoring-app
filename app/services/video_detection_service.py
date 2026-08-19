@@ -1,5 +1,6 @@
 from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
 from app.model_profile import RuntimeModelProfile
 from app.services.detection_service import (
@@ -11,6 +12,9 @@ from app.services.detection_service import (
 from app.services.frame_sampling_service import SampledFrame
 from app.services.preprocessing_service import preprocess_image_for_detection
 
+if TYPE_CHECKING:
+    from app.services.grid_counting_service import GridCountResult
+
 
 @dataclass(frozen=True)
 class VideoFrameDetectionResult:
@@ -20,6 +24,7 @@ class VideoFrameDetectionResult:
     image_height: int
     detection_records: list[dict]
     object_counts: dict[str, int]
+    grid_count_result: "GridCountResult | None" = None
 
 
 def process_sampled_video_frames(

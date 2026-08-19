@@ -25,6 +25,44 @@ class MonitoringSessionPage(BaseModel):
     pagination: Pagination
 
 
+class VideoAnalysisJobResult(BaseModel):
+    session_id: int = Field(gt=0)
+    status: Literal["queued", "processing", "completed", "failed"]
+    sampling_interval_seconds: float = Field(gt=0)
+    grid_rows: int | None = Field(default=None, gt=0)
+    grid_columns: int | None = Field(default=None, gt=0)
+    total_source_frames: int = Field(gt=0)
+    sampled_frames_total: int = Field(gt=0)
+    sampled_frames_processed: int = Field(ge=0)
+    progress_percent: float = Field(ge=0, le=100)
+    failure_code: str | None
+    failure_message: str | None
+    queued_at: datetime
+    started_at: datetime | None
+    finished_at: datetime | None
+
+    @model_validator(mode="after")
+    def validate_progress_and_grid(self) -> "VideoAnalysisJobResult":
+        if (self.grid_rows is None) != (self.grid_columns is None):
+            raise ValueError("Video grid rows and columns must be provided together.")
+        if self.sampled_frames_processed > self.sampled_frames_total:
+            raise ValueError("Processed sampled frames cannot exceed the total.")
+        if self.status == "completed" and (
+            self.sampled_frames_processed != self.sampled_frames_total
+            or self.finished_at is None
+            or self.failure_code is not None
+            or self.failure_message is not None
+        ):
+            raise ValueError("Completed video jobs require complete progress.")
+        if self.status == "failed" and (
+            self.finished_at is None
+            or self.failure_code is None
+            or self.failure_message is None
+        ):
+            raise ValueError("Failed video jobs require public failure details.")
+        return self
+
+
 class InputSourceResult(BaseModel):
     id: int
     source_type: Literal["image", "video"]

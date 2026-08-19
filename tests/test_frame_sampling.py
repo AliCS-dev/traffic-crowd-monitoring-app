@@ -3,7 +3,10 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from app.services.frame_sampling_service import sample_video_frames
+from app.services.frame_sampling_service import (
+    calculate_sampled_frame_count,
+    sample_video_frames,
+)
 from app.services.video_service import VideoMetadata
 
 
@@ -90,3 +93,8 @@ def test_empty_video_produces_no_sampled_frames():
     )
 
     assert sampled_frames == []
+
+
+def test_sampled_frame_count_matches_sampling_sequence():
+    assert calculate_sampled_frame_count(5, fps=2, sampling_interval_seconds=1) == 3
+    assert calculate_sampled_frame_count(6, fps=4, sampling_interval_seconds=0.5) == 3

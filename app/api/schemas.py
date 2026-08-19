@@ -39,3 +39,14 @@ class ImageAnalysisCreatedResponse(BaseModel):
     grid_rows: int | None
     grid_columns: int | None
     dense_crowd_analysis: DenseCrowdAnalysisResult
+
+
+class VideoAnalysisCreatedResponse(BaseModel):
+    session_id: int
+    status: Literal["queued"]
+    job_url: str
+    result_url: str
+    sampled_frames_total: int
+    sampling_interval_seconds: float
+    grid_rows: int | None
+    grid_columns: int | None

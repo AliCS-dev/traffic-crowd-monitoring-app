@@ -422,3 +422,21 @@ A failed validation, detector call, output write, or database transaction does n
 leave partial files or a completed session. Controlled API tests cover success,
 empty detections, malformed and oversized uploads, invalid grids, and failures;
 the PostgreSQL test exercises the complete create-and-read workflow.
+
+### Issue #71: Asynchronous Video Analysis And Progress
+
+We connected the existing video reader, time-based sampler, detector, grid
+counter, and repositories through a bounded background service. The upload route
+accepts validated MP4, AVI, MOV, and MKV files, stores them under generated names,
+creates a durable queued record, and returns HTTP `202` without waiting for
+inference. A second route reports queued, processing, completed, or failed state
+with sampled-frame progress.
+
+Migration `006` stores video-job configuration, progress, timestamps, and public
+failure details. Sampled results stay in memory until processing finishes, then
+all frames, detections, summaries, and optional grids are committed together.
+The default single worker bounds GPU work, and the detector itself serialises
+inference. On restart, abandoned local jobs are marked failed instead of being
+presented as resumable. Unit and PostgreSQL tests cover upload validation, prompt
+queuing, progress, grid persistence, ordered reads, failures, and restart
+recovery.

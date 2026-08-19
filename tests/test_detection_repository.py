@@ -159,6 +159,8 @@ def test_save_video_results_associates_multiple_frames_and_records(monkeypatch):
         "frame_count": 2,
         "detection_count": 2,
         "object_count_summary_count": 2,
+        "grid_cell_count": 0,
+        "grid_object_count_summary_count": 0,
     }
     assert ("input_source", (10, "video", "data/input/traffic.mp4", "traffic.mp4")) in (
         cursor.execute_calls
