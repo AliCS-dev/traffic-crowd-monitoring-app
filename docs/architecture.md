@@ -49,13 +49,15 @@ Optional PostgreSQL transaction
   - optional grid cells and per-cell summaries
 ```
 
-Video input currently has its own smaller flow:
+Video API input follows an asynchronous flow:
 
 ```text
-Video file
+Validated MP4, AVI, MOV, or MKV upload
     |
     v
-Load runtime model profile and verify checkpoint identity
+Commit queued session, source, profile, and job
+    |
+    +---------------------> Return HTTP 202 and job URL
     |
     v
 Validate and open with OpenCV
@@ -76,12 +78,10 @@ Preprocess and detect sampled frames
     +---------------------> Detections and class counts
     |
     v
-Optional PostgreSQL transaction
-  - one monitoring session
-  - one model and inference profile snapshot
-  - one video input source
+Bounded local background worker and completion transaction
   - one processed row per sampled frame
-  - per-frame detections and class counts
+  - per-frame detections, class counts, and optional grids
+  - persistent progress or public failure state
 ```
 
 The HTTP foundation currently has a smaller service-status flow:
@@ -135,7 +135,7 @@ Session ID and typed result URL
 
 The endpoint runs blocking inference in FastAPI's worker thread and serialises use
 of the shared detector. This is appropriate for the current single-user image
-workflow. Video processing will use a separate background-job design rather than
+workflow. Video processing uses a separate background-job design rather than
 holding an HTTP request open.
 
 ## Main Components
@@ -148,6 +148,7 @@ holding an HTTP request open.
 | `app/api/errors.py` | Converts API failures into one public JSON error format |
 | `app/api/routes/health.py` | Exposes process health and dependency readiness |
 | `app/api/routes/image_analyses.py` | Creates image analyses and returns complete stored results |
+| `app/api/routes/video_analyses.py` | Queues video analyses and returns persistent job progress |
 | `app/config.py` | Keeps project paths in one place |
 | `app/crowd_analysis.py` | Converts the recorded crowd evaluation rejection into a validated runtime decision |
 | `app/model_profile.py` | Validates the runtime profile and verifies checkpoint identity |
@@ -160,10 +161,13 @@ holding an HTTP request open.
 | `app/services/detection_service.py` | Loads YOLO, runs inference, and converts output into counts and records |
 | `app/services/grid_counting_service.py` | Assigns detection centres to configurable image cells and counts classes per cell |
 | `app/services/video_detection_service.py` | Processes sampled frames while preserving frame metadata |
+| `app/services/video_analysis_service.py` | Coordinates video uploads, bounded background work, progress, grids, and failures |
+| `app/services/video_upload_service.py` | Streams and validates supported uploaded video containers |
 | `app/services/output_service.py` | Creates the annotated output image |
 | `app/database/connection.py` | Reads `DATABASE_URL` and opens PostgreSQL connections |
 | `app/database/migration_runner.py` | Discovers, verifies, and applies ordered SQL migrations |
 | `app/database/detection_repository.py` | Stores complete image or sampled-video results in a transaction |
+| `app/database/video_job_repository.py` | Persists video-job state, progress, completion, failure, and startup recovery |
 | `app/database/monitoring_query_repository.py` | Lists sessions and reconstructs complete stored results with fixed bulk queries |
 | `app/schemas/monitoring.py` | Defines database-independent history and result models for later API and frontend use |
 | `scripts/` | Contains explicit database setup and diagnostic commands |
@@ -210,6 +214,14 @@ as a required pair. Result schemas expose only the UUID. If validation,
 inference, output writing, or database persistence fails, the orchestration
 service removes any partial input and output files; the repository transaction
 rolls back incomplete database records.
+
+Uploaded videos also receive generated UUID filenames. A bounded
+`ThreadPoolExecutor` handles local jobs, with one worker by default. The shared
+detector serialises inference so concurrent image and video requests cannot use
+the same model instance simultaneously. This is intentionally a single-process
+design for the thesis prototype, not a distributed queue. On startup, abandoned
+`queued` or `processing` records are marked `failed` because in-memory work
+cannot be resumed honestly after a process interruption.
 
 ## Decisions We Have Made So Far
 

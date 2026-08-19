@@ -47,6 +47,8 @@ monitoring_sessions
   |
   +-- dense_crowd_analysis_results
   |
+  +-- video_analysis_jobs
+  |
   +-- input_sources
   |     |
   |     +-- processed_frames
@@ -101,6 +103,18 @@ method. Existing sessions remain readable with no crowd-analysis record.
 
 An input source describes the image or video that belongs to a session. We store
 its source type, file path, original filename, and creation time.
+
+### `video_analysis_jobs`
+
+Migration `006` adds one persistent job record for each API video analysis. It
+stores the queue state, sampling interval, optional grid dimensions, source and
+sampled frame totals, processed-frame progress, timestamps, and public failure
+details. Database checks keep grid dimensions paired, progress within its total,
+and completed or failed states internally consistent.
+
+The job row is created together with its queued monitoring session, model
+profile, crowd-capability record, and input source before inference begins.
+Completed frame results are inserted in a later all-or-nothing transaction.
 
 ### `processed_frames`
 
@@ -192,6 +206,13 @@ For a video, we follow the same transaction pattern, but create one
 number and timestamp. Its detections and class summaries use that frame's ID, so
 results from different moments in the video do not become mixed. A sampled frame
 is still stored when it has no detections.
+
+API video jobs add a durable boundary around this process. We first commit the
+queued job and input metadata. Progress updates commit after each sampled frame,
+but detections, summaries, and grids remain in memory until every frame has
+finished. The completion transaction writes all frame results and changes both
+the job and session to `completed`. A processing error records a reproducible
+`failed` state without leaving partial result frames.
 
 ## What We Still Need to Improve
 

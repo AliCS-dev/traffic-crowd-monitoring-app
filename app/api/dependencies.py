@@ -10,6 +10,7 @@ from app.config import BASE_DIR
 from app.crowd_analysis import load_dense_crowd_analysis_decision
 from app.database.connection import check_database_connection
 from app.database.monitoring_query_repository import get_monitoring_session
+from app.database.video_job_repository import recover_interrupted_video_jobs
 from app.model_profile import (
     load_runtime_model_profile,
     verify_runtime_checkpoint,
@@ -17,6 +18,8 @@ from app.model_profile import (
 from app.services.detection_service import ObjectDetector
 from app.services.image_analysis_service import ImageAnalysisService
 from app.services.image_upload_service import ImageUploadPolicy
+from app.services.video_analysis_service import VideoAnalysisService
+from app.services.video_upload_service import VideoUploadPolicy
 
 DATABASE_READINESS_TIMEOUT_SECONDS = 3
 LOGGER = logging.getLogger(__name__)
@@ -30,16 +33,29 @@ class ApplicationServices:
         detector_probe: Callable[[], bool],
         detector_factory: Callable[[], Any],
         image_analysis_factory: Callable[[Any], Any] | None = None,
+        video_analysis_factory: Callable[[Callable], Any] | None = None,
         monitoring_session_reader: Callable[[int], Any] = get_monitoring_session,
+        startup_function: Callable[[], int] | None = None,
     ) -> None:
         self._database_probe = database_probe
         self._detector_probe = detector_probe
         self._detector_factory = detector_factory
         self._image_analysis_factory = image_analysis_factory
+        self._video_analysis_factory = video_analysis_factory
         self._monitoring_session_reader = monitoring_session_reader
+        self._startup_function = startup_function
         self._detector: Any | None = None
         self._image_analysis_service: Any | None = None
+        self._video_analysis_service: Any | None = None
         self._detector_lock = Lock()
+        self._service_lock = Lock()
+
+    def start(self) -> None:
+        if self._startup_function is None:
+            return
+        recovered = self._startup_function()
+        if recovered:
+            LOGGER.warning("Marked %s interrupted video job(s) as failed", recovered)
 
     def readiness(self) -> dict[str, bool]:
         return {
@@ -81,7 +97,21 @@ class ApplicationServices:
     def get_monitoring_session(self, session_id: int) -> Any:
         return self._monitoring_session_reader(session_id)
 
+    def get_video_analysis_service(self) -> Any:
+        if self._video_analysis_factory is None:
+            raise RuntimeError("Video analysis service is not configured.")
+        if self._video_analysis_service is None:
+            with self._service_lock:
+                if self._video_analysis_service is None:
+                    self._video_analysis_service = self._video_analysis_factory(
+                        self.get_detector
+                    )
+        return self._video_analysis_service
+
     def close(self) -> None:
+        if self._video_analysis_service is not None:
+            self._video_analysis_service.close()
+        self._video_analysis_service = None
         self._image_analysis_service = None
         self._detector = None
 
@@ -115,6 +145,19 @@ def create_application_services(
             ),
             max_grid_dimension=settings.max_grid_dimension,
         ),
+        video_analysis_factory=lambda detector_provider: VideoAnalysisService(
+            detector_provider=detector_provider,
+            model_profile=profile,
+            crowd_analysis_decision=crowd_analysis_decision,
+            upload_directory=settings.video_upload_directory,
+            upload_policy=VideoUploadPolicy(
+                max_bytes=settings.max_video_upload_bytes,
+                max_frame_pixels=settings.max_image_pixels,
+            ),
+            max_grid_dimension=settings.max_grid_dimension,
+            worker_count=settings.video_workers,
+        ),
+        startup_function=recover_interrupted_video_jobs,
     )
 
 
@@ -128,3 +171,7 @@ def get_detector(request: Request) -> Any:
 
 def get_image_analysis_service(request: Request) -> Any:
     return get_application_services(request).get_image_analysis_service()
+
+
+def get_video_analysis_service(request: Request) -> Any:
+    return get_application_services(request).get_video_analysis_service()

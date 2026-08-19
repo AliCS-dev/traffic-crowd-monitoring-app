@@ -5,7 +5,11 @@ from urllib.parse import urlparse
 
 from dotenv import load_dotenv
 
-from app.config import API_IMAGE_OUTPUT_DIR, API_IMAGE_UPLOAD_DIR
+from app.config import (
+    API_IMAGE_OUTPUT_DIR,
+    API_IMAGE_UPLOAD_DIR,
+    API_VIDEO_UPLOAD_DIR,
+)
 
 BYTES_PER_MEGABYTE = 1024 * 1024
 
@@ -21,9 +25,12 @@ class ApiSettings:
     cors_origins: tuple[str, ...] = ("http://localhost:5173",)
     image_upload_directory: Path = API_IMAGE_UPLOAD_DIR
     image_output_directory: Path = API_IMAGE_OUTPUT_DIR
+    video_upload_directory: Path = API_VIDEO_UPLOAD_DIR
     max_image_upload_bytes: int = 10 * BYTES_PER_MEGABYTE
     max_image_pixels: int = 40_000_000
     max_grid_dimension: int = 20
+    max_video_upload_bytes: int = 500 * BYTES_PER_MEGABYTE
+    video_workers: int = 1
 
     @classmethod
     def from_environment(cls) -> "ApiSettings":
@@ -51,11 +58,17 @@ class ApiSettings:
         max_grid_dimension = _positive_environment_integer(
             "API_MAX_GRID_DIMENSION", default=20
         )
+        max_video_upload_mb = _positive_environment_integer(
+            "API_MAX_VIDEO_UPLOAD_MB", default=500
+        )
+        video_workers = _positive_environment_integer("API_VIDEO_WORKERS", default=1)
         return cls(
             cors_origins=origins,
             max_image_upload_bytes=max_upload_mb * BYTES_PER_MEGABYTE,
             max_image_pixels=max_image_pixels,
             max_grid_dimension=max_grid_dimension,
+            max_video_upload_bytes=max_video_upload_mb * BYTES_PER_MEGABYTE,
+            video_workers=video_workers,
         )
 
 

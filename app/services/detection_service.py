@@ -1,4 +1,5 @@
 from pathlib import Path
+from threading import Lock
 from typing import Any
 
 from ultralytics import YOLO
@@ -14,6 +15,7 @@ class ObjectDetector:
     def __init__(self, model_path, *, model_factory=None):
         model_factory = model_factory or YOLO
         self._model = model_factory(str(model_path))
+        self._inference_lock = Lock()
 
     @classmethod
     def from_runtime_profile(
@@ -49,7 +51,8 @@ class ObjectDetector:
             options["half"] = True
         if verbose is not None:
             options["verbose"] = verbose
-        return self._model(image, **options)
+        with self._inference_lock:
+            return self._model(image, **options)
 
 
 def detect_objects(

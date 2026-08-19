@@ -108,6 +108,8 @@ def save_video_detection_results(
     processed_frame_ids = []
     detection_count = 0
     object_count_summary_count = 0
+    grid_cell_count = 0
+    grid_object_count_summary_count = 0
 
     with open_database_connection() as connection:
         with connection.cursor() as cursor:
@@ -152,6 +154,20 @@ def save_video_detection_results(
                     summary_records,
                 )
 
+                if frame_result.grid_count_result is not None:
+                    _validate_grid_image_dimensions(
+                        frame_result.grid_count_result,
+                        frame_result.image_width,
+                        frame_result.image_height,
+                    )
+                    cell_count, grid_summary_count = create_grid_count_results(
+                        cursor,
+                        processed_frame_id,
+                        frame_result.grid_count_result,
+                    )
+                    grid_cell_count += cell_count
+                    grid_object_count_summary_count += grid_summary_count
+
                 detection_count += len(frame_result.detection_records)
                 object_count_summary_count += len(summary_records)
 
@@ -164,17 +180,19 @@ def save_video_detection_results(
         "frame_count": len(processed_frame_ids),
         "detection_count": detection_count,
         "object_count_summary_count": object_count_summary_count,
+        "grid_cell_count": grid_cell_count,
+        "grid_object_count_summary_count": grid_object_count_summary_count,
     }
 
 
-def create_monitoring_session(cursor, session_name):
+def create_monitoring_session(cursor, session_name, status="processing"):
     cursor.execute(
         """
         INSERT INTO monitoring_sessions (session_name, status)
         VALUES (%s, %s)
         RETURNING id;
         """,
-        (session_name, "processing"),
+        (session_name, status),
     )
 
     return cursor.fetchone()[0]

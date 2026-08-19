@@ -18,14 +18,8 @@ def sample_video_frames(
     video_reader: VideoReader,
     sampling_interval_seconds: float,
 ) -> Iterator[SampledFrame]:
-    if not math.isfinite(sampling_interval_seconds) or sampling_interval_seconds <= 0:
-        raise ValueError("Sampling interval must be a positive finite number.")
-
     fps = video_reader.metadata.fps
-    if not math.isfinite(fps) or fps <= 0:
-        raise ValueError("Video FPS must be positive for time-based sampling.")
-
-    frame_interval = max(1, round(sampling_interval_seconds * fps))
+    frame_interval = calculate_frame_interval(fps, sampling_interval_seconds)
     frame_number = 0
 
     while True:
@@ -41,3 +35,24 @@ def sample_video_frames(
             )
 
         frame_number += 1
+
+
+def calculate_frame_interval(fps: float, sampling_interval_seconds: float) -> int:
+    if not math.isfinite(sampling_interval_seconds) or sampling_interval_seconds <= 0:
+        raise ValueError("Sampling interval must be a positive finite number.")
+    if not math.isfinite(fps) or fps <= 0:
+        raise ValueError("Video FPS must be positive for time-based sampling.")
+    return max(1, round(sampling_interval_seconds * fps))
+
+
+def calculate_sampled_frame_count(
+    frame_count: int,
+    fps: float,
+    sampling_interval_seconds: float,
+) -> int:
+    if isinstance(frame_count, bool) or not isinstance(frame_count, int):
+        raise ValueError("Video frame count must be a positive integer.")
+    if frame_count < 1:
+        raise ValueError("Video frame count must be a positive integer.")
+    frame_interval = calculate_frame_interval(fps, sampling_interval_seconds)
+    return ((frame_count - 1) // frame_interval) + 1

@@ -57,7 +57,14 @@ def test_fresh_database_applies_migrations_once(isolated_database_schema):
         connection_factory=connection_factory,
     )
 
-    assert [migration.version for migration in first_result.applied] == [1, 2, 3, 4, 5]
+    assert [migration.version for migration in first_result.applied] == [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+    ]
     assert second_result.applied == ()
     assert [migration.version for migration in second_result.previously_applied] == [
         1,
@@ -65,6 +72,7 @@ def test_fresh_database_applies_migrations_once(isolated_database_schema):
         3,
         4,
         5,
+        6,
     ]
 
     with connection_factory() as connection:
@@ -78,6 +86,7 @@ def test_fresh_database_applies_migrations_once(isolated_database_schema):
                 (3, "add_session_history_index"),
                 (4, "add_output_asset_references"),
                 (5, "add_dense_crowd_analysis_results"),
+                (6, "add_video_analysis_jobs"),
             ]
             cursor.execute("SELECT to_regclass('monitoring_sessions');")
             assert cursor.fetchone() == ("monitoring_sessions",)
@@ -116,7 +125,7 @@ def test_existing_initial_schema_is_adopted_without_data_loss(
 
     result = apply_pending_migrations(connection_factory=connection_factory)
 
-    assert [migration.version for migration in result.applied] == [1, 2, 3, 4, 5]
+    assert [migration.version for migration in result.applied] == [1, 2, 3, 4, 5, 6]
     with connection_factory() as connection:
         with connection.cursor() as cursor:
             cursor.execute(
@@ -125,7 +134,7 @@ def test_existing_initial_schema_is_adopted_without_data_loss(
             )
             assert cursor.fetchone() == ("legacy session", "completed")
             cursor.execute("SELECT version FROM schema_migrations ORDER BY version;")
-            assert cursor.fetchall() == [(1,), (2,), (3,), (4,), (5,)]
+            assert cursor.fetchall() == [(1,), (2,), (3,), (4,), (5,), (6,)]
 
 
 def test_unsupported_crowd_result_cannot_store_a_false_zero_or_active_model(

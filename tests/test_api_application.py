@@ -120,6 +120,21 @@ def test_detector_is_lazy_cached_and_released_at_shutdown():
     assert len(created_detectors) == 2
 
 
+def test_startup_recovers_interrupted_video_jobs():
+    recovery_calls = []
+    services = ApplicationServices(
+        database_probe=lambda: True,
+        detector_probe=lambda: True,
+        detector_factory=lambda: object(),
+        startup_function=lambda: recovery_calls.append("recover") or 0,
+    )
+
+    with TestClient(create_test_app(services)) as client:
+        assert client.get("/api/health").status_code == 200
+
+    assert recovery_calls == ["recover"]
+
+
 def test_default_services_use_a_bounded_database_readiness_probe(monkeypatch):
     database_calls = []
     profile = object()
@@ -153,6 +168,8 @@ def test_openapi_and_interactive_documentation_are_available():
     }
     assert set(schema.json()["paths"]) == {
         "/api/analyses/images",
+        "/api/analyses/videos",
+        "/api/analyses/videos/{session_id}",
         "/api/analyses/{session_id}",
         "/api/health",
         "/api/ready",
@@ -270,11 +287,27 @@ def test_api_settings_parse_positive_image_limits(monkeypatch):
     assert settings.max_grid_dimension == 8
 
 
+def test_api_settings_parse_positive_video_limits(monkeypatch):
+    monkeypatch.setenv("API_MAX_VIDEO_UPLOAD_MB", "250")
+    monkeypatch.setenv("API_VIDEO_WORKERS", "2")
+
+    settings = ApiSettings.from_environment()
+
+    assert settings.max_video_upload_bytes == 250 * 1024 * 1024
+    assert settings.video_workers == 2
+
+
 @pytest.mark.parametrize(
     "variable",
-    ["API_MAX_IMAGE_UPLOAD_MB", "API_MAX_IMAGE_PIXELS", "API_MAX_GRID_DIMENSION"],
+    [
+        "API_MAX_IMAGE_UPLOAD_MB",
+        "API_MAX_IMAGE_PIXELS",
+        "API_MAX_GRID_DIMENSION",
+        "API_MAX_VIDEO_UPLOAD_MB",
+        "API_VIDEO_WORKERS",
+    ],
 )
-def test_api_settings_reject_non_positive_image_limits(monkeypatch, variable):
+def test_api_settings_reject_non_positive_limits(monkeypatch, variable):
     monkeypatch.setenv(variable, "0")
 
     with pytest.raises(
