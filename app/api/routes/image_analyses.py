@@ -9,7 +9,7 @@ from app.api.dependencies import (
 )
 from app.api.errors import ApiError
 from app.api.schemas import ErrorResponse, ImageAnalysisCreatedResponse
-from app.schemas.monitoring import MonitoringSessionResult
+from app.schemas.monitoring import DenseCrowdAnalysisResult, MonitoringSessionResult
 from app.services.image_analysis_service import InvalidImageAnalysisOptionsError
 from app.services.image_upload_service import (
     ImageUploadTooLargeError,
@@ -66,6 +66,21 @@ def create_image_analysis_router() -> APIRouter:
             detection_count=result.detection_count,
             grid_rows=result.grid_rows,
             grid_columns=result.grid_columns,
+            dense_crowd_analysis=DenseCrowdAnalysisResult(
+                status=result.dense_crowd_analysis.status,
+                count=result.dense_crowd_analysis.count,
+                method_id=result.dense_crowd_analysis.method_id,
+                model_id=result.dense_crowd_analysis.model_id,
+                evaluated_candidate_id=(
+                    result.dense_crowd_analysis.evaluated_candidate_id
+                ),
+                quality_gate_status=(result.dense_crowd_analysis.quality_gate_status),
+                evaluation_reference=(
+                    result.dense_crowd_analysis.evaluation_reference.as_posix()
+                ),
+                reason_code=result.dense_crowd_analysis.reason_code,
+                message=result.dense_crowd_analysis.message,
+            ),
         )
 
     @router.get(

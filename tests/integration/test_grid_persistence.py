@@ -2,6 +2,7 @@ import os
 
 import pytest
 
+from app.crowd_analysis import load_dense_crowd_analysis_decision
 from app.database.connection import open_database_connection
 from app.database.detection_repository import save_image_detection_results
 from app.database.migration_runner import apply_pending_migrations
@@ -55,6 +56,7 @@ def test_grid_cells_and_summaries_are_persisted_with_correct_relationships():
         grid_count_result=grid_result,
         session_name="grid persistence integration test",
         model_profile=load_runtime_model_profile(),
+        crowd_analysis_decision=load_dense_crowd_analysis_decision(),
     )
 
     try:

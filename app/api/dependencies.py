@@ -7,6 +7,7 @@ from fastapi import Request
 
 from app.api.settings import ApiSettings
 from app.config import BASE_DIR
+from app.crowd_analysis import load_dense_crowd_analysis_decision
 from app.database.connection import check_database_connection
 from app.database.monitoring_query_repository import get_monitoring_session
 from app.model_profile import (
@@ -90,6 +91,7 @@ def create_application_services(
 ) -> ApplicationServices:
     settings = settings or ApiSettings.from_environment()
     profile = load_runtime_model_profile()
+    crowd_analysis_decision = load_dense_crowd_analysis_decision()
 
     def detector_probe() -> bool:
         verify_runtime_checkpoint(profile, BASE_DIR)
@@ -104,6 +106,7 @@ def create_application_services(
         image_analysis_factory=lambda detector: ImageAnalysisService(
             detector=detector,
             model_profile=profile,
+            crowd_analysis_decision=crowd_analysis_decision,
             upload_directory=settings.image_upload_directory,
             output_directory=settings.image_output_directory,
             upload_policy=ImageUploadPolicy(

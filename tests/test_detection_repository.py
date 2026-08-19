@@ -3,11 +3,13 @@ from uuid import UUID
 import pytest
 
 import app.database.detection_repository as detection_repository
+from app.crowd_analysis import load_dense_crowd_analysis_decision
 from app.model_profile import load_runtime_model_profile
 from app.services.grid_counting_service import count_detections_by_grid
 from app.services.video_detection_service import VideoFrameDetectionResult
 
 MODEL_PROFILE = load_runtime_model_profile()
+CROWD_ANALYSIS_DECISION = load_dense_crowd_analysis_decision()
 
 CAR_DETECTION = {
     "object_class": "car",
@@ -71,6 +73,8 @@ class FakeCursor:
             return "monitoring_session"
         if "INSERT INTO model_run_profiles" in normalized_query:
             return "model_run_profile"
+        if "INSERT INTO dense_crowd_analysis_results" in normalized_query:
+            return "dense_crowd_analysis"
         if "INSERT INTO input_sources" in normalized_query:
             return "input_source"
         if "INSERT INTO processed_frames" in normalized_query:
@@ -145,6 +149,7 @@ def test_save_video_results_associates_multiple_frames_and_records(monkeypatch):
         frame_results,
         session_name="sample video",
         model_profile=MODEL_PROFILE,
+        crowd_analysis_decision=CROWD_ANALYSIS_DECISION,
     )
 
     assert stored_result == {
@@ -175,6 +180,21 @@ def test_save_video_results_associates_multiple_frames_and_records(monkeypatch):
         )
         for operation, parameters in cursor.execute_calls
     )
+    assert (
+        "dense_crowd_analysis",
+        (
+            10,
+            "unsupported",
+            None,
+            None,
+            None,
+            "p2pnet-shtecha",
+            "failed",
+            "docs/evaluation/dedicated_crowd_counting_result.md",
+            "no_accepted_dense_crowd_model",
+            CROWD_ANALYSIS_DECISION.message,
+        ),
+    ) in cursor.execute_calls
     assert cursor.executemany_calls == [
         (
             "detection_results",
@@ -222,6 +242,7 @@ def test_save_video_result_records_frame_without_detections(monkeypatch):
         "data/input/empty-frame.mp4",
         [frame_result],
         model_profile=MODEL_PROFILE,
+        crowd_analysis_decision=CROWD_ANALYSIS_DECISION,
     )
 
     assert stored_result["frame_count"] == 1
@@ -248,6 +269,7 @@ def test_save_video_results_rejects_empty_frame_sequence(monkeypatch):
             "data/input/no-frames.mp4",
             [],
             model_profile=MODEL_PROFILE,
+            crowd_analysis_decision=CROWD_ANALYSIS_DECISION,
         )
 
 
@@ -269,6 +291,7 @@ def test_save_video_results_rolls_back_complete_transaction_on_failure(monkeypat
             "data/input/traffic.mp4",
             [frame_result],
             model_profile=MODEL_PROFILE,
+            crowd_analysis_decision=CROWD_ANALYSIS_DECISION,
         )
 
     assert connection.exit_exception_type is RuntimeError
@@ -290,6 +313,7 @@ def test_existing_image_storage_uses_image_source_and_zero_frame(monkeypatch):
         image_height=480,
         detection_records=[],
         model_profile=MODEL_PROFILE,
+        crowd_analysis_decision=CROWD_ANALYSIS_DECISION,
     )
 
     assert stored_result["processed_frame_id"] == 30
@@ -314,6 +338,7 @@ def test_image_storage_persists_public_and_private_output_references(monkeypatch
         image_height=480,
         detection_records=[],
         model_profile=MODEL_PROFILE,
+        crowd_analysis_decision=CROWD_ANALYSIS_DECISION,
         original_filename="drone-original.jpg",
         output_asset_id=asset_id,
         output_file_path="data/output/analyses/result.jpg",
@@ -358,6 +383,7 @@ def test_image_storage_rejects_incomplete_output_reference(
             image_height=480,
             detection_records=[],
             model_profile=MODEL_PROFILE,
+            crowd_analysis_decision=CROWD_ANALYSIS_DECISION,
             output_asset_id=output_asset_id,
             output_file_path=output_file_path,
         )
@@ -377,12 +403,38 @@ def test_model_profile_failure_rolls_back_before_source_storage(monkeypatch):
             image_height=480,
             detection_records=[],
             model_profile=MODEL_PROFILE,
+            crowd_analysis_decision=CROWD_ANALYSIS_DECISION,
         )
 
     assert connection.exit_exception_type is RuntimeError
     assert [operation for operation, _parameters in cursor.execute_calls] == [
         "monitoring_session",
         "model_run_profile",
+    ]
+
+
+def test_dense_crowd_status_failure_rolls_back_before_source_storage(monkeypatch):
+    cursor, connection = use_fake_database(
+        monkeypatch,
+        generated_ids=[10],
+        fail_on="dense_crowd_analysis",
+    )
+
+    with pytest.raises(RuntimeError, match="Failed to insert dense_crowd_analysis"):
+        detection_repository.save_image_detection_results(
+            "data/input/image.jpg",
+            image_width=640,
+            image_height=480,
+            detection_records=[],
+            model_profile=MODEL_PROFILE,
+            crowd_analysis_decision=CROWD_ANALYSIS_DECISION,
+        )
+
+    assert connection.exit_exception_type is RuntimeError
+    assert [operation for operation, _parameters in cursor.execute_calls] == [
+        "monitoring_session",
+        "model_run_profile",
+        "dense_crowd_analysis",
     ]
 
 
@@ -400,6 +452,7 @@ def test_image_storage_keeps_session_name_positional_compatibility(monkeypatch):
         [],
         "existing positional call",
         model_profile=MODEL_PROFILE,
+        crowd_analysis_decision=CROWD_ANALYSIS_DECISION,
     )
 
     assert ("monitoring_session", ("existing positional call", "processing")) in (
@@ -431,6 +484,7 @@ def test_save_image_results_stores_grid_cells_and_linked_summaries(monkeypatch):
         ],
         grid_count_result=grid_result,
         model_profile=MODEL_PROFILE,
+        crowd_analysis_decision=CROWD_ANALYSIS_DECISION,
     )
 
     assert stored_result["grid_cell_count"] == 4
@@ -490,6 +544,7 @@ def test_save_image_results_rejects_grid_for_different_image(monkeypatch):
             detection_records=[],
             grid_count_result=grid_result,
             model_profile=MODEL_PROFILE,
+            crowd_analysis_decision=CROWD_ANALYSIS_DECISION,
         )
 
 
@@ -515,6 +570,7 @@ def test_grid_insert_failure_rolls_back_complete_image_transaction(monkeypatch):
             detection_records=[],
             grid_count_result=grid_result,
             model_profile=MODEL_PROFILE,
+            crowd_analysis_decision=CROWD_ANALYSIS_DECISION,
         )
 
     assert connection.exit_exception_type is RuntimeError

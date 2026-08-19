@@ -6,6 +6,7 @@ import cv2
 import numpy as np
 import pytest
 
+from app.crowd_analysis import load_dense_crowd_analysis_decision
 from app.model_profile import load_runtime_model_profile
 from app.services.image_analysis_service import (
     ImageAnalysisService,
@@ -15,6 +16,7 @@ from app.services.image_upload_service import ImageUploadPolicy
 
 ASSET_ID = UUID("12345678-1234-5678-1234-567812345678")
 MODEL_PROFILE = load_runtime_model_profile()
+CROWD_ANALYSIS_DECISION = load_dense_crowd_analysis_decision()
 
 
 def encoded_jpeg():
@@ -57,6 +59,7 @@ def create_service(tmp_path, detector, persistence_function):
     return ImageAnalysisService(
         detector=detector,
         model_profile=MODEL_PROFILE,
+        crowd_analysis_decision=CROWD_ANALYSIS_DECISION,
         upload_directory=tmp_path / "uploads",
         output_directory=tmp_path / "outputs",
         upload_policy=ImageUploadPolicy(max_bytes=1024 * 1024, max_pixels=10_000),
@@ -99,6 +102,7 @@ def test_complete_analysis_uses_profile_grid_and_server_controlled_paths(tmp_pat
     assert persisted[0]["session_name"] == "morning junction"
     assert persisted[0]["original_filename"] == "original scene.jpg"
     assert persisted[0]["model_profile"] is MODEL_PROFILE
+    assert persisted[0]["crowd_analysis_decision"] is CROWD_ANALYSIS_DECISION
     assert persisted[0]["grid_count_result"].grid_size.rows == 2
     assert persisted[0]["grid_count_result"].grid_size.columns == 4
     assert persisted[0]["output_asset_id"] == ASSET_ID
@@ -107,6 +111,7 @@ def test_complete_analysis_uses_profile_grid_and_server_controlled_paths(tmp_pat
     assert "original scene" not in str(persisted[0]["image_path"])
     assert persisted[0]["image_path"].is_file()
     assert persisted[0]["output_file_path"].is_file()
+    assert result.dense_crowd_analysis is CROWD_ANALYSIS_DECISION
 
 
 def test_empty_detection_result_is_still_persisted(tmp_path):

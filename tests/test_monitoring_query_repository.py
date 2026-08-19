@@ -83,6 +83,22 @@ def session_row(**overrides):
     return row
 
 
+def crowd_analysis_row(**overrides):
+    row = {
+        "status": "unsupported",
+        "count": None,
+        "method_id": None,
+        "model_id": None,
+        "evaluated_candidate_id": "p2pnet-shtecha",
+        "quality_gate_status": "failed",
+        "evaluation_reference": ("docs/evaluation/dedicated_crowd_counting_result.md"),
+        "reason_code": "no_accepted_dense_crowd_model",
+        "message": "The evaluated candidate did not meet the acceptance threshold.",
+    }
+    row.update(overrides)
+    return row
+
+
 def test_list_sessions_returns_deterministic_page_metadata():
     rows = [
         {
@@ -163,15 +179,16 @@ def test_session_without_model_profile_or_frames_remains_readable():
         device=None,
         profile_created_at=None,
     )
-    cursor, connection_factory = connection_factory_for([legacy_session], [], [])
+    cursor, connection_factory = connection_factory_for([legacy_session], [], [], [])
 
     result = get_monitoring_session(11, connection_factory=connection_factory)
 
     assert result is not None
     assert result.model_profile is None
+    assert result.dense_crowd_analysis is None
     assert result.sources == []
     assert result.frames == []
-    assert len(cursor.execute_calls) == 3
+    assert len(cursor.execute_calls) == 4
 
 
 def test_complete_result_is_grouped_by_frame_and_grid_level():
@@ -244,6 +261,7 @@ def test_complete_result_is_grouped_by_frame_and_grid_level():
     }
     cursor, connection_factory = connection_factory_for(
         [session_row()],
+        [crowd_analysis_row()],
         [source],
         [frame],
         [detection],
@@ -256,6 +274,11 @@ def test_complete_result_is_grouped_by_frame_and_grid_level():
 
     assert result is not None
     assert result.model_profile.model_id == "test-model"
+    assert result.dense_crowd_analysis.status == "unsupported"
+    assert result.dense_crowd_analysis.count is None
+    assert result.dense_crowd_analysis.method_id is None
+    assert result.dense_crowd_analysis.model_id is None
+    assert result.dense_crowd_analysis.evaluated_candidate_id == "p2pnet-shtecha"
     assert result.sources[0].original_filename == "junction.jpg"
     assert len(result.frames) == 1
     result_frame = result.frames[0]
@@ -264,8 +287,8 @@ def test_complete_result_is_grouped_by_frame_and_grid_level():
     assert [summary.id for summary in result_frame.frame_summaries] == [61]
     assert [summary.id for summary in result_frame.grid_cells[0].summaries] == [62]
     assert result_frame.alerts[0].grid_cell_id == 51
-    assert len(cursor.execute_calls) == 7
-    for _query, parameters in cursor.execute_calls[3:]:
+    assert len(cursor.execute_calls) == 8
+    for _query, parameters in cursor.execute_calls[4:]:
         assert parameters == ([31],)
 
 
@@ -284,15 +307,15 @@ def test_detail_query_count_does_not_grow_with_video_frames():
         for frame_id, frame_number in [(31, 0), (32, 30), (33, 60)]
     ]
     cursor, connection_factory = connection_factory_for(
-        [session_row()], [], frame_rows, [], [], [], []
+        [session_row()], [crowd_analysis_row()], [], frame_rows, [], [], [], []
     )
 
     result = get_monitoring_session(11, connection_factory=connection_factory)
 
     assert result is not None
     assert [frame.frame_number for frame in result.frames] == [0, 30, 60]
-    assert len(cursor.execute_calls) == 7
-    for _query, parameters in cursor.execute_calls[3:]:
+    assert len(cursor.execute_calls) == 8
+    for _query, parameters in cursor.execute_calls[4:]:
         assert parameters == ([31, 32, 33],)
 
 

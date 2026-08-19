@@ -3,6 +3,7 @@ from collections.abc import Iterable
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from app.crowd_analysis import DenseCrowdAnalysisDecision
 from app.database.connection import open_database_connection
 from app.model_profile import RuntimeModelProfile
 from app.services.detection_service import build_object_count_summary_records
@@ -22,6 +23,7 @@ def save_image_detection_results(
     grid_count_result: "GridCountResult | None" = None,
     *,
     model_profile: RuntimeModelProfile,
+    crowd_analysis_decision: DenseCrowdAnalysisDecision,
     original_filename=None,
     output_asset_id=None,
     output_file_path=None,
@@ -38,6 +40,11 @@ def save_image_detection_results(
         with connection.cursor() as cursor:
             session_id = create_monitoring_session(cursor, session_name)
             create_model_run_profile(cursor, session_id, model_profile)
+            create_dense_crowd_analysis_result(
+                cursor,
+                session_id,
+                crowd_analysis_decision,
+            )
             input_source_id = create_input_source(
                 cursor,
                 session_id,
@@ -90,6 +97,7 @@ def save_video_detection_results(
     session_name=None,
     *,
     model_profile: RuntimeModelProfile,
+    crowd_analysis_decision: DenseCrowdAnalysisDecision,
 ):
     video_path = Path(video_path)
     frame_results = list(frame_results)
@@ -105,6 +113,11 @@ def save_video_detection_results(
         with connection.cursor() as cursor:
             session_id = create_monitoring_session(cursor, session_name)
             create_model_run_profile(cursor, session_id, model_profile)
+            create_dense_crowd_analysis_result(
+                cursor,
+                session_id,
+                crowd_analysis_decision,
+            )
             input_source_id = create_input_source(
                 cursor,
                 session_id,
@@ -206,6 +219,38 @@ def create_model_run_profile(cursor, session_id, model_profile):
             model_profile.max_detections,
             model_profile.numeric_precision,
             model_profile.device,
+        ),
+    )
+
+
+def create_dense_crowd_analysis_result(cursor, session_id, decision):
+    cursor.execute(
+        """
+        INSERT INTO dense_crowd_analysis_results (
+            session_id,
+            status,
+            crowd_count,
+            method_id,
+            model_id,
+            evaluated_candidate_id,
+            quality_gate_status,
+            evaluation_reference,
+            reason_code,
+            message
+        )
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+        """,
+        (
+            session_id,
+            decision.status,
+            decision.count,
+            decision.method_id,
+            decision.model_id,
+            decision.evaluated_candidate_id,
+            decision.quality_gate_status,
+            decision.evaluation_reference.as_posix(),
+            decision.reason_code,
+            decision.message,
         ),
     )
 

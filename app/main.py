@@ -4,6 +4,7 @@ from app.config import (
     SAMPLE_IMAGE_PATH,
     SAMPLE_OUTPUT_PATH,
 )
+from app.crowd_analysis import load_dense_crowd_analysis_decision
 from app.database.detection_repository import save_image_detection_results
 from app.model_profile import load_runtime_model_profile
 from app.services.detection_service import (
@@ -105,10 +106,13 @@ def print_database_storage_summary(stored_result) -> None:
 def main():
     args = parse_arguments()
     model_profile = load_runtime_model_profile()
+    crowd_analysis_decision = load_dense_crowd_analysis_decision()
     class_mapping = model_profile.class_mapping_dict()
 
     print(f"Runtime model profile: {model_profile.profile_id}")
     print(f"Model quality-gate status: {model_profile.quality_gate_status}")
+    print(f"Dense-crowd counting: {crowd_analysis_decision.status}")
+    print("Dense-crowd count: unavailable; no candidate passed evaluation.")
 
     image = load_input_image(args.image)
     height, width = image.shape[:2]
@@ -164,6 +168,7 @@ def main():
             grid_count_result=grid_result,
             session_name=args.session_name,
             model_profile=model_profile,
+            crowd_analysis_decision=crowd_analysis_decision,
         )
 
         print_database_storage_summary(stored_result)

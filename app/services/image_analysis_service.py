@@ -5,6 +5,7 @@ from threading import Lock
 from typing import BinaryIO
 from uuid import UUID, uuid4
 
+from app.crowd_analysis import DenseCrowdAnalysisDecision
 from app.database.detection_repository import save_image_detection_results
 from app.model_profile import RuntimeModelProfile
 from app.services.detection_service import (
@@ -33,6 +34,7 @@ class ImageAnalysisResult:
     detection_count: int
     grid_rows: int | None
     grid_columns: int | None
+    dense_crowd_analysis: DenseCrowdAnalysisDecision
 
 
 class ImageAnalysisService:
@@ -41,6 +43,7 @@ class ImageAnalysisService:
         *,
         detector,
         model_profile: RuntimeModelProfile,
+        crowd_analysis_decision: DenseCrowdAnalysisDecision,
         upload_directory: Path,
         output_directory: Path,
         upload_policy: ImageUploadPolicy,
@@ -52,6 +55,7 @@ class ImageAnalysisService:
             raise ValueError("Maximum grid dimension must be positive.")
         self._detector = detector
         self._model_profile = model_profile
+        self._crowd_analysis_decision = crowd_analysis_decision
         self._upload_directory = Path(upload_directory)
         self._output_directory = Path(output_directory)
         self._upload_policy = upload_policy
@@ -150,6 +154,7 @@ class ImageAnalysisService:
                 grid_count_result=grid_result,
                 session_name=session_name,
                 model_profile=self._model_profile,
+                crowd_analysis_decision=self._crowd_analysis_decision,
                 original_filename=upload.original_filename,
                 output_asset_id=asset_id,
                 output_file_path=output_path,
@@ -161,6 +166,7 @@ class ImageAnalysisService:
                 detection_count=len(detection_records),
                 grid_rows=grid_rows,
                 grid_columns=grid_columns,
+                dense_crowd_analysis=self._crowd_analysis_decision,
             )
         finally:
             if not persisted:
