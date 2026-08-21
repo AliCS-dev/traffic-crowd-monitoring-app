@@ -1,6 +1,6 @@
 import logging
 import math
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from concurrent.futures import Executor, ThreadPoolExecutor
 from dataclasses import dataclass, replace
 from pathlib import Path
@@ -18,6 +18,10 @@ from app.database.video_job_repository import (
     update_video_job_progress,
 )
 from app.model_profile import RuntimeModelProfile
+from app.services.alert_service import (
+    ThresholdAlertRule,
+    evaluate_threshold_alerts,
+)
 from app.services.frame_sampling_service import (
     calculate_sampled_frame_count,
     sample_video_frames,
@@ -74,6 +78,7 @@ class VideoAnalysisService:
         output_directory: Path,
         upload_policy: VideoUploadPolicy,
         max_grid_dimension: int,
+        alert_rules: Sequence[ThresholdAlertRule] = (),
         worker_count: int = 1,
         executor: Executor | None = None,
         store_upload: Callable = store_validated_video_upload,
@@ -96,6 +101,7 @@ class VideoAnalysisService:
         self._output_directory = Path(output_directory)
         self._upload_policy = upload_policy
         self._max_grid_dimension = max_grid_dimension
+        self._alert_rules = tuple(alert_rules)
         self._executor = executor or ThreadPoolExecutor(
             max_workers=worker_count, thread_name_prefix="video-analysis"
         )
@@ -210,6 +216,12 @@ class VideoAnalysisService:
                             columns=item.grid_columns,
                         )
                         result = replace(result, grid_count_result=grid)
+                    alerts = evaluate_threshold_alerts(
+                        self._alert_rules,
+                        frame_object_counts=result.object_counts,
+                        grid_count_result=result.grid_count_result,
+                    )
+                    result = replace(result, alert_records=alerts)
                     result = self._store_frame_asset(result)
                     if result.output_file_path is None:
                         raise RuntimeError("Video frame output path was not assigned.")

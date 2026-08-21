@@ -64,9 +64,11 @@ def test_database_summary_reports_persisted_grid_results(capsys):
             "object_count_summary_count": 2,
             "grid_cell_count": 4,
             "grid_object_count_summary_count": 2,
+            "alert_count": 1,
         }
     )
 
     output = capsys.readouterr().out
     assert "Stored grid cells: 4" in output
     assert "Stored grid object count summaries: 2" in output
+    assert "Stored experimental alerts: 1" in output

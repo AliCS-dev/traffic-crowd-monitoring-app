@@ -15,6 +15,7 @@ from app.model_profile import (
     load_runtime_model_profile,
     verify_runtime_checkpoint,
 )
+from app.services.alert_service import load_threshold_alert_rules
 from app.services.detection_service import ObjectDetector
 from app.services.image_analysis_service import ImageAnalysisService
 from app.services.image_upload_service import ImageUploadPolicy
@@ -136,6 +137,7 @@ def create_application_services(
     settings = settings or ApiSettings.from_environment()
     profile = load_runtime_model_profile()
     crowd_analysis_decision = load_dense_crowd_analysis_decision()
+    alert_rules = load_threshold_alert_rules()
 
     def detector_probe() -> bool:
         verify_runtime_checkpoint(profile, BASE_DIR)
@@ -158,6 +160,7 @@ def create_application_services(
                 max_pixels=settings.max_image_pixels,
             ),
             max_grid_dimension=settings.max_grid_dimension,
+            alert_rules=alert_rules,
         ),
         video_analysis_factory=lambda detector_provider: VideoAnalysisService(
             detector_provider=detector_provider,
@@ -170,6 +173,7 @@ def create_application_services(
                 max_frame_pixels=settings.max_image_pixels,
             ),
             max_grid_dimension=settings.max_grid_dimension,
+            alert_rules=alert_rules,
             worker_count=settings.video_workers,
         ),
         output_asset_factory=lambda: OutputAssetService(

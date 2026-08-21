@@ -64,6 +64,7 @@ def test_fresh_database_applies_migrations_once(isolated_database_schema):
         4,
         5,
         6,
+        7,
     ]
     assert second_result.applied == ()
     assert [migration.version for migration in second_result.previously_applied] == [
@@ -73,6 +74,7 @@ def test_fresh_database_applies_migrations_once(isolated_database_schema):
         4,
         5,
         6,
+        7,
     ]
 
     with connection_factory() as connection:
@@ -87,6 +89,7 @@ def test_fresh_database_applies_migrations_once(isolated_database_schema):
                 (4, "add_output_asset_references"),
                 (5, "add_dense_crowd_analysis_results"),
                 (6, "add_video_analysis_jobs"),
+                (7, "add_threshold_alert_metadata"),
             ]
             cursor.execute("SELECT to_regclass('monitoring_sessions');")
             assert cursor.fetchone() == ("monitoring_sessions",)
@@ -100,6 +103,8 @@ def test_fresh_database_applies_migrations_once(isolated_database_schema):
             assert cursor.fetchone() == ("idx_processed_frames_output_asset_id",)
             cursor.execute("SELECT to_regclass('dense_crowd_analysis_results');")
             assert cursor.fetchone() == ("dense_crowd_analysis_results",)
+            cursor.execute("SELECT to_regclass('idx_alerts_rule_lineage_unique');")
+            assert cursor.fetchone() == ("idx_alerts_rule_lineage_unique",)
 
 
 def test_existing_initial_schema_is_adopted_without_data_loss(
@@ -125,7 +130,15 @@ def test_existing_initial_schema_is_adopted_without_data_loss(
 
     result = apply_pending_migrations(connection_factory=connection_factory)
 
-    assert [migration.version for migration in result.applied] == [1, 2, 3, 4, 5, 6]
+    assert [migration.version for migration in result.applied] == [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+    ]
     with connection_factory() as connection:
         with connection.cursor() as cursor:
             cursor.execute(
@@ -134,7 +147,15 @@ def test_existing_initial_schema_is_adopted_without_data_loss(
             )
             assert cursor.fetchone() == ("legacy session", "completed")
             cursor.execute("SELECT version FROM schema_migrations ORDER BY version;")
-            assert cursor.fetchall() == [(1,), (2,), (3,), (4,), (5,), (6,)]
+            assert cursor.fetchall() == [
+                (1,),
+                (2,),
+                (3,),
+                (4,),
+                (5,),
+                (6,),
+                (7,),
+            ]
 
 
 def test_unsupported_crowd_result_cannot_store_a_false_zero_or_active_model(

@@ -457,3 +457,20 @@ one annotated JPEG for each sampled frame and stores its UUID and path in the sa
 completion transaction as the frame results. Focused unit and PostgreSQL tests
 cover path confinement, media type, missing assets, coordinate consistency, image
 retrieval, and sampled-video asset persistence.
+
+### Issue #25: Experimental Threshold-Based Alert Logic
+
+We added a model-independent service that validates tracked count-threshold rules
+and evaluates them over complete-frame or grid-cell object counts. Each rule
+declares its analysis method, object class, scope, comparison boundary, positive
+threshold, and display severity. Equality behavior is explicit, and missing
+classes or empty cells are evaluated as zero rather than omitted ambiguously.
+
+Migration `007` adds typed rule metadata and duplicate protection to the existing
+alerts table. Generated records retain their processed frame and optional grid
+cell, and they are inserted in the same transaction as detections, summaries, and
+grids. Repeating the same insertion uses the database uniqueness rule instead of
+creating duplicate notifications. Image, video, CLI, query, and API paths now use
+the same rules. The documentation states that these alerts are experimental
+software notifications over imperfect detector output, not evidence of
+congestion, physical density, danger, or an emergency.

@@ -7,6 +7,10 @@ from app.config import (
 from app.crowd_analysis import load_dense_crowd_analysis_decision
 from app.database.detection_repository import save_image_detection_results
 from app.model_profile import load_runtime_model_profile
+from app.services.alert_service import (
+    evaluate_threshold_alerts,
+    load_threshold_alert_rules,
+)
 from app.services.detection_service import (
     build_object_count_summary_records,
     count_detected_objects,
@@ -101,12 +105,15 @@ def print_database_storage_summary(stored_result) -> None:
             "Stored grid object count summaries: "
             f"{stored_result['grid_object_count_summary_count']}"
         )
+    if stored_result["alert_count"]:
+        print(f"Stored experimental alerts: {stored_result['alert_count']}")
 
 
 def main():
     args = parse_arguments()
     model_profile = load_runtime_model_profile()
     crowd_analysis_decision = load_dense_crowd_analysis_decision()
+    alert_rules = load_threshold_alert_rules()
     class_mapping = model_profile.class_mapping_dict()
 
     print(f"Runtime model profile: {model_profile.profile_id}")
@@ -158,6 +165,11 @@ def main():
     save_detection_output(first_result, args.output)
 
     if args.save_to_db:
+        alert_records = evaluate_threshold_alerts(
+            alert_rules,
+            frame_object_counts=object_counts,
+            grid_count_result=grid_result,
+        )
         object_count_summary_records = build_object_count_summary_records(object_counts)
         stored_result = save_image_detection_results(
             image_path=args.image,
@@ -166,6 +178,7 @@ def main():
             detection_records=detection_records,
             object_count_summary_records=object_count_summary_records,
             grid_count_result=grid_result,
+            alert_records=alert_records,
             session_name=args.session_name,
             model_profile=model_profile,
             crowd_analysis_decision=crowd_analysis_decision,

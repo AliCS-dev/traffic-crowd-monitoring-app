@@ -14,6 +14,13 @@ from app.database.connection import open_database_connection
 from app.database.migration_runner import apply_pending_migrations
 from app.database.monitoring_query_repository import get_monitoring_session
 from app.model_profile import load_runtime_model_profile
+from app.services.alert_service import (
+    AlertAnalysisMethod,
+    AlertComparison,
+    AlertScope,
+    AlertSeverity,
+    ThresholdAlertRule,
+)
 from app.services.image_analysis_service import ImageAnalysisService
 from app.services.image_upload_service import ImageUploadPolicy
 from app.services.output_asset_service import OutputAssetService
@@ -69,6 +76,17 @@ def test_complete_image_api_workflow_persists_and_reads_result(tmp_path):
                 max_pixels=settings.max_image_pixels,
             ),
             max_grid_dimension=settings.max_grid_dimension,
+            alert_rules=(
+                ThresholdAlertRule(
+                    rule_id="frame-car-warning",
+                    analysis_method=AlertAnalysisMethod.DETECTOR_OBJECT_COUNT,
+                    object_class="car_or_van",
+                    scope=AlertScope.FRAME,
+                    comparison=AlertComparison.GREATER_THAN_OR_EQUAL,
+                    threshold=1,
+                    severity=AlertSeverity.WARNING,
+                ),
+            ),
         ),
         output_asset_factory=lambda: OutputAssetService(
             allowed_directories=(settings.image_output_directory,)
@@ -133,6 +151,11 @@ def test_complete_image_api_workflow_persists_and_reads_result(tmp_path):
         assert frame["detections"][0]["object_class"] == "car_or_van"
         assert frame["frame_summaries"][0]["object_count"] == 1
         assert len(frame["grid_cells"]) == 4
+        assert len(frame["alerts"]) == 1
+        assert frame["alerts"][0]["alert_type"] == "frame-car-warning"
+        assert frame["alerts"][0]["scope"] == "frame"
+        assert frame["alerts"][0]["grid_cell_id"] is None
+        assert frame["alerts"][0]["measured_value"] == 1.0
         assert (
             sum(
                 summary["object_count"]

@@ -1,4 +1,4 @@
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 from threading import Lock
@@ -8,6 +8,10 @@ from uuid import UUID, uuid4
 from app.crowd_analysis import DenseCrowdAnalysisDecision
 from app.database.detection_repository import save_image_detection_results
 from app.model_profile import RuntimeModelProfile
+from app.services.alert_service import (
+    ThresholdAlertRule,
+    evaluate_threshold_alerts,
+)
 from app.services.detection_service import (
     build_object_count_summary_records,
     count_detected_objects,
@@ -48,6 +52,7 @@ class ImageAnalysisService:
         output_directory: Path,
         upload_policy: ImageUploadPolicy,
         max_grid_dimension: int,
+        alert_rules: Sequence[ThresholdAlertRule] = (),
         persistence_function: Callable = save_image_detection_results,
         asset_id_factory: Callable[[], UUID] = uuid4,
     ) -> None:
@@ -60,6 +65,7 @@ class ImageAnalysisService:
         self._output_directory = Path(output_directory)
         self._upload_policy = upload_policy
         self._max_grid_dimension = max_grid_dimension
+        self._alert_rules = tuple(alert_rules)
         self._persistence_function = persistence_function
         self._asset_id_factory = asset_id_factory
         self._analysis_lock = Lock()
@@ -142,6 +148,12 @@ class ImageAnalysisService:
                     columns=grid_columns,
                 )
 
+            alert_records = evaluate_threshold_alerts(
+                self._alert_rules,
+                frame_object_counts=object_counts,
+                grid_count_result=grid_result,
+            )
+
             save_detection_output(
                 first_result,
                 output_path,
@@ -157,6 +169,7 @@ class ImageAnalysisService:
                     object_counts
                 ),
                 grid_count_result=grid_result,
+                alert_records=alert_records,
                 session_name=session_name,
                 model_profile=self._model_profile,
                 crowd_analysis_decision=self._crowd_analysis_decision,

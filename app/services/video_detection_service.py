@@ -17,6 +17,7 @@ from app.services.frame_sampling_service import SampledFrame
 from app.services.preprocessing_service import preprocess_image_for_detection
 
 if TYPE_CHECKING:
+    from app.services.alert_service import ThresholdAlert
     from app.services.grid_counting_service import GridCountResult
 
 
@@ -29,6 +30,7 @@ class VideoFrameDetectionResult:
     detection_records: list[dict]
     object_counts: dict[str, int]
     grid_count_result: "GridCountResult | None" = None
+    alert_records: tuple["ThresholdAlert", ...] = ()
     output_asset_id: UUID | None = None
     output_file_path: Path | None = None
     annotated_image: np.ndarray | None = field(

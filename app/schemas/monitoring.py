@@ -188,12 +188,36 @@ class AlertResult(BaseModel):
     id: int
     grid_cell_id: int | None
     alert_type: str
-    severity: str
+    analysis_method: Literal["detector_object_count"] | None
+    object_class: str | None
+    scope: Literal["frame", "grid_cell"] | None
+    comparison_operator: Literal["greater_than", "greater_than_or_equal"] | None
+    severity: Literal["information", "warning", "critical"]
     message: str
-    measured_value: float | None
-    threshold_value: float | None
+    measured_value: float | None = Field(ge=0)
+    threshold_value: float | None = Field(gt=0)
     created_at: datetime
     resolved_at: datetime | None
+
+    @model_validator(mode="after")
+    def validate_rule_metadata_and_lineage(self) -> "AlertResult":
+        metadata = (
+            self.analysis_method,
+            self.object_class,
+            self.scope,
+            self.comparison_operator,
+        )
+        if all(value is None for value in metadata):
+            return self
+        if any(value is None for value in metadata) or (
+            self.measured_value is None or self.threshold_value is None
+        ):
+            raise ValueError("Configured alerts require complete rule metadata.")
+        if self.scope == "frame" and self.grid_cell_id is not None:
+            raise ValueError("Frame alerts cannot reference a grid cell.")
+        if self.scope == "grid_cell" and self.grid_cell_id is None:
+            raise ValueError("Grid-cell alerts require grid-cell lineage.")
+        return self
 
 
 class ProcessedFrameResult(BaseModel):

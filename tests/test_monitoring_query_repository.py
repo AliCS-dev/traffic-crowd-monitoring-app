@@ -252,6 +252,10 @@ def test_complete_result_is_grouped_by_frame_and_grid_level():
         "processed_frame_id": 31,
         "grid_cell_id": 51,
         "alert_type": "test_threshold",
+        "analysis_method": "detector_object_count",
+        "object_class": "car_or_van",
+        "scope": "grid_cell",
+        "comparison_operator": "greater_than_or_equal",
         "severity": "warning",
         "message": "Test alert",
         "measured_value": Decimal("1.000"),
@@ -300,6 +304,10 @@ def test_complete_result_is_grouped_by_frame_and_grid_level():
     assert [summary.id for summary in result_frame.frame_summaries] == [61]
     assert [summary.id for summary in result_frame.grid_cells[0].summaries] == [62]
     assert result_frame.alerts[0].grid_cell_id == 51
+    assert result_frame.alerts[0].analysis_method == "detector_object_count"
+    assert result_frame.alerts[0].object_class == "car_or_van"
+    assert result_frame.alerts[0].scope == "grid_cell"
+    assert result_frame.alerts[0].comparison_operator == "greater_than_or_equal"
     assert len(cursor.execute_calls) == 8
     for _query, parameters in cursor.execute_calls[4:]:
         assert parameters == ([31],)
