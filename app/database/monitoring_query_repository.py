@@ -17,7 +17,9 @@ from app.schemas.monitoring import (
     MonitoringSessionSummary,
     ObjectCountSummaryResult,
     Pagination,
+    PixelCoordinateSpace,
     ProcessedFrameResult,
+    VisualAssetReference,
 )
 
 DEFAULT_PAGE_SIZE = 20
@@ -375,6 +377,20 @@ def _build_bounds(row, prefix=""):
 
 def _build_frame(values):
     row = values["row"]
+    coordinate_space = None
+    visual_asset = None
+    if row["image_width"] is not None and row["image_height"] is not None:
+        coordinate_space = PixelCoordinateSpace(
+            width=row["image_width"],
+            height=row["image_height"],
+        )
+        if row["output_asset_id"] is not None:
+            visual_asset = VisualAssetReference(
+                asset_id=row["output_asset_id"],
+                url=f"/api/assets/{row['output_asset_id']}",
+                width=row["image_width"],
+                height=row["image_height"],
+            )
     return ProcessedFrameResult(
         id=row["id"],
         input_source_id=row["input_source_id"],
@@ -383,6 +399,8 @@ def _build_frame(values):
         image_width=row["image_width"],
         image_height=row["image_height"],
         output_asset_id=row["output_asset_id"],
+        visual_asset=visual_asset,
+        coordinate_space=coordinate_space,
         processed_at=row["processed_at"],
         detections=values["detections"],
         frame_summaries=values["frame_summaries"],

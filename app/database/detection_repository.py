@@ -128,6 +128,10 @@ def save_video_detection_results(
             )
 
             for frame_result in frame_results:
+                _validate_output_reference(
+                    frame_result.output_asset_id,
+                    frame_result.output_file_path,
+                )
                 processed_frame_id = create_processed_frame(
                     cursor,
                     session_id,
@@ -136,6 +140,8 @@ def save_video_detection_results(
                     frame_result.image_height,
                     frame_number=frame_result.frame_number,
                     frame_timestamp_seconds=frame_result.timestamp_seconds,
+                    output_asset_id=frame_result.output_asset_id,
+                    output_file_path=frame_result.output_file_path,
                 )
                 processed_frame_ids.append(processed_frame_id)
 

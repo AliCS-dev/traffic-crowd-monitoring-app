@@ -78,8 +78,11 @@ Preprocess and detect sampled frames
     +---------------------> Detections and class counts
     |
     v
+Render one annotated JPEG per sampled frame
+    |
+    v
 Bounded local background worker and completion transaction
-  - one processed row per sampled frame
+  - one processed row and output-asset reference per sampled frame
   - per-frame detections, class counts, and optional grids
   - persistent progress or public failure state
 ```
@@ -147,6 +150,7 @@ holding an HTTP request open.
 | `app/api/dependencies.py` | Provides readiness probes and lazy detector access |
 | `app/api/errors.py` | Converts API failures into one public JSON error format |
 | `app/api/routes/health.py` | Exposes process health and dependency readiness |
+| `app/api/routes/assets.py` | Serves generated images through controlled asset identifiers |
 | `app/api/routes/image_analyses.py` | Creates image analyses and returns complete stored results |
 | `app/api/routes/video_analyses.py` | Queues video analyses and returns persistent job progress |
 | `app/config.py` | Keeps project paths in one place |
@@ -164,11 +168,13 @@ holding an HTTP request open.
 | `app/services/video_analysis_service.py` | Coordinates video uploads, bounded background work, progress, grids, and failures |
 | `app/services/video_upload_service.py` | Streams and validates supported uploaded video containers |
 | `app/services/output_service.py` | Creates the annotated output image |
+| `app/services/output_asset_service.py` | Resolves stored assets inside configured output directories |
 | `app/database/connection.py` | Reads `DATABASE_URL` and opens PostgreSQL connections |
 | `app/database/migration_runner.py` | Discovers, verifies, and applies ordered SQL migrations |
 | `app/database/detection_repository.py` | Stores complete image or sampled-video results in a transaction |
 | `app/database/video_job_repository.py` | Persists video-job state, progress, completion, failure, and startup recovery |
 | `app/database/monitoring_query_repository.py` | Lists sessions and reconstructs complete stored results with fixed bulk queries |
+| `app/database/output_asset_repository.py` | Finds a private generated-file path by public asset UUID |
 | `app/schemas/monitoring.py` | Defines database-independent history and result models for later API and frontend use |
 | `scripts/` | Contains explicit database setup and diagnostic commands |
 
@@ -210,7 +216,8 @@ future API layer to translate into a consistent not-found response.
 
 For uploaded images, one generated UUID names both the private files and the
 public output-asset reference. PostgreSQL stores the UUID and private output path
-as a required pair. Result schemas expose only the UUID. If validation,
+as a required pair. Result schemas expose the UUID, a controlled API URL, media
+dimensions, and the coordinate-space definition. If validation,
 inference, output writing, or database persistence fails, the orchestration
 service removes any partial input and output files; the repository transaction
 rolls back incomplete database records.
@@ -222,6 +229,27 @@ the same model instance simultaneously. This is intentionally a single-process
 design for the thesis prototype, not a distributed queue. On startup, abandoned
 `queued` or `processing` records are marked `failed` because in-memory work
 cannot be resumed honestly after a process interruption.
+
+### Keeping media and overlays aligned
+
+The result API uses one coordinate system for images and sampled video frames:
+pixels in the preprocessed image, with the origin at the top-left, x increasing
+to the right, and y increasing downwards. The width and height in
+`coordinate_space` match both the detection and grid coordinates and the JPEG
+served through `visual_asset.url`. Output writing rejects a rendered image when
+its dimensions do not match this metadata.
+
+Detection boxes are already rendered in the generated JPEG, which is stated in
+`visual_asset.rendered_overlays`. The API still returns each detection box for
+inspection and interaction. Grid cells are returned as metadata and are intended
+to be drawn by the frontend, so they can be shown or hidden without generating a
+second image.
+
+The asset route accepts only a stored UUID. It looks up the private path in
+PostgreSQL, resolves symbolic links and relative path components, and serves only
+supported image files inside the configured image or video output directories.
+Unknown IDs, missing files, unsupported types, and paths outside those roots are
+not exposed.
 
 ## Decisions We Have Made So Far
 
@@ -279,15 +307,11 @@ and timestamp.
 
 The evaluation protocol, labelled data, model comparison, fine-tuning pilot,
 and held-out quality gate are complete. The grid service now assigns detected
-object centres to image cells independently of YOLO. Image runs can now persist
-those cells and summaries through the existing repository. Our next
-planned extensions are:
-
-1. evaluate grid behavior separately from detector accuracy;
-2. connect grid processing to sampled video frames when the application needs it;
-3. generate threshold-based alerts only after their input limitations are
-   explicit;
-4. add a user-facing interface and result views.
+object centres to image cells independently of YOLO. Image and sampled-video runs
+can persist those cells and summaries through the existing repositories. Our
+next planned extensions are threshold-based alerts, session-history HTTP access,
+and a user-facing result interface. Alert rules will be added only with their
+input limitations made explicit.
 
 We want each step to remain independently testable. The video reader now supplies
 frames without knowing how they will be sampled or detected. The sampling service
@@ -318,13 +342,15 @@ below, while the outer image edges remain part of the final row and column.
   instance, but video processing is not yet connected to the command-line
   application.
 - We do not yet store processing duration with a database result.
-- Grid counts can be printed and stored for image runs, but they are not drawn on
-  output images or connected to sampled video frames yet.
+- Grid counts are stored for image and sampled-video runs. They are returned as
+  frontend metadata rather than drawn into the generated JPEG.
 - Detector-based person summaries are not dense-crowd estimates. The dedicated
   crowd result is explicitly unsupported and has a null count because no tested
   candidate passed the evaluation decision rule.
 - Repository tests cover transaction behavior with controlled test doubles, but
   live PostgreSQL coverage does not yet include every future API query path.
 - `app/ui` is reserved for later work and does not contain an interface yet.
-- The API supports synchronous image creation and detail reads, but not video
-  jobs, session-history routes, or output-file serving yet.
+- The API does not yet expose the paginated session-history query or provide a
+  user interface.
+- Generated assets are stored on the local filesystem and the API does not yet
+  include user authentication.

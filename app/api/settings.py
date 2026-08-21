@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from app.config import (
     API_IMAGE_OUTPUT_DIR,
     API_IMAGE_UPLOAD_DIR,
+    API_VIDEO_OUTPUT_DIR,
     API_VIDEO_UPLOAD_DIR,
 )
 
@@ -26,6 +27,7 @@ class ApiSettings:
     image_upload_directory: Path = API_IMAGE_UPLOAD_DIR
     image_output_directory: Path = API_IMAGE_OUTPUT_DIR
     video_upload_directory: Path = API_VIDEO_UPLOAD_DIR
+    video_output_directory: Path = API_VIDEO_OUTPUT_DIR
     max_image_upload_bytes: int = 10 * BYTES_PER_MEGABYTE
     max_image_pixels: int = 40_000_000
     max_grid_dimension: int = 20

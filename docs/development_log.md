@@ -440,3 +440,20 @@ inference. On restart, abandoned local jobs are marked failed instead of being
 presented as resumable. Unit and PostgreSQL tests cover upload validation, prompt
 queuing, progress, grid persistence, ordered reads, failures, and restart
 recovery.
+
+### Issue #72: Visual Result Assets And Overlay Metadata
+
+We added a controlled API route for generated result images without exposing
+private filesystem paths. The route accepts an output-asset UUID, resolves its
+database record, and serves only JPEG files inside the configured image and
+video output directories. Missing files, unknown IDs, unsupported extensions,
+paths outside those directories, and symbolic-link escapes return a clear error.
+
+Completed result frames now describe their processed-pixel coordinate space and
+provide a visual asset URL with matching dimensions. Detection boxes are rendered
+in the generated JPEG and also remain available as structured records. Grid cells
+remain structured metadata for the future frontend. Video processing now writes
+one annotated JPEG for each sampled frame and stores its UUID and path in the same
+completion transaction as the frame results. Focused unit and PostgreSQL tests
+cover path confinement, media type, missing assets, coordinate consistency, image
+retrieval, and sampled-video asset persistence.

@@ -1,5 +1,7 @@
 from pathlib import Path
+from uuid import UUID
 
+import numpy as np
 import pytest
 
 import app.services.video_analysis_service as service_module
@@ -14,6 +16,8 @@ from app.services.video_analysis_service import (
 from app.services.video_detection_service import VideoFrameDetectionResult
 from app.services.video_service import VideoMetadata
 from app.services.video_upload_service import StoredVideoUpload, VideoUploadPolicy
+
+ASSET_ID = UUID("12345678-1234-5678-1234-567812345678")
 
 
 class CapturingExecutor:
@@ -81,6 +85,7 @@ def create_service(tmp_path, monkeypatch, *, processing_error=None):
                 }
             ],
             object_counts={"car_or_van": 1},
+            annotated_image=np.zeros((10, 20, 3), dtype=np.uint8),
         )
 
     monkeypatch.setattr(service_module, "process_sampled_video_frames", process_frames)
@@ -89,6 +94,7 @@ def create_service(tmp_path, monkeypatch, *, processing_error=None):
         model_profile=load_runtime_model_profile(),
         crowd_analysis_decision=load_dense_crowd_analysis_decision(),
         upload_directory=tmp_path,
+        output_directory=tmp_path / "outputs",
         upload_policy=VideoUploadPolicy(max_bytes=100, max_frame_pixels=1000),
         max_grid_dimension=20,
         executor=executor,
@@ -106,6 +112,7 @@ def create_service(tmp_path, monkeypatch, *, processing_error=None):
         fail_job=lambda *values: calls["failed"].append(values),
         read_job=lambda session_id: {"session_id": session_id},
         video_reader_factory=FakeReader,
+        asset_id_factory=lambda: ASSET_ID,
     )
     return service, executor, calls
 
@@ -133,6 +140,10 @@ def test_upload_returns_queued_job_before_detector_runs_and_worker_persists_grid
     assert calls["progress"] == [(42, 1)]
     persisted = calls["completed"][0][1][0]
     assert persisted.grid_count_result.total_count == 1
+    assert persisted.output_asset_id == ASSET_ID
+    assert persisted.output_file_path == tmp_path / "outputs" / f"{ASSET_ID}.jpg"
+    assert persisted.output_file_path.is_file()
+    assert persisted.annotated_image is None
     assert calls["failed"] == []
 
 

@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from uuid import uuid4
 
 import pytest
 
@@ -17,6 +18,7 @@ from app.database.video_job_repository import (
 )
 from app.model_profile import load_runtime_model_profile
 from app.services.grid_counting_service import count_detections_by_grid
+from app.services.output_asset_service import OutputAssetService
 from app.services.video_detection_service import VideoFrameDetectionResult
 
 pytestmark = pytest.mark.skipif(
@@ -34,11 +36,19 @@ DETECTION = {
 }
 
 
-def test_video_job_tracks_progress_and_commits_ordered_results_atomically():
+def test_video_job_tracks_progress_and_commits_ordered_results_atomically(tmp_path):
     apply_pending_migrations()
     profile = load_runtime_model_profile()
     decision = load_dense_crowd_analysis_decision()
     grid = count_detections_by_grid([DETECTION], 100, 50, rows=1, columns=2)
+    output_directory = tmp_path / "video-frames"
+    output_directory.mkdir()
+    frame_zero_asset_id = uuid4()
+    frame_thirty_asset_id = uuid4()
+    frame_zero_path = output_directory / f"{frame_zero_asset_id}.jpg"
+    frame_thirty_path = output_directory / f"{frame_thirty_asset_id}.jpg"
+    frame_zero_path.write_bytes(b"frame zero")
+    frame_thirty_path.write_bytes(b"frame thirty")
     created = create_video_analysis_job(
         video_path=Path("data/input/async-integration.mp4"),
         original_filename="drone-traffic.mp4",
@@ -73,6 +83,8 @@ def test_video_job_tracks_progress_and_commits_ordered_results_atomically():
                     grid_count_result=count_detections_by_grid(
                         [], 100, 50, rows=1, columns=2
                     ),
+                    output_asset_id=frame_thirty_asset_id,
+                    output_file_path=frame_thirty_path,
                 ),
                 VideoFrameDetectionResult(
                     frame_number=0,
@@ -82,6 +94,8 @@ def test_video_job_tracks_progress_and_commits_ordered_results_atomically():
                     detection_records=[DETECTION],
                     object_counts={"car_or_van": 1},
                     grid_count_result=grid,
+                    output_asset_id=frame_zero_asset_id,
+                    output_file_path=frame_zero_path,
                 ),
             ],
         )
@@ -92,6 +106,17 @@ def test_video_job_tracks_progress_and_commits_ordered_results_atomically():
         assert completed.progress_percent == 100
         assert [frame.frame_number for frame in result.frames] == [0, 30]
         assert len(result.frames[0].grid_cells) == 2
+        assert result.frames[0].visual_asset.url == (
+            f"/api/assets/{frame_zero_asset_id}"
+        )
+        assert result.frames[1].visual_asset.url == (
+            f"/api/assets/{frame_thirty_asset_id}"
+        )
+        asset_service = OutputAssetService(allowed_directories=(output_directory,))
+        assert asset_service.resolve(frame_zero_asset_id).file_path == frame_zero_path
+        assert (
+            asset_service.resolve(frame_thirty_asset_id).file_path == frame_thirty_path
+        )
         assert result.sources[0].original_filename == "drone-traffic.mp4"
     finally:
         _delete_sessions([created.session_id])

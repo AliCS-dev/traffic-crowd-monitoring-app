@@ -125,8 +125,10 @@ processing time. For a still image, we use frame number `0` and timestamp `0`.
 Migration `004` adds an optional output-asset UUID and private output path. A
 constraint requires both values together, and a partial unique index prevents
 two frames from sharing the same public asset identifier. Existing image and
-video records remain valid with both fields null. The read schema exposes the
-UUID but not the server path.
+video records remain valid with both fields null. New image analyses and sampled
+video frames store generated JPEG references. The read schema exposes the UUID,
+controlled asset URL, dimensions, and coordinate-space description, but not the
+server path.
 
 ### `detection_results`
 
@@ -139,6 +141,7 @@ We store one row for each detected object. A row contains:
 
 The coordinates currently refer to the preprocessed image. We store the frame
 dimensions in the same coordinate space so that the values remain meaningful.
+Those dimensions also match the generated JPEG served for the frame.
 
 ### `object_count_summaries`
 
@@ -179,6 +182,11 @@ grid cells, summaries, and alerts by relationship. The number of queries does no
 grow with the number of sampled video frames. Complete-frame summaries and
 per-cell summaries remain in separate fields in the returned schema, even though
 PostgreSQL stores them in the same table.
+
+When a frame has an output asset, the result model derives its public
+`/api/assets/<uuid>` URL from the stored identifier. File access remains a
+separate service concern: the private path is checked against configured output
+directories before any bytes are returned.
 
 Sessions created before model-profile snapshots were introduced remain readable.
 Their `model_profile` field is null, which preserves the historical record without

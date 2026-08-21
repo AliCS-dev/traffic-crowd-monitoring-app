@@ -8,7 +8,9 @@ monitoring and analysis.
 At this stage, images can be analysed synchronously and videos can be submitted
 as background jobs through the API. Both paths reuse the same detector,
 preprocessing, grid-counting, and PostgreSQL boundaries. Video jobs preserve the
-sampled frame numbers and timestamps while reporting persistent progress.
+sampled frame numbers and timestamps while reporting persistent progress. Stored
+results also provide controlled URLs and pixel-coordinate metadata for annotated
+images and sampled video frames.
 
 ## Where the Project Stands
 
@@ -39,6 +41,7 @@ sampled frame numbers and timestamps while reporting persistent progress.
 | Stored-session query layer | Implemented with typed paginated result models |
 | Image upload and analysis API | Implemented for validated JPG and PNG files |
 | Asynchronous video analysis API | Implemented with persistent progress and failure states |
+| Visual result assets and overlay metadata | Implemented for images and sampled video frames |
 | Dense-crowd analysis | Explicitly unsupported; rejected candidate is not loaded |
 | Threshold-based alerts | Planned |
 
@@ -189,6 +192,7 @@ The first API routes are deliberately small:
 - `POST /api/analyses/videos` validates and queues one video;
 - `GET /api/analyses/videos/{session_id}` returns video-job progress;
 - `GET /api/analyses/{session_id}` returns one complete stored result;
+- `GET /api/assets/{asset_id}` returns one controlled generated image;
 - `GET /docs` opens the generated interactive OpenAPI documentation;
 - `GET /openapi.json` returns the machine-readable API contract.
 
@@ -259,12 +263,24 @@ curl http://127.0.0.1:8000/api/analyses/videos/<session-id>
 The create request returns HTTP `202` after validation, upload storage, and the
 queued database record are complete. The progress route reports `queued`,
 `processing`, `completed`, or `failed`. Once completed, the normal result route
-returns ordered frames, detections, summaries, and optional grids.
+returns ordered frames, detections, summaries, optional grids, and a visual asset
+reference for each sampled frame.
 
-Successful uploads and annotated images use generated UUID filenames under the
-ignored `data/input/uploads/` and `data/output/analyses/` directories. The API
-returns the public output-asset UUID, not the server's private path. Serving the
-image bytes through that UUID belongs to the later visual-assets issue.
+Successful uploads and generated images use UUID filenames under ignored data
+directories. Image outputs are stored in `data/output/analyses/`, while sampled
+video-frame outputs are stored in `data/output/video-frames/`. The result JSON
+contains a URL such as `/api/assets/<asset-id>` and never exposes the private
+server path. We can download that generated JPEG with:
+
+```bash
+curl http://127.0.0.1:8000/api/assets/<asset-id> --output result.jpg
+```
+
+All visual coordinates use the processed image returned by that URL. The origin
+is the top-left corner, x increases to the right, and y increases downwards. The
+generated JPEG already contains the detection boxes. Detection records and grid
+cells remain in the JSON so the future frontend can inspect detections and draw
+the grid without changing the saved image.
 
 ## Trying the Image Pipeline
 
@@ -364,8 +380,9 @@ print(stored_result)
 Supported formats are MP4, AVI, MOV, and MKV. The context manager closes the
 OpenCV video resource when we finish reading. Video persistence stores one
 session and input source for the video, followed by one processed-frame row for
-each sampled frame. The command-line application still handles image runs only.
-The video API now composes these services in a bounded background worker.
+each sampled frame. API video jobs also save one annotated JPEG for every sampled
+frame. The command-line application still handles image runs only. The video API
+composes these services in a bounded background worker.
 
 ## Working with PostgreSQL
 
@@ -547,7 +564,8 @@ is still under development:
   worker and persistent progress;
 - background jobs are local to one API process; interrupted queued or processing
   jobs are marked failed at the next startup and must be submitted again;
-- output asset IDs are stored, but image-download routes are not implemented yet;
+- generated result assets are local files served by the API and are not yet
+  backed by remote object storage or an authentication layer;
 - the project does not yet have a user interface;
 - we do not calculate physical crowd density.
 

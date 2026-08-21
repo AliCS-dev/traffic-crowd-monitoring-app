@@ -16,6 +16,7 @@ from app.database.monitoring_query_repository import get_monitoring_session
 from app.model_profile import load_runtime_model_profile
 from app.services.image_analysis_service import ImageAnalysisService
 from app.services.image_upload_service import ImageUploadPolicy
+from app.services.output_asset_service import OutputAssetService
 
 pytestmark = pytest.mark.skipif(
     os.getenv("RUN_DATABASE_INTEGRATION_TESTS") != "1",
@@ -69,6 +70,9 @@ def test_complete_image_api_workflow_persists_and_reads_result(tmp_path):
             ),
             max_grid_dimension=settings.max_grid_dimension,
         ),
+        output_asset_factory=lambda: OutputAssetService(
+            allowed_directories=(settings.image_output_directory,)
+        ),
         monitoring_session_reader=get_monitoring_session,
     )
     application = create_app(settings=settings, service_factory=lambda: services)
@@ -95,6 +99,8 @@ def test_complete_image_api_workflow_persists_and_reads_result(tmp_path):
             )
             session_id = created.json().get("session_id")
             result = client.get(f"/api/analyses/{session_id}")
+            visual_asset_url = result.json()["frames"][0]["visual_asset"]["url"]
+            visual_asset = client.get(visual_asset_url)
 
         assert created.status_code == 201
         assert result.status_code == 200
@@ -113,6 +119,16 @@ def test_complete_image_api_workflow_persists_and_reads_result(tmp_path):
         assert len(values["frames"]) == 1
         frame = values["frames"][0]
         assert frame["output_asset_id"] == created.json()["output_asset_id"]
+        assert frame["coordinate_space"]["width"] == 200
+        assert frame["coordinate_space"]["height"] == 100
+        assert frame["visual_asset"]["rendered_overlays"] == ["detections"]
+        assert visual_asset.status_code == 200
+        assert visual_asset.headers["content-type"] == "image/jpeg"
+        decoded_asset = cv2.imdecode(
+            np.frombuffer(visual_asset.content, dtype=np.uint8),
+            cv2.IMREAD_COLOR,
+        )
+        assert decoded_asset.shape[:2] == (100, 200)
         assert len(frame["detections"]) == 1
         assert frame["detections"][0]["object_class"] == "car_or_van"
         assert frame["frame_summaries"][0]["object_count"] == 1

@@ -18,6 +18,7 @@ from app.model_profile import (
 from app.services.detection_service import ObjectDetector
 from app.services.image_analysis_service import ImageAnalysisService
 from app.services.image_upload_service import ImageUploadPolicy
+from app.services.output_asset_service import OutputAssetService
 from app.services.video_analysis_service import VideoAnalysisService
 from app.services.video_upload_service import VideoUploadPolicy
 
@@ -34,6 +35,7 @@ class ApplicationServices:
         detector_factory: Callable[[], Any],
         image_analysis_factory: Callable[[Any], Any] | None = None,
         video_analysis_factory: Callable[[Callable], Any] | None = None,
+        output_asset_factory: Callable[[], Any] | None = None,
         monitoring_session_reader: Callable[[int], Any] = get_monitoring_session,
         startup_function: Callable[[], int] | None = None,
     ) -> None:
@@ -42,11 +44,13 @@ class ApplicationServices:
         self._detector_factory = detector_factory
         self._image_analysis_factory = image_analysis_factory
         self._video_analysis_factory = video_analysis_factory
+        self._output_asset_factory = output_asset_factory
         self._monitoring_session_reader = monitoring_session_reader
         self._startup_function = startup_function
         self._detector: Any | None = None
         self._image_analysis_service: Any | None = None
         self._video_analysis_service: Any | None = None
+        self._output_asset_service: Any | None = None
         self._detector_lock = Lock()
         self._service_lock = Lock()
 
@@ -108,10 +112,20 @@ class ApplicationServices:
                     )
         return self._video_analysis_service
 
+    def get_output_asset_service(self) -> Any:
+        if self._output_asset_factory is None:
+            raise RuntimeError("Output asset service is not configured.")
+        if self._output_asset_service is None:
+            with self._service_lock:
+                if self._output_asset_service is None:
+                    self._output_asset_service = self._output_asset_factory()
+        return self._output_asset_service
+
     def close(self) -> None:
         if self._video_analysis_service is not None:
             self._video_analysis_service.close()
         self._video_analysis_service = None
+        self._output_asset_service = None
         self._image_analysis_service = None
         self._detector = None
 
@@ -150,12 +164,19 @@ def create_application_services(
             model_profile=profile,
             crowd_analysis_decision=crowd_analysis_decision,
             upload_directory=settings.video_upload_directory,
+            output_directory=settings.video_output_directory,
             upload_policy=VideoUploadPolicy(
                 max_bytes=settings.max_video_upload_bytes,
                 max_frame_pixels=settings.max_image_pixels,
             ),
             max_grid_dimension=settings.max_grid_dimension,
             worker_count=settings.video_workers,
+        ),
+        output_asset_factory=lambda: OutputAssetService(
+            allowed_directories=(
+                settings.image_output_directory,
+                settings.video_output_directory,
+            )
         ),
         startup_function=recover_interrupted_video_jobs,
     )
@@ -175,3 +196,7 @@ def get_image_analysis_service(request: Request) -> Any:
 
 def get_video_analysis_service(request: Request) -> Any:
     return get_application_services(request).get_video_analysis_service()
+
+
+def get_output_asset_service(request: Request) -> Any:
+    return get_application_services(request).get_output_asset_service()
