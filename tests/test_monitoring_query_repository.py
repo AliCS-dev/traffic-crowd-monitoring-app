@@ -284,6 +284,19 @@ def test_complete_result_is_grouped_by_frame_and_grid_level():
     result_frame = result.frames[0]
     assert result_frame.detections[0].bounds.x_max == 50
     assert str(result_frame.output_asset_id) == "12345678-1234-5678-1234-567812345678"
+    assert result_frame.coordinate_space.model_dump() == {
+        "name": "processed_image_pixels",
+        "origin": "top_left",
+        "x_axis_direction": "right",
+        "y_axis_direction": "down",
+        "width": 200,
+        "height": 100,
+    }
+    assert result_frame.visual_asset.url == (
+        "/api/assets/12345678-1234-5678-1234-567812345678"
+    )
+    assert result_frame.visual_asset.content_type == "image/jpeg"
+    assert result_frame.visual_asset.rendered_overlays == ("detections",)
     assert [summary.id for summary in result_frame.frame_summaries] == [61]
     assert [summary.id for summary in result_frame.grid_cells[0].summaries] == [62]
     assert result_frame.alerts[0].grid_cell_id == 51
@@ -314,6 +327,8 @@ def test_detail_query_count_does_not_grow_with_video_frames():
 
     assert result is not None
     assert [frame.frame_number for frame in result.frames] == [0, 30, 60]
+    assert all(frame.visual_asset is None for frame in result.frames)
+    assert all(frame.coordinate_space.width == 1280 for frame in result.frames)
     assert len(cursor.execute_calls) == 8
     for _query, parameters in cursor.execute_calls[4:]:
         assert parameters == ([31, 32, 33],)

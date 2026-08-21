@@ -162,7 +162,7 @@ def test_output_write_failure_removes_partial_files(tmp_path, monkeypatch):
         lambda **_values: pytest.fail("Persistence should not run."),
     )
 
-    def fail_after_partial_write(_result, output_path):
+    def fail_after_partial_write(_result, output_path, **_options):
         output_path.write_bytes(b"partial output")
         raise OSError("output failed")
 

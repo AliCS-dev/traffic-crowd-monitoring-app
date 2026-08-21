@@ -232,6 +232,22 @@ def result_record():
                 "image_width": 200,
                 "image_height": 100,
                 "output_asset_id": str(ASSET_ID),
+                "visual_asset": {
+                    "asset_id": str(ASSET_ID),
+                    "url": f"/api/assets/{ASSET_ID}",
+                    "content_type": "image/jpeg",
+                    "width": 200,
+                    "height": 100,
+                    "rendered_overlays": ["detections"],
+                },
+                "coordinate_space": {
+                    "name": "processed_image_pixels",
+                    "origin": "top_left",
+                    "x_axis_direction": "right",
+                    "y_axis_direction": "down",
+                    "width": 200,
+                    "height": 100,
+                },
                 "processed_at": "2026-08-18T12:00:01Z",
                 "detections": [],
                 "frame_summaries": [],
@@ -257,6 +273,9 @@ def test_completed_analysis_is_available_through_read_route():
     assert response.status_code == 200
     assert response.json()["id"] == 42
     assert response.json()["frames"][0]["output_asset_id"] == str(ASSET_ID)
+    assert response.json()["frames"][0]["visual_asset"]["url"] == (
+        f"/api/assets/{ASSET_ID}"
+    )
     assert response.json()["dense_crowd_analysis"]["status"] == "unsupported"
     assert response.json()["dense_crowd_analysis"]["count"] is None
     assert "file_path" not in response.text

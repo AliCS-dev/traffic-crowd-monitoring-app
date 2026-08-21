@@ -142,7 +142,12 @@ class ImageAnalysisService:
                     columns=grid_columns,
                 )
 
-            save_detection_output(first_result, output_path)
+            save_detection_output(
+                first_result,
+                output_path,
+                expected_width=processed_width,
+                expected_height=processed_height,
+            )
             stored_result = self._persistence_function(
                 image_path=input_path,
                 image_width=processed_width,

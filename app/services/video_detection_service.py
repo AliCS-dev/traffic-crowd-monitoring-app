@@ -1,6 +1,10 @@
 from collections.abc import Iterable, Iterator
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from pathlib import Path
 from typing import TYPE_CHECKING
+from uuid import UUID
+
+import numpy as np
 
 from app.model_profile import RuntimeModelProfile
 from app.services.detection_service import (
@@ -25,6 +29,13 @@ class VideoFrameDetectionResult:
     detection_records: list[dict]
     object_counts: dict[str, int]
     grid_count_result: "GridCountResult | None" = None
+    output_asset_id: UUID | None = None
+    output_file_path: Path | None = None
+    annotated_image: np.ndarray | None = field(
+        default=None,
+        repr=False,
+        compare=False,
+    )
 
 
 def process_sampled_video_frames(
@@ -51,6 +62,11 @@ def process_sampled_video_frames(
 
         first_result = results[0]
         image_height, image_width = processed_image.shape[:2]
+        annotated_image = first_result.plot()
+        if annotated_image.shape[:2] != (image_height, image_width):
+            raise ValueError(
+                "Annotated video frame dimensions do not match processed dimensions."
+            )
 
         yield VideoFrameDetectionResult(
             frame_number=sampled_frame.frame_number,
@@ -59,4 +75,5 @@ def process_sampled_video_frames(
             image_height=image_height,
             detection_records=extract_detection_records(first_result, class_mapping),
             object_counts=count_detected_objects(first_result, class_mapping),
+            annotated_image=annotated_image,
         )

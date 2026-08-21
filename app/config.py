@@ -7,6 +7,7 @@ OUTPUT_DIR = BASE_DIR / "data" / "output"
 API_IMAGE_UPLOAD_DIR = INPUT_DIR / "uploads"
 API_IMAGE_OUTPUT_DIR = OUTPUT_DIR / "analyses"
 API_VIDEO_UPLOAD_DIR = INPUT_DIR / "video-uploads"
+API_VIDEO_OUTPUT_DIR = OUTPUT_DIR / "video-frames"
 
 RUNTIME_MODEL_PROFILE_PATH = BASE_DIR / "configs" / "runtime" / "yolo26m_visdrone.json"
 DENSE_CROWD_EVALUATION_PATH = (

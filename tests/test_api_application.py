@@ -167,6 +167,7 @@ def test_openapi_and_interactive_documentation_are_available():
         "version": "0.1.0",
     }
     assert set(schema.json()["paths"]) == {
+        "/api/assets/{asset_id}",
         "/api/analyses/images",
         "/api/analyses/videos",
         "/api/analyses/videos/{session_id}",

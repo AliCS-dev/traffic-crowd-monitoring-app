@@ -39,6 +39,9 @@ class FakeDetector:
                 "half_precision": half_precision,
             }
         )
+        annotated_image = image.copy()
+        for result in self.results:
+            result.plot = lambda image=annotated_image: image
         return self.results
 
 
@@ -49,17 +52,17 @@ def create_detection_result():
             SimpleNamespace(
                 cls=[2],
                 conf=[0.91],
-                xyxy=[[10.0, 20.0, 50.0, 80.0]],
+                xyxy=[[1.0, 1.0, 3.0, 3.0]],
             ),
             SimpleNamespace(
                 cls=[0],
                 conf=[0.75],
-                xyxy=[[100.0, 120.0, 140.0, 180.0]],
+                xyxy=[[3.0, 1.0, 5.0, 4.0]],
             ),
             SimpleNamespace(
                 cls=[10],
                 conf=[0.99],
-                xyxy=[[0.0, 0.0, 10.0, 10.0]],
+                xyxy=[[0.0, 0.0, 1.0, 1.0]],
             ),
         ],
     )
@@ -212,18 +215,18 @@ def test_sampled_frames_are_processed_with_metadata_and_counts():
         {
             "object_class": "car_or_van",
             "confidence": 0.91,
-            "bbox_x_min": 10.0,
-            "bbox_y_min": 20.0,
-            "bbox_x_max": 50.0,
-            "bbox_y_max": 80.0,
+            "bbox_x_min": 1.0,
+            "bbox_y_min": 1.0,
+            "bbox_x_max": 3.0,
+            "bbox_y_max": 3.0,
         },
         {
             "object_class": "person",
             "confidence": 0.75,
-            "bbox_x_min": 100.0,
-            "bbox_y_min": 120.0,
-            "bbox_x_max": 140.0,
-            "bbox_y_max": 180.0,
+            "bbox_x_min": 3.0,
+            "bbox_y_min": 1.0,
+            "bbox_x_max": 5.0,
+            "bbox_y_max": 4.0,
         },
     ]
     assert len(detector.calls) == 2
@@ -233,6 +236,7 @@ def test_sampled_frames_are_processed_with_metadata_and_counts():
     assert detector.calls[0]["device"] == "cuda:0"
     assert detector.calls[0]["max_detections"] == 300
     assert detector.calls[0]["half_precision"] is False
+    assert processed_frames[0].annotated_image.shape == (4, 6, 3)
 
 
 def test_empty_sample_sequence_produces_no_results():

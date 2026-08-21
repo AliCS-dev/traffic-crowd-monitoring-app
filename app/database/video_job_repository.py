@@ -8,6 +8,7 @@ from app.crowd_analysis import DenseCrowdAnalysisDecision
 from app.database.connection import open_database_connection
 from app.database.detection_repository import (
     _validate_grid_image_dimensions,
+    _validate_output_reference,
     create_dense_crowd_analysis_result,
     create_detection_results,
     create_grid_count_results,
@@ -163,6 +164,10 @@ def complete_video_analysis_job(
                 )
 
             for result in frame_results:
+                _validate_output_reference(
+                    result.output_asset_id,
+                    result.output_file_path,
+                )
                 frame_id = create_processed_frame(
                     cursor,
                     session_id,
@@ -171,6 +176,8 @@ def complete_video_analysis_job(
                     result.image_height,
                     result.frame_number,
                     result.timestamp_seconds,
+                    output_asset_id=result.output_asset_id,
+                    output_file_path=result.output_file_path,
                 )
                 create_detection_results(cursor, frame_id, result.detection_records)
                 create_object_count_summaries(

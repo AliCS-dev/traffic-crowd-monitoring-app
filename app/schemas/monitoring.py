@@ -134,6 +134,32 @@ class ImageBounds(BaseModel):
     x_max: float = Field(ge=0)
     y_max: float = Field(ge=0)
 
+    @model_validator(mode="after")
+    def validate_order(self) -> "ImageBounds":
+        if self.x_max < self.x_min or self.y_max < self.y_min:
+            raise ValueError(
+                "Image bounds must use ordered minimum and maximum values."
+            )
+        return self
+
+
+class PixelCoordinateSpace(BaseModel):
+    name: Literal["processed_image_pixels"] = "processed_image_pixels"
+    origin: Literal["top_left"] = "top_left"
+    x_axis_direction: Literal["right"] = "right"
+    y_axis_direction: Literal["down"] = "down"
+    width: int = Field(gt=0)
+    height: int = Field(gt=0)
+
+
+class VisualAssetReference(BaseModel):
+    asset_id: UUID
+    url: str
+    content_type: Literal["image/jpeg"] = "image/jpeg"
+    width: int = Field(gt=0)
+    height: int = Field(gt=0)
+    rendered_overlays: tuple[Literal["detections"], ...] = ("detections",)
+
 
 class DetectionResult(BaseModel):
     id: int
@@ -178,11 +204,49 @@ class ProcessedFrameResult(BaseModel):
     image_width: int | None = Field(gt=0)
     image_height: int | None = Field(gt=0)
     output_asset_id: UUID | None
+    visual_asset: VisualAssetReference | None = None
+    coordinate_space: PixelCoordinateSpace | None = None
     processed_at: datetime
     detections: list[DetectionResult]
     frame_summaries: list[ObjectCountSummaryResult]
     grid_cells: list[GridCellResult]
     alerts: list[AlertResult]
+
+    @model_validator(mode="after")
+    def validate_visual_coordinates(self) -> "ProcessedFrameResult":
+        if (self.image_width is None) != (self.image_height is None):
+            raise ValueError("Frame width and height must be provided together.")
+
+        if self.image_width is None or self.image_height is None:
+            if self.coordinate_space is not None or self.visual_asset is not None:
+                raise ValueError("Visual metadata requires frame dimensions.")
+            return self
+
+        if self.coordinate_space is None or (
+            self.coordinate_space.width != self.image_width
+            or self.coordinate_space.height != self.image_height
+        ):
+            raise ValueError("Coordinate-space dimensions must match the frame.")
+
+        if self.output_asset_id is None:
+            if self.visual_asset is not None:
+                raise ValueError("Visual assets require a stored output asset ID.")
+        elif self.visual_asset is None or (
+            self.visual_asset.asset_id != self.output_asset_id
+            or self.visual_asset.width != self.image_width
+            or self.visual_asset.height != self.image_height
+        ):
+            raise ValueError("Visual asset metadata must match the processed frame.")
+
+        for detection in self.detections:
+            self._validate_bounds(detection.bounds)
+        for cell in self.grid_cells:
+            self._validate_bounds(cell.bounds)
+        return self
+
+    def _validate_bounds(self, bounds: ImageBounds) -> None:
+        if bounds.x_max > self.image_width or bounds.y_max > self.image_height:
+            raise ValueError("Overlay bounds must remain inside the processed frame.")
 
 
 class MonitoringSessionResult(BaseModel):
