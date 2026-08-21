@@ -4,7 +4,7 @@ from uuid import UUID
 import pytest
 from pydantic import ValidationError
 
-from app.schemas.monitoring import ProcessedFrameResult
+from app.schemas.monitoring import AlertResult, ProcessedFrameResult
 
 ASSET_ID = UUID("12345678-1234-5678-1234-567812345678")
 NOW = datetime(2026, 8, 21, tzinfo=timezone.utc)
@@ -61,3 +61,47 @@ def test_overlay_bounds_must_remain_inside_served_media():
 
     with pytest.raises(ValidationError, match="inside the processed frame"):
         ProcessedFrameResult.model_validate(values)
+
+
+def alert_values(**overrides):
+    values = {
+        "id": 4,
+        "grid_cell_id": None,
+        "alert_type": "frame-car-warning",
+        "analysis_method": "detector_object_count",
+        "object_class": "car_or_van",
+        "scope": "frame",
+        "comparison_operator": "greater_than_or_equal",
+        "severity": "warning",
+        "message": "Experimental detector count met its configured threshold.",
+        "measured_value": 2,
+        "threshold_value": 2,
+        "created_at": NOW,
+        "resolved_at": None,
+    }
+    values.update(overrides)
+    return values
+
+
+def test_configured_alert_schema_retains_typed_threshold_values():
+    alert = AlertResult.model_validate(alert_values())
+
+    assert alert.analysis_method == "detector_object_count"
+    assert alert.scope == "frame"
+    assert alert.measured_value == 2
+    assert alert.threshold_value == 2
+
+
+@pytest.mark.parametrize(
+    "overrides",
+    [
+        {"scope": "grid_cell", "grid_cell_id": None},
+        {"scope": "frame", "grid_cell_id": 3},
+        {"object_class": None},
+        {"severity": "emergency"},
+        {"threshold_value": 0},
+    ],
+)
+def test_invalid_alert_metadata_or_lineage_is_rejected(overrides):
+    with pytest.raises(ValidationError):
+        AlertResult.model_validate(alert_values(**overrides))

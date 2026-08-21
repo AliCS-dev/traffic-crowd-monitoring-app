@@ -6,6 +6,7 @@ import pytest
 from app.crowd_analysis import load_dense_crowd_analysis_decision
 from app.database.connection import open_database_connection
 from app.database.detection_repository import (
+    create_alert_results,
     save_image_detection_results,
     save_video_detection_results,
 )
@@ -15,6 +16,14 @@ from app.database.monitoring_query_repository import (
     list_monitoring_sessions,
 )
 from app.model_profile import load_runtime_model_profile
+from app.services.alert_service import (
+    AlertAnalysisMethod,
+    AlertComparison,
+    AlertScope,
+    AlertSeverity,
+    ThresholdAlertRule,
+    evaluate_threshold_alerts,
+)
 from app.services.grid_counting_service import count_detections_by_grid
 from app.services.video_detection_service import VideoFrameDetectionResult
 
@@ -44,6 +53,21 @@ def test_reads_complete_image_and_ordered_video_sessions_from_postgresql():
         rows=1,
         columns=2,
     )
+    alert_records = evaluate_threshold_alerts(
+        (
+            ThresholdAlertRule(
+                rule_id="grid-car-information",
+                analysis_method=AlertAnalysisMethod.DETECTOR_OBJECT_COUNT,
+                object_class="car_or_van",
+                scope=AlertScope.GRID_CELL,
+                comparison=AlertComparison.GREATER_THAN_OR_EQUAL,
+                threshold=1,
+                severity=AlertSeverity.INFORMATION,
+            ),
+        ),
+        frame_object_counts={"car_or_van": 1},
+        grid_count_result=grid_result,
+    )
     image_result = save_image_detection_results(
         "data/input/query-integration.jpg",
         image_width=200,
@@ -54,6 +78,7 @@ def test_reads_complete_image_and_ordered_video_sessions_from_postgresql():
         ],
         session_name="query repository image",
         grid_count_result=grid_result,
+        alert_records=alert_records,
         model_profile=model_profile,
         crowd_analysis_decision=crowd_analysis_decision,
     )
@@ -99,31 +124,33 @@ def test_reads_complete_image_and_ordered_video_sessions_from_postgresql():
                 )
                 cursor.execute(
                     """
-                    INSERT INTO alerts (
-                        processed_frame_id,
-                        grid_cell_id,
-                        alert_type,
-                        severity,
-                        message,
-                        measured_value,
-                        threshold_value
-                    )
-                    SELECT %s, id, %s, %s, %s, %s, %s
+                    SELECT id, row_index, column_index
                     FROM grid_cells
-                    WHERE processed_frame_id = %s
-                    ORDER BY row_index, column_index
-                    LIMIT 1;
+                    WHERE processed_frame_id = %s;
                     """,
-                    (
-                        image_result["processed_frame_id"],
-                        "integration_test",
-                        "warning",
-                        "Controlled integration-test alert",
-                        1,
-                        2,
-                        image_result["processed_frame_id"],
-                    ),
+                    (image_result["processed_frame_id"],),
                 )
+                grid_cell_ids = {
+                    (row_index, column_index): grid_cell_id
+                    for grid_cell_id, row_index, column_index in cursor.fetchall()
+                }
+                create_alert_results(
+                    cursor,
+                    image_result["processed_frame_id"],
+                    alert_records,
+                    grid_cell_ids,
+                )
+                create_alert_results(
+                    cursor,
+                    image_result["processed_frame_id"],
+                    alert_records,
+                    grid_cell_ids,
+                )
+                cursor.execute(
+                    "SELECT COUNT(*) FROM alerts WHERE processed_frame_id = %s;",
+                    (image_result["processed_frame_id"],),
+                )
+                assert cursor.fetchone() == (1,)
 
         image_session = get_monitoring_session(image_result["session_id"])
         video_session = get_monitoring_session(video_result["session_id"])
@@ -151,7 +178,13 @@ def test_reads_complete_image_and_ordered_video_sessions_from_postgresql():
     assert len(image_frame.grid_cells) == 2
     assert len(image_frame.grid_cells[0].summaries) == 1
     assert image_frame.grid_cells[1].summaries == []
-    assert image_frame.alerts[0].alert_type == "integration_test"
+    assert image_frame.alerts[0].alert_type == "grid-car-information"
+    assert image_frame.alerts[0].analysis_method == "detector_object_count"
+    assert image_frame.alerts[0].object_class == "car_or_van"
+    assert image_frame.alerts[0].scope == "grid_cell"
+    assert image_frame.alerts[0].severity == "information"
+    assert image_frame.alerts[0].measured_value == 1
+    assert image_frame.alerts[0].threshold_value == 1
 
     assert video_session is not None
     assert video_session.sources[0].source_type == "video"

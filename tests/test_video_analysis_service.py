@@ -8,6 +8,13 @@ import app.services.video_analysis_service as service_module
 from app.crowd_analysis import load_dense_crowd_analysis_decision
 from app.database.video_job_repository import CreatedVideoJob
 from app.model_profile import load_runtime_model_profile
+from app.services.alert_service import (
+    AlertAnalysisMethod,
+    AlertComparison,
+    AlertScope,
+    AlertSeverity,
+    ThresholdAlertRule,
+)
 from app.services.video_analysis_service import (
     PUBLIC_PROCESSING_FAILURE,
     InvalidVideoAnalysisOptionsError,
@@ -50,7 +57,7 @@ class FakeReader:
         return None
 
 
-def create_service(tmp_path, monkeypatch, *, processing_error=None):
+def create_service(tmp_path, monkeypatch, *, processing_error=None, alert_rules=()):
     executor = CapturingExecutor()
     calls = {"detector": 0, "progress": [], "failed": [], "completed": []}
     path = tmp_path / "stored.mp4"
@@ -97,6 +104,7 @@ def create_service(tmp_path, monkeypatch, *, processing_error=None):
         output_directory=tmp_path / "outputs",
         upload_policy=VideoUploadPolicy(max_bytes=100, max_frame_pixels=1000),
         max_grid_dimension=20,
+        alert_rules=alert_rules,
         executor=executor,
         store_upload=lambda *_args, **_kwargs: stored,
         create_job=lambda **_kwargs: CreatedVideoJob(42, 7),
@@ -120,7 +128,22 @@ def create_service(tmp_path, monkeypatch, *, processing_error=None):
 def test_upload_returns_queued_job_before_detector_runs_and_worker_persists_grid(
     tmp_path, monkeypatch
 ):
-    service, executor, calls = create_service(tmp_path, monkeypatch)
+    alert_rules = (
+        ThresholdAlertRule(
+            rule_id="grid-car-information",
+            analysis_method=AlertAnalysisMethod.DETECTOR_OBJECT_COUNT,
+            object_class="car_or_van",
+            scope=AlertScope.GRID_CELL,
+            comparison=AlertComparison.GREATER_THAN_OR_EQUAL,
+            threshold=1,
+            severity=AlertSeverity.INFORMATION,
+        ),
+    )
+    service, executor, calls = create_service(
+        tmp_path,
+        monkeypatch,
+        alert_rules=alert_rules,
+    )
 
     result = service.submit_upload(
         object(),
@@ -140,6 +163,9 @@ def test_upload_returns_queued_job_before_detector_runs_and_worker_persists_grid
     assert calls["progress"] == [(42, 1)]
     persisted = calls["completed"][0][1][0]
     assert persisted.grid_count_result.total_count == 1
+    assert len(persisted.alert_records) == 1
+    assert persisted.alert_records[0].grid_row_index == 0
+    assert persisted.alert_records[0].grid_column_index == 0
     assert persisted.output_asset_id == ASSET_ID
     assert persisted.output_file_path == tmp_path / "outputs" / f"{ASSET_ID}.jpg"
     assert persisted.output_file_path.is_file()

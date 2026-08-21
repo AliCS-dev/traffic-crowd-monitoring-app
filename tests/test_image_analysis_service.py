@@ -8,6 +8,13 @@ import pytest
 
 from app.crowd_analysis import load_dense_crowd_analysis_decision
 from app.model_profile import load_runtime_model_profile
+from app.services.alert_service import (
+    AlertAnalysisMethod,
+    AlertComparison,
+    AlertScope,
+    AlertSeverity,
+    ThresholdAlertRule,
+)
 from app.services.image_analysis_service import (
     ImageAnalysisService,
     InvalidImageAnalysisOptionsError,
@@ -55,7 +62,7 @@ class FakeDetector:
         return self.results
 
 
-def create_service(tmp_path, detector, persistence_function):
+def create_service(tmp_path, detector, persistence_function, *, alert_rules=()):
     return ImageAnalysisService(
         detector=detector,
         model_profile=MODEL_PROFILE,
@@ -64,6 +71,7 @@ def create_service(tmp_path, detector, persistence_function):
         output_directory=tmp_path / "outputs",
         upload_policy=ImageUploadPolicy(max_bytes=1024 * 1024, max_pixels=10_000),
         max_grid_dimension=20,
+        alert_rules=alert_rules,
         persistence_function=persistence_function,
         asset_id_factory=lambda: ASSET_ID,
     )
@@ -112,6 +120,33 @@ def test_complete_analysis_uses_profile_grid_and_server_controlled_paths(tmp_pat
     assert persisted[0]["image_path"].is_file()
     assert persisted[0]["output_file_path"].is_file()
     assert result.dense_crowd_analysis is CROWD_ANALYSIS_DECISION
+
+
+def test_complete_analysis_evaluates_alerts_before_persistence(tmp_path):
+    persisted = []
+    alert_rule = ThresholdAlertRule(
+        rule_id="frame-car-warning",
+        analysis_method=AlertAnalysisMethod.DETECTOR_OBJECT_COUNT,
+        object_class="car_or_van",
+        scope=AlertScope.FRAME,
+        comparison=AlertComparison.GREATER_THAN_OR_EQUAL,
+        threshold=1,
+        severity=AlertSeverity.WARNING,
+    )
+    service = create_service(
+        tmp_path,
+        FakeDetector([FakeResult()]),
+        lambda **values: persisted.append(values) or {"session_id": 42},
+        alert_rules=(alert_rule,),
+    )
+
+    analyse(service)
+
+    assert len(persisted[0]["alert_records"]) == 1
+    alert = persisted[0]["alert_records"][0]
+    assert alert.rule_id == "frame-car-warning"
+    assert alert.measured_value == 1
+    assert alert.grid_row_index is None
 
 
 def test_empty_detection_result_is_still_persisted(tmp_path):

@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "rules": [
+    {
+      "rule_id": "frame-car-or-van-warning",
+      "analysis_method": "detector_object_count",
+      "object_class": "car_or_van",
+      "scope": "frame",
+      "comparison": "greater_than_or_equal",
+      "threshold": 20,
+      "severity": "warning"
+    },
+    {
+      "rule_id": "grid-person-information",
+      "analysis_method": "detector_object_count",
+      "object_class": "person",
+      "scope": "grid_cell",
+      "comparison": "greater_than_or_equal",
+      "threshold": 8,
+      "severity": "information"
+    }
+  ]
+}

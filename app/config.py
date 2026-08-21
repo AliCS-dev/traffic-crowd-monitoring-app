@@ -10,6 +10,7 @@ API_VIDEO_UPLOAD_DIR = INPUT_DIR / "video-uploads"
 API_VIDEO_OUTPUT_DIR = OUTPUT_DIR / "video-frames"
 
 RUNTIME_MODEL_PROFILE_PATH = BASE_DIR / "configs" / "runtime" / "yolo26m_visdrone.json"
+ALERT_RULES_PATH = BASE_DIR / "configs" / "runtime" / "alert_rules.json"
 DENSE_CROWD_EVALUATION_PATH = (
     BASE_DIR / "data" / "evaluation" / "dedicated_crowd_counting.json"
 )

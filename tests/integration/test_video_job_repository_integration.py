@@ -17,6 +17,13 @@ from app.database.video_job_repository import (
     update_video_job_progress,
 )
 from app.model_profile import load_runtime_model_profile
+from app.services.alert_service import (
+    AlertAnalysisMethod,
+    AlertComparison,
+    AlertScope,
+    AlertSeverity,
+    ThresholdAlert,
+)
 from app.services.grid_counting_service import count_detections_by_grid
 from app.services.output_asset_service import OutputAssetService
 from app.services.video_detection_service import VideoFrameDetectionResult
@@ -96,6 +103,19 @@ def test_video_job_tracks_progress_and_commits_ordered_results_atomically(tmp_pa
                     grid_count_result=grid,
                     output_asset_id=frame_zero_asset_id,
                     output_file_path=frame_zero_path,
+                    alert_records=(
+                        ThresholdAlert(
+                            rule_id="frame-car-warning",
+                            analysis_method=(AlertAnalysisMethod.DETECTOR_OBJECT_COUNT),
+                            object_class="car_or_van",
+                            scope=AlertScope.FRAME,
+                            comparison=AlertComparison.GREATER_THAN_OR_EQUAL,
+                            severity=AlertSeverity.WARNING,
+                            message="Experimental frame count met threshold.",
+                            measured_value=1,
+                            threshold_value=1,
+                        ),
+                    ),
                 ),
             ],
         )
@@ -106,6 +126,8 @@ def test_video_job_tracks_progress_and_commits_ordered_results_atomically(tmp_pa
         assert completed.progress_percent == 100
         assert [frame.frame_number for frame in result.frames] == [0, 30]
         assert len(result.frames[0].grid_cells) == 2
+        assert len(result.frames[0].alerts) == 1
+        assert result.frames[0].alerts[0].alert_type == "frame-car-warning"
         assert result.frames[0].visual_asset.url == (
             f"/api/assets/{frame_zero_asset_id}"
         )

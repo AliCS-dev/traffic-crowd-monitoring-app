@@ -38,6 +38,8 @@ Extract detections and class counts
        |
        +---------------------> Optional grid-cell counts
        |
+       +---------------------> Experimental count-threshold alerts
+       |
        v
 Optional PostgreSQL transaction
   - monitoring session
@@ -76,6 +78,8 @@ Select frames at a time interval
 Preprocess and detect sampled frames
     |
     +---------------------> Detections and class counts
+    |
+    +---------------------> Optional grids and experimental alerts
     |
     v
 Render one annotated JPEG per sampled frame
@@ -127,6 +131,8 @@ Fixed runtime profile -> preprocessing -> shared detector
     |
     +---------------------> Optional validated grid counts
     |
+    +---------------------> Experimental count-threshold alerts
+    |
     v
 Annotated output + one PostgreSQL transaction
     |
@@ -164,6 +170,7 @@ holding an HTTP request open.
 | `app/services/preprocessing_service.py` | Resizes images before inference |
 | `app/services/detection_service.py` | Loads YOLO, runs inference, and converts output into counts and records |
 | `app/services/grid_counting_service.py` | Assigns detection centres to configurable image cells and counts classes per cell |
+| `app/services/alert_service.py` | Validates and evaluates model-independent count-threshold rules |
 | `app/services/video_detection_service.py` | Processes sampled frames while preserving frame metadata |
 | `app/services/video_analysis_service.py` | Coordinates video uploads, bounded background work, progress, grids, and failures |
 | `app/services/video_upload_service.py` | Streams and validates supported uploaded video containers |
@@ -192,7 +199,9 @@ and all related detections and summaries. An image grid joins the same
 transaction when requested. Every cell is stored, while only non-zero per-class
 counts create summary rows. The same transaction stores the dense-crowd
 capability state. It currently records no active crowd method, no model, and no
-count because the evaluated candidate was rejected. If one insert fails, the
+count because the evaluated candidate was rejected. Experimental alerts are
+evaluated before persistence and inserted after their frame and optional grid
+cell exist, preserving their source lineage. If one insert fails, the
 transaction is rolled back,
 so we do not keep an incomplete processing run.
 
@@ -308,10 +317,10 @@ and timestamp.
 The evaluation protocol, labelled data, model comparison, fine-tuning pilot,
 and held-out quality gate are complete. The grid service now assigns detected
 object centres to image cells independently of YOLO. Image and sampled-video runs
-can persist those cells and summaries through the existing repositories. Our
-next planned extensions are threshold-based alerts, session-history HTTP access,
-and a user-facing result interface. Alert rules will be added only with their
-input limitations made explicit.
+can persist those cells and summaries through the existing repositories. The
+model-independent alert service now evaluates tracked frame and grid thresholds
+over those counts. Our next planned extensions are session-history HTTP access
+and a user-facing result interface.
 
 We want each step to remain independently testable. The video reader now supplies
 frames without knowing how they will be sampled or detected. The sampling service
@@ -332,6 +341,8 @@ below, while the outer image edges remain part of the final row and column.
 - **Object count** means the number of detections for one class in an image or
   frame.
 - **Grid count** means the number of detections assigned to one image region.
+- **Experimental alert** means a stored count crossed a configured software
+  threshold; it is not confirmation of a real-world condition.
 - **Crowd concentration** means a relative count of people in an image region.
 - **Crowd density** means people per measured physical area. We do not currently
   calculate this because the images are not geographically calibrated.

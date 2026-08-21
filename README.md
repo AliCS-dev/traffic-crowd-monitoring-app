@@ -43,7 +43,7 @@ images and sampled video frames.
 | Asynchronous video analysis API | Implemented with persistent progress and failure states |
 | Visual result assets and overlay metadata | Implemented for images and sampled video frames |
 | Dense-crowd analysis | Explicitly unsupported; rejected candidate is not loaded |
-| Threshold-based alerts | Planned |
+| Threshold-based alerts | Implemented as experimental count notifications |
 
 The current detector gives us a measured starting point, but it is not reliable
 enough for final conclusions about aerial traffic or crowds. We compared three
@@ -264,7 +264,8 @@ The create request returns HTTP `202` after validation, upload storage, and the
 queued database record are complete. The progress route reports `queued`,
 `processing`, `completed`, or `failed`. Once completed, the normal result route
 returns ordered frames, detections, summaries, optional grids, and a visual asset
-reference for each sampled frame.
+reference for each sampled frame. It also returns any experimental threshold
+notifications generated from those stored counts.
 
 Successful uploads and generated images use UUID filenames under ignored data
 directories. Image outputs are stored in `data/output/analyses/`, while sampled
@@ -339,6 +340,24 @@ and have no grid-cell reference.
 Grid counts are relative image-region counts. They depend on the detector's
 predictions and do not represent people or vehicles per square metre. The
 current command does not draw the grid on the output image.
+
+## Experimental Threshold Notifications
+
+Image and video analyses evaluate the tracked rules in
+`configs/runtime/alert_rules.json`. A rule names one object class, selects either
+the complete frame or each grid cell, declares whether equality triggers it, and
+assigns an information, warning, or critical display level. The current file has
+two illustrative rules:
+
+- at least 20 `car_or_van` detections in one frame produces a warning;
+- at least 8 `person` detections in one grid cell produces an information notice.
+
+These values are application configuration, not research findings or public
+safety limits. A generated alert means only that a model-produced count met its
+configured software threshold. It does not establish traffic congestion,
+physical crowd density, danger, or an emergency. The complete rule format,
+boundary behavior, and limitations are described in the
+[alert-rule documentation](docs/alert_rules.md).
 
 ## Reading And Sampling Video Input
 
@@ -541,6 +560,7 @@ schemas afterwards.
 
 - [Architecture](docs/architecture.md)
 - [Database schema](docs/database/database_schema.md)
+- [Experimental alert rules](docs/alert_rules.md)
 - [Aerial detection evaluation protocol](docs/evaluation/evaluation_protocol.md)
 - [Development log](docs/development_log.md)
 - [Development workflow](docs/development_workflow.md)
@@ -559,7 +579,8 @@ is still under development:
   API reports this with an unsupported state and null count;
 - video processing is available through the API but not through the
   command-line entry point;
-- we do not yet generate alerts;
+- threshold notifications inherit the detector's failed quality-gate status and
+  must not be interpreted as verified real-world conditions;
 - image analysis is synchronous, while video analysis uses a local background
   worker and persistent progress;
 - background jobs are local to one API process; interrupted queued or processing

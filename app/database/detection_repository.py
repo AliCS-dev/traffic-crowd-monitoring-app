@@ -1,5 +1,6 @@
 import json
 from collections.abc import Iterable
+from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -9,6 +10,7 @@ from app.model_profile import RuntimeModelProfile
 from app.services.detection_service import build_object_count_summary_records
 
 if TYPE_CHECKING:
+    from app.services.alert_service import ThresholdAlert
     from app.services.grid_counting_service import GridCountResult
     from app.services.video_detection_service import VideoFrameDetectionResult
 
@@ -21,6 +23,7 @@ def save_image_detection_results(
     object_count_summary_records=None,
     session_name=None,
     grid_count_result: "GridCountResult | None" = None,
+    alert_records: Iterable["ThresholdAlert"] = (),
     *,
     model_profile: RuntimeModelProfile,
     crowd_analysis_decision: DenseCrowdAnalysisDecision,
@@ -30,9 +33,11 @@ def save_image_detection_results(
 ):
     image_path = Path(image_path)
     object_count_summary_records = object_count_summary_records or []
+    alert_records = tuple(alert_records)
     _validate_grid_image_dimensions(grid_count_result, image_width, image_height)
     _validate_output_reference(output_asset_id, output_file_path)
 
+    grid_cell_ids = {}
     grid_cell_count = 0
     grid_object_count_summary_count = 0
 
@@ -70,14 +75,22 @@ def save_image_detection_results(
                 object_count_summary_records,
             )
             if grid_count_result is not None:
-                (
-                    grid_cell_count,
-                    grid_object_count_summary_count,
-                ) = create_grid_count_results(
+                created_grid = create_grid_count_results(
                     cursor,
                     processed_frame_id,
                     grid_count_result,
                 )
+                grid_cell_ids = created_grid.cell_ids
+                grid_cell_count = created_grid.cell_count
+                grid_object_count_summary_count = (
+                    created_grid.object_count_summary_count
+                )
+            create_alert_results(
+                cursor,
+                processed_frame_id,
+                alert_records,
+                grid_cell_ids,
+            )
             mark_monitoring_session_completed(cursor, session_id)
 
     return {
@@ -88,6 +101,7 @@ def save_image_detection_results(
         "object_count_summary_count": len(object_count_summary_records),
         "grid_cell_count": grid_cell_count,
         "grid_object_count_summary_count": grid_object_count_summary_count,
+        "alert_count": len(alert_records),
     }
 
 
@@ -166,13 +180,24 @@ def save_video_detection_results(
                         frame_result.image_width,
                         frame_result.image_height,
                     )
-                    cell_count, grid_summary_count = create_grid_count_results(
+                    created_grid = create_grid_count_results(
                         cursor,
                         processed_frame_id,
                         frame_result.grid_count_result,
                     )
-                    grid_cell_count += cell_count
-                    grid_object_count_summary_count += grid_summary_count
+                    grid_cell_ids = created_grid.cell_ids
+                    grid_cell_count += created_grid.cell_count
+                    grid_object_count_summary_count += (
+                        created_grid.object_count_summary_count
+                    )
+                else:
+                    grid_cell_ids = {}
+                create_alert_results(
+                    cursor,
+                    processed_frame_id,
+                    frame_result.alert_records,
+                    grid_cell_ids,
+                )
 
                 detection_count += len(frame_result.detection_records)
                 object_count_summary_count += len(summary_records)
@@ -188,6 +213,7 @@ def save_video_detection_results(
         "object_count_summary_count": object_count_summary_count,
         "grid_cell_count": grid_cell_count,
         "grid_object_count_summary_count": grid_object_count_summary_count,
+        "alert_count": sum(len(result.alert_records) for result in frame_results),
     }
 
 
@@ -418,11 +444,23 @@ def create_object_count_summaries(
     )
 
 
+@dataclass(frozen=True)
+class CreatedGridCountResults:
+    cell_ids: dict[tuple[int, int], int]
+    object_count_summary_count: int
+
+    @property
+    def cell_count(self) -> int:
+        return len(self.cell_ids)
+
+
 def create_grid_count_results(cursor, processed_frame_id, grid_count_result):
     summary_records = []
+    cell_ids = {}
 
     for cell in grid_count_result.cells:
         grid_cell_id = create_grid_cell(cursor, processed_frame_id, cell)
+        cell_ids[(cell.row_index, cell.column_index)] = grid_cell_id
         summary_records.extend(
             {
                 "grid_cell_id": grid_cell_id,
@@ -438,7 +476,82 @@ def create_grid_count_results(cursor, processed_frame_id, grid_count_result):
         processed_frame_id,
         summary_records,
     )
-    return len(grid_count_result.cells), len(summary_records)
+    return CreatedGridCountResults(
+        cell_ids=cell_ids,
+        object_count_summary_count=len(summary_records),
+    )
+
+
+def create_alert_results(
+    cursor,
+    processed_frame_id,
+    alert_records: Iterable["ThresholdAlert"],
+    grid_cell_ids: dict[tuple[int, int], int],
+):
+    records = []
+    for alert in alert_records:
+        grid_cell_id = None
+        if alert.scope.value == "grid_cell":
+            key = (alert.grid_row_index, alert.grid_column_index)
+            try:
+                grid_cell_id = grid_cell_ids[key]
+            except KeyError as error:
+                raise ValueError(
+                    "Grid alert does not match a stored grid cell."
+                ) from error
+        elif alert.grid_row_index is not None or alert.grid_column_index is not None:
+            raise ValueError("Frame alert cannot reference a grid cell.")
+
+        records.append(
+            {
+                "processed_frame_id": processed_frame_id,
+                "grid_cell_id": grid_cell_id,
+                "alert_type": alert.rule_id,
+                "analysis_method": alert.analysis_method.value,
+                "object_class": alert.object_class,
+                "scope": alert.scope.value,
+                "comparison_operator": alert.comparison.value,
+                "severity": alert.severity.value,
+                "message": alert.message,
+                "measured_value": alert.measured_value,
+                "threshold_value": alert.threshold_value,
+            }
+        )
+
+    if not records:
+        return
+    cursor.executemany(
+        """
+        INSERT INTO alerts (
+            processed_frame_id,
+            grid_cell_id,
+            alert_type,
+            analysis_method,
+            object_class,
+            scope,
+            comparison_operator,
+            severity,
+            message,
+            measured_value,
+            threshold_value
+        )
+        VALUES (
+            %(processed_frame_id)s,
+            %(grid_cell_id)s,
+            %(alert_type)s,
+            %(analysis_method)s,
+            %(object_class)s,
+            %(scope)s,
+            %(comparison_operator)s,
+            %(severity)s,
+            %(message)s,
+            %(measured_value)s,
+            %(threshold_value)s
+        )
+        ON CONFLICT DO NOTHING;
+        """,
+        records,
+    )
 
 
 def create_grid_cell(cursor, processed_frame_id, cell):

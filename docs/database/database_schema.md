@@ -152,15 +152,24 @@ both levels in one table while allowing queries to distinguish them directly.
 ### `grid_cells`
 
 This table describes rectangular regions inside a processed frame. Each region
-has a row, column, and image-coordinate boundary. For stored image grids, the
-repository inserts every configured cell in row-major order, including empty
-cells. It then stores one linked summary for each non-zero class count.
+has a row, column, and image-coordinate boundary. For stored image and sampled
+video grids, the repository inserts every configured cell in row-major order,
+including empty cells. It then stores one linked summary for each non-zero class
+count.
 
 ### `alerts`
 
-This table is ready for future threshold-based warnings. It can hold the alert
-type, severity, message, measured value, threshold, and resolution time. We have
-not implemented the alert rules yet.
+This table stores experimental count-threshold notifications. Migration `007`
+adds the analysis method, object class, scope, and comparison operator to the
+existing alert type, severity, message, measured value, threshold, and resolution
+fields. A frame alert has no grid-cell reference, while a grid alert references
+the exact cell that supplied its count.
+
+A unique index treats null grid references as equal and permits only one record
+for the same frame, optional grid cell, and rule ID. Re-evaluating one result is
+therefore idempotent. New configured alerts require complete rule metadata and
+non-negative measured values. Older manually created alert rows may retain null
+rule metadata so that migration does not invent provenance.
 
 ## How We Read Stored Results
 

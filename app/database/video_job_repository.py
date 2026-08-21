@@ -9,6 +9,7 @@ from app.database.connection import open_database_connection
 from app.database.detection_repository import (
     _validate_grid_image_dimensions,
     _validate_output_reference,
+    create_alert_results,
     create_dense_crowd_analysis_result,
     create_detection_results,
     create_grid_count_results,
@@ -191,9 +192,18 @@ def complete_video_analysis_job(
                         result.image_width,
                         result.image_height,
                     )
-                    create_grid_count_results(
+                    created_grid = create_grid_count_results(
                         cursor, frame_id, result.grid_count_result
                     )
+                    grid_cell_ids = created_grid.cell_ids
+                else:
+                    grid_cell_ids = {}
+                create_alert_results(
+                    cursor,
+                    frame_id,
+                    result.alert_records,
+                    grid_cell_ids,
+                )
 
             cursor.execute(
                 """

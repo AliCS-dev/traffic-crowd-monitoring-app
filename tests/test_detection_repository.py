@@ -5,6 +5,13 @@ import pytest
 import app.database.detection_repository as detection_repository
 from app.crowd_analysis import load_dense_crowd_analysis_decision
 from app.model_profile import load_runtime_model_profile
+from app.services.alert_service import (
+    AlertAnalysisMethod,
+    AlertComparison,
+    AlertScope,
+    AlertSeverity,
+    ThresholdAlert,
+)
 from app.services.grid_counting_service import count_detections_by_grid
 from app.services.video_detection_service import VideoFrameDetectionResult
 
@@ -85,6 +92,8 @@ class FakeCursor:
             return "detection_results"
         if "INSERT INTO object_count_summaries" in normalized_query:
             return "object_count_summaries"
+        if "INSERT INTO alerts" in normalized_query:
+            return "alerts"
         if "UPDATE monitoring_sessions" in normalized_query:
             return "complete_session"
 
@@ -161,6 +170,7 @@ def test_save_video_results_associates_multiple_frames_and_records(monkeypatch):
         "object_count_summary_count": 2,
         "grid_cell_count": 0,
         "grid_object_count_summary_count": 0,
+        "alert_count": 0,
     }
     assert ("input_source", (10, "video", "data/input/traffic.mp4", "traffic.mp4")) in (
         cursor.execute_calls
@@ -517,6 +527,102 @@ def test_save_image_results_stores_grid_cells_and_linked_summaries(monkeypatch):
                 "object_count": 1,
             },
         ],
+    )
+
+
+def test_save_image_results_stores_frame_and_grid_alert_lineage(monkeypatch):
+    cursor, _connection = use_fake_database(
+        monkeypatch,
+        generated_ids=[10, 20, 30, 40, 41, 42, 43],
+    )
+    grid_result = count_detections_by_grid(
+        [PERSON_DETECTION],
+        image_width=200,
+        image_height=200,
+        rows=2,
+        columns=2,
+    )
+    frame_alert = ThresholdAlert(
+        rule_id="frame-person-warning",
+        analysis_method=AlertAnalysisMethod.DETECTOR_OBJECT_COUNT,
+        object_class="person",
+        scope=AlertScope.FRAME,
+        comparison=AlertComparison.GREATER_THAN_OR_EQUAL,
+        severity=AlertSeverity.WARNING,
+        message="Experimental frame threshold reached.",
+        measured_value=1,
+        threshold_value=1,
+    )
+    grid_alert = ThresholdAlert(
+        rule_id="grid-person-information",
+        analysis_method=AlertAnalysisMethod.DETECTOR_OBJECT_COUNT,
+        object_class="person",
+        scope=AlertScope.GRID_CELL,
+        comparison=AlertComparison.GREATER_THAN_OR_EQUAL,
+        severity=AlertSeverity.INFORMATION,
+        message="Experimental grid threshold reached.",
+        measured_value=1,
+        threshold_value=1,
+        grid_row_index=1,
+        grid_column_index=0,
+    )
+
+    stored_result = detection_repository.save_image_detection_results(
+        "data/input/image.jpg",
+        image_width=200,
+        image_height=200,
+        detection_records=[PERSON_DETECTION],
+        grid_count_result=grid_result,
+        alert_records=(frame_alert, grid_alert),
+        model_profile=MODEL_PROFILE,
+        crowd_analysis_decision=CROWD_ANALYSIS_DECISION,
+    )
+
+    assert stored_result["alert_count"] == 2
+    alert_insert = next(
+        values
+        for operation, values in cursor.executemany_calls
+        if operation == "alerts"
+    )
+    assert [record["grid_cell_id"] for record in alert_insert] == [None, 42]
+    assert alert_insert[0]["scope"] == "frame"
+    assert alert_insert[1]["scope"] == "grid_cell"
+    assert alert_insert[1]["severity"] == "information"
+
+
+def test_alert_insert_failure_rolls_back_complete_image_transaction(monkeypatch):
+    cursor, connection = use_fake_database(
+        monkeypatch,
+        generated_ids=[10, 20, 30],
+        fail_on="alerts",
+    )
+    alert = ThresholdAlert(
+        rule_id="frame-car-warning",
+        analysis_method=AlertAnalysisMethod.DETECTOR_OBJECT_COUNT,
+        object_class="car",
+        scope=AlertScope.FRAME,
+        comparison=AlertComparison.GREATER_THAN,
+        severity=AlertSeverity.WARNING,
+        message="Experimental frame threshold reached.",
+        measured_value=2,
+        threshold_value=1,
+    )
+
+    with pytest.raises(RuntimeError, match="Failed to insert alerts"):
+        detection_repository.save_image_detection_results(
+            "data/input/image.jpg",
+            image_width=200,
+            image_height=200,
+            detection_records=[CAR_DETECTION],
+            alert_records=(alert,),
+            model_profile=MODEL_PROFILE,
+            crowd_analysis_decision=CROWD_ANALYSIS_DECISION,
+        )
+
+    assert connection.exit_exception_type is RuntimeError
+    assert not any(
+        operation == "complete_session"
+        for operation, _parameters in cursor.execute_calls
     )
 
 
