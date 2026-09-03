@@ -10,9 +10,11 @@ project does not yet need.
 The current structure lets us combine image and video processing with detection
 and database storage without placing everything in one large script.
 
-The application now has two entry points. `app/main.py` remains the image CLI,
-while `app/api/application.py` exposes reusable services through HTTP. Neither
-entry point contains detection or persistence logic of its own.
+The Python application has two entry points. `app/main.py` remains the image
+CLI, while `app/api/application.py` exposes reusable services through HTTP.
+Neither entry point contains detection or persistence logic of its own. The
+separate `frontend/` workspace is the browser client for that HTTP boundary; it
+does not import Python code or access PostgreSQL directly.
 
 ## Current Processing Flow
 
@@ -115,6 +117,29 @@ Injected application services
 The detector itself is created lazily through the same dependency container.
 Health checks, OpenAPI generation, and API unit tests do not load YOLO.
 
+The frontend foundation follows this browser flow:
+
+```text
+React route and shared application shell
+    |
+    +---------------------> Workspace, sessions, or result view
+    |
+    v
+Typed API client using VITE_API_BASE_URL
+    |
+    +---------------------> /api/health: backend availability
+    |
+    +---------------------> /api/ready: dependency readiness
+    |
+    v
+Explicit loading, empty, error, or unavailable state
+```
+
+React Query owns remote service state, React Router owns browser navigation,
+and Material UI provides one accessible component baseline. The route pages do
+not call `fetch` directly; later upload and result work extends the same typed
+API client.
+
 Image requests now add one synchronous application flow:
 
 ```text
@@ -183,12 +208,16 @@ holding an HTTP request open.
 | `app/database/monitoring_query_repository.py` | Lists sessions and reconstructs complete stored results with fixed bulk queries |
 | `app/database/output_asset_repository.py` | Finds a private generated-file path by public asset UUID |
 | `app/schemas/monitoring.py` | Defines database-independent history and result models for later API and frontend use |
+| `frontend/src/api/` | Validates the API base URL and contains typed HTTP requests and response contracts |
+| `frontend/src/components/` | Provides the responsive shell and shared status, dialog, and state patterns |
+| `frontend/src/pages/` | Defines the workspace, session-history, result, and not-found routes |
+| `frontend/src/theme.ts` | Defines shared colours, typography, spacing, and component defaults |
 | `scripts/` | Contains explicit database setup and diagnostic commands |
 
 `app/main.py` brings these pieces together, while the service modules contain
 the individual processing steps. This gives us a simple command-line application
-and an HTTP application that can be used by the future frontend without
-reimplementing the processing pipeline.
+and an HTTP application that the frontend can use without reimplementing the
+processing pipeline.
 
 ## How We Store a Result
 
@@ -250,9 +279,9 @@ its dimensions do not match this metadata.
 
 Detection boxes are already rendered in the generated JPEG, which is stated in
 `visual_asset.rendered_overlays`. The API still returns each detection box for
-inspection and interaction. Grid cells are returned as metadata and are intended
-to be drawn by the frontend, so they can be shown or hidden without generating a
-second image.
+inspection and interaction. Grid cells are returned as metadata and will be
+drawn by the result interface, so they can be shown or hidden without generating
+a second image.
 
 The asset route accepts only a stored UUID. It looks up the private path in
 PostgreSQL, resolves symbolic links and relative path components, and serves only
@@ -262,12 +291,22 @@ not exposed.
 
 ## Decisions We Have Made So Far
 
+### Keeping the browser application separate
+
+The React and TypeScript application lives in `frontend/`, with its own lockfile,
+tests, and production build. It communicates with FastAPI through a validated
+environment-based URL. This keeps presentation concerns out of the Python
+packages and gives us a clear container boundary for later deployment. We chose
+Material UI for consistent accessible controls, React Router for route state,
+and React Query for server state rather than creating local replacements for
+those established concerns.
+
 ### Starting with a command-line interface
 
-We began with a command-line interface because it lets us test the complete
-pipeline before deciding what we want from the final desktop or web interface.
-When we add that interface, it will call the existing services instead of
-reimplementing image detection or database storage.
+We began with a command-line interface because it let us test the complete
+pipeline before adding the browser application. The frontend now calls the
+existing HTTP boundary instead of reimplementing image detection or database
+storage.
 
 ### Running only PostgreSQL in Docker
 
@@ -360,8 +399,7 @@ below, while the outer image edges remain part of the final row and column.
   candidate passed the evaluation decision rule.
 - Repository tests cover transaction behavior with controlled test doubles, but
   live PostgreSQL coverage does not yet include every future API query path.
-- `app/ui` is reserved for later work and does not contain an interface yet.
-- The API does not yet expose the paginated session-history query or provide a
-  user interface.
+- The API does not yet expose the paginated session-history query, so the
+  frontend session-history route currently presents an explicit empty state.
 - Generated assets are stored on the local filesystem and the API does not yet
   include user authentication.
