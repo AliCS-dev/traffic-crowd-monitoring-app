@@ -39,9 +39,10 @@ terminal. As the pipeline grew, we moved image loading, preprocessing, detection
 and output into separate service modules. We also added command-line options for
 the input path, output path, confidence, image size, and preprocessing scale.
 
-We reserved `app/ui` for the later user interface, but we deliberately kept the
-first usable version as a command-line application while the core pipeline was
-still changing.
+At that stage, we reserved `app/ui` for a possible interface and kept the first
+usable version as a command-line application while the core pipeline was still
+changing. Issue #74 later replaced that placeholder with the separate
+`frontend/` workspace.
 
 ### Issue #10: Initial Database Design
 
@@ -474,3 +475,19 @@ creating duplicate notifications. Image, video, CLI, query, and API paths now us
 the same rules. The documentation states that these alerts are experimental
 software notifications over imperfect detector output, not evidence of
 congestion, physical density, danger, or an emergency.
+
+### Issue #74: Frontend Application Foundation
+
+We created an independent React and TypeScript workspace for the browser
+application. Its responsive monitoring shell provides routes for the analysis
+workspace, session history, and results, together with reusable navigation,
+table, tab, dialog, tooltip, status, and empty or failure-state patterns. The
+first route is the working application shell rather than a marketing page.
+
+A typed API client reads a validated `VITE_API_BASE_URL` and currently reports
+backend health and dependency readiness without exposing database settings to
+the browser. Material UI supplies the accessible component baseline, React
+Router owns navigation, and React Query owns remote service state. The frontend
+has its own npm lockfile, Oxlint and Prettier checks, TypeScript build, Vitest
+suite, GitHub Actions job, and weekly Dependabot updates. Image/video submission
+and complete result rendering remain separate follow-up issues.

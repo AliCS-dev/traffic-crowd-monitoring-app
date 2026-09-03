@@ -44,6 +44,7 @@ images and sampled video frames.
 | Visual result assets and overlay metadata | Implemented for images and sampled video frames |
 | Dense-crowd analysis | Explicitly unsupported; rejected candidate is not loaded |
 | Threshold-based alerts | Implemented as experimental count notifications |
+| Browser frontend foundation | Implemented with responsive routes and live service status |
 
 The current detector gives us a measured starting point, but it is not reliable
 enough for final conclusions about aerial traffic or crowds. We compared three
@@ -61,8 +62,9 @@ misleading zero.
 - Ultralytics YOLO
 - PostgreSQL 16 and Psycopg 3
 - FastAPI and Uvicorn
+- React, TypeScript, Vite, and Material UI
 - Docker Compose for the local database
-- Pytest and Ruff
+- Pytest, Vitest, Ruff, Oxlint, and Prettier
 - GitHub Actions and Dependabot
 
 ## Repository Layout
@@ -73,7 +75,6 @@ app/
   database/              Database connections, repositories, and migrations
   schemas/               Typed monitoring history and result models
   services/              Image, preprocessing, detection, and output logic
-  ui/                    Reserved for the future user interface
   config.py              Project paths
   model_profile.py       Runtime-profile validation and checkpoint verification
   main.py                Command-line application entry point
@@ -84,6 +85,7 @@ data/
   input/                  Local input images and videos
   output/                 Generated annotated output
 docs/                     Architecture and development documentation
+frontend/                 Independent React and TypeScript browser application
 models/                   Local model weights, excluded from Git
 scripts/                  Setup, validation, evaluation, and diagnostic commands
 tests/                    Automated tests
@@ -280,8 +282,37 @@ curl http://127.0.0.1:8000/api/assets/<asset-id> --output result.jpg
 All visual coordinates use the processed image returned by that URL. The origin
 is the top-left corner, x increases to the right, and y increases downwards. The
 generated JPEG already contains the detection boxes. Detection records and grid
-cells remain in the JSON so the future frontend can inspect detections and draw
+cells remain in the JSON so the result interface can inspect detections and draw
 the grid without changing the saved image.
+
+## Running the Frontend
+
+The browser application is kept in `frontend/` so interface code remains
+separate from the Python processing and persistence layers. We use Node.js 24
+LTS and install the committed dependency set with:
+
+```bash
+cd frontend
+npm ci
+cp .env.example .env
+npm run dev
+```
+
+The workspace opens at <http://localhost:5173> and reads the API location from
+`VITE_API_BASE_URL`. Its current routes provide the monitoring workspace,
+session-history table, result view, and live health and readiness states. Media
+submission and complete result visualisation remain the next frontend stages.
+
+Frontend linting, formatting, type checking, unit tests, and the production
+build can be run together as separate explicit checks:
+
+```bash
+npm run lint
+npm run format:check
+npm run typecheck
+npm test
+npm run build
+```
 
 ## Trying the Image Pipeline
 

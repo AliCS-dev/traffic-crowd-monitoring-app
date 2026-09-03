@@ -36,6 +36,20 @@ We keep development tools in the project virtual environment:
 .venv/bin/python -m pip install -r requirements-dev.txt
 ```
 
+The browser application has an independent Node.js 24 LTS environment and a
+committed npm lockfile:
+
+```bash
+cd frontend
+npm ci
+cp .env.example .env
+npm run dev
+```
+
+The frontend reads `VITE_API_BASE_URL` and never reads database credentials.
+Keeping the browser and Python dependency sets separate also matches the later
+frontend and backend container boundary.
+
 When an issue involves PostgreSQL, we use the local `.env` file and start the
 database service:
 
@@ -84,6 +98,19 @@ Before a pull request, we run:
 .venv/bin/python -m ruff format --check .
 .venv/bin/python -m compileall app scripts
 ```
+
+When frontend files change, we also run from `frontend/`:
+
+```bash
+npm run lint
+npm run format:check
+npm run typecheck
+npm test
+npm run build
+```
+
+The unit tests cover route behavior, accessible controls, environment parsing,
+and typed API errors without requiring PostgreSQL or a running backend.
 
 For database changes, we also check the connection and apply the current schema:
 
@@ -165,10 +192,10 @@ we still review the behavior and the code ourselves.
 
 ## Dependency Updates
 
-Dependabot checks Python packages and GitHub Actions each week. We treat these
-pull requests like any other change: CI needs to pass, and we review the effect
-before merging. The fact that an update was created automatically is not enough
-reason for us to accept it.
+Dependabot checks frontend npm packages, Python packages, and GitHub Actions each
+week. We treat these pull requests like any other change: CI needs to pass, and
+we review the effect before merging. The fact that an update was created
+automatically is not enough reason for us to accept it.
 
 ## Our Research Record
 
