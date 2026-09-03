@@ -14,6 +14,14 @@ Summarise the change and why it belongs in the project.
 - [ ] `python -m compileall app scripts`
 - [ ] We completed the relevant manual or database checks
 
+When frontend files change:
+
+- [ ] `npm run lint`
+- [ ] `npm run format:check`
+- [ ] `npm run typecheck`
+- [ ] `npm test`
+- [ ] `npm run build`
+
 ## Documentation
 
 - [ ] We updated the related documentation
