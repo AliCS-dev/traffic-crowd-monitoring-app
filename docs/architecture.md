@@ -117,28 +117,36 @@ Injected application services
 The detector itself is created lazily through the same dependency container.
 Health checks, OpenAPI generation, and API unit tests do not load YOLO.
 
-The frontend foundation follows this browser flow:
+The frontend follows this browser flow:
 
 ```text
 React route and shared application shell
     |
-    +---------------------> Workspace, sessions, or result view
+    +---------------------> /api/capabilities: formats and limits
+    |
+    v
+Validated image or video form
+    |
+    +---------------------> Image: synchronous multipart request
+    |
+    +---------------------> Video: create persistent background job
     |
     v
 Typed API client using VITE_API_BASE_URL
     |
-    +---------------------> /api/health: backend availability
+    +---------------------> Poll persistent video status and progress
     |
-    +---------------------> /api/ready: dependency readiness
+    +---------------------> Preserve form on validation or API failure
     |
     v
-Explicit loading, empty, error, or unavailable state
+Completed session result route
 ```
 
 React Query owns remote service state, React Router owns browser navigation,
 and Material UI provides one accessible component baseline. The route pages do
-not call `fetch` directly; later upload and result work extends the same typed
-API client.
+not call `fetch` directly. The same client also reads health and readiness. The
+browser derives its upload rules from a public capability endpoint, while the
+backend remains authoritative and repeats all validation before processing.
 
 Image requests now add one synchronous application flow:
 
@@ -181,6 +189,7 @@ holding an HTTP request open.
 | `app/api/dependencies.py` | Provides readiness probes and lazy detector access |
 | `app/api/errors.py` | Converts API failures into one public JSON error format |
 | `app/api/routes/health.py` | Exposes process health and dependency readiness |
+| `app/api/routes/capabilities.py` | Exposes public upload formats and analysis-option bounds |
 | `app/api/routes/assets.py` | Serves generated images through controlled asset identifiers |
 | `app/api/routes/image_analyses.py` | Creates image analyses and returns complete stored results |
 | `app/api/routes/video_analyses.py` | Queues video analyses and returns persistent job progress |
@@ -210,6 +219,7 @@ holding an HTTP request open.
 | `app/schemas/monitoring.py` | Defines database-independent history and result models for later API and frontend use |
 | `frontend/src/api/` | Validates the API base URL and contains typed HTTP requests and response contracts |
 | `frontend/src/components/` | Provides the responsive shell and shared status, dialog, and state patterns |
+| `frontend/src/features/analysis/` | Owns media validation, submission, progress polling, and recovery state |
 | `frontend/src/pages/` | Defines the workspace, session-history, result, and not-found routes |
 | `frontend/src/theme.ts` | Defines shared colours, typography, spacing, and component defaults |
 | `scripts/` | Contains explicit database setup and diagnostic commands |
@@ -358,8 +368,8 @@ and held-out quality gate are complete. The grid service now assigns detected
 object centres to image cells independently of YOLO. Image and sampled-video runs
 can persist those cells and summaries through the existing repositories. The
 model-independent alert service now evaluates tracked frame and grid thresholds
-over those counts. Our next planned extensions are session-history HTTP access
-and a user-facing result interface.
+over those counts. Our next planned extension is a user-facing result interface
+built on the existing query and visual-asset APIs.
 
 We want each step to remain independently testable. The video reader now supplies
 frames without knowing how they will be sampled or detected. The sampling service
@@ -401,5 +411,7 @@ below, while the outer image edges remain part of the final row and column.
   live PostgreSQL coverage does not yet include every future API query path.
 - The API does not yet expose the paginated session-history query, so the
   frontend session-history route currently presents an explicit empty state.
+- The browser can stop waiting for a pending request, but the API does not yet
+  provide server-side cancellation for accepted image or video work.
 - Generated assets are stored on the local filesystem and the API does not yet
   include user authentication.
