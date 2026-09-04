@@ -45,6 +45,7 @@ images and sampled video frames.
 | Dense-crowd analysis | Explicitly unsupported; rejected candidate is not loaded |
 | Threshold-based alerts | Implemented as experimental count notifications |
 | Browser frontend foundation | Implemented with responsive routes and live service status |
+| Browser media submission | Implemented for images and asynchronous videos |
 
 The current detector gives us a measured starting point, but it is not reliable
 enough for final conclusions about aerial traffic or crowds. We compared three
@@ -190,6 +191,7 @@ The first API routes are deliberately small:
 
 - `GET /api/health` confirms that the HTTP process can respond;
 - `GET /api/ready` checks PostgreSQL and verifies the configured checkpoint;
+- `GET /api/capabilities` returns public upload formats and option limits;
 - `POST /api/analyses/images` validates, processes, and stores one image;
 - `POST /api/analyses/videos` validates and queues one video;
 - `GET /api/analyses/videos/{session_id}` returns video-job progress;
@@ -299,9 +301,18 @@ npm run dev
 ```
 
 The workspace opens at <http://localhost:5173> and reads the API location from
-`VITE_API_BASE_URL`. Its current routes provide the monitoring workspace,
-session-history table, result view, and live health and readiness states. Media
-submission and complete result visualisation remain the next frontend stages.
+`VITE_API_BASE_URL`. Its current routes provide image and video submission,
+video-job progress, the session-history table, the result view, and live health
+and readiness states. The form reads supported formats and limits from the API,
+so browser validation stays aligned with the configured backend. A completed
+submission opens its result route automatically. Detailed result visualisation
+is the next frontend stage.
+
+Stopping an image upload in the browser aborts the local request. It is not a
+server-side cancellation guarantee: if the API already accepted the request,
+work may continue and appear in session history. Persistent video jobs can be
+followed after the create request returns, but the API does not yet provide a
+job-cancellation endpoint.
 
 Frontend linting, formatting, type checking, unit tests, and the production
 build can be run together as separate explicit checks:
@@ -618,7 +629,8 @@ is still under development:
   jobs are marked failed at the next startup and must be submitted again;
 - generated result assets are local files served by the API and are not yet
   backed by remote object storage or an authentication layer;
-- the project does not yet have a user interface;
+- the browser interface can submit media and track video progress, but detailed
+  result visualisation and session-history data loading are not yet implemented;
 - we do not calculate physical crowd density.
 
 Until we add geographic calibration, we use the terms **count per spatial

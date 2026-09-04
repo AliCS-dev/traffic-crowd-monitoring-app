@@ -69,6 +69,60 @@ def test_readiness_reports_each_available_dependency():
     }
 
 
+def test_capabilities_report_public_runtime_constraints():
+    settings = ApiSettings(
+        max_image_upload_bytes=123,
+        max_image_pixels=456,
+        max_grid_dimension=7,
+        max_video_upload_bytes=789,
+    )
+    application = create_app(
+        settings=settings,
+        service_factory=lambda: create_services(),
+    )
+
+    with TestClient(application) as client:
+        response = client.get("/api/capabilities")
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "image": {
+            "extensions": [".jpg", ".jpeg", ".png"],
+            "mime_types": ["image/jpeg", "image/png"],
+            "mime_type_by_extension": {
+                ".jpg": "image/jpeg",
+                ".jpeg": "image/jpeg",
+                ".png": "image/png",
+            },
+            "max_upload_bytes": 123,
+            "max_pixels": 456,
+        },
+        "video": {
+            "extensions": [".avi", ".mkv", ".mov", ".mp4"],
+            "mime_types": [
+                "video/x-msvideo",
+                "video/x-matroska",
+                "video/quicktime",
+                "video/mp4",
+            ],
+            "mime_type_by_extension": {
+                ".avi": "video/x-msvideo",
+                ".mkv": "video/x-matroska",
+                ".mov": "video/quicktime",
+                ".mp4": "video/mp4",
+            },
+            "max_upload_bytes": 789,
+            "max_pixels": 456,
+        },
+        "options": {
+            "max_session_name_length": 150,
+            "max_grid_dimension": 7,
+            "default_sampling_interval_seconds": 1.0,
+            "max_sampling_interval_seconds": 3600.0,
+        },
+    }
+
+
 def test_readiness_returns_503_without_leaking_probe_errors():
     def unavailable_database():
         raise RuntimeError("private database connection details")
@@ -167,6 +221,7 @@ def test_openapi_and_interactive_documentation_are_available():
         "version": "0.1.0",
     }
     assert set(schema.json()["paths"]) == {
+        "/api/capabilities",
         "/api/assets/{asset_id}",
         "/api/analyses/images",
         "/api/analyses/videos",

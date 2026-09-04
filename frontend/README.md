@@ -4,10 +4,10 @@ The frontend is a separate React and TypeScript application for the traffic and
 crowd monitoring workflow. It calls the FastAPI backend over HTTP and does not
 import Python modules or access PostgreSQL directly.
 
-The current foundation provides the responsive application shell, workspace,
-session-history and result routes, typed health and readiness requests, and
-consistent loading, empty, error, and unavailable states. Media submission and
-complete result visualisation are added in the next application stages.
+The application provides a responsive shell, image and video submission,
+persistent video-job progress, session-history and result routes, typed API
+requests, and consistent loading, empty, error, and unavailable states. Complete
+result visualisation is a separate application stage.
 
 ## Local Development
 
@@ -35,6 +35,24 @@ The application is then available at <http://localhost:5173>. PostgreSQL and the
 backend remain separate processes; the frontend does not require its own Docker
 container during local development.
 
+## Submitting Media
+
+The **New analysis** tab accepts one supported image or video. We can optionally
+name the session and divide the processed scene into a grid. Video submissions
+also accept a sampling interval in seconds. The frontend reads formats, size
+limits, and option bounds from `/api/capabilities` instead of maintaining a
+second copy of backend settings.
+
+Image analysis completes in its upload request. Video analysis returns a queued
+session and the browser polls its persistent job status until it completes or
+fails. Successful work opens `/analyses/<session-id>`. Validation and API errors
+leave the selected file and options in place so we can correct or retry them.
+
+The **Stop waiting** action only aborts a pending browser request. It does not
+claim to cancel work that may already have reached the API. We check session
+history before resubmitting after an abort. Server-side job cancellation is not
+part of the current backend contract.
+
 ## Quality Checks
 
 Before a pull request, we run:
@@ -57,6 +75,7 @@ configuration.
 src/
   api/          Typed HTTP client and response contracts
   components/   Shared layout, status, and state components
+  features/     Complete workflows such as media submission and job progress
   pages/        Route-level workspace, session, and result views
   test/         Shared unit-test setup and render helpers
   App.tsx       Application routes

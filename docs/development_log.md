@@ -489,5 +489,28 @@ backend health and dependency readiness without exposing database settings to
 the browser. Material UI supplies the accessible component baseline, React
 Router owns navigation, and React Query owns remote service state. The frontend
 has its own npm lockfile, Oxlint and Prettier checks, TypeScript build, Vitest
-suite, GitHub Actions job, and weekly Dependabot updates. Image/video submission
-and complete result rendering remain separate follow-up issues.
+suite, GitHub Actions job, and weekly Dependabot updates. We kept image/video
+submission and complete result rendering as separate follow-up issues.
+
+### Issue #75: Media Submission And Processing Status
+
+We added the first complete browser workflow on top of the frontend foundation.
+The workspace now accepts supported aerial images and videos through a file
+picker or drag-and-drop area. Users can name a session, enable bounded grid
+dimensions, and choose the video sampling interval. The selected file and form
+values remain available after validation or API failures so a retry does not
+require entering everything again.
+
+The FastAPI capability endpoint publishes allowed extensions, matching MIME
+types, upload limits, and analysis-option bounds from the same runtime settings
+used by backend validation. The typed frontend client uses that contract for
+multipart submissions and persistent video-job polling. Queued and processing
+videos show sampled-frame progress, completed analyses open their result route,
+and status-network failures remain distinct from failed processing jobs.
+
+The browser can abort a pending submission, but we deliberately call this
+**Stop waiting** because the backend has no server-side cancellation endpoint.
+The interface explains that accepted work may continue. Unit and component
+tests cover option boundaries, file type and size errors, multipart fields,
+image and video completion, progress presentation, long filenames, safe API
+errors, preserved input, and local abort behavior.
