@@ -5,6 +5,7 @@ import type {
   ErrorResponse,
   HealthResponse,
   ImageAnalysisCreatedResponse,
+  MonitoringSessionPage,
   ReadinessResponse,
   VideoAnalysisCreatedResponse,
   VideoAnalysisJobResponse,
@@ -92,6 +93,18 @@ export class ApiClient {
     signal?: AbortSignal,
   ): Promise<VideoAnalysisJobResponse> {
     return this.request(`/api/analyses/videos/${sessionId}`, { signal });
+  }
+
+  listAnalyses(
+    page = 1,
+    pageSize = 20,
+    signal?: AbortSignal,
+  ): Promise<MonitoringSessionPage> {
+    const searchParameters = new URLSearchParams({
+      page: String(page),
+      page_size: String(pageSize),
+    });
+    return this.request(`/api/analyses?${searchParameters}`, { signal });
   }
 
   private async request<T>(

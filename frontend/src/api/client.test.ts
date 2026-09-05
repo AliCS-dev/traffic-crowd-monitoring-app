@@ -111,6 +111,28 @@ describe("ApiClient", () => {
     );
   });
 
+  it("lists analyses with explicit pagination", async () => {
+    const fetchFunction = vi.fn().mockResolvedValue(
+      jsonResponse({
+        items: [],
+        pagination: {
+          page: 2,
+          page_size: 20,
+          total_items: 21,
+          total_pages: 2,
+        },
+      }),
+    );
+    const client = new ApiClient("http://localhost:8000", fetchFunction);
+
+    await expect(client.listAnalyses(2, 20)).resolves.toMatchObject({
+      pagination: { page: 2, total_items: 21 },
+    });
+    expect(fetchFunction.mock.calls[0][0]).toBe(
+      "http://localhost:8000/api/analyses?page=2&page_size=20",
+    );
+  });
+
   it("preserves structured API error details", async () => {
     const client = new ApiClient(
       "http://localhost:8000",

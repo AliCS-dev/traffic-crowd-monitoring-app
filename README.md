@@ -303,11 +303,11 @@ npm run dev
 
 The workspace opens at <http://localhost:5173> and reads the API location from
 `VITE_API_BASE_URL`. Its current routes provide image and video submission,
-video-job progress, the session-history table, the result view, and live health
+video-job progress, paginated session history, the result view, and live health
 and readiness states. The form reads supported formats and limits from the API,
 so browser validation stays aligned with the configured backend. A completed
-submission opens its result route automatically. Detailed result visualisation
-is the next frontend stage.
+submission opens its result route automatically, and each history row links to
+the same route. Detailed result visualisation is the next frontend stage.
 
 Stopping an image upload in the browser aborts the local request. It is not a
 server-side cancellation guarantee: if the API already accepted the request,
@@ -630,9 +630,8 @@ is still under development:
   jobs are marked failed at the next startup and must be submitted again;
 - generated result assets are local files served by the API and are not yet
   backed by remote object storage or an authentication layer;
-- the browser interface can submit media and track video progress, but detailed
-  result visualisation and connection of the session-history table are not yet
-  implemented;
+- the browser interface can submit media, track video progress, and browse
+  stored sessions, but detailed result visualisation is not yet implemented;
 - we do not calculate physical crowd density.
 
 Until we add geographic calibration, we use the terms **count per spatial

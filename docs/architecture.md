@@ -410,8 +410,8 @@ below, while the outer image edges remain part of the final row and column.
   candidate passed the evaluation decision rule.
 - Repository tests cover transaction behavior with controlled test doubles, but
   live PostgreSQL coverage does not yet include every future API query path.
-- The API exposes paginated session history, but the frontend session-history
-  route is not connected to it yet and still presents an explicit empty state.
+- The frontend reads paginated session history from the API and links each row
+  to its result route. Detailed result visualisation is still pending.
 - The browser can stop waiting for a pending request, but the API does not yet
   provide server-side cancellation for accepted image or video work.
 - Generated assets are stored on the local filesystem and the API does not yet

@@ -71,6 +71,18 @@ function capabilitiesResponse(): Response {
   );
 }
 
+function sessionHistoryResponse(): Response {
+  return jsonResponse({
+    items: [],
+    pagination: {
+      page: 1,
+      page_size: 20,
+      total_items: 0,
+      total_pages: 0,
+    },
+  });
+}
+
 function jsonResponse(payload: unknown, status = 200): Response {
   return new Response(JSON.stringify(payload), {
     status,
@@ -89,6 +101,9 @@ describe("App", () => {
         }
         if (url.endsWith("/api/capabilities")) {
           return Promise.resolve(capabilitiesResponse());
+        }
+        if (url.includes("/api/analyses?")) {
+          return Promise.resolve(sessionHistoryResponse());
         }
         return Promise.resolve(healthResponse());
       }),
@@ -123,7 +138,7 @@ describe("App", () => {
       await screen.findByRole("heading", { name: "Session history" }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("table", { name: "Monitoring sessions" }),
+      await screen.findByRole("heading", { name: "No sessions available" }),
     ).toBeInTheDocument();
   });
 

@@ -5,9 +5,9 @@ crowd monitoring workflow. It calls the FastAPI backend over HTTP and does not
 import Python modules or access PostgreSQL directly.
 
 The application provides a responsive shell, image and video submission,
-persistent video-job progress, session-history and result routes, typed API
-requests, and consistent loading, empty, error, and unavailable states. Complete
-result visualisation is a separate application stage.
+persistent video-job progress, paginated session history, result routes, typed
+API requests, and consistent loading, empty, error, and unavailable states.
+Complete result visualisation is a separate application stage.
 
 ## Local Development
 
@@ -52,6 +52,14 @@ The **Stop waiting** action only aborts a pending browser request. It does not
 claim to cancel work that may already have reached the API. We check session
 history before resubmitting after an abort. Server-side job cancellation is not
 part of the current backend contract.
+
+## Browsing Sessions
+
+The **Sessions** page reads stored image and video analyses from
+`GET /api/analyses`. It shows the session name, database ID, original filename,
+source type, status, and start time. The API supplies pagination metadata, so we
+request one bounded page at a time rather than loading the complete history.
+Selecting the arrow at the end of a row opens that session's result route.
 
 ## Quality Checks
 
