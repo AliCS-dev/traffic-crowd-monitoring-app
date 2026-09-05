@@ -190,6 +190,7 @@ holding an HTTP request open.
 | `app/api/errors.py` | Converts API failures into one public JSON error format |
 | `app/api/routes/health.py` | Exposes process health and dependency readiness |
 | `app/api/routes/capabilities.py` | Exposes public upload formats and analysis-option bounds |
+| `app/api/routes/analysis_results.py` | Lists session history and returns complete stored results |
 | `app/api/routes/assets.py` | Serves generated images through controlled asset identifiers |
 | `app/api/routes/image_analyses.py` | Creates image analyses and returns complete stored results |
 | `app/api/routes/video_analyses.py` | Queues video analyses and returns persistent job progress |
@@ -409,8 +410,8 @@ below, while the outer image edges remain part of the final row and column.
   candidate passed the evaluation decision rule.
 - Repository tests cover transaction behavior with controlled test doubles, but
   live PostgreSQL coverage does not yet include every future API query path.
-- The API does not yet expose the paginated session-history query, so the
-  frontend session-history route currently presents an explicit empty state.
+- The API exposes paginated session history, but the frontend session-history
+  route is not connected to it yet and still presents an explicit empty state.
 - The browser can stop waiting for a pending request, but the API does not yet
   provide server-side cancellation for accepted image or video work.
 - Generated assets are stored on the local filesystem and the API does not yet

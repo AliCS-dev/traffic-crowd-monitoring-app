@@ -192,6 +192,7 @@ The first API routes are deliberately small:
 - `GET /api/health` confirms that the HTTP process can respond;
 - `GET /api/ready` checks PostgreSQL and verifies the configured checkpoint;
 - `GET /api/capabilities` returns public upload formats and option limits;
+- `GET /api/analyses` returns paginated monitoring-session history;
 - `POST /api/analyses/images` validates, processes, and stores one image;
 - `POST /api/analyses/videos` validates and queues one video;
 - `GET /api/analyses/videos/{session_id}` returns video-job progress;
@@ -630,7 +631,8 @@ is still under development:
 - generated result assets are local files served by the API and are not yet
   backed by remote object storage or an authentication layer;
 - the browser interface can submit media and track video progress, but detailed
-  result visualisation and session-history data loading are not yet implemented;
+  result visualisation and connection of the session-history table are not yet
+  implemented;
 - we do not calculate physical crowd density.
 
 Until we add geographic calibration, we use the terms **count per spatial

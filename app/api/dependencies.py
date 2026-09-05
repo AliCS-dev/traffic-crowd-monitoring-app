@@ -9,7 +9,10 @@ from app.api.settings import ApiSettings
 from app.config import BASE_DIR
 from app.crowd_analysis import load_dense_crowd_analysis_decision
 from app.database.connection import check_database_connection
-from app.database.monitoring_query_repository import get_monitoring_session
+from app.database.monitoring_query_repository import (
+    get_monitoring_session,
+    list_monitoring_sessions,
+)
 from app.database.video_job_repository import recover_interrupted_video_jobs
 from app.model_profile import (
     load_runtime_model_profile,
@@ -37,6 +40,7 @@ class ApplicationServices:
         image_analysis_factory: Callable[[Any], Any] | None = None,
         video_analysis_factory: Callable[[Callable], Any] | None = None,
         output_asset_factory: Callable[[], Any] | None = None,
+        monitoring_session_lister: Callable[..., Any] = list_monitoring_sessions,
         monitoring_session_reader: Callable[[int], Any] = get_monitoring_session,
         startup_function: Callable[[], int] | None = None,
     ) -> None:
@@ -46,6 +50,7 @@ class ApplicationServices:
         self._image_analysis_factory = image_analysis_factory
         self._video_analysis_factory = video_analysis_factory
         self._output_asset_factory = output_asset_factory
+        self._monitoring_session_lister = monitoring_session_lister
         self._monitoring_session_reader = monitoring_session_reader
         self._startup_function = startup_function
         self._detector: Any | None = None
@@ -101,6 +106,9 @@ class ApplicationServices:
 
     def get_monitoring_session(self, session_id: int) -> Any:
         return self._monitoring_session_reader(session_id)
+
+    def list_monitoring_sessions(self, *, page: int, page_size: int) -> Any:
+        return self._monitoring_session_lister(page=page, page_size=page_size)
 
     def get_video_analysis_service(self) -> Any:
         if self._video_analysis_factory is None:

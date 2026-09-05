@@ -104,6 +104,8 @@ def test_list_sessions_returns_deterministic_page_metadata():
         {
             "id": 3,
             "session_name": "newer id",
+            "source_type": "video",
+            "original_filename": "junction.mp4",
             "status": "completed",
             "started_at": NOW,
             "completed_at": NOW,
@@ -111,6 +113,8 @@ def test_list_sessions_returns_deterministic_page_metadata():
         {
             "id": 2,
             "session_name": "older id",
+            "source_type": "image",
+            "original_filename": "junction.jpg",
             "status": "completed",
             "started_at": NOW,
             "completed_at": NOW,
@@ -125,13 +129,21 @@ def test_list_sessions_returns_deterministic_page_metadata():
     )
 
     assert [session.id for session in result.items] == [3, 2]
+    assert [session.source_type for session in result.items] == ["video", "image"]
+    assert [session.original_filename for session in result.items] == [
+        "junction.mp4",
+        "junction.jpg",
+    ]
     assert result.pagination.model_dump() == {
         "page": 2,
         "page_size": 2,
         "total_items": 5,
         "total_pages": 3,
     }
-    assert "ORDER BY started_at DESC, id DESC" in cursor.execute_calls[1][0]
+    assert (
+        "ORDER BY sessions.started_at DESC, sessions.id DESC"
+        in cursor.execute_calls[1][0]
+    )
     assert cursor.execute_calls[1][1] == (2, 2)
 
 

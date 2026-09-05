@@ -50,9 +50,23 @@ def list_monitoring_sessions(
             total_items = cursor.fetchone()["total_items"]
             cursor.execute(
                 """
-                SELECT id, session_name, status, started_at, completed_at
-                FROM monitoring_sessions
-                ORDER BY started_at DESC, id DESC
+                SELECT
+                    sessions.id,
+                    sessions.session_name,
+                    source.source_type,
+                    source.original_filename,
+                    sessions.status,
+                    sessions.started_at,
+                    sessions.completed_at
+                FROM monitoring_sessions AS sessions
+                LEFT JOIN LATERAL (
+                    SELECT source_type, original_filename
+                    FROM input_sources
+                    WHERE session_id = sessions.id
+                    ORDER BY id
+                    LIMIT 1
+                ) AS source ON TRUE
+                ORDER BY sessions.started_at DESC, sessions.id DESC
                 LIMIT %s OFFSET %s;
                 """,
                 (page_size, offset),
