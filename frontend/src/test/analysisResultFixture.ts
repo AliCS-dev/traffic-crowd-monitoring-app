@@ -1,5 +1,48 @@
 import type { MonitoringSessionResult } from "../api/analysisResults.ts";
 
+export function gridResultFixture(): MonitoringSessionResult {
+  const result = analysisResultFixture();
+  const frame = result.frames[0];
+  const carSummary = frame.frame_summaries[0];
+  const personSummary = {
+    ...carSummary,
+    id: 42,
+    object_class: "person",
+    object_count: 2,
+  };
+  frame.frame_summaries.push(personSummary);
+  frame.detections.push(
+    ...[31, 32].map((id) => ({
+      ...frame.detections[0],
+      id,
+      object_class: "person",
+      bounds: { x_min: 700 + id, y_min: 100, x_max: 710 + id, y_max: 120 },
+    })),
+  );
+  frame.grid_cells = Array.from({ length: 4 }, (_, index) => {
+    const row = Math.floor(index / 2);
+    const column = index % 2;
+    return {
+      id: 50 + index,
+      row_index: row,
+      column_index: column,
+      bounds: {
+        x_min: column * 640,
+        y_min: row * 360,
+        x_max: (column + 1) * 640,
+        y_max: (row + 1) * 360,
+      },
+      summaries:
+        index === 0
+          ? [{ ...carSummary, id: 51 }]
+          : index === 1
+            ? [{ ...personSummary, id: 52 }]
+            : [],
+    };
+  });
+  return result;
+}
+
 export function videoResultFixture(id = 42): MonitoringSessionResult {
   const result = analysisResultFixture(id);
   result.sources[0].source_type = "video";

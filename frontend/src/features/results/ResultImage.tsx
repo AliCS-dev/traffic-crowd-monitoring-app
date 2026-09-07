@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import {
   Box,
   CircularProgress,
@@ -16,9 +16,13 @@ import { StatePanel } from "../../components/StatePanel.tsx";
 export function ResultImage({
   asset,
   filename,
+  overlay,
+  controls,
 }: {
   asset: VisualAssetReference | null;
   filename: string;
+  overlay?: ReactNode;
+  controls?: ReactNode;
 }) {
   const url = asset && apiClient.resolveOutputAssetUrl(asset);
   return asset && url ? (
@@ -27,6 +31,8 @@ export function ResultImage({
       asset={asset}
       filename={filename}
       url={url}
+      overlay={overlay}
+      controls={controls}
     />
   ) : (
     <StatePanel
@@ -41,10 +47,14 @@ function AvailableResultImage({
   asset,
   filename,
   url,
+  overlay,
+  controls,
 }: {
   asset: VisualAssetReference;
   filename: string;
   url: string;
+  overlay?: ReactNode;
+  controls?: ReactNode;
 }) {
   const [state, setState] = useState<"loading" | "loaded" | "failed">(
     "loading",
@@ -60,6 +70,13 @@ function AvailableResultImage({
   }
   return (
     <Box component="figure" sx={{ m: 0, minWidth: 0 }}>
+      {controls && (
+        <Box
+          sx={{ mb: 1, visibility: state === "loaded" ? "visible" : "hidden" }}
+        >
+          {controls}
+        </Box>
+      )}
       <Box
         sx={{
           position: "relative",
@@ -96,6 +113,7 @@ function AvailableResultImage({
             visibility: state === "loaded" ? "visible" : "hidden",
           }}
         />
+        {state === "loaded" && overlay}
       </Box>
       <Stack
         component="figcaption"

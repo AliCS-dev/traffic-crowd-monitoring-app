@@ -94,9 +94,33 @@ when it still exists. Partial sessions remain labelled incomplete, and refreshin
 retrieves any newly stored results. We do not poll this historical result view.
 The model profile and dense-crowd decision below the frames describe the session.
 
-Interactive grids, class filters, and the experimental alert view are the
-remaining dashboard work. Mixed-source sessions are identified as unsupported
+Class filters and the experimental alert view are the remaining dashboard work.
+Mixed-source sessions are identified as unsupported
 rather than combined into a single timeline.
+
+### Inspecting Stored Grids
+
+When a frame includes a stored grid, we display its cell boundaries over the
+saved image. The overlay follows the stored pixel bounds, including fractional
+coordinates, and scales with the uncropped image. A visibility toggle leaves the
+saved image and its detection boxes unchanged.
+
+Cell selection works on the image, with keyboard-focusable cell buttons, or
+through the row/column selector. We display rows and columns starting at one;
+the stored indices still start at zero. The selected-cell table reads only that
+cell's `summaries`. Whole-frame counts and detection records do not change when
+we select a cell, and the browser does not repeat the backend's counting logic.
+Changing video frames clears cell selection.
+
+Missing images do not prevent selection through the cell selector. Missing or
+inconsistent coordinate metadata disables the spatial overlay without hiding
+stored counts. A session without grid records has an explicit no-grid state.
+Empty cell summaries are reported as having no recorded class counts, rather
+than filled with invented values. The backend normally stores only positive
+cell counts, but the display also preserves an explicitly stored zero.
+
+These are counts within image-space regions, not equally sized ground areas or
+people per square metre. Dense-crowd estimates remain a separate result.
 
 ## Quality Checks
 

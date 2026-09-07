@@ -49,6 +49,7 @@ images and sampled video frames.
 | Browser session history | Implemented with API pagination and result links |
 | Browser image results | Implemented with saved images, counts, confidence, and model limitations |
 | Browser video results | Implemented with timestamp-ordered sampled frames and per-frame counts |
+| Browser grid inspection | Implemented with aligned cell overlays and separate selected-cell counts |
 
 The current detector gives us a measured starting point, but it is not reliable
 enough for final conclusions about aerial traffic or crowds. We compared three
@@ -318,12 +319,17 @@ Video results have a sampled-frame selector and previous/next controls. Each
 sample retains its source frame number, timestamp, image, counts, and detections;
 we do not add these counts together as unique objects across a video.
 
+Stored grids appear over the result image without changing the saved JPEG. We
+can select a cell on the image or from the cell selector, and hide the overlay
+when inspecting detection boxes. Selected-cell counts remain separate from the
+whole-frame summaries and detection records. The cells use image pixels, not
+calibrated ground areas; these counts do not measure physical crowd density.
+
 Processing completion and model quality are shown separately. The recorded
 detector decision appears beside the image results, while unsupported
 dense-crowd counting is shown without a count. Missing historical model or crowd
-records are described as unavailable. Interactive grid inspection,
-class filtering, and experimental alert presentation remain the
-next dashboard steps.
+records are described as unavailable. Class filtering and experimental alert
+presentation remain the next dashboard steps.
 
 Stopping an image upload in the browser aborts the local request. It is not a
 server-side cancellation guarantee: if the API already accepted the request,
@@ -378,7 +384,7 @@ four columns:
 
 The terminal summary reports only occupied cells. The grid service itself
 returns every cell, including empty cells, in stable row-major order so that a
-later interface can render a complete grid without rebuilding it.
+browser can render a complete grid without rebuilding it.
 
 We can store the same grid together with the image result by combining the grid
 and database options:
@@ -647,8 +653,8 @@ is still under development:
 - generated result assets are local files served by the API and are not yet
   backed by remote object storage or an authentication layer;
 - the browser interface can submit media, track video progress, browse stored
-  sessions, and inspect images and sampled video frames; interactive grids,
-  class filtering, and alert presentation are not yet implemented in the browser;
+  sessions, and inspect images, sampled video frames, and stored grids;
+  class filtering and alert presentation are not yet implemented in the browser;
 - we do not calculate physical crowd density.
 
 Until we add geographic calibration, we use the terms **count per spatial

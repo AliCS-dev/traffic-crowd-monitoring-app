@@ -300,7 +300,7 @@ describe("ResultsPage", () => {
     expect(screen.getByText("21-21 of 21 detections")).toBeInTheDocument();
     expect(
       within(
-        screen.getByRole("table", { name: "Detection records" }),
+        screen.getByRole("table", { name: "Whole-frame detection records" }),
       ).getByText("120"),
     ).toBeInTheDocument();
     expect(

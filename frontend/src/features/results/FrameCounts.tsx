@@ -1,14 +1,6 @@
-import {
-  Box,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import type { ProcessedFrameResult } from "../../api/analysisResults.ts";
-import { formatLabel } from "./resultFormatting.ts";
+import { ObjectCountsTable } from "./ObjectCountsTable.tsx";
 
 export function FrameCounts({
   frame,
@@ -32,28 +24,10 @@ export function FrameCounts({
         {frame.detections.length === 1 ? "detection" : "detections"}
       </Typography>
       {frame.frame_summaries.length ? (
-        <Table
-          size="small"
-          aria-label={`Whole-${scope} object counts`}
-          sx={{ tableLayout: "fixed" }}
-        >
-          <TableHead>
-            <TableRow>
-              <TableCell>Class</TableCell>
-              <TableCell align="right">Count</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {frame.frame_summaries.map((summary) => (
-              <TableRow key={summary.id}>
-                <TableCell sx={{ overflowWrap: "anywhere" }}>
-                  {formatLabel(summary.object_class)}
-                </TableCell>
-                <TableCell align="right">{summary.object_count}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <ObjectCountsTable
+          summaries={frame.frame_summaries}
+          label={`Whole-${scope} object counts`}
+        />
       ) : (
         <Typography color="text.secondary">
           No whole-{scope} count summaries were stored.

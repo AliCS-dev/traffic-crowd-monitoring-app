@@ -336,6 +336,18 @@ detection pagination, while refreshing preserves selection if the frame remains
 available. Counts belong to the selected frame, not a video-wide unique-object
 total. Mixed-source sessions are not combined into a timeline.
 
+Grid inspection uses the same frame component for images and video samples.
+Cell bounds become percentage positions relative to the processed-image
+dimensions, so they remain aligned as the image resizes. We require matching
+image and coordinate-space metadata and bounds inside the frame before drawing
+the overlay. Cell buttons are shown only after the image loads; the separate
+cell selector also works when no image is available.
+
+We keep the selected cell ID and overlay visibility in the frame component.
+Switching frames resets this state. Selected-cell summaries and whole-frame
+summaries share a table component but remain separate datasets. The browser
+neither recounts detections nor combines cell counts with frame counts.
+
 ### Starting with a command-line interface
 
 We began with a command-line interface because it let us test the complete
@@ -434,9 +446,9 @@ below, while the outer image edges remain part of the final row and column.
   candidate passed the evaluation decision rule.
 - Repository tests cover transaction behavior with controlled test doubles, but
   live PostgreSQL coverage does not yet include every future API query path.
-- The frontend reads paginated session history and displays images and sampled video frames.
-  Interactive grids, class filters, and the experimental
-  alert view remain pending.
+- The frontend reads paginated session history and displays images, sampled video
+  frames, and interactive stored grids. Class filters and the experimental alert
+  view remain pending.
 - The browser can stop waiting for a pending request, but the API does not yet
   provide server-side cancellation for accepted image or video work.
 - Generated assets are stored on the local filesystem and the API does not yet

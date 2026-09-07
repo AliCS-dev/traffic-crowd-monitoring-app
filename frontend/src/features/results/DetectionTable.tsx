@@ -36,13 +36,13 @@ export function DetectionTable({
         variant="h2"
         sx={{ mb: 2 }}
       >
-        Detection records
+        Whole-frame detection records
       </Typography>
       {detections.length ? (
         <>
           <Table
             size="small"
-            aria-label="Detection records"
+            aria-label="Whole-frame detection records"
             sx={{ tableLayout: "fixed" }}
           >
             <TableHead>
