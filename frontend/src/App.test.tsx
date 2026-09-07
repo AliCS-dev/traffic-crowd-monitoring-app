@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import App from "./App.tsx";
+import { analysisResultFixture } from "./test/analysisResultFixture.ts";
 import { renderApplication } from "./test/render.tsx";
 
 function healthResponse(): Response {
@@ -14,6 +15,13 @@ function healthResponse(): Response {
     }),
     { headers: { "content-type": "application/json" } },
   );
+}
+
+function analysisOrHealthResponse(url: string): Response {
+  const match = /\/api\/analyses\/(\d+)$/.exec(url);
+  return match
+    ? jsonResponse(analysisResultFixture(Number(match[1])))
+    : healthResponse();
 }
 
 function readinessResponse(): Response {
@@ -105,7 +113,7 @@ describe("App", () => {
         if (url.includes("/api/analyses?")) {
           return Promise.resolve(sessionHistoryResponse());
         }
-        return Promise.resolve(healthResponse());
+        return Promise.resolve(analysisOrHealthResponse(url));
       }),
     );
   });
@@ -192,7 +200,7 @@ describe("App", () => {
           ),
         );
       }
-      return Promise.resolve(healthResponse());
+      return Promise.resolve(analysisOrHealthResponse(url));
     });
     renderApplication(<App />, "/workspace");
 
@@ -259,7 +267,7 @@ describe("App", () => {
           }),
         );
       }
-      return Promise.resolve(healthResponse());
+      return Promise.resolve(analysisOrHealthResponse(url));
     });
     renderApplication(<App />, "/workspace");
 

@@ -221,6 +221,8 @@ holding an HTTP request open.
 | `frontend/src/api/` | Validates the API base URL and contains typed HTTP requests and response contracts |
 | `frontend/src/components/` | Provides the responsive shell and shared status, dialog, and state patterns |
 | `frontend/src/features/analysis/` | Owns media validation, submission, progress polling, and recovery state |
+| `frontend/src/features/sessions/` | Reads and presents paginated monitoring-session history |
+| `frontend/src/features/results/` | Reads stored image results and presents media, counts, confidence, and model decisions |
 | `frontend/src/pages/` | Defines the workspace, session-history, result, and not-found routes |
 | `frontend/src/theme.ts` | Defines shared colours, typography, spacing, and component defaults |
 | `scripts/` | Contains explicit database setup and diagnostic commands |
@@ -311,6 +313,20 @@ packages and gives us a clear container boundary for later deployment. We chose
 Material UI for consistent accessible controls, React Router for route state,
 and React Query for server state rather than creating local replacements for
 those established concerns.
+
+Image result pages read `GET /api/analyses/{session_id}` with a query key tied to
+the session ID. Route changes reset the lookup and result state. Missing sessions
+and failed requests have separate recovery states. The frontend uses the saved
+model profile, not current runtime configuration, to describe a result's
+evaluation status and confidence threshold.
+
+The saved JPEG already contains detection boxes. We display that asset at its
+original aspect ratio, with no duplicate browser overlay. The client accepts
+only the matching public `/api/assets/{asset_id}` reference and resolves it
+against the configured API base URL. A missing image does not hide stored counts.
+Whole-frame summaries and detection records are displayed independently of
+grid-cell summaries. Dense-crowd decisions remain a separate result with an
+explicit unsupported or unrecorded state.
 
 ### Starting with a command-line interface
 
@@ -410,8 +426,9 @@ below, while the outer image edges remain part of the final row and column.
   candidate passed the evaluation decision rule.
 - Repository tests cover transaction behavior with controlled test doubles, but
   live PostgreSQL coverage does not yet include every future API query path.
-- The frontend reads paginated session history from the API and links each row
-  to its result route. Detailed result visualisation is still pending.
+- The frontend reads paginated session history and displays stored image results.
+  Video-frame navigation, interactive grids, class filters, and the experimental
+  alert view remain pending.
 - The browser can stop waiting for a pending request, but the API does not yet
   provide server-side cancellation for accepted image or video work.
 - Generated assets are stored on the local filesystem and the API does not yet

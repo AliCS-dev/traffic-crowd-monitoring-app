@@ -46,6 +46,8 @@ images and sampled video frames.
 | Threshold-based alerts | Implemented as experimental count notifications |
 | Browser frontend foundation | Implemented with responsive routes and live service status |
 | Browser media submission | Implemented for images and asynchronous videos |
+| Browser session history | Implemented with API pagination and result links |
+| Browser image results | Implemented with saved images, counts, confidence, and model limitations |
 
 The current detector gives us a measured starting point, but it is not reliable
 enough for final conclusions about aerial traffic or crowds. We compared three
@@ -307,7 +309,17 @@ video-job progress, paginated session history, the result view, and live health
 and readiness states. The form reads supported formats and limits from the API,
 so browser validation stays aligned with the configured backend. A completed
 submission opens its result route automatically, and each history row links to
-the same route. Detailed result visualisation is the next frontend stage.
+the same route. Image results show the saved detection image, whole-image class
+counts, confidence scores, and the model profile recorded for that session.
+The browser preserves the image proportions and uses the API's public asset
+reference. Counts remain readable when an older result has no accessible image.
+
+Processing completion and model quality are shown separately. The recorded
+detector decision appears beside the image results, while unsupported
+dense-crowd counting is shown without a count. Missing historical model or crowd
+records are described as unavailable. Interactive grid inspection, video-frame
+navigation, class filtering, and experimental alert presentation remain the
+next dashboard steps.
 
 Stopping an image upload in the browser aborts the local request. It is not a
 server-side cancellation guarantee: if the API already accepted the request,
@@ -630,8 +642,9 @@ is still under development:
   jobs are marked failed at the next startup and must be submitted again;
 - generated result assets are local files served by the API and are not yet
   backed by remote object storage or an authentication layer;
-- the browser interface can submit media, track video progress, and browse
-  stored sessions, but detailed result visualisation is not yet implemented;
+- the browser interface can submit media, track video progress, browse stored
+  sessions, and inspect image results; video-frame navigation, interactive grids,
+  class filtering, and alert presentation are not yet implemented in the browser;
 - we do not calculate physical crowd density.
 
 Until we add geographic calibration, we use the terms **count per spatial

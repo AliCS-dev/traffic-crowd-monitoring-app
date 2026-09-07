@@ -7,7 +7,8 @@ import Python modules or access PostgreSQL directly.
 The application provides a responsive shell, image and video submission,
 persistent video-job progress, paginated session history, result routes, typed
 API requests, and consistent loading, empty, error, and unavailable states.
-Complete result visualisation is a separate application stage.
+Image results include the saved visual output, object counts, confidence scores,
+and the model decisions recorded for the session.
 
 ## Local Development
 
@@ -60,6 +61,29 @@ The **Sessions** page reads stored image and video analyses from
 source type, status, and start time. The API supplies pagination metadata, so we
 request one bounded page at a time rather than loading the complete history.
 Selecting the arrow at the end of a row opens that session's result route.
+
+## Reading Image Results
+
+At `/analyses/<session-id>`, we can inspect a stored image analysis and its
+original filename, processing status, and timestamps. The image already contains
+the saved detection boxes, so the browser preserves its proportions without
+drawing duplicate boxes. An available image can be opened at full resolution.
+Only asset references matching the backend's public asset route become links.
+
+Whole-image counts come from `frame_summaries`; they do not include grid-cell
+summaries. Detection records show their stored class and confidence, with
+pagination for longer lists. Missing summaries, missing images, and missing
+frames have separate states so we do not mistake absent data for zero objects.
+
+We show the detector's recorded quality-gate decision near the image and the
+saved model profile below it. These describe that particular run rather than
+the application's current default model. Dense-crowd results remain separate
+from detector-based person counts. An unsupported crowd decision has no numeric
+count, and older sessions without a decision are identified as unrecorded.
+
+Video and multiple-frame sessions currently show their session metadata and
+frame availability. Frame navigation, interactive grids, class filters, and the
+experimental alert view are the remaining dashboard work.
 
 ## Quality Checks
 

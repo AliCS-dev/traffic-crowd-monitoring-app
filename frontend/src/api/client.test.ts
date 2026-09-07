@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 
 import { ApiClient, ApiRequestError } from "./client.ts";
+import { analysisResultFixture } from "../test/analysisResultFixture.ts";
 
 function jsonResponse(payload: unknown, status = 200): Response {
   return new Response(JSON.stringify(payload), {
@@ -10,6 +11,40 @@ function jsonResponse(payload: unknown, status = 200): Response {
 }
 
 describe("ApiClient", () => {
+  it("reads a stored analysis and forwards cancellation", async () => {
+    const result = analysisResultFixture();
+    const fetchFunction = vi.fn().mockResolvedValue(jsonResponse(result));
+    const client = new ApiClient("http://localhost:8000", fetchFunction);
+    const controller = new AbortController();
+    await expect(client.getAnalysis(42, controller.signal)).resolves.toEqual(
+      result,
+    );
+    expect(fetchFunction).toHaveBeenCalledWith(
+      "http://localhost:8000/api/analyses/42",
+      expect.objectContaining({ signal: controller.signal }),
+    );
+  });
+
+  it("resolves asset links through the configured API including deployment prefixes", () => {
+    const asset = analysisResultFixture().frames[0].visual_asset!;
+    const client = new ApiClient("https://monitor.example/backend");
+    expect(client.resolveOutputAssetUrl(asset)).toBe(
+      `https://monitor.example/backend${asset.url}`,
+    );
+  });
+
+  it.each([
+    "https://external.example/image.jpg",
+    "//external.example/image.jpg",
+    "javascript:alert(1)",
+    "/api/assets/../private",
+    "/api/assets/not-the-stored-id",
+  ])("rejects an unexpected output asset URL: %s", (url) => {
+    const asset = analysisResultFixture().frames[0].visual_asset!;
+    const client = new ApiClient("http://localhost:8000");
+    expect(client.resolveOutputAssetUrl({ ...asset, url })).toBeNull();
+  });
+
   it("reads the typed health endpoint", async () => {
     const fetchFunction = vi.fn().mockResolvedValue(
       jsonResponse({
