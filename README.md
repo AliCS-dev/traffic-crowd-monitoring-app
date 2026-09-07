@@ -48,6 +48,7 @@ images and sampled video frames.
 | Browser media submission | Implemented for images and asynchronous videos |
 | Browser session history | Implemented with API pagination and result links |
 | Browser image results | Implemented with saved images, counts, confidence, and model limitations |
+| Browser video results | Implemented with timestamp-ordered sampled frames and per-frame counts |
 
 The current detector gives us a measured starting point, but it is not reliable
 enough for final conclusions about aerial traffic or crowds. We compared three
@@ -313,12 +314,15 @@ the same route. Image results show the saved detection image, whole-image class
 counts, confidence scores, and the model profile recorded for that session.
 The browser preserves the image proportions and uses the API's public asset
 reference. Counts remain readable when an older result has no accessible image.
+Video results have a sampled-frame selector and previous/next controls. Each
+sample retains its source frame number, timestamp, image, counts, and detections;
+we do not add these counts together as unique objects across a video.
 
 Processing completion and model quality are shown separately. The recorded
 detector decision appears beside the image results, while unsupported
 dense-crowd counting is shown without a count. Missing historical model or crowd
-records are described as unavailable. Interactive grid inspection, video-frame
-navigation, class filtering, and experimental alert presentation remain the
+records are described as unavailable. Interactive grid inspection,
+class filtering, and experimental alert presentation remain the
 next dashboard steps.
 
 Stopping an image upload in the browser aborts the local request. It is not a
@@ -643,7 +647,7 @@ is still under development:
 - generated result assets are local files served by the API and are not yet
   backed by remote object storage or an authentication layer;
 - the browser interface can submit media, track video progress, browse stored
-  sessions, and inspect image results; video-frame navigation, interactive grids,
+  sessions, and inspect images and sampled video frames; interactive grids,
   class filtering, and alert presentation are not yet implemented in the browser;
 - we do not calculate physical crowd density.
 

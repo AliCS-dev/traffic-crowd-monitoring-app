@@ -10,15 +10,22 @@ import {
 import type { ProcessedFrameResult } from "../../api/analysisResults.ts";
 import { formatLabel } from "./resultFormatting.ts";
 
-export function FrameCounts({ frame }: { frame: ProcessedFrameResult }) {
+export function FrameCounts({
+  frame,
+  video = false,
+}: {
+  frame: ProcessedFrameResult;
+  video?: boolean;
+}) {
+  const scope = video ? "frame" : "image";
   return (
     <Box
       component="section"
-      aria-labelledby="image-counts-title"
+      aria-labelledby="frame-counts-title"
       sx={{ minWidth: 0 }}
     >
-      <Typography component="h2" id="image-counts-title" variant="h2">
-        Whole-image object counts
+      <Typography component="h2" id="frame-counts-title" variant="h2">
+        Whole-{scope} object counts
       </Typography>
       <Typography sx={{ mt: 1, mb: 2 }} color="text.secondary" variant="body2">
         {frame.detections.length} stored{" "}
@@ -27,7 +34,7 @@ export function FrameCounts({ frame }: { frame: ProcessedFrameResult }) {
       {frame.frame_summaries.length ? (
         <Table
           size="small"
-          aria-label="Whole-image object counts"
+          aria-label={`Whole-${scope} object counts`}
           sx={{ tableLayout: "fixed" }}
         >
           <TableHead>
@@ -49,7 +56,7 @@ export function FrameCounts({ frame }: { frame: ProcessedFrameResult }) {
         </Table>
       ) : (
         <Typography color="text.secondary">
-          No whole-image count summaries were stored.
+          No whole-{scope} count summaries were stored.
         </Typography>
       )}
       <Typography color="text.secondary" variant="body2" sx={{ mt: 2 }}>

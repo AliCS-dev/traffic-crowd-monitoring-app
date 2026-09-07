@@ -1,5 +1,45 @@
 import type { MonitoringSessionResult } from "../api/analysisResults.ts";
 
+export function videoResultFixture(id = 42): MonitoringSessionResult {
+  const result = analysisResultFixture(id);
+  result.sources[0].source_type = "video";
+  result.sources[0].original_filename = "junction.mp4";
+  const first = result.frames[0];
+  first.frame_timestamp_seconds = 0;
+  const second = structuredClone(first);
+  second.id = 21;
+  second.frame_number = 60;
+  second.frame_timestamp_seconds = 2.5;
+  second.output_asset_id = null;
+  second.visual_asset = null;
+  second.detections = Array.from({ length: 21 }, (_, index) => ({
+    ...first.detections[0],
+    id: 100 + index,
+    object_class: "truck",
+  }));
+  second.frame_summaries = [
+    {
+      ...first.frame_summaries[0],
+      id: 41,
+      object_class: "truck",
+      object_count: 21,
+    },
+  ];
+  second.grid_cells = [];
+  const third = structuredClone(first);
+  third.id = 22;
+  third.frame_number = 120;
+  third.frame_timestamp_seconds = 5;
+  third.output_asset_id = "12345678-1234-5678-1234-567812345679";
+  third.visual_asset!.asset_id = third.output_asset_id;
+  third.visual_asset!.url = `/api/assets/${third.output_asset_id}`;
+  third.detections = [];
+  third.frame_summaries = [];
+  third.grid_cells = [];
+  result.frames = [third, first, second];
+  return result;
+}
+
 export function analysisResultFixture(id = 42): MonitoringSessionResult {
   const timestamp = "2026-09-07T09:30:00Z";
   const assetId = "12345678-1234-5678-1234-567812345678";

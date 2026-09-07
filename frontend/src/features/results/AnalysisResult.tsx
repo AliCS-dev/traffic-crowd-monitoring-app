@@ -15,14 +15,13 @@ import { Link } from "react-router-dom";
 import { apiClient, ApiRequestError } from "../../api/client.ts";
 import type { MonitoringSessionResult } from "../../api/analysisResults.ts";
 import { StatePanel } from "../../components/StatePanel.tsx";
-import { DetectionTable } from "./DetectionTable.tsx";
-import { FrameCounts } from "./FrameCounts.tsx";
+import { FrameResult } from "./FrameResult.tsx";
+import { VideoResult } from "./VideoResult.tsx";
 import {
   CrowdResult,
   DetectorQuality,
   ModelProvenance,
 } from "./ModelContext.tsx";
-import { ResultImage } from "./ResultImage.tsx";
 import { formatLabel, formatTimestamp } from "./resultFormatting.ts";
 
 export function AnalysisResult({ sessionId }: { sessionId: number }) {
@@ -175,33 +174,35 @@ function ResultContent({ result }: { result: MonitoringSessionResult }) {
     result.sources[0].source_type === "image" &&
     result.frames.length === 1 &&
     frame.input_source_id === result.sources[0].id;
+  const singleVideo =
+    result.sources.length === 1 &&
+    result.sources[0].source_type === "video" &&
+    result.frames.length > 0 &&
+    result.frames.every(
+      (sample) => sample.input_source_id === result.sources[0].id,
+    );
   return (
     <Stack spacing={4}>
       {singleImage ? (
         <Box component="section" aria-label="Image result">
           <DetectorQuality profile={result.model_profile} />
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: {
-                xs: "minmax(0, 1fr)",
-                lg: "minmax(0, 2fr) minmax(260px, 1fr)",
-              },
-              gap: 3,
-              alignItems: "start",
-            }}
-          >
-            <ResultImage
-              asset={frame.visual_asset}
-              filename={
-                result.sources[0].original_filename || `analysis ${result.id}`
-              }
-            />
-            <FrameCounts frame={frame} />
-          </Box>
-          <Box sx={{ mt: 4 }}>
-            <DetectionTable key={frame.id} detections={frame.detections} />
-          </Box>
+          <FrameResult
+            key={frame.id}
+            frame={frame}
+            filename={
+              result.sources[0].original_filename || `analysis ${result.id}`
+            }
+          />
+        </Box>
+      ) : singleVideo ? (
+        <Box component="section" aria-label="Video result">
+          <DetectorQuality profile={result.model_profile} />
+          <VideoResult
+            frames={result.frames}
+            filename={
+              result.sources[0].original_filename || `analysis ${result.id}`
+            }
+          />
         </Box>
       ) : (
         <StatePanel
@@ -214,7 +215,7 @@ function ResultContent({ result }: { result: MonitoringSessionResult }) {
           description={
             !frame
               ? "This session has no stored processed frames."
-              : `${result.frames.length} processed frames are stored. Detailed browsing of video and multiple-frame sessions is not available yet.`
+              : `${result.frames.length} processed frames are stored. This view requires one matching image or video source.`
           }
         />
       )}

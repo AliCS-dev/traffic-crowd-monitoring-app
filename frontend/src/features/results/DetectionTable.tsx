@@ -87,7 +87,7 @@ export function DetectionTable({
         </>
       ) : (
         <Typography color="text.secondary">
-          No detections were stored for this image.
+          No detections were stored for this frame.
         </Typography>
       )}
     </Box>

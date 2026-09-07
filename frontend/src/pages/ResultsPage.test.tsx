@@ -3,7 +3,10 @@ import userEvent from "@testing-library/user-event";
 import { Link, Route, Routes } from "react-router-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { MonitoringSessionResult } from "../api/analysisResults.ts";
-import { analysisResultFixture } from "../test/analysisResultFixture.ts";
+import {
+  analysisResultFixture,
+  videoResultFixture,
+} from "../test/analysisResultFixture.ts";
 import { renderApplication } from "../test/render.tsx";
 import { ResultsPage } from "./ResultsPage.tsx";
 
@@ -102,7 +105,7 @@ describe("ResultsPage", () => {
       screen.getByText("No whole-image count summaries were stored."),
     ).toBeInTheDocument();
     expect(
-      screen.getByText("No detections were stored for this image."),
+      screen.getByText("No detections were stored for this frame."),
     ).toBeInTheDocument();
     expect(
       screen.getByText(
@@ -126,16 +129,155 @@ describe("ResultsPage", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("identifies video sessions without representing one sample as the complete video", async () => {
-    const result = analysisResultFixture();
-    result.sources[0].source_type = "video";
+  it("browses video samples in time order with matching images and counts", async () => {
+    const user = userEvent.setup();
+    mockResult(videoResultFixture());
+    renderResults();
+    await screen.findByText("Sample 1 of 3 | Source frame 0 | 00:00:00.000");
+    const previous = screen.getByRole("button", {
+      name: "Previous sampled frame",
+    });
+    const next = screen.getByRole("button", { name: "Next sampled frame" });
+    expect(previous).toBeDisabled();
+    expect(
+      screen.getByAltText("Detection result for junction.mp4, frame 0"),
+    ).toBeInTheDocument();
+    expect(
+      within(
+        screen.getByRole("table", { name: "Whole-frame object counts" }),
+      ).getByText("1"),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole("table", { name: "Whole-image object counts" }),
+    ).not.toBeInTheDocument();
+    await user.click(next);
+    expect(
+      screen.getByText("Sample 2 of 3 | Source frame 60 | 00:00:02.500"),
+    ).toBeInTheDocument();
+    expect(screen.getByText("Result image unavailable")).toBeInTheDocument();
+    expect(
+      screen.queryByAltText("Detection result for junction.mp4, frame 0"),
+    ).not.toBeInTheDocument();
+    const counts = screen.getByRole("table", {
+      name: "Whole-frame object counts",
+    });
+    expect(within(counts).getByText("Truck")).toBeInTheDocument();
+    expect(within(counts).getByText("21")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Go to page 2" }));
+    expect(screen.getByText("21-21 of 21 detections")).toBeInTheDocument();
+    await user.click(next);
+    expect(next).toBeDisabled();
+    expect(
+      screen.getByAltText("Detection result for junction.mp4, frame 120"),
+    ).toHaveAttribute("src", expect.stringContaining("567812345679"));
+    expect(
+      screen.getByText("No whole-frame count summaries were stored."),
+    ).toBeInTheDocument();
+    await user.click(previous);
+    expect(screen.getByText("1-20 of 21 detections")).toBeInTheDocument();
+    await user.selectOptions(
+      screen.getByRole("combobox", { name: "Sampled frame" }),
+      "20",
+    );
+    expect(previous).toBeDisabled();
+    expect(
+      screen.getByAltText("Detection result for junction.mp4, frame 0"),
+    ).toBeInTheDocument();
+  });
+
+  it("identifies a partial single-frame video and its missing timestamp", async () => {
+    const result = videoResultFixture();
+    result.status = "processing";
+    result.completed_at = null;
+    result.frames = [result.frames[1]];
+    result.frames[0].frame_timestamp_seconds = null;
+    mockResult(result);
+    renderResults();
+    await screen.findByText(
+      "Sample 1 of 1 | Source frame 0 | Time unavailable",
+    );
+    expect(
+      screen.getByText(/Stored results may be partial/),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Previous sampled frame" }),
+    ).toBeDisabled();
+    expect(
+      screen.getByRole("button", { name: "Next sampled frame" }),
+    ).toBeDisabled();
+    expect(
+      screen.getByText(/not unique objects across the video/),
+    ).toBeInTheDocument();
+  });
+
+  it("keeps the selected frame by ID when a refresh adds an earlier sample", async () => {
+    const user = userEvent.setup();
+    const result = videoResultFixture();
+    mockResult(result);
+    renderResults();
+    await user.selectOptions(
+      await screen.findByRole("combobox", { name: "Sampled frame" }),
+      "21",
+    );
+    const added = structuredClone(result.frames[1]);
+    added.id = 23;
+    added.frame_number = 24;
+    added.frame_timestamp_seconds = 1;
+    result.frames.push(added);
+    mockResult(result);
+    await user.click(screen.getByRole("button", { name: "Refresh analysis" }));
+    expect(
+      await screen.findByText("Sample 3 of 4 | Source frame 60 | 00:00:02.500"),
+    ).toBeInTheDocument();
+  });
+
+  it("preserves the initially displayed sample when a refresh adds earlier frames", async () => {
+    const user = userEvent.setup();
+    const result = videoResultFixture();
+    const first = result.frames.splice(1, 1)[0];
+    mockResult(result);
+    renderResults();
+    await screen.findByText("Sample 1 of 2 | Source frame 60 | 00:00:02.500");
+    result.frames.push(first);
+    mockResult(result);
+    await user.click(screen.getByRole("button", { name: "Refresh analysis" }));
+    expect(
+      await screen.findByText("Sample 2 of 3 | Source frame 60 | 00:00:02.500"),
+    ).toBeInTheDocument();
+  });
+
+  it("resets video selection when opening another session", async () => {
+    const user = userEvent.setup();
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockImplementation((input: RequestInfo | URL) => {
+        return Promise.resolve(
+          response(videoResultFixture(Number(String(input).split("/").at(-1)))),
+        );
+      }),
+    );
+    renderResults();
+    await user.selectOptions(
+      await screen.findByRole("combobox", { name: "Sampled frame" }),
+      "22",
+    );
+    await user.click(screen.getByRole("link", { name: "Another session" }));
+    await screen.findByRole("heading", { name: "Analysis 43" });
+    expect(screen.getByRole("combobox", { name: "Sampled frame" })).toHaveValue(
+      "20",
+    );
+  });
+
+  it("does not combine frames from unmatched sources into one video timeline", async () => {
+    const result = videoResultFixture();
+    result.frames[0].input_source_id = 99;
     mockResult(result);
     renderResults();
     expect(
       await screen.findByText("Sampled-frame view unavailable"),
     ).toBeInTheDocument();
     expect(
-      screen.queryByRole("table", { name: "Whole-image object counts" }),
+      screen.queryByRole("combobox", { name: "Sampled frame" }),
     ).not.toBeInTheDocument();
   });
 

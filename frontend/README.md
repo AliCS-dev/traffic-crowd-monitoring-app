@@ -62,7 +62,7 @@ source type, status, and start time. The API supplies pagination metadata, so we
 request one bounded page at a time rather than loading the complete history.
 Selecting the arrow at the end of a row opens that session's result route.
 
-## Reading Image Results
+## Reading Stored Results
 
 At `/analyses/<session-id>`, we can inspect a stored image analysis and its
 original filename, processing status, and timestamps. The image already contains
@@ -81,9 +81,22 @@ the application's current default model. Dense-crowd results remain separate
 from detector-based person counts. An unsupported crowd decision has no numeric
 count, and older sessions without a decision are identified as unrecorded.
 
-Video and multiple-frame sessions currently show their session metadata and
-frame availability. Frame navigation, interactive grids, class filters, and the
-experimental alert view are the remaining dashboard work.
+For a single video source, we browse stored samples with previous/next controls
+or the frame selector. Samples follow timestamp order, with source frame number
+and record ID breaking ties. Samples without a recorded timestamp follow the
+timed samples in frame-number order; their time remains unavailable. The displayed
+source frame number is the stored zero-based index, not the sample's position.
+
+Each selected sample has its own image, whole-frame counts, and detection records.
+These counts do not represent unique objects across a video. A frame change resets
+detection pagination and image loading; refreshing keeps the selected frame by ID
+when it still exists. Partial sessions remain labelled incomplete, and refreshing
+retrieves any newly stored results. We do not poll this historical result view.
+The model profile and dense-crowd decision below the frames describe the session.
+
+Interactive grids, class filters, and the experimental alert view are the
+remaining dashboard work. Mixed-source sessions are identified as unsupported
+rather than combined into a single timeline.
 
 ## Quality Checks
 
