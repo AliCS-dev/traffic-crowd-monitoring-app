@@ -6,6 +6,8 @@ export default defineConfig({
   retries: 0,
   workers: 1,
   reporter: "list",
+  // WSL and GitHub's Linux runner differ slightly at antialiased text edges.
+  expect: { toHaveScreenshot: { maxDiffPixels: 20 } },
   use: {
     baseURL: "http://localhost:5174",
     browserName: "chromium",
