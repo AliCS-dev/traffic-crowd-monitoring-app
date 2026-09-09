@@ -26,6 +26,8 @@ Comparison allows at most 20 differing pixels for small text-rendering variation
 between WSL and the CI runner. The first CI run differed by 4-13 isolated text-edge
 pixels in the image/header captures; we inspected those differences before setting
 this fixed tolerance. Geometry and interaction assertions remain unchanged.
+Chromium's LCD text rendering is disabled for screenshot checks to avoid
+environment-specific coloured text edges in the longer alert view.
 The fixed toolbar is hidden only in the alert-section screenshot so it does not
 obscure a section taller than the viewport; the toolbar has its own screenshot.
 

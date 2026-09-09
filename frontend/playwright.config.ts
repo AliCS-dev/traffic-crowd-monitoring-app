@@ -11,6 +11,7 @@ export default defineConfig({
   use: {
     baseURL: "http://localhost:5174",
     browserName: "chromium",
+    launchOptions: { args: ["--disable-lcd-text"] },
     locale: "en-GB",
     timezoneId: "UTC",
     reducedMotion: "reduce",
