@@ -94,7 +94,7 @@ when it still exists. Partial sessions remain labelled incomplete, and refreshin
 retrieves any newly stored results. We do not poll this historical result view.
 The model profile and dense-crowd decision below the frames describe the session.
 
-Class filters and the experimental alert view are the remaining dashboard work.
+The experimental alert view and final verification are the remaining dashboard work.
 Mixed-source sessions are identified as unsupported
 rather than combined into a single timeline.
 
@@ -121,6 +121,27 @@ cell counts, but the display also preserves an explicitly stored zero.
 
 These are counts within image-space regions, not equally sized ground areas or
 people per square metre. Dense-crowd estimates remain a separate result.
+
+### Filtering Stored Classes
+
+The **Table class** selector offers the classes present in a frame's detections,
+whole-frame summaries, or cell summaries. We can inspect one class or return to
+**All classes**. Matching uses the stored class name, not a renamed model label.
+
+The filter applies to detection records and both count tables. The tables retain
+their whole-frame or selected-cell scope and show the active class in their
+captions. The stored detection total remains an all-class total. Missing matches
+have a separate message from missing records, and existing zero values are kept.
+We display stored summaries rather than rebuilding them from detection rows.
+
+Changing or clearing the filter resets detection pagination, but keeps the
+selected grid cell. Refreshing a frame keeps the selected class even if the
+updated records have no matches. Opening another frame or session resets the
+filter to all classes.
+
+The saved detection JPEG remains unchanged and is labelled as an all-class
+overlay. This is a table filter, not a visual-box filter or an inference setting.
+Grid boundaries, model provenance, and dense-crowd decisions are unaffected.
 
 ## Quality Checks
 

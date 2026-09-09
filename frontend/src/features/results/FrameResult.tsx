@@ -1,5 +1,12 @@
 import { useMemo, useState } from "react";
-import { Alert, Box, FormControlLabel, Stack, Switch } from "@mui/material";
+import {
+  Alert,
+  Box,
+  FormControlLabel,
+  Stack,
+  Switch,
+  TextField,
+} from "@mui/material";
 import type { ProcessedFrameResult } from "../../api/analysisResults.ts";
 import { DetectionTable } from "./DetectionTable.tsx";
 import { FrameCounts } from "./FrameCounts.tsx";
@@ -7,6 +14,7 @@ import { ResultImage } from "./ResultImage.tsx";
 import { GridCellCounts } from "./GridCellCounts.tsx";
 import { GridOverlay } from "./GridOverlay.tsx";
 import { hasAlignedGridCoordinates } from "./gridGeometry.ts";
+import { formatLabel } from "./resultFormatting.ts";
 
 export function FrameResult({
   frame,
@@ -19,6 +27,21 @@ export function FrameResult({
 }) {
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [showGrid, setShowGrid] = useState(true);
+  const [classFilter, setClassFilter] = useState<string | null>(null);
+  const classes = useMemo(
+    () =>
+      [
+        ...new Set([
+          ...frame.detections.map((record) => record.object_class),
+          ...frame.frame_summaries.map((record) => record.object_class),
+          ...frame.grid_cells.flatMap((cell) =>
+            cell.summaries.map((record) => record.object_class),
+          ),
+          ...(classFilter === null ? [] : [classFilter]),
+        ]),
+      ].sort((a, b) => a.localeCompare(b)),
+    [frame.detections, frame.frame_summaries, frame.grid_cells, classFilter],
+  );
   const cells = useMemo(
     () =>
       [...frame.grid_cells].sort(
@@ -33,6 +56,23 @@ export function FrameResult({
   const aligned = cells.length > 0 && hasAlignedGridCoordinates(frame);
   return (
     <>
+      <TextField
+        select
+        label="Table class"
+        size="small"
+        value={classFilter ?? ""}
+        onChange={(event) => setClassFilter(event.target.value || null)}
+        disabled={classes.length === 0}
+        slotProps={{ select: { native: true }, inputLabel: { shrink: true } }}
+        sx={{ width: "100%", maxWidth: 320, mb: 3 }}
+      >
+        <option value="">All classes</option>
+        {classes.map((objectClass) => (
+          <option key={objectClass} value={objectClass}>
+            {formatLabel(objectClass)}
+          </option>
+        ))}
+      </TextField>
       <Box
         sx={{
           display: "grid",
@@ -82,16 +122,21 @@ export function FrameResult({
           />
         </Box>
         <Stack spacing={4} sx={{ minWidth: 0 }}>
-          <FrameCounts frame={frame} video={video} />
+          <FrameCounts frame={frame} video={video} classFilter={classFilter} />
           <GridCellCounts
             cells={cells}
             selectedCell={selectedCell}
             onSelect={setSelectedId}
+            classFilter={classFilter}
           />
         </Stack>
       </Box>
       <Box sx={{ mt: 4 }}>
-        <DetectionTable detections={frame.detections} />
+        <DetectionTable
+          key={classFilter ?? ""}
+          detections={frame.detections}
+          classFilter={classFilter}
+        />
       </Box>
     </>
   );

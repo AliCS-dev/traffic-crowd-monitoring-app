@@ -50,6 +50,7 @@ images and sampled video frames.
 | Browser image results | Implemented with saved images, counts, confidence, and model limitations |
 | Browser video results | Implemented with timestamp-ordered sampled frames and per-frame counts |
 | Browser grid inspection | Implemented with aligned cell overlays and separate selected-cell counts |
+| Browser class filters | Implemented for detection records and frame/cell count tables |
 
 The current detector gives us a measured starting point, but it is not reliable
 enough for final conclusions about aerial traffic or crowds. We compared three
@@ -325,11 +326,16 @@ when inspecting detection boxes. Selected-cell counts remain separate from the
 whole-frame summaries and detection records. The cells use image pixels, not
 calibrated ground areas; these counts do not measure physical crowd density.
 
+The **Table class** filter narrows detection records and both count tables to
+one stored class. The saved JPEG still shows all recorded detection boxes and
+is labelled accordingly. Filtering changes neither stored counts nor model
+settings; a missing matching record is not displayed as an invented zero.
+
 Processing completion and model quality are shown separately. The recorded
 detector decision appears beside the image results, while unsupported
 dense-crowd counting is shown without a count. Missing historical model or crowd
-records are described as unavailable. Class filtering and experimental alert
-presentation remain the next dashboard steps.
+records are described as unavailable. Experimental alert presentation and final
+dashboard verification remain the next steps.
 
 Stopping an image upload in the browser aborts the local request. It is not a
 server-side cancellation guarantee: if the API already accepted the request,
@@ -654,7 +660,7 @@ is still under development:
   backed by remote object storage or an authentication layer;
 - the browser interface can submit media, track video progress, browse stored
   sessions, and inspect images, sampled video frames, and stored grids;
-  class filtering and alert presentation are not yet implemented in the browser;
+  table class filters are available, but alert presentation is not yet implemented;
 - we do not calculate physical crowd density.
 
 Until we add geographic calibration, we use the terms **count per spatial

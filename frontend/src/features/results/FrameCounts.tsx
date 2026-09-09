@@ -5,9 +5,11 @@ import { ObjectCountsTable } from "./ObjectCountsTable.tsx";
 export function FrameCounts({
   frame,
   video = false,
+  classFilter = null,
 }: {
   frame: ProcessedFrameResult;
   video?: boolean;
+  classFilter?: string | null;
 }) {
   const scope = video ? "frame" : "image";
   return (
@@ -22,11 +24,13 @@ export function FrameCounts({
       <Typography sx={{ mt: 1, mb: 2 }} color="text.secondary" variant="body2">
         {frame.detections.length} stored{" "}
         {frame.detections.length === 1 ? "detection" : "detections"}
+        {classFilter !== null && " (all classes)"}
       </Typography>
       {frame.frame_summaries.length ? (
         <ObjectCountsTable
           summaries={frame.frame_summaries}
           label={`Whole-${scope} object counts`}
+          classFilter={classFilter}
         />
       ) : (
         <Typography color="text.secondary">

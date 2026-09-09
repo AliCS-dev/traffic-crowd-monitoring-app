@@ -128,7 +128,7 @@ function AvailableResultImage({
         >
           {asset.width} x {asset.height} px
           {asset.rendered_overlays.includes("detections") &&
-            " | Saved detection overlay"}
+            " | Saved detection overlay: all classes"}
         </Typography>
         {state === "loaded" && (
           <Tooltip title="Open result image">

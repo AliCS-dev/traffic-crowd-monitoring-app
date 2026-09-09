@@ -9,10 +9,12 @@ export function GridCellCounts({
   cells,
   selectedCell,
   onSelect,
+  classFilter = null,
 }: {
   cells: GridCellResult[];
   selectedCell: GridCellResult | null;
   onSelect: (id: number | null) => void;
+  classFilter?: string | null;
 }) {
   return (
     <Stack
@@ -62,6 +64,7 @@ export function GridCellCounts({
                 <ObjectCountsTable
                   summaries={selectedCell.summaries}
                   label="Selected-cell object counts"
+                  classFilter={classFilter}
                 />
               ) : (
                 <Typography color="text.secondary">

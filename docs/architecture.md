@@ -348,6 +348,14 @@ Switching frames resets this state. Selected-cell summaries and whole-frame
 summaries share a table component but remain separate datasets. The browser
 neither recounts detections nor combines cell counts with frame counts.
 
+The frame component also owns a table-class filter. Available classes come from
+the union of detections, whole-frame summaries, and grid summaries. Filtering
+selects stored rows by exact class name without changing the API response or
+recalculating counts. Changing the class resets detection pagination but leaves
+the selected cell intact; changing frames resets both. A refresh preserves the
+active class, including a class with no remaining matches. The saved JPEG and
+its rasterised detection boxes remain an explicitly all-class visual asset.
+
 ### Starting with a command-line interface
 
 We began with a command-line interface because it let us test the complete
@@ -447,8 +455,8 @@ below, while the outer image edges remain part of the final row and column.
 - Repository tests cover transaction behavior with controlled test doubles, but
   live PostgreSQL coverage does not yet include every future API query path.
 - The frontend reads paginated session history and displays images, sampled video
-  frames, and interactive stored grids. Class filters and the experimental alert
-  view remain pending.
+  frames, interactive stored grids, and class-filtered tables. The experimental
+  alert view remains pending; class filtering does not alter saved image boxes.
 - The browser can stop waiting for a pending request, but the API does not yet
   provide server-side cancellation for accepted image or video work.
 - Generated assets are stored on the local filesystem and the API does not yet
