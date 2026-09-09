@@ -514,3 +514,24 @@ The interface explains that accepted work may continue. Unit and component
 tests cover option boundaries, file type and size errors, multipart fields,
 image and video completion, progress presentation, long filenames, safe API
 errors, preserved input, and local abort behavior.
+
+### Issue #76: Monitoring Results And Session History
+
+We connected paginated session history to stored image and sampled-video results.
+The result view preserves image proportions, overlays recorded grid boundaries,
+and keeps whole-frame counts separate from selected-cell summaries. Class filters
+apply to tables, while the saved detection image remains unchanged. Experimental
+alert records show their stored scope, values, comparison, and severity without
+presenting them as verified real-world conditions.
+
+Model provenance and evaluation limitations remain visible with each session.
+Missing images, incomplete sessions, older metadata, and unsupported crowd
+counting have explicit states. We corrected mobile header sizing and stale
+backend-health reporting during the final review.
+
+Unit, API, database, and browser checks cover the implementation. The new
+Playwright suite adds repeatable keyboard, responsive, and screenshot checks to
+CI. Separate local image/video submissions verified the complete workflow with
+PostgreSQL. We recorded their scope and results in
+[dashboard verification](dashboard_verification.md), separately from the thesis's
+model-evaluation measurements.

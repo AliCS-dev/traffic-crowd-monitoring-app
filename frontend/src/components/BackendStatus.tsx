@@ -11,7 +11,7 @@ export function BackendStatus() {
     refetchInterval: 30_000,
   });
 
-  const isOnline = health.data?.status === "ok";
+  const isOnline = !health.isError && health.data?.status === "ok";
   const label = health.isPending
     ? "Checking service"
     : isOnline
@@ -27,7 +27,9 @@ export function BackendStatus() {
           display: "flex",
           alignItems: "center",
           gap: 0.75,
-          minWidth: { sm: 142 },
+          minWidth: { xs: 0, sm: 142 },
+          width: { xs: 100, sm: "auto" },
+          flexShrink: 0,
         }}
       >
         {health.isPending ? (
@@ -46,8 +48,8 @@ export function BackendStatus() {
         )}
         <Typography
           color={isOnline ? "text.primary" : "text.secondary"}
-          noWrap
           variant="body2"
+          sx={{ whiteSpace: { xs: "normal", sm: "nowrap" } }}
         >
           {label}
         </Typography>

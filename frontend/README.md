@@ -94,7 +94,6 @@ when it still exists. Partial sessions remain labelled incomplete, and refreshin
 retrieves any newly stored results. We do not poll this historical result view.
 The model profile and dense-crowd decision below the frames describe the session.
 
-Final dashboard-wide verification remains before the dashboard issue is complete.
 Mixed-source sessions are identified as unsupported
 rather than combined into a single timeline.
 
@@ -173,11 +172,17 @@ npm run format:check
 npm run typecheck
 npm test
 npm run build
+npx playwright install --with-deps chromium
+npm run test:browser
 ```
 
 GitHub Actions repeats these commands from a clean `npm ci` installation. The
 frontend dependencies are also covered by the repository's weekly Dependabot
-configuration.
+configuration. Playwright starts a separate server on port 5174 and uses mocked
+API responses, so browser checks need neither PostgreSQL nor a detector. The
+Linux screenshot baselines cover desktop and narrow mobile layouts. The
+[dashboard verification record](../docs/dashboard_verification.md) describes
+their scope, baseline review, and the separate live workflow checks.
 
 ## Source Structure
 

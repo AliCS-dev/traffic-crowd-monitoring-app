@@ -421,8 +421,8 @@ and held-out quality gate are complete. The grid service now assigns detected
 object centres to image cells independently of YOLO. Image and sampled-video runs
 can persist those cells and summaries through the existing repositories. The
 model-independent alert service now evaluates tracked frame and grid thresholds
-over those counts. Our next planned extension is a user-facing result interface
-built on the existing query and visual-asset APIs.
+over those counts. The browser result interface now uses the existing query and
+visual-asset APIs for session history, sampled frames, grids, and threshold events.
 
 We want each step to remain independently testable. The video reader now supplies
 frames without knowing how they will be sampled or detected. The sampling service
@@ -464,7 +464,8 @@ below, while the outer image edges remain part of the final row and column.
   live PostgreSQL coverage does not yet include every future API query path.
 - The frontend reads paginated session history and displays images, sampled video
   frames, interactive stored grids, class-filtered tables, and experimental alert
-  records. Final dashboard verification remains pending. Class filtering does not
+  records. [Dashboard verification](dashboard_verification.md) covers the browser
+  checks and live workflows. Class filtering does not
   alter saved image boxes, and alert records are read-only.
 - The browser can stop waiting for a pending request, but the API does not yet
   provide server-side cancellation for accepted image or video work.

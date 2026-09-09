@@ -342,8 +342,8 @@ confirm congestion, overcrowding, or emergencies. Details are in
 Processing completion and model quality are shown separately. The recorded
 detector decision appears beside the image results, while unsupported
 dense-crowd counting is shown without a count. Missing historical model or crowd
-records are described as unavailable. Final dashboard-wide verification remains
-before the dashboard issue is complete.
+records are described as unavailable. The [dashboard verification record](docs/dashboard_verification.md)
+collects the automated checks, live workflow results, and remaining limitations.
 
 Stopping an image upload in the browser aborts the local request. It is not a
 server-side cancellation guarantee: if the API already accepted the request,
@@ -360,6 +360,14 @@ npm run format:check
 npm run typecheck
 npm test
 npm run build
+```
+
+The repeatable browser suite uses controlled API responses and does not require
+PostgreSQL or a detector. From `frontend/`, we run:
+
+```bash
+npx playwright install --with-deps chromium
+npm run test:browser
 ```
 
 ## Trying the Image Pipeline
@@ -668,8 +676,7 @@ is still under development:
   backed by remote object storage or an authentication layer;
 - the browser interface can submit media, track video progress, browse stored
   sessions, and inspect images, sampled video frames, and stored grids;
-  table class filters and read-only experimental alerts are available, while final
-  dashboard verification remains pending;
+  table class filters and read-only experimental alerts are available;
 - we do not calculate physical crowd density.
 
 Until we add geographic calibration, we use the terms **count per spatial

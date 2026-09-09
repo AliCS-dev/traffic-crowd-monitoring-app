@@ -1,0 +1,4 @@
+/* Section screenshots should not include the fixed application toolbar. */
+header {
+  visibility: hidden !important;
+}
