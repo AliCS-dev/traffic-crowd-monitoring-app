@@ -356,6 +356,14 @@ the selected cell intact; changing frames resets both. A refresh preserves the
 active class, including a class with no remaining matches. The saved JPEG and
 its rasterised detection boxes remain an explicitly all-class visual asset.
 
+The same frame response supplies the read-only alert list. We render stored rule
+metadata rather than loading today's configuration or re-evaluating thresholds.
+Alerts remain independent of class filters and selected-cell summaries. Grid-cell
+inspection only changes local selection and keyboard focus; it does not mutate
+an alert. Missing metadata and missing cell references remain explicit. Frame
+changes reset the newest-first event pagination. Stored resolution timestamps
+describe the database record, not a verified change in real-world conditions.
+
 ### Starting with a command-line interface
 
 We began with a command-line interface because it let us test the complete
@@ -455,8 +463,9 @@ below, while the outer image edges remain part of the final row and column.
 - Repository tests cover transaction behavior with controlled test doubles, but
   live PostgreSQL coverage does not yet include every future API query path.
 - The frontend reads paginated session history and displays images, sampled video
-  frames, interactive stored grids, and class-filtered tables. The experimental
-  alert view remains pending; class filtering does not alter saved image boxes.
+  frames, interactive stored grids, class-filtered tables, and experimental alert
+  records. Final dashboard verification remains pending. Class filtering does not
+  alter saved image boxes, and alert records are read-only.
 - The browser can stop waiting for a pending request, but the API does not yet
   provide server-side cancellation for accepted image or video work.
 - Generated assets are stored on the local filesystem and the API does not yet

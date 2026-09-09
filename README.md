@@ -51,6 +51,7 @@ images and sampled video frames.
 | Browser video results | Implemented with timestamp-ordered sampled frames and per-frame counts |
 | Browser grid inspection | Implemented with aligned cell overlays and separate selected-cell counts |
 | Browser class filters | Implemented for detection records and frame/cell count tables |
+| Browser alert results | Implemented as read-only experimental threshold events |
 
 The current detector gives us a measured starting point, but it is not reliable
 enough for final conclusions about aerial traffic or crowds. We compared three
@@ -331,11 +332,18 @@ one stored class. The saved JPEG still shows all recorded detection boxes and
 is labelled accordingly. Filtering changes neither stored counts nor model
 settings; a missing matching record is not displayed as an invented zero.
 
+Experimental alerts show the stored measured value, threshold, comparison, class,
+scope, and rule severity for the current frame. Grid-cell events link back to
+their cell counts. Alerts stay visible independently of table filters, and the
+view does not change thresholds or mark events resolved. These records do not
+confirm congestion, overcrowding, or emergencies. Details are in
+[`docs/alert_rules.md`](docs/alert_rules.md).
+
 Processing completion and model quality are shown separately. The recorded
 detector decision appears beside the image results, while unsupported
 dense-crowd counting is shown without a count. Missing historical model or crowd
-records are described as unavailable. Experimental alert presentation and final
-dashboard verification remain the next steps.
+records are described as unavailable. Final dashboard-wide verification remains
+before the dashboard issue is complete.
 
 Stopping an image upload in the browser aborts the local request. It is not a
 server-side cancellation guarantee: if the API already accepted the request,
@@ -660,7 +668,8 @@ is still under development:
   backed by remote object storage or an authentication layer;
 - the browser interface can submit media, track video progress, browse stored
   sessions, and inspect images, sampled video frames, and stored grids;
-  table class filters are available, but alert presentation is not yet implemented;
+  table class filters and read-only experimental alerts are available, while final
+  dashboard verification remains pending;
 - we do not calculate physical crowd density.
 
 Until we add geographic calibration, we use the terms **count per spatial

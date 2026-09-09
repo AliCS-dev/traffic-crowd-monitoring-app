@@ -1,3 +1,4 @@
+import type { Ref } from "react";
 import { Box, Stack, TextField, Typography } from "@mui/material";
 import type { GridCellResult } from "../../api/analysisResults.ts";
 import { gridCellLabel } from "./gridGeometry.ts";
@@ -10,11 +11,13 @@ export function GridCellCounts({
   selectedCell,
   onSelect,
   classFilter = null,
+  inputRef,
 }: {
   cells: GridCellResult[];
   selectedCell: GridCellResult | null;
   onSelect: (id: number | null) => void;
   classFilter?: string | null;
+  inputRef?: Ref<HTMLSelectElement>;
 }) {
   return (
     <Stack
@@ -35,6 +38,7 @@ export function GridCellCounts({
           <TextField
             select
             label="Grid cell"
+            inputRef={inputRef}
             size="small"
             fullWidth
             value={selectedCell?.id ?? ""}

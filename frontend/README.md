@@ -94,7 +94,7 @@ when it still exists. Partial sessions remain labelled incomplete, and refreshin
 retrieves any newly stored results. We do not poll this historical result view.
 The model profile and dense-crowd decision below the frames describe the session.
 
-The experimental alert view and final verification are the remaining dashboard work.
+Final dashboard-wide verification remains before the dashboard issue is complete.
 Mixed-source sessions are identified as unsupported
 rather than combined into a single timeline.
 
@@ -142,6 +142,26 @@ filter to all classes.
 The saved detection JPEG remains unchanged and is labelled as an all-class
 overlay. This is a table filter, not a visual-box filter or an inference setting.
 Grid boundaries, model provenance, and dense-crowd decisions are unaffected.
+
+### Reading Experimental Alerts
+
+Each frame has a read-only list of stored threshold events. We show their rule
+identifier, severity, class, method, measured value, threshold, comparison, and
+whole-frame or grid-cell scope. Events appear newest first, with record ID
+breaking timestamp ties and five records per page. Table filters and grid
+selection do not hide alerts. Moving to another video frame resets event pagination.
+
+The cell-inspection action selects the referenced cell and focuses its selector;
+the existing class filter is preserved. A missing cell reference has no inspection
+action. A stored message is available separately in its original wording, including
+zero-based cell indices, while displayed cell labels start at one.
+
+Older records can lack structured rule metadata. We show those fields as not
+recorded rather than inferring values from messages or current configuration.
+Resolution timestamps are displayed when stored, but the browser does not resolve
+events. An empty event list does not confirm that rules were evaluated or that
+conditions were safe. All rule severities remain experimental presentation labels,
+not verified congestion, overcrowding, or emergency assessments.
 
 ## Quality Checks
 

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import {
   Alert,
   Box,
@@ -15,6 +15,7 @@ import { GridCellCounts } from "./GridCellCounts.tsx";
 import { GridOverlay } from "./GridOverlay.tsx";
 import { hasAlignedGridCoordinates } from "./gridGeometry.ts";
 import { formatLabel } from "./resultFormatting.ts";
+import { FrameAlerts } from "./FrameAlerts.tsx";
 
 export function FrameResult({
   frame,
@@ -28,6 +29,7 @@ export function FrameResult({
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [showGrid, setShowGrid] = useState(true);
   const [classFilter, setClassFilter] = useState<string | null>(null);
+  const cellSelector = useRef<HTMLSelectElement>(null);
   const classes = useMemo(
     () =>
       [
@@ -128,8 +130,20 @@ export function FrameResult({
             selectedCell={selectedCell}
             onSelect={setSelectedId}
             classFilter={classFilter}
+            inputRef={cellSelector}
           />
         </Stack>
+      </Box>
+      <Box sx={{ mt: 4 }}>
+        <FrameAlerts
+          alerts={frame.alerts}
+          cells={cells}
+          onSelectCell={(id) => {
+            setSelectedId(id);
+            cellSelector.current?.focus();
+            cellSelector.current?.scrollIntoView?.({ block: "center" });
+          }}
+        />
       </Box>
       <Box sx={{ mt: 4 }}>
         <DetectionTable
