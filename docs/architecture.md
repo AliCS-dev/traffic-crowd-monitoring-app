@@ -190,6 +190,7 @@ holding an HTTP request open.
 | `app/api/errors.py` | Converts API failures into one public JSON error format |
 | `app/api/routes/health.py` | Exposes process health and dependency readiness |
 | `app/api/routes/capabilities.py` | Exposes public upload formats and analysis-option bounds |
+| `app/api/routes/analysis_results.py` | Lists session history and returns complete stored results |
 | `app/api/routes/assets.py` | Serves generated images through controlled asset identifiers |
 | `app/api/routes/image_analyses.py` | Creates image analyses and returns complete stored results |
 | `app/api/routes/video_analyses.py` | Queues video analyses and returns persistent job progress |
@@ -220,6 +221,8 @@ holding an HTTP request open.
 | `frontend/src/api/` | Validates the API base URL and contains typed HTTP requests and response contracts |
 | `frontend/src/components/` | Provides the responsive shell and shared status, dialog, and state patterns |
 | `frontend/src/features/analysis/` | Owns media validation, submission, progress polling, and recovery state |
+| `frontend/src/features/sessions/` | Reads and presents paginated monitoring-session history |
+| `frontend/src/features/results/` | Reads stored image and sampled-video results and presents media, counts, confidence, and model decisions |
 | `frontend/src/pages/` | Defines the workspace, session-history, result, and not-found routes |
 | `frontend/src/theme.ts` | Defines shared colours, typography, spacing, and component defaults |
 | `scripts/` | Contains explicit database setup and diagnostic commands |
@@ -311,6 +314,56 @@ Material UI for consistent accessible controls, React Router for route state,
 and React Query for server state rather than creating local replacements for
 those established concerns.
 
+Image and video result pages read `GET /api/analyses/{session_id}` with a query key tied to
+the session ID. Route changes reset the lookup and result state. Missing sessions
+and failed requests have separate recovery states. The frontend uses the saved
+model profile, not current runtime configuration, to describe a result's
+evaluation status and confidence threshold.
+
+The saved JPEG already contains detection boxes. We display that asset at its
+original aspect ratio, with no duplicate browser overlay. The client accepts
+only the matching public `/api/assets/{asset_id}` reference and resolves it
+against the configured API base URL. A missing image does not hide stored counts.
+Whole-frame summaries and detection records are displayed independently of
+grid-cell summaries. Dense-crowd decisions remain a separate result with an
+explicit unsupported or unrecorded state.
+
+The video view orders samples from one source by timestamp and uses the stored
+frame ID for selection. Missing timestamps are not inferred: those samples follow
+the timed frames, ordered by source frame number and ID. Image and video views
+share the same frame presentation. Changing frames resets image loading and
+detection pagination, while refreshing preserves selection if the frame remains
+available. Counts belong to the selected frame, not a video-wide unique-object
+total. Mixed-source sessions are not combined into a timeline.
+
+Grid inspection uses the same frame component for images and video samples.
+Cell bounds become percentage positions relative to the processed-image
+dimensions, so they remain aligned as the image resizes. We require matching
+image and coordinate-space metadata and bounds inside the frame before drawing
+the overlay. Cell buttons are shown only after the image loads; the separate
+cell selector also works when no image is available.
+
+We keep the selected cell ID and overlay visibility in the frame component.
+Switching frames resets this state. Selected-cell summaries and whole-frame
+summaries share a table component but remain separate datasets. The browser
+neither recounts detections nor combines cell counts with frame counts.
+
+The frame component also owns a table-class filter. Available classes come from
+the union of detections, whole-frame summaries, and grid summaries. Filtering
+selects stored rows by exact class name without changing the API response or
+recalculating counts. Changing the class resets detection pagination but leaves
+the selected cell intact; changing frames resets both. A refresh preserves the
+active class, including a class with no remaining matches. The saved JPEG and
+its rasterised detection boxes remain an explicitly all-class visual asset.
+
+The same frame response supplies the read-only alert list. We render stored rule
+metadata rather than loading today's configuration or re-evaluating thresholds.
+Alerts remain independent of class filters and selected-cell summaries. Grid-cell
+inspection only changes local selection and keyboard focus; it does not mutate
+an alert. Missing metadata and missing cell references remain explicit. Frame
+changes reset the newest-first event pagination. Stored resolution timestamps
+describe the database record, not a verified change in real-world conditions.
+
 ### Starting with a command-line interface
 
 We began with a command-line interface because it let us test the complete
@@ -368,8 +421,8 @@ and held-out quality gate are complete. The grid service now assigns detected
 object centres to image cells independently of YOLO. Image and sampled-video runs
 can persist those cells and summaries through the existing repositories. The
 model-independent alert service now evaluates tracked frame and grid thresholds
-over those counts. Our next planned extension is a user-facing result interface
-built on the existing query and visual-asset APIs.
+over those counts. The browser result interface now uses the existing query and
+visual-asset APIs for session history, sampled frames, grids, and threshold events.
 
 We want each step to remain independently testable. The video reader now supplies
 frames without knowing how they will be sampled or detected. The sampling service
@@ -409,8 +462,11 @@ below, while the outer image edges remain part of the final row and column.
   candidate passed the evaluation decision rule.
 - Repository tests cover transaction behavior with controlled test doubles, but
   live PostgreSQL coverage does not yet include every future API query path.
-- The API does not yet expose the paginated session-history query, so the
-  frontend session-history route currently presents an explicit empty state.
+- The frontend reads paginated session history and displays images, sampled video
+  frames, interactive stored grids, class-filtered tables, and experimental alert
+  records. [Dashboard verification](dashboard_verification.md) covers the browser
+  checks and live workflows. Class filtering does not
+  alter saved image boxes, and alert records are read-only.
 - The browser can stop waiting for a pending request, but the API does not yet
   provide server-side cancellation for accepted image or video work.
 - Generated assets are stored on the local filesystem and the API does not yet

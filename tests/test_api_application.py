@@ -223,6 +223,7 @@ def test_openapi_and_interactive_documentation_are_available():
     assert set(schema.json()["paths"]) == {
         "/api/capabilities",
         "/api/assets/{asset_id}",
+        "/api/analyses",
         "/api/analyses/images",
         "/api/analyses/videos",
         "/api/analyses/videos/{session_id}",

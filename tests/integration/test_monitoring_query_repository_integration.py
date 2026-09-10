@@ -196,3 +196,16 @@ def test_reads_complete_image_and_ordered_video_sessions_from_postgresql():
         session.id for session in history.items if session.id in session_ids
     ]
     assert matching_history_ids == sorted(session_ids, reverse=True)
+    history_by_id = {
+        session.id: session for session in history.items if session.id in session_ids
+    }
+    assert history_by_id[image_result["session_id"]].source_type == "image"
+    assert history_by_id[video_result["session_id"]].source_type == "video"
+    assert (
+        history_by_id[image_result["session_id"]].original_filename
+        == "query-integration.jpg"
+    )
+    assert (
+        history_by_id[video_result["session_id"]].original_filename
+        == "query-integration.mp4"
+    )

@@ -15,6 +15,8 @@ class Pagination(BaseModel):
 class MonitoringSessionSummary(BaseModel):
     id: int
     session_name: str | None
+    source_type: Literal["image", "video"] | None = None
+    original_filename: str | None = None
     status: str
     started_at: datetime
     completed_at: datetime | None

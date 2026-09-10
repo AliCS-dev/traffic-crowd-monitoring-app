@@ -9,6 +9,7 @@ from app.api.dependencies import (
     create_application_services,
 )
 from app.api.errors import register_error_handlers
+from app.api.routes.analysis_results import create_analysis_result_router
 from app.api.routes.assets import create_asset_router
 from app.api.routes.capabilities import create_capabilities_router
 from app.api.routes.health import create_health_router
@@ -62,6 +63,10 @@ def create_app(
     )
     application.include_router(
         create_asset_router(),
+        prefix="/api",
+    )
+    application.include_router(
+        create_analysis_result_router(),
         prefix="/api",
     )
     application.include_router(

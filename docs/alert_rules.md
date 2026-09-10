@@ -57,6 +57,22 @@ PostgreSQL permits one alert for each combination of processed frame, optional
 grid cell, and rule ID. Alert insertion uses conflict-safe semantics, so applying
 the same rule to the same stored result again does not add another row.
 
+## Browser Presentation
+
+The result page displays the stored events for the current image or sampled video
+frame, including the measured value, threshold, comparison, scope, class, method,
+and rule severity. The browser does not re-evaluate rules or apply current
+configuration to historical records. Table class filters do not hide alerts.
+
+We can inspect a referenced grid cell through its cell selector. Cell labels in
+the interface start at one; the original stored message retains the evaluator's
+zero-based indices. Missing rule fields or cell references remain explicitly
+unavailable. Event timestamps and any stored resolution timestamp are shown,
+but there is no resolve or acknowledge action.
+
+No recorded alerts is not evidence of safe conditions or proof that rules were
+evaluated. Severity remains a rule label, not a verified assessment of danger.
+
 ## Limitations
 
 The alerts inherit every limitation of their source counts. The current detector

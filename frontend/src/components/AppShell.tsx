@@ -143,7 +143,7 @@ export function AppShell() {
           boxShadow: "none",
         }}
       >
-        <Toolbar sx={{ gap: 1.5, minHeight: 64 }}>
+        <Toolbar sx={{ gap: { xs: 1, sm: 1.5 }, minHeight: 64 }}>
           <Tooltip title="Open navigation">
             <IconButton
               aria-label="Open navigation"
@@ -154,7 +154,11 @@ export function AppShell() {
               <Menu aria-hidden size={21} />
             </IconButton>
           </Tooltip>
-          <Typography component="p" sx={{ flexGrow: 1 }} variant="h2">
+          <Typography
+            component="p"
+            sx={{ flexGrow: 1, minWidth: 0, overflowWrap: "anywhere" }}
+            variant="h2"
+          >
             {getPageTitle(location.pathname)}
           </Typography>
           <BackendStatus />

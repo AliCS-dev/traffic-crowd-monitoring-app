@@ -46,6 +46,12 @@ images and sampled video frames.
 | Threshold-based alerts | Implemented as experimental count notifications |
 | Browser frontend foundation | Implemented with responsive routes and live service status |
 | Browser media submission | Implemented for images and asynchronous videos |
+| Browser session history | Implemented with API pagination and result links |
+| Browser image results | Implemented with saved images, counts, confidence, and model limitations |
+| Browser video results | Implemented with timestamp-ordered sampled frames and per-frame counts |
+| Browser grid inspection | Implemented with aligned cell overlays and separate selected-cell counts |
+| Browser class filters | Implemented for detection records and frame/cell count tables |
+| Browser alert results | Implemented as read-only experimental threshold events |
 
 The current detector gives us a measured starting point, but it is not reliable
 enough for final conclusions about aerial traffic or crowds. We compared three
@@ -192,6 +198,7 @@ The first API routes are deliberately small:
 - `GET /api/health` confirms that the HTTP process can respond;
 - `GET /api/ready` checks PostgreSQL and verifies the configured checkpoint;
 - `GET /api/capabilities` returns public upload formats and option limits;
+- `GET /api/analyses` returns paginated monitoring-session history;
 - `POST /api/analyses/images` validates, processes, and stores one image;
 - `POST /api/analyses/videos` validates and queues one video;
 - `GET /api/analyses/videos/{session_id}` returns video-job progress;
@@ -302,11 +309,41 @@ npm run dev
 
 The workspace opens at <http://localhost:5173> and reads the API location from
 `VITE_API_BASE_URL`. Its current routes provide image and video submission,
-video-job progress, the session-history table, the result view, and live health
+video-job progress, paginated session history, the result view, and live health
 and readiness states. The form reads supported formats and limits from the API,
 so browser validation stays aligned with the configured backend. A completed
-submission opens its result route automatically. Detailed result visualisation
-is the next frontend stage.
+submission opens its result route automatically, and each history row links to
+the same route. Image results show the saved detection image, whole-image class
+counts, confidence scores, and the model profile recorded for that session.
+The browser preserves the image proportions and uses the API's public asset
+reference. Counts remain readable when an older result has no accessible image.
+Video results have a sampled-frame selector and previous/next controls. Each
+sample retains its source frame number, timestamp, image, counts, and detections;
+we do not add these counts together as unique objects across a video.
+
+Stored grids appear over the result image without changing the saved JPEG. We
+can select a cell on the image or from the cell selector, and hide the overlay
+when inspecting detection boxes. Selected-cell counts remain separate from the
+whole-frame summaries and detection records. The cells use image pixels, not
+calibrated ground areas; these counts do not measure physical crowd density.
+
+The **Table class** filter narrows detection records and both count tables to
+one stored class. The saved JPEG still shows all recorded detection boxes and
+is labelled accordingly. Filtering changes neither stored counts nor model
+settings; a missing matching record is not displayed as an invented zero.
+
+Experimental alerts show the stored measured value, threshold, comparison, class,
+scope, and rule severity for the current frame. Grid-cell events link back to
+their cell counts. Alerts stay visible independently of table filters, and the
+view does not change thresholds or mark events resolved. These records do not
+confirm congestion, overcrowding, or emergencies. Details are in
+[`docs/alert_rules.md`](docs/alert_rules.md).
+
+Processing completion and model quality are shown separately. The recorded
+detector decision appears beside the image results, while unsupported
+dense-crowd counting is shown without a count. Missing historical model or crowd
+records are described as unavailable. The [dashboard verification record](docs/dashboard_verification.md)
+collects the automated checks, live workflow results, and remaining limitations.
 
 Stopping an image upload in the browser aborts the local request. It is not a
 server-side cancellation guarantee: if the API already accepted the request,
@@ -323,6 +360,14 @@ npm run format:check
 npm run typecheck
 npm test
 npm run build
+```
+
+The repeatable browser suite uses controlled API responses and does not require
+PostgreSQL or a detector. From `frontend/`, we run:
+
+```bash
+npx playwright install --with-deps chromium
+npm run test:browser
 ```
 
 ## Trying the Image Pipeline
@@ -361,7 +406,7 @@ four columns:
 
 The terminal summary reports only occupied cells. The grid service itself
 returns every cell, including empty cells, in stable row-major order so that a
-later interface can render a complete grid without rebuilding it.
+browser can render a complete grid without rebuilding it.
 
 We can store the same grid together with the image result by combining the grid
 and database options:
@@ -629,8 +674,9 @@ is still under development:
   jobs are marked failed at the next startup and must be submitted again;
 - generated result assets are local files served by the API and are not yet
   backed by remote object storage or an authentication layer;
-- the browser interface can submit media and track video progress, but detailed
-  result visualisation and session-history data loading are not yet implemented;
+- the browser interface can submit media, track video progress, browse stored
+  sessions, and inspect images, sampled video frames, and stored grids;
+  table class filters and read-only experimental alerts are available;
 - we do not calculate physical crowd density.
 
 Until we add geographic calibration, we use the terms **count per spatial

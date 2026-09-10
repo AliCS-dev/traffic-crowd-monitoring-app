@@ -102,3 +102,27 @@ export interface VideoAnalysisJobResponse {
   started_at: string | null;
   finished_at: string | null;
 }
+
+export type MonitoringSessionSourceType = "image" | "video";
+
+export interface MonitoringSessionSummary {
+  id: number;
+  session_name: string | null;
+  source_type: MonitoringSessionSourceType | null;
+  original_filename: string | null;
+  status: string;
+  started_at: string;
+  completed_at: string | null;
+}
+
+export interface PaginationMetadata {
+  page: number;
+  page_size: number;
+  total_items: number;
+  total_pages: number;
+}
+
+export interface MonitoringSessionPage {
+  items: MonitoringSessionSummary[];
+  pagination: PaginationMetadata;
+}

@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import App from "./App.tsx";
+import { analysisResultFixture } from "./test/analysisResultFixture.ts";
 import { renderApplication } from "./test/render.tsx";
 
 function healthResponse(): Response {
@@ -14,6 +15,13 @@ function healthResponse(): Response {
     }),
     { headers: { "content-type": "application/json" } },
   );
+}
+
+function analysisOrHealthResponse(url: string): Response {
+  const match = /\/api\/analyses\/(\d+)$/.exec(url);
+  return match
+    ? jsonResponse(analysisResultFixture(Number(match[1])))
+    : healthResponse();
 }
 
 function readinessResponse(): Response {
@@ -71,6 +79,18 @@ function capabilitiesResponse(): Response {
   );
 }
 
+function sessionHistoryResponse(): Response {
+  return jsonResponse({
+    items: [],
+    pagination: {
+      page: 1,
+      page_size: 20,
+      total_items: 0,
+      total_pages: 0,
+    },
+  });
+}
+
 function jsonResponse(payload: unknown, status = 200): Response {
   return new Response(JSON.stringify(payload), {
     status,
@@ -90,7 +110,10 @@ describe("App", () => {
         if (url.endsWith("/api/capabilities")) {
           return Promise.resolve(capabilitiesResponse());
         }
-        return Promise.resolve(healthResponse());
+        if (url.includes("/api/analyses?")) {
+          return Promise.resolve(sessionHistoryResponse());
+        }
+        return Promise.resolve(analysisOrHealthResponse(url));
       }),
     );
   });
@@ -123,7 +146,7 @@ describe("App", () => {
       await screen.findByRole("heading", { name: "Session history" }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("table", { name: "Monitoring sessions" }),
+      await screen.findByRole("heading", { name: "No sessions available" }),
     ).toBeInTheDocument();
   });
 
@@ -177,7 +200,7 @@ describe("App", () => {
           ),
         );
       }
-      return Promise.resolve(healthResponse());
+      return Promise.resolve(analysisOrHealthResponse(url));
     });
     renderApplication(<App />, "/workspace");
 
@@ -244,7 +267,7 @@ describe("App", () => {
           }),
         );
       }
-      return Promise.resolve(healthResponse());
+      return Promise.resolve(analysisOrHealthResponse(url));
     });
     renderApplication(<App />, "/workspace");
 

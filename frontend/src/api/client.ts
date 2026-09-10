@@ -1,10 +1,15 @@
 import { apiBaseUrl } from "../config.ts";
 import type {
+  MonitoringSessionResult,
+  VisualAssetReference,
+} from "./analysisResults.ts";
+import type {
   AnalysisCapabilitiesResponse,
   AnalysisSubmissionOptions,
   ErrorResponse,
   HealthResponse,
   ImageAnalysisCreatedResponse,
+  MonitoringSessionPage,
   ReadinessResponse,
   VideoAnalysisCreatedResponse,
   VideoAnalysisJobResponse,
@@ -92,6 +97,37 @@ export class ApiClient {
     signal?: AbortSignal,
   ): Promise<VideoAnalysisJobResponse> {
     return this.request(`/api/analyses/videos/${sessionId}`, { signal });
+  }
+
+  listAnalyses(
+    page = 1,
+    pageSize = 20,
+    signal?: AbortSignal,
+  ): Promise<MonitoringSessionPage> {
+    const searchParameters = new URLSearchParams({
+      page: String(page),
+      page_size: String(pageSize),
+    });
+    return this.request(`/api/analyses?${searchParameters}`, { signal });
+  }
+
+  getAnalysis(
+    sessionId: number,
+    signal?: AbortSignal,
+  ): Promise<MonitoringSessionResult> {
+    return this.request(`/api/analyses/${sessionId}`, { signal });
+  }
+
+  resolveOutputAssetUrl(asset: VisualAssetReference): string | null {
+    const uuidPattern =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (
+      !uuidPattern.test(asset.asset_id) ||
+      asset.url !== `/api/assets/${asset.asset_id}`
+    ) {
+      return null;
+    }
+    return `${this.baseUrl}${asset.url}`;
   }
 
   private async request<T>(

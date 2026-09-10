@@ -50,6 +50,21 @@ jobs:
       - name: Build production frontend
         run: npm run build
 
+      - name: Install browser for dashboard checks
+        run: npx playwright install --with-deps chromium
+
+      - name: Check dashboard in Chromium
+        run: npm run test:browser
+
+      - name: Retain failed browser checks
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: dashboard-browser-failures
+          path: frontend/test-results/
+          if-no-files-found: ignore
+          retention-days: 7
+
   quality:
     name: Python quality checks
     runs-on: ubuntu-latest
