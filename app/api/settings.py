@@ -11,6 +11,7 @@ from app.config import (
     API_VIDEO_OUTPUT_DIR,
     API_VIDEO_UPLOAD_DIR,
 )
+from app.model_profile import DEVICE_PATTERN
 
 BYTES_PER_MEGABYTE = 1024 * 1024
 
@@ -33,6 +34,7 @@ class ApiSettings:
     max_grid_dimension: int = 20
     max_video_upload_bytes: int = 500 * BYTES_PER_MEGABYTE
     video_workers: int = 1
+    model_device: str | None = None
 
     @classmethod
     def from_environment(cls) -> "ApiSettings":
@@ -64,6 +66,9 @@ class ApiSettings:
             "API_MAX_VIDEO_UPLOAD_MB", default=500
         )
         video_workers = _positive_environment_integer("API_VIDEO_WORKERS", default=1)
+        model_device = os.getenv("API_DEVICE")
+        if model_device is not None and not DEVICE_PATTERN.fullmatch(model_device):
+            raise ApiSettingsError("API_DEVICE must be cpu, cuda, or cuda:<index>")
         return cls(
             cors_origins=origins,
             max_image_upload_bytes=max_upload_mb * BYTES_PER_MEGABYTE,
@@ -71,6 +76,7 @@ class ApiSettings:
             max_grid_dimension=max_grid_dimension,
             max_video_upload_bytes=max_video_upload_mb * BYTES_PER_MEGABYTE,
             video_workers=video_workers,
+            model_device=model_device,
         )
 
 

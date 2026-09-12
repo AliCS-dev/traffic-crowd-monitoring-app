@@ -10,6 +10,7 @@ env/
 
 # Local environment variables
 .env
+.env.backend
 
 # Data files
 data/input/*

@@ -14,6 +14,15 @@ permissions:
   contents: read
 
 jobs:
+  backend-container-check:
+    name: Backend Dockerfile checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+      - name: Check backend Dockerfile
+        run: docker build --check .
+
   frontend-quality:
     name: Frontend quality checks
     runs-on: ubuntu-latest

@@ -208,14 +208,18 @@ The first API routes are deliberately small:
 - `GET /openapi.json` returns the machine-readable API contract.
 
 Readiness returns HTTP `503` when a dependency is unavailable. Detector
-readiness means that the configured checkpoint exists and matches its recorded
-identity. It does not change the failed model quality-gate result or claim that
+readiness means that the configured checkpoint exists, matches its recorded
+identity, and that a requested CUDA device is available. It does not change the
+failed model quality-gate result or claim that
 the detector is accurate enough for operational monitoring.
 
 The detector is loaded only when the first analysis request needs it. Starting
 the server, checking health, and generating documentation therefore do not
-allocate GPU model memory. PostgreSQL remains the only Docker service at this
-stage.
+allocate GPU model memory. PostgreSQL remains the only service in the current
+Compose file. The backend can also run in its own GPU-enabled container; its
+build, storage, health, CPU fallback, and verification commands are in
+[Backend Container](docs/backend_container.md). The frontend container and
+combined stack remain issue #78.
 
 Development browser origins are configured as a comma-separated list in
 `.env`:
@@ -492,8 +496,9 @@ composes these services in a bounded background worker.
 
 ## Working with PostgreSQL
 
-For now, PostgreSQL is the only part that we run in Docker. Python, OpenCV, and
-YOLO continue to run in the local virtual environment.
+The default development setup runs PostgreSQL in Docker and Python in the local
+virtual environment. The separate backend container uses the same database
+contract and ordered migrations.
 
 We start the database and check its status with:
 
