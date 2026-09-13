@@ -12,6 +12,10 @@ and the model decisions recorded for the session.
 
 ## Local Development
 
+For the compiled frontend served by Nginx with the backend and database, we use
+the [full application Compose setup](../docs/compose_stack.md). That image uses
+same-origin API requests. The Vite workflow below remains available for editing.
+
 We use Node.js 24 LTS and the committed npm lockfile. From `frontend/`, we
 install the exact dependency versions with:
 

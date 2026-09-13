@@ -1,8 +1,8 @@
 # Backend Container
 
-Issue #77 packages the FastAPI API and detector in one backend image. PostgreSQL
-still uses the existing Compose service; the frontend still runs separately.
-The complete three-service stack belongs to issue #78.
+Issue #77 packages the FastAPI API and detector in one backend image. This guide
+retains the standalone backend workflow. For the frontend, backend, and database
+together, we use the [full application Compose setup](compose_stack.md) from #78.
 
 ## Runtime Choice
 
@@ -202,4 +202,5 @@ new detector-quality measurements or final system-performance benchmarks.
 CI runs the Python regression suite and Docker's built-in Dockerfile checks.
 The real image build, GPU inference, and container-volume checks were performed
 locally: ordinary GitHub-hosted CI does not supply this RTX GPU. Complete-stack
-automation remains part of issues #78 and #26.
+verification is documented in [Full Application Compose](compose_stack.md);
+broader automated coverage remains issue #26.

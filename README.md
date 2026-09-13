@@ -52,6 +52,7 @@ images and sampled video frames.
 | Browser grid inspection | Implemented with aligned cell overlays and separate selected-cell counts |
 | Browser class filters | Implemented for detection records and frame/cell count tables |
 | Browser alert results | Implemented as read-only experimental threshold events |
+| Full application containers | Implemented with same-origin Nginx, backend, PostgreSQL, and explicit GPU mode |
 
 The current detector gives us a measured starting point, but it is not reliable
 enough for final conclusions about aerial traffic or crowds. We compared three
@@ -70,7 +71,7 @@ misleading zero.
 - PostgreSQL 16 and Psycopg 3
 - FastAPI and Uvicorn
 - React, TypeScript, Vite, and Material UI
-- Docker Compose for the local database
+- Docker Compose for database-only development or the full application
 - Pytest, Vitest, Ruff, Oxlint, and Prettier
 - GitHub Actions and Dependabot
 
@@ -138,6 +139,11 @@ machine-readable provenance is stored in
 and checkpoints remain outside Git.
 
 ## Running the Project Locally
+
+The complete browser application can run through Docker Compose, including
+the GPU backend and PostgreSQL. The [full-stack guide](docs/compose_stack.md)
+contains startup commands, storage details, and live browser checks. The
+instructions below remain the separate-process development workflow.
 
 We use a virtual environment so that the project dependencies stay separate from
 the system Python installation:
@@ -215,11 +221,11 @@ the detector is accurate enough for operational monitoring.
 
 The detector is loaded only when the first analysis request needs it. Starting
 the server, checking health, and generating documentation therefore do not
-allocate GPU model memory. PostgreSQL remains the only service in the current
-Compose file. The backend can also run in its own GPU-enabled container; its
+allocate GPU model memory. PostgreSQL remains the only service in the default
+development Compose file. The backend can also run in its own GPU-enabled container; its
 build, storage, health, CPU fallback, and verification commands are in
 [Backend Container](docs/backend_container.md). The frontend container and
-combined stack remain issue #78.
+combined stack are described in [Full Application Compose](docs/compose_stack.md).
 
 Development browser origins are configured as a comma-separated list in
 `.env`:

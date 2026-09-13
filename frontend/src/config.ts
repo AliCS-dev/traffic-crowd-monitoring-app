@@ -9,6 +9,7 @@ export class FrontendConfigurationError extends Error {
 
 export function resolveApiBaseUrl(rawValue?: string): string {
   const value = (rawValue ?? DEFAULT_API_BASE_URL).trim();
+  if (value === "") return "";
 
   let parsed: URL;
   try {

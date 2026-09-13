@@ -1,0 +1,79 @@
+name: traffic-monitoring-app
+
+x-backend: &backend
+  image: traffic-monitoring-backend:local
+  build: .
+  environment: &backend-environment
+    DATABASE_URL: postgresql://
+    PGHOST: postgres
+    PGPORT: "5432"
+    PGDATABASE: ${POSTGRES_DB:-traffic_monitoring}
+    PGUSER: ${POSTGRES_USER:-traffic_user}
+    PGPASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    API_DEVICE: cpu
+    API_CORS_ORIGINS: ""
+    API_VIDEO_WORKERS: "1"
+
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-traffic_monitoring}
+      POSTGRES_USER: ${POSTGRES_USER:-traffic_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  migrate:
+    <<: *backend
+    command: ["python", "scripts/migrate_database.py"]
+    healthcheck:
+      disable: true
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  backend:
+    <<: *backend
+    restart: unless-stopped
+    environment:
+      <<: *backend-environment
+      API_MAX_IMAGE_UPLOAD_MB: ${API_MAX_IMAGE_UPLOAD_MB:-10}
+      API_MAX_IMAGE_PIXELS: ${API_MAX_IMAGE_PIXELS:-40000000}
+      API_MAX_GRID_DIMENSION: ${API_MAX_GRID_DIMENSION:-20}
+      API_MAX_VIDEO_UPLOAD_MB: ${API_MAX_VIDEO_UPLOAD_MB:-500}
+    volumes:
+      - type: bind
+        source: ./models
+        target: /app/models
+        read_only: true
+        bind:
+          create_host_path: false
+      - uploads:/app/data/input
+      - outputs:/app/data/output
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+
+  frontend:
+    image: traffic-monitoring-frontend:local
+    build: ./frontend
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${FRONTEND_PORT:-8080}:8080"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  uploads:
+  outputs:

@@ -8,10 +8,11 @@
     "build": "tsc -b && vite build",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint": "oxlint src e2e playwright.config.ts",
+    "lint": "oxlint src e2e stack-tests playwright.config.ts playwright.stack.config.ts",
     "preview": "vite preview",
     "test": "vitest run",
     "test:browser": "playwright test",
+    "test:stack": "playwright test --config playwright.stack.config.ts",
     "test:coverage": "vitest run --coverage",
     "typecheck": "tsc -b"
   },

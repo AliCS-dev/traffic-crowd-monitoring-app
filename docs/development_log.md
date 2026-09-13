@@ -555,3 +555,21 @@ isolated database, and preservation of records and media through container
 recreation. The [backend container notes](backend_container.md) collect the
 commands, observations, image-size trade-offs, and CI boundaries. The frontend
 container and complete Compose stack remain separate work.
+
+### Issue #78: Full Application Compose Stack (13 September 2026)
+
+We connected the compiled React frontend, FastAPI backend, and PostgreSQL with
+a separate full-app Compose setup. Nginx serves the browser application and
+proxies same-origin API requests; only its localhost port is exposed. The
+existing database-only development setup and database volume remain unchanged.
+An ordered one-shot migration service gates backend startup. CPU and GPU modes
+are explicit, models stay read-only, and uploaded/generated media use named
+volumes. The frontend runs without root privileges.
+
+We added frontend container checks to CI, Docker dependency updates, same-origin
+configuration tests, and a dedicated live Playwright check. Real desktop/mobile
+image submissions, full-stack persistence, CPU/GPU inference, and dependency
+outage checks were exercised against isolated test databases. The
+[Compose guide](compose_stack.md#verification-record) records the commands,
+observations, hashes, and limitations for thesis writing. The model-quality
+decisions did not change, and no image packages were published.
