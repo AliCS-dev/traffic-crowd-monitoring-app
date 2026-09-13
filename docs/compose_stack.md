@@ -123,6 +123,10 @@ PostgreSQL's volume. Database and media backups must be kept together.
 The frontend runs as UID 101; the backend runs as UID 10001. Neither image embeds
 credentials or model weights. Images stay local rather than being published to
 a registry. This setup has no authentication or TLS and stays localhost-only.
+GitHub reported open Pillow and PyTorch advisories in the inherited backend
+runtime on 13 September 2026. Their updates and compatibility checks are tracked
+under #80, including Dependabot PRs #104 and #105. Until that review is complete,
+we use trusted local media only and do not expose this demonstration publicly.
 
 ## Live Browser Check
 
