@@ -1,15 +1,15 @@
 # Container runtime only; torch and torchvision are supplied by the pinned base.
-torch==2.12.0
-torchvision==0.27.0
-ultralytics==8.4.51
-opencv-python==4.13.0.92
-numpy==2.2.6
-Pillow==12.2.0
+torch==2.14.0
+torchvision==0.29.0
+ultralytics==8.4.146
+opencv-python==5.0.0.93
+numpy==2.5.3
+Pillow==12.3.0
 PyYAML==6.0.3
-psycopg[binary]==3.3.4
-python-dotenv==1.2.2
+psycopg[binary]==3.3.5
+python-dotenv==1.2.3
 fastapi==0.141.1
-uvicorn==0.52.3
+uvicorn==0.52.4
 python-multipart==0.0.32
 
 # Resolved application dependencies; other packages are fixed by the base digest.
@@ -24,9 +24,9 @@ kiwisolver==1.5.1
 matplotlib==3.11.2
 polars==1.44.2
 polars-runtime-32==1.44.2
-psycopg-binary==3.3.4
+psycopg-binary==3.3.5
 pydantic==2.13.5
-pydantic-core==2.46.5
+pydantic-core==2.49.0
 pyparsing==3.3.2
 python-dateutil==2.9.0.post0
 scipy==1.18.1
