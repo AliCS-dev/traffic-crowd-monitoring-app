@@ -3,6 +3,10 @@ import { describe, expect, it } from "vitest";
 import { FrontendConfigurationError, resolveApiBaseUrl } from "./config.ts";
 
 describe("resolveApiBaseUrl", () => {
+  it("uses same-origin requests when explicitly configured with an empty value", () => {
+    expect(resolveApiBaseUrl("")).toBe("");
+  });
+
   it("uses the local API when no value is configured", () => {
     expect(resolveApiBaseUrl()).toBe("http://localhost:8000");
   });

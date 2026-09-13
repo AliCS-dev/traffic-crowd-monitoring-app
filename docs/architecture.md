@@ -378,7 +378,11 @@ model experiments, or build the GPU-enabled backend image described in
 [Backend Container](backend_container.md). The backend runs as a non-root user,
 reads mounted model weights, and stores uploaded/generated media in persistent
 volumes. A separate local environment file supplies its database connection.
-The frontend container and unified Compose startup remain a separate issue.
+The [full Compose setup](compose_stack.md) adds a non-root Nginx frontend,
+same-origin API proxying, an ordered migration service, and persistent database
+and media volumes. Only the frontend port is published on localhost. The CPU
+base file and GPU override keep device selection explicit while preserving the
+original database-only development setup.
 
 ### Keeping health separate from readiness
 

@@ -11,6 +11,17 @@ function jsonResponse(payload: unknown, status = 200): Response {
 }
 
 describe("ApiClient", () => {
+  it("keeps requests and saved asset links same-origin with an empty base", async () => {
+    const result = analysisResultFixture();
+    const fetchFunction = vi.fn().mockResolvedValue(jsonResponse(result));
+    const client = new ApiClient("", fetchFunction);
+    await client.getAnalysis(42);
+    expect(fetchFunction.mock.calls[0][0]).toBe("/api/analyses/42");
+    expect(client.resolveOutputAssetUrl(result.frames[0].visual_asset!)).toBe(
+      result.frames[0].visual_asset!.url,
+    );
+  });
+
   it("reads a stored analysis and forwards cancellation", async () => {
     const result = analysisResultFixture();
     const fetchFunction = vi.fn().mockResolvedValue(jsonResponse(result));
