@@ -1,8 +1,10 @@
 import logging
 from collections.abc import Callable
+from dataclasses import replace
 from threading import Lock
 from typing import Any
 
+import torch
 from fastapi import Request
 
 from app.api.settings import ApiSettings
@@ -144,11 +146,20 @@ def create_application_services(
 ) -> ApplicationServices:
     settings = settings or ApiSettings.from_environment()
     profile = load_runtime_model_profile()
+    if settings.model_device is not None:
+        profile = replace(profile, device=settings.model_device)
     crowd_analysis_decision = load_dense_crowd_analysis_decision()
     alert_rules = load_threshold_alert_rules()
 
     def detector_probe() -> bool:
         verify_runtime_checkpoint(profile, BASE_DIR)
+        if profile.device.startswith("cuda"):
+            device_index = (
+                int(profile.device.split(":")[1]) if ":" in profile.device else 0
+            )
+            return (
+                torch.cuda.is_available() and device_index < torch.cuda.device_count()
+            )
         return True
 
     return ApplicationServices(

@@ -371,17 +371,21 @@ pipeline before adding the browser application. The frontend now calls the
 existing HTTP boundary instead of reimplementing image detection or database
 storage.
 
-### Running only PostgreSQL in Docker
+### Separating database and backend containers
 
-At this stage, we run PostgreSQL in Docker and keep Python, OpenCV, and YOLO in a
-local virtual environment. This makes it easier for us to experiment with models
-and hardware while keeping the database setup repeatable.
+The existing Compose file runs PostgreSQL. We can still run Python locally for
+model experiments, or build the GPU-enabled backend image described in
+[Backend Container](backend_container.md). The backend runs as a non-root user,
+reads mounted model weights, and stores uploaded/generated media in persistent
+volumes. A separate local environment file supplies its database connection.
+The frontend container and unified Compose startup remain a separate issue.
 
 ### Keeping health separate from readiness
 
 Process health answers only whether the HTTP server is running. Readiness checks
 whether PostgreSQL is reachable and whether the runtime checkpoint matches its
-recorded identity. A missing dependency therefore returns `503` from readiness
+recorded identity, including availability of the requested CUDA device. A missing
+dependency therefore returns `503` from readiness
 without making the health route unavailable. Checkpoint readiness is an
 operational state, not evidence of model accuracy.
 

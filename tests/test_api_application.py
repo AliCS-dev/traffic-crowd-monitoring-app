@@ -1,3 +1,4 @@
+from types import SimpleNamespace
 from typing import Annotated
 
 import pytest
@@ -191,7 +192,7 @@ def test_startup_recovers_interrupted_video_jobs():
 
 def test_default_services_use_a_bounded_database_readiness_probe(monkeypatch):
     database_calls = []
-    profile = object()
+    profile = SimpleNamespace(device="cpu")
     monkeypatch.setattr(
         "app.api.dependencies.load_runtime_model_profile", lambda: profile
     )
@@ -204,7 +205,7 @@ def test_default_services_use_a_bounded_database_readiness_probe(monkeypatch):
         lambda received_profile, _root: received_profile is profile,
     )
 
-    services = create_application_services()
+    services = create_application_services(ApiSettings())
 
     assert services.readiness() == {"database": True, "detector": True}
     assert database_calls == [{"connect_timeout": DATABASE_READINESS_TIMEOUT_SECONDS}]

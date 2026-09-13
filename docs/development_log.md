@@ -535,3 +535,23 @@ CI. Separate local image/video submissions verified the complete workflow with
 PostgreSQL. We recorded their scope and results in
 [dashboard verification](dashboard_verification.md), separately from the thesis's
 model-evaluation measurements.
+
+### Issue #77: GPU-Enabled Backend Container
+
+We packaged the API and detector using a digest-pinned PyTorch/CUDA runtime.
+Application dependencies live in a separate virtual environment and are pinned
+alongside the base image. A restricted build context leaves local secrets,
+model weights, datasets, and generated media outside the image. The recorded
+crowd decision remains included so unsupported results stay explicit.
+
+The backend runs as a non-root user, reads model weights from a read-only mount,
+and uses persistent input/output volumes. PostgreSQL migrations remain an explicit
+step. We added validated device selection for CPU development checks and made
+readiness reject an unavailable requested CUDA device. Stored model provenance
+uses the effective device without changing model identity or evaluation decisions.
+
+Local verification covered GPU and CPU inference, an image API workflow with an
+isolated database, and preservation of records and media through container
+recreation. The [backend container notes](backend_container.md) collect the
+commands, observations, image-size trade-offs, and CI boundaries. The frontend
+container and complete Compose stack remain separate work.

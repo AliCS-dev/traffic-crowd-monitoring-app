@@ -1,6 +1,16 @@
 version: 2
 
 updates:
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "08:45"
+    open-pull-requests-limit: 2
+    commit-message:
+      prefix: "chore(deps)"
+
   - package-ecosystem: "npm"
     directory: "/frontend"
     schedule:

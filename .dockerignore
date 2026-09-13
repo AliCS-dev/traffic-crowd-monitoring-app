@@ -1,0 +1,20 @@
+# Only runtime source and the recorded crowd decision enter the build context.
+**
+!Dockerfile
+!requirements-container.txt
+!app/
+!app/**
+!configs/
+!configs/runtime/
+!configs/runtime/**
+!data/
+!data/evaluation/
+!data/evaluation/dedicated_crowd_counting.json
+!scripts/
+!scripts/migrate_database.py
+!scripts/check_backend_runtime.py
+**/__pycache__
+**/*.pyc
+**/.env*
+**/*.pt
+**/*.onnx
