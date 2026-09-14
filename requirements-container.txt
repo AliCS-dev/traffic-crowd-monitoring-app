@@ -1,7 +1,7 @@
 # Container runtime only; torch and torchvision are supplied by the pinned base.
 torch==2.14.0
 torchvision==0.29.0
-ultralytics==8.4.146
+ultralytics==8.4.147
 opencv-python==5.0.0.93
 numpy==2.5.3
 Pillow==12.3.0
