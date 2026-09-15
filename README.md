@@ -63,6 +63,11 @@ dense-crowd threshold. The application therefore returns an explicit unsupported
 state and a null crowd count instead of loading that checkpoint or reporting a
 misleading zero.
 
+The [quality-improvement roadmap](quality_roadmap.md) links the next accuracy,
+interface, and delivery issues. Current deployment checks are recorded in the
+[runtime recovery report](docs/runtime_recovery.md); model metrics remain in the
+[evaluation results index](docs/evaluation/results_index.md).
+
 ## What We Use
 
 - Python 3.10 or 3.11
@@ -307,8 +312,8 @@ the grid without changing the saved image.
 ## Running the Frontend
 
 The browser application is kept in `frontend/` so interface code remains
-separate from the Python processing and persistence layers. We use Node.js 24
-LTS and install the committed dependency set with:
+separate from the Python processing and persistence layers. We use Node.js 26
+to match `.nvmrc`, CI, and the container, and install the committed dependency set with:
 
 ```bash
 cd frontend

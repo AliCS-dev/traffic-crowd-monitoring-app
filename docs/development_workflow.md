@@ -36,7 +36,7 @@ We keep development tools in the project virtual environment:
 .venv/bin/python -m pip install -r requirements-dev.txt
 ```
 
-The browser application has an independent Node.js 24 LTS environment and a
+The browser application has an independent Node.js 26 environment and a
 committed npm lockfile:
 
 ```bash

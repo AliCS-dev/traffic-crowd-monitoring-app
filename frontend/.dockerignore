@@ -1,5 +1,6 @@
 **
 !Dockerfile
+!.nvmrc
 !nginx.conf
 !package.json
 !package-lock.json

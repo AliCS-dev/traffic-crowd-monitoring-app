@@ -1,6 +1,13 @@
 # Aerial Evaluation Dataset Card
 
-## Current Status
+## Source Acquisition Snapshot
+
+This section preserves the July 29 source-acquisition record, not the current
+evaluation status. Annotation, model comparison and final testing have since
+finished. The [results index](results_index.md) links their current evidence;
+the [quality roadmap](../../quality_roadmap.md) describes the planned v2 dataset.
+Future-tense source-selection notes below belong to the original snapshot and
+do not mean that those completed experiments are still pending.
 
 - **Version:** 0.2
 - **Last reviewed:** 29 July 2026
