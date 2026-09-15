@@ -199,8 +199,9 @@ The persisted result image hash was
 These observations check application operation and persistence; they are not
 new detector-quality measurements or final system-performance benchmarks.
 
-CI runs the Python regression suite and Docker's built-in Dockerfile checks.
-The real image build, GPU inference, and container-volume checks were performed
-locally: ordinary GitHub-hosted CI does not supply this RTX GPU. Complete-stack
+CI runs the Python regression suite, Dockerfile checks, a complete backend image
+build, `pip check`, and application imports. GPU inference and container-volume
+checks run locally: ordinary GitHub-hosted CI does not supply this RTX GPU.
+Complete-stack
 verification is documented in [Full Application Compose](compose_stack.md);
 broader automated coverage remains issue #26.
