@@ -5,6 +5,12 @@ important decisions and metrics easy to find when we write the thesis, while
 the larger generated predictions, images, training logs, and timing samples
 remain outside Git.
 
+Deployment checks are separate from these model metrics. The
+[September 15 runtime report](../runtime_recovery.md) records a changed sample
+output after dependency updates; it does not supersede the frozen quality gate.
+The [quality roadmap](../../quality_roadmap.md) links the planned v2 evaluation
+and accuracy work. No v2 accuracy result has been produced yet.
+
 ## Current Final Result
 
 The selected VisDrone YOLO26m model **failed the final held-out quality gate**.

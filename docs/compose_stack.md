@@ -123,17 +123,30 @@ PostgreSQL's volume. Database and media backups must be kept together.
 The frontend runs as UID 101; the backend runs as UID 10001. Neither image embeds
 credentials or model weights. Images stay local rather than being published to
 a registry. This setup has no authentication or TLS and stays localhost-only.
-GitHub reported open Pillow and PyTorch advisories in the inherited backend
-runtime on 13 September 2026. Their updates and compatibility checks are tracked
-under #80, including Dependabot PRs #104 and #105. Until that review is complete,
-we use trusted local media only and do not expose this demonstration publicly.
+The September 13 verification used an older runtime. Subsequent dependency
+updates are covered by the [September 15 recovery record](runtime_recovery.md),
+including the compatibility fix in #111. We still use trusted local media and
+do not expose this demonstration publicly; operational safeguards remain #80.
+
+After a Docker Desktop/WSL restart, a stopped backend can report a missing
+`docker-desktop-bind-mounts` path. With the repository and model files available
+again, we recreate the backend from the same Compose project and environment:
+
+```bash
+docker compose -f docker-compose.app.yml -f docker-compose.gpu.yml up -d --force-recreate --wait backend
+```
+
+For CPU mode we omit the GPU override. An isolated project also needs its
+original `-p` and `--env-file` arguments. We do not delete volumes to repair a
+stale bind mount. A healthy frontend `/healthz` alone does not prove that the
+backend is ready; `/api/ready` checks the application through the proxy.
 
 ## Live Browser Check
 
 The dedicated check runs against an already healthy stack, with no API mocks.
 It creates one stored image session for each desktop/mobile test. We use an
 isolated Compose project for verification rather than a thesis evidence database.
-From `frontend/`, with Node 24 and a local image:
+From `frontend/`, with the Node version in `.nvmrc` and a local image:
 
 ```bash
 npm ci
@@ -151,8 +164,8 @@ STACK_SESSION_ID=1 STACK_EXPECTED_ASSET_SHA256=<recorded-hash> npm run test:stac
 
 The check saves screenshots and a JSON evidence attachment in the ignored
 `frontend/test-results/` directory. CI validates both Compose variants, builds
-the frontend image, and checks Nginx/SPA routing, alongside existing unit,
-database, and mocked browser tests. The real GPU workflow is a local check;
+both application images, and checks backend dependencies/imports and Nginx/SPA
+routing, alongside existing unit, database, and mocked browser tests. The real GPU workflow is a local check;
 it is not presented as a GitHub-hosted GPU test or an accuracy benchmark.
 
 ## Verification Record
