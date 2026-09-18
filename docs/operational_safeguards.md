@@ -126,6 +126,50 @@ capabilities, per-request timings and budget outcomes. It exits nonzero on a
 warning or unavailable resource evidence. Final representative measurements,
 broader scenarios and release-frozen evidence remain issue #79.
 
+## Verification Record: 18 September 2026
+
+We measured commit `6a518673d22c71a9536f1176cf2673c1f328bcc4` with a clean
+working tree on the isolated `traffic-stack-check` GPU stack. The backend was
+recreated before inference. The device was an RTX 5060 Laptop GPU with 8,151 MiB
+reported memory and driver 616.92. We used the existing experimental VisDrone
+YOLO26m profile; the model and its failed quality-gate status did not change.
+
+| Measurement | Observed | Budget | Outcome |
+| --- | ---: | ---: | --- |
+| First image upload-to-result | 21.74 s | 60 s | Pass |
+| Warm image median, three requests | 0.143 s | 10 s | Pass |
+| Short video upload-to-completion | 4.27 s | 120 s | Pass |
+| Sampled backend cgroup memory, maximum | 2,965.11 MiB | 4,096 MiB | Pass |
+| Sampled whole-device GPU memory, maximum | 1,085 MiB | 6,144 MiB | Pass |
+
+The video produced three sampled frames, equivalent to 0.703 sampled frames per
+elapsed second including upload, decoding, storage and polling. This is not
+camera FPS or inference-only throughput. We collected 22 samples per resource
+with no sampling errors. The compact [measurement record](../data/evaluation/operational_budget.json)
+contains exact timings, media hashes, request/session IDs, capabilities and the
+backend image digest. This small single-run check is not a load test or final
+system evaluation, and sampled memory is not a guaranteed peak.
+
+Local verification passed 400 Python tests, 10 PostgreSQL integration tests,
+104 frontend unit tests, eight mocked browser scenarios and two live Compose
+browser workflows. The ordinary Python run skips the 10 integration tests;
+we ran them separately against a disposable database. Ruff, frontend lint,
+formatting, type checking and container builds passed. Desktop and 320-pixel
+mobile screenshots showed loaded result images and no horizontal overflow.
+Both live image workflows retained 94 detections and the same annotated-asset
+hash as the preceding runtime check; this is regression evidence, not accuracy.
+
+Cleanup was refused with the API running. With the API stopped, its dry run
+found no expired orphan files. Automated tests exercise deletion only in
+temporary directories and preserve database-referenced media. We restarted the
+API afterward; existing image/video results remained available.
+
+Processing deadlines are cooperative and separate from proxy request timeouts.
+In particular, a synchronous image can spend time waiting before processing;
+the proxy may time out first. These limits do not promise hard cancellation of
+native operations or total request latency. Saved records and their media have
+no automatic expiry, so retention does not impose a total disk quota.
+
 ## References
 
 The timeout boundary follows Python's [executor shutdown behavior](https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.Executor.shutdown).
