@@ -9,6 +9,7 @@ from app.api.dependencies import (
     create_application_services,
 )
 from app.api.errors import register_error_handlers
+from app.api.request_logging import RequestLoggingMiddleware
 from app.api.routes.analysis_results import create_analysis_result_router
 from app.api.routes.assets import create_asset_router
 from app.api.routes.capabilities import create_capabilities_router
@@ -16,6 +17,7 @@ from app.api.routes.health import create_health_router
 from app.api.routes.image_analyses import create_image_analysis_router
 from app.api.routes.video_analyses import create_video_analysis_router
 from app.api.settings import ApiSettings
+from app.logging_config import configure_application_logging
 
 
 def create_app(
@@ -27,6 +29,7 @@ def create_app(
 
     @asynccontextmanager
     async def lifespan(application: FastAPI):
+        configure_application_logging()
         services = (
             service_factory()
             if service_factory is not None
@@ -51,7 +54,9 @@ def create_app(
             allow_credentials=False,
             allow_methods=["*"],
             allow_headers=["*"],
+            expose_headers=["X-Request-ID", "Retry-After"],
         )
+    application.add_middleware(RequestLoggingMiddleware)
     register_error_handlers(application)
     application.include_router(
         create_capabilities_router(settings),

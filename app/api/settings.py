@@ -1,5 +1,5 @@
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field, fields
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -12,6 +12,7 @@ from app.config import (
     API_VIDEO_UPLOAD_DIR,
 )
 from app.model_profile import DEVICE_PATTERN
+from app.services.workload import WorkloadLimits
 
 BYTES_PER_MEGABYTE = 1024 * 1024
 
@@ -35,6 +36,7 @@ class ApiSettings:
     max_video_upload_bytes: int = 500 * BYTES_PER_MEGABYTE
     video_workers: int = 1
     model_device: str | None = None
+    workload: WorkloadLimits = field(default_factory=WorkloadLimits)
 
     @classmethod
     def from_environment(cls) -> "ApiSettings":
@@ -66,6 +68,27 @@ class ApiSettings:
             "API_MAX_VIDEO_UPLOAD_MB", default=500
         )
         video_workers = _positive_environment_integer("API_VIDEO_WORKERS", default=1)
+        defaults = WorkloadLimits()
+        try:
+            workload = WorkloadLimits(
+                **{
+                    item.name: (
+                        float if item.name == "min_sampling_interval_seconds" else int
+                    )(
+                        os.getenv(
+                            f"API_{item.name.upper()}",
+                            str(getattr(defaults, item.name)),
+                        )
+                    )
+                    for item in fields(defaults)
+                }
+            )
+        except ValueError as error:
+            raise ApiSettingsError("Invalid API workload limits.") from error
+        if video_workers > min(4, workload.max_inflight_analyses):
+            raise ApiSettingsError(
+                "API_VIDEO_WORKERS cannot exceed 4 or analysis capacity."
+            )
         model_device = os.getenv("API_DEVICE")
         if model_device is not None and not DEVICE_PATTERN.fullmatch(model_device):
             raise ApiSettingsError("API_DEVICE must be cpu, cuda, or cuda:<index>")
@@ -77,6 +100,7 @@ class ApiSettings:
             max_video_upload_bytes=max_video_upload_mb * BYTES_PER_MEGABYTE,
             video_workers=video_workers,
             model_device=model_device,
+            workload=workload,
         )
 
 

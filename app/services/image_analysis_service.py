@@ -1,7 +1,9 @@
+import logging
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 from threading import Lock
+from time import monotonic
 from typing import BinaryIO
 from uuid import UUID, uuid4
 
@@ -21,10 +23,18 @@ from app.services.detection_service import (
 from app.services.grid_counting_service import count_detections_by_grid
 from app.services.image_upload_service import (
     ImageUploadPolicy,
+    ImageUploadTooLargeError,
     validate_image_upload,
 )
 from app.services.output_service import save_detection_output
 from app.services.preprocessing_service import preprocess_image_for_detection
+from app.services.workload import (
+    AnalysisTimeoutError,
+    WorkloadAdmission,
+    WorkloadLimits,
+)
+
+LOGGER = logging.getLogger(__name__)
 
 
 class InvalidImageAnalysisOptionsError(ValueError):
@@ -55,6 +65,8 @@ class ImageAnalysisService:
         alert_rules: Sequence[ThresholdAlertRule] = (),
         persistence_function: Callable = save_image_detection_results,
         asset_id_factory: Callable[[], UUID] = uuid4,
+        limits: WorkloadLimits | None = None,
+        admission: WorkloadAdmission | None = None,
     ) -> None:
         if max_grid_dimension < 1:
             raise ValueError("Maximum grid dimension must be positive.")
@@ -69,6 +81,10 @@ class ImageAnalysisService:
         self._persistence_function = persistence_function
         self._asset_id_factory = asset_id_factory
         self._analysis_lock = Lock()
+        self._limits = limits or WorkloadLimits()
+        self._admission = admission or WorkloadAdmission(
+            self._limits.max_inflight_analyses
+        )
 
     def analyze_upload(
         self,
@@ -86,20 +102,52 @@ class ImageAnalysisService:
             grid_columns,
             max_dimension=self._max_grid_dimension,
         )
-        upload = validate_image_upload(
-            file,
-            filename=filename,
-            content_type=content_type,
-            policy=self._upload_policy,
-        )
-
-        with self._analysis_lock:
-            return self._analyze_validated_upload(
-                upload,
-                session_name=session_name,
-                grid_rows=grid_rows,
-                grid_columns=grid_columns,
+        self._admission.acquire()
+        started = monotonic()
+        try:
+            upload = validate_image_upload(
+                file,
+                filename=filename,
+                content_type=content_type,
+                policy=self._upload_policy,
             )
+            height, width = upload.image.shape[:2]
+            if (
+                int(width * self._model_profile.scale_factor)
+                * int(height * self._model_profile.scale_factor)
+                > self._limits.max_processed_pixels
+            ):
+                raise ImageUploadTooLargeError(
+                    "The processed image exceeds the configured pixel limit."
+                )
+            if not self._analysis_lock.acquire(timeout=self._limits.max_queue_seconds):
+                raise AnalysisTimeoutError("Image queue deadline exceeded.")
+            try:
+                result = self._analyze_validated_upload(
+                    upload,
+                    session_name=session_name,
+                    grid_rows=grid_rows,
+                    grid_columns=grid_columns,
+                    deadline=monotonic() + self._limits.max_processing_seconds,
+                )
+            finally:
+                self._analysis_lock.release()
+            LOGGER.info(
+                "image_completed",
+                extra={
+                    "session_id": result.session_id,
+                    "duration_seconds": round(monotonic() - started, 6),
+                },
+            )
+            return result
+        except Exception:
+            LOGGER.exception(
+                "image_failed",
+                extra={"duration_seconds": round(monotonic() - started, 6)},
+            )
+            raise
+        finally:
+            self._admission.release()
 
     def _analyze_validated_upload(
         self,
@@ -108,6 +156,7 @@ class ImageAnalysisService:
         session_name,
         grid_rows,
         grid_columns,
+        deadline,
     ) -> ImageAnalysisResult:
         asset_id = self._asset_id_factory()
         input_path = self._upload_directory / f"{asset_id}{upload.suffix}"
@@ -131,6 +180,8 @@ class ImageAnalysisService:
             )
             if not results:
                 raise RuntimeError("Image detection returned no result object.")
+            if monotonic() >= deadline:
+                raise AnalysisTimeoutError("Image processing deadline exceeded.")
 
             first_result = results[0]
             class_mapping = self._model_profile.class_mapping_dict()
@@ -160,6 +211,8 @@ class ImageAnalysisService:
                 expected_width=processed_width,
                 expected_height=processed_height,
             )
+            if monotonic() >= deadline:
+                raise AnalysisTimeoutError("Image processing deadline exceeded.")
             stored_result = self._persistence_function(
                 image_path=input_path,
                 image_width=processed_width,

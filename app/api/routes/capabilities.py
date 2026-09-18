@@ -48,6 +48,12 @@ def create_capabilities_router(settings: ApiSettings) -> APIRouter:
                 max_grid_dimension=settings.max_grid_dimension,
                 default_sampling_interval_seconds=(DEFAULT_SAMPLING_INTERVAL_SECONDS),
                 max_sampling_interval_seconds=MAX_SAMPLING_INTERVAL_SECONDS,
+                min_sampling_interval_seconds=settings.workload.min_sampling_interval_seconds,
+                max_video_duration_seconds=settings.workload.max_video_duration_seconds,
+                max_video_source_frames=settings.workload.max_video_source_frames,
+                max_sampled_frames=settings.workload.max_sampled_frames,
+                max_processed_pixels=settings.workload.max_processed_pixels,
+                max_inflight_analyses=settings.workload.max_inflight_analyses,
             ),
         )
 

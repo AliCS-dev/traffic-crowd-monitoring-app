@@ -11,6 +11,10 @@ output after dependency updates; it does not supersede the frozen quality gate.
 The [quality roadmap](../../quality_roadmap.md) links the planned v2 evaluation
 and accuracy work. No v2 accuracy result has been produced yet.
 
+Application limits and preliminary resource budgets are recorded separately in
+the [operational safeguards guide](../operational_safeguards.md). Its upload,
+video and memory measurements do not change the model-quality results below.
+
 ## Current Final Result
 
 The selected VisDrone YOLO26m model **failed the final held-out quality gate**.

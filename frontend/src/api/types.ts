@@ -36,6 +36,12 @@ export interface AnalysisCapabilitiesResponse {
     max_grid_dimension: number;
     default_sampling_interval_seconds: number;
     max_sampling_interval_seconds: number;
+    min_sampling_interval_seconds: number;
+    max_video_duration_seconds: number;
+    max_video_source_frames: number;
+    max_sampled_frames: number;
+    max_processed_pixels: number;
+    max_inflight_analyses: number;
   };
 }
 

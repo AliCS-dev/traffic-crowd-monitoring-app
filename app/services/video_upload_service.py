@@ -88,7 +88,7 @@ def store_validated_video_upload(
             )
 
         temporary_path.replace(final_path)
-        metadata = _inspect_video(final_path, video_reader_factory)
+        metadata = _inspect_video(final_path, video_reader_factory, policy)
         if metadata.width * metadata.height > policy.max_frame_pixels:
             raise VideoUploadTooLargeError(
                 "The video frame dimensions exceed the configured pixel limit."
@@ -144,11 +144,19 @@ def _header_matches_suffix(header: bytes, suffix: str) -> bool:
     return False
 
 
-def _inspect_video(path: Path, video_reader_factory) -> VideoMetadata:
+def _inspect_video(
+    path: Path, video_reader_factory, policy: VideoUploadPolicy
+) -> VideoMetadata:
     try:
         with video_reader_factory(path) as reader:
             metadata = reader.metadata
+            if metadata.width * metadata.height > policy.max_frame_pixels:
+                raise VideoUploadTooLargeError(
+                    "The video frame dimensions exceed the configured pixel limit."
+                )
             first_frame = reader.read_next_frame()
+    except VideoUploadTooLargeError:
+        raise
     except (OSError, RuntimeError, ValueError) as error:
         raise InvalidVideoUploadError(
             "The uploaded file is not a readable video."

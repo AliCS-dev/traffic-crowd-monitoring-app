@@ -5,6 +5,8 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHttpException
 
+from app.services.workload import AnalysisBusyError, AnalysisTimeoutError
+
 LOGGER = logging.getLogger(__name__)
 
 
@@ -21,6 +23,27 @@ def error_payload(code: str, message: str) -> dict[str, dict[str, str]]:
 
 
 def register_error_handlers(application: FastAPI) -> None:
+    @application.exception_handler(AnalysisBusyError)
+    async def handle_busy(_request: Request, _error: AnalysisBusyError) -> JSONResponse:
+        return JSONResponse(
+            status_code=503,
+            headers={"Retry-After": "5"},
+            content=error_payload(
+                "analysis_busy", "Analysis capacity is full. Please retry later."
+            ),
+        )
+
+    @application.exception_handler(AnalysisTimeoutError)
+    async def handle_timeout(
+        _request: Request, _error: AnalysisTimeoutError
+    ) -> JSONResponse:
+        return JSONResponse(
+            status_code=504,
+            content=error_payload(
+                "analysis_timeout", "Analysis exceeded the configured time limit."
+            ),
+        )
+
     @application.exception_handler(ApiError)
     async def handle_api_error(_request: Request, error: ApiError) -> JSONResponse:
         return JSONResponse(
@@ -62,6 +85,9 @@ def register_error_handlers(application: FastAPI) -> None:
         )
         return JSONResponse(
             status_code=500,
+            headers={
+                "X-Request-ID": getattr(request.state, "request_id", "unavailable")
+            },
             content=error_payload(
                 "internal_error", "An unexpected server error occurred."
             ),
