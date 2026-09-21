@@ -573,3 +573,20 @@ outage checks were exercised against isolated test databases. The
 [Compose guide](compose_stack.md#verification-record) records the commands,
 observations, hashes, and limitations for thesis writing. The model-quality
 decisions did not change, and no image packages were published.
+
+### Issue #80: Operational Safeguards (18 September 2026)
+
+We bounded queued and running analyses, video duration, decoding, sampling and
+retained detection records. Request IDs now connect API calls to structured
+processing logs. Cooperative deadlines and shutdown checks make failed work
+easier to diagnose and recover, without introducing a separate queue service.
+
+We also added an offline, dry-run-first cleanup command for expired orphan
+media. Database references protect saved results, and a maintenance lock blocks
+cleanup while an API instance holds its connection. All writers must still stop
+before maintenance, including after database restarts.
+
+The [safeguards report](operational_safeguards.md) records the limits, tests and
+predeclared resource budgets. The isolated GPU workflow passed those preliminary
+budgets. Model accuracy and dense-crowd support remain unchanged; these checks
+establish operational bounds, not readiness for real-world monitoring.

@@ -57,7 +57,9 @@ class FakeReader:
         return None
 
 
-def create_service(tmp_path, monkeypatch, *, processing_error=None, alert_rules=()):
+def create_service(
+    tmp_path, monkeypatch, *, processing_error=None, alert_rules=(), **service_options
+):
     executor = CapturingExecutor()
     calls = {"detector": 0, "progress": [], "failed": [], "completed": []}
     path = tmp_path / "stored.mp4"
@@ -121,6 +123,7 @@ def create_service(tmp_path, monkeypatch, *, processing_error=None, alert_rules=
         read_job=lambda session_id: {"session_id": session_id},
         video_reader_factory=FakeReader,
         asset_id_factory=lambda: ASSET_ID,
+        **service_options,
     )
     return service, executor, calls
 
@@ -173,6 +176,152 @@ def test_upload_returns_queued_job_before_detector_runs_and_worker_persists_grid
     assert calls["failed"] == []
 
 
+def submit(service, **overrides):
+    options = dict(
+        filename="traffic.mp4",
+        content_type="video/mp4",
+        session_name=None,
+        sampling_interval_seconds=1,
+        grid_rows=None,
+        grid_columns=None,
+    )
+    options.update(overrides)
+    return service.submit_upload(object(), **options)
+
+
+def test_busy_queue_rejects_before_upload_and_releases_after_completion(
+    tmp_path, monkeypatch
+):
+    from app.services.workload import AnalysisBusyError, WorkloadLimits
+
+    service, executor, calls = create_service(
+        tmp_path, monkeypatch, limits=WorkloadLimits(max_inflight_analyses=1)
+    )
+    submit(service)
+    with pytest.raises(AnalysisBusyError):
+        submit(service)
+    assert calls["detector"] == 0
+    executor.run()
+    submit(service)
+    executor.run()
+    assert len(calls["completed"]) == 2
+
+
+@pytest.mark.parametrize(
+    "limits",
+    [
+        {"max_video_duration_seconds": 1},
+        {"max_video_source_frames": 2},
+        {"max_sampled_frames": 1},
+        {"max_processed_pixels": 1},
+    ],
+)
+def test_work_limits_remove_rejected_upload_and_release_capacity(
+    tmp_path, monkeypatch, limits
+):
+    from app.services.workload import WorkloadLimits
+
+    service, executor, calls = create_service(
+        tmp_path, monkeypatch, limits=WorkloadLimits(**limits)
+    )
+    with pytest.raises(InvalidVideoAnalysisOptionsError):
+        submit(service)
+    assert not (tmp_path / "stored.mp4").exists()
+    assert executor.work is None
+    assert calls["detector"] == 0
+    # A second rejection must be validation, not a leaked admission slot.
+    with pytest.raises(InvalidVideoAnalysisOptionsError):
+        submit(service)
+
+
+def test_sampling_floor_rejects_before_upload(tmp_path, monkeypatch):
+    service, executor, _calls = create_service(tmp_path, monkeypatch)
+    with pytest.raises(InvalidVideoAnalysisOptionsError):
+        submit(service, sampling_interval_seconds=0.1)
+    assert (tmp_path / "stored.mp4").exists()
+    assert executor.work is None
+
+
+def test_queue_timeout_does_not_load_detector_and_releases_slot(tmp_path, monkeypatch):
+    from app.services.workload import WorkloadLimits
+
+    now = [100.0]
+    monkeypatch.setattr(service_module, "monotonic", lambda: now[0])
+    service, executor, calls = create_service(
+        tmp_path,
+        monkeypatch,
+        limits=WorkloadLimits(max_inflight_analyses=1, max_queue_seconds=1),
+    )
+    submit(service)
+    now[0] = 102
+    executor.run()
+    assert calls["detector"] == 0
+    assert calls["failed"][0][1] == "video_queue_timeout"
+    submit(service)
+    executor.run()
+    assert len(calls["completed"]) == 1
+
+
+def test_processing_deadline_is_public_and_releases_slot(tmp_path, monkeypatch):
+    from app.services.workload import WorkloadLimits
+
+    now = [100.0]
+    monkeypatch.setattr(service_module, "monotonic", lambda: now[0])
+    service, executor, calls = create_service(
+        tmp_path,
+        monkeypatch,
+        limits=WorkloadLimits(max_inflight_analyses=1, max_processing_seconds=1),
+    )
+    original = service._detector_provider
+
+    def slow_detector():
+        now[0] += 2
+        return original()
+
+    service._detector_provider = slow_detector
+    submit(service)
+    executor.run()
+    assert calls["completed"] == []
+    assert calls["failed"][0][1] == "video_processing_timeout"
+    assert calls["failed"][0][2] == PUBLIC_PROCESSING_FAILURE
+    service._admission.acquire()
+    service._admission.release()
+
+
+def test_worker_context_correlates_request_and_session(tmp_path, monkeypatch, caplog):
+    import logging
+
+    from app.logging_config import request_id_context
+
+    caplog.set_level(logging.INFO)
+    service, executor, _calls = create_service(tmp_path, monkeypatch)
+    token = request_id_context.set("test-request")
+    submit(service)
+    request_id_context.reset(token)
+    assert executor.work[1].request_id == "test-request"
+    executor.run()
+    assert request_id_context.get() is None
+    assert any(
+        record.getMessage() == "video_completed" and record.session_id == 42
+        for record in caplog.records
+    )
+
+
+def test_executor_rejection_cleans_input_and_returns_capacity(tmp_path, monkeypatch):
+    service, executor, calls = create_service(tmp_path, monkeypatch)
+
+    def unavailable(*_args):
+        raise RuntimeError("executor stopped")
+
+    executor.submit = unavailable
+    with pytest.raises(RuntimeError):
+        submit(service)
+    assert calls["failed"][0][1] == "worker_unavailable"
+    assert not (tmp_path / "stored.mp4").exists()
+    service._admission.acquire()
+    service._admission.release()
+
+
 def test_worker_failure_is_persisted_without_private_details(tmp_path, monkeypatch):
     service, executor, calls = create_service(
         tmp_path, monkeypatch, processing_error=RuntimeError("private GPU detail")
@@ -210,3 +359,59 @@ def test_invalid_grid_is_rejected_before_upload(tmp_path, monkeypatch):
         )
 
     assert calls["detector"] == 0
+
+
+def test_result_budget_removes_partial_frames(tmp_path, monkeypatch):
+    from app.services.workload import WorkloadLimits
+
+    service, executor, calls = create_service(
+        tmp_path, monkeypatch, limits=WorkloadLimits(max_video_detection_records=1)
+    )
+    original = service_module.process_sampled_video_frames
+
+    def two_results(*args):
+        yield from original(*args)
+        yield from original(*args)
+
+    monkeypatch.setattr(service_module, "process_sampled_video_frames", two_results)
+    submit(service)
+    executor.run()
+    assert calls["completed"] == []
+    assert calls["failed"][0][1] == "video_limit_exceeded"
+    assert list((tmp_path / "outputs").iterdir()) == []
+
+
+def test_shutdown_rejects_new_work_and_fails_queued_work(tmp_path, monkeypatch):
+    from app.services.workload import AnalysisBusyError
+
+    service, executor, calls = create_service(tmp_path, monkeypatch)
+    submit(service)
+    service.close()
+    with pytest.raises(AnalysisBusyError):
+        submit(service)
+    executor.run()
+    assert calls["failed"][0][1] == "worker_interrupted"
+    assert calls["detector"] == 0
+
+
+def test_database_failure_recording_still_releases_capacity(
+    tmp_path, monkeypatch, caplog
+):
+    service, executor, _calls = create_service(
+        tmp_path, monkeypatch, processing_error=RuntimeError("inference failed")
+    )
+
+    def fail_database(*_args):
+        raise RuntimeError("database unavailable")
+
+    service._fail_job = fail_database
+    submit(service)
+    with pytest.raises(RuntimeError, match="database unavailable"):
+        executor.run()
+    assert any(
+        record.getMessage() == "video_failure_recording_failed"
+        and record.session_id == 42
+        for record in caplog.records
+    )
+    service._admission.acquire()
+    service._admission.release()

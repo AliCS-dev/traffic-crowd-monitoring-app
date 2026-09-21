@@ -5,6 +5,7 @@ from concurrent.futures import Executor, ThreadPoolExecutor
 from dataclasses import dataclass, replace
 from pathlib import Path
 from threading import Event
+from time import monotonic
 from uuid import UUID, uuid4
 
 from app.crowd_analysis import DenseCrowdAnalysisDecision
@@ -17,6 +18,7 @@ from app.database.video_job_repository import (
     mark_video_job_processing,
     update_video_job_progress,
 )
+from app.logging_config import request_id_context
 from app.model_profile import RuntimeModelProfile
 from app.services.alert_service import (
     ThresholdAlertRule,
@@ -34,6 +36,12 @@ from app.services.video_upload_service import (
     StoredVideoUpload,
     VideoUploadPolicy,
     store_validated_video_upload,
+)
+from app.services.workload import (
+    AnalysisBusyError,
+    AnalysisTimeoutError,
+    WorkloadAdmission,
+    WorkloadLimits,
 )
 
 LOGGER = logging.getLogger(__name__)
@@ -65,6 +73,8 @@ class VideoWorkItem:
     sampling_interval_seconds: float
     grid_rows: int | None
     grid_columns: int | None
+    submitted_at: float = 0
+    request_id: str | None = None
 
 
 class VideoAnalysisService:
@@ -91,6 +101,8 @@ class VideoAnalysisService:
         video_reader_factory: Callable = VideoReader,
         output_writer: Callable = save_image_output,
         asset_id_factory: Callable[[], UUID] = uuid4,
+        limits: WorkloadLimits | None = None,
+        admission: WorkloadAdmission | None = None,
     ) -> None:
         if worker_count < 1:
             raise ValueError("Video worker count must be positive.")
@@ -116,8 +128,26 @@ class VideoAnalysisService:
         self._output_writer = output_writer
         self._asset_id_factory = asset_id_factory
         self._stop = Event()
+        self._limits = limits or WorkloadLimits()
+        self._admission = admission or WorkloadAdmission(
+            self._limits.max_inflight_analyses
+        )
 
     def submit_upload(
+        self,
+        file,
+        **options,
+    ) -> QueuedVideoAnalysis:
+        if self._stop.is_set():
+            raise AnalysisBusyError("The worker is stopping.")
+        self._admission.acquire()
+        try:
+            return self._submit_reserved(file, **options)
+        except Exception:
+            self._admission.release()
+            raise
+
+    def _submit_reserved(
         self,
         file,
         *,
@@ -138,12 +168,31 @@ class VideoAnalysisService:
             upload_directory=self._upload_directory,
             policy=self._upload_policy,
         )
-        sampled_total = calculate_sampled_frame_count(
-            stored.metadata.frame_count,
-            stored.metadata.fps,
-            sampling_interval_seconds,
-        )
         try:
+            metadata = stored.metadata
+            if (
+                not math.isfinite(metadata.fps)
+                or metadata.fps <= 0
+                or metadata.frame_count < 1
+                or metadata.frame_count > self._limits.max_video_source_frames
+                or metadata.frame_count / metadata.fps
+                > self._limits.max_video_duration_seconds
+                or int(metadata.width * self._profile.scale_factor)
+                * int(metadata.height * self._profile.scale_factor)
+                > self._limits.max_processed_pixels
+            ):
+                raise InvalidVideoAnalysisOptionsError(
+                    "Video duration, frame count or processed dimensions "
+                    "exceed the configured limits."
+                )
+            sampled_total = calculate_sampled_frame_count(
+                metadata.frame_count, metadata.fps, sampling_interval_seconds
+            )
+            if sampled_total > self._limits.max_sampled_frames:
+                raise InvalidVideoAnalysisOptionsError(
+                    "Too many sampled frames. Increase the sampling interval "
+                    "or use a shorter video."
+                )
             created: CreatedVideoJob = self._create_job(
                 video_path=stored.path,
                 original_filename=stored.original_filename,
@@ -166,16 +215,25 @@ class VideoAnalysisService:
             sampling_interval_seconds=sampling_interval_seconds,
             grid_rows=grid_rows,
             grid_columns=grid_columns,
+            submitted_at=monotonic(),
+            request_id=request_id_context.get(),
         )
         try:
             self._executor.submit(self._process, item)
         except Exception:
-            self._fail_job(
-                created.session_id,
-                "worker_unavailable",
-                "The video worker is unavailable. Please retry the upload.",
-            )
+            try:
+                self._fail_job(
+                    created.session_id,
+                    "worker_unavailable",
+                    "The video worker is unavailable. Please retry the upload.",
+                )
+            finally:
+                stored.path.unlink(missing_ok=True)
             raise
+        LOGGER.info(
+            "video_queued",
+            extra={"session_id": created.session_id, "sampled_frames": sampled_total},
+        )
         return QueuedVideoAnalysis(
             session_id=created.session_id,
             status="queued",
@@ -194,19 +252,71 @@ class VideoAnalysisService:
 
     def _process(self, item: VideoWorkItem) -> None:
         output_paths: list[Path] = []
-        try:
+        started = monotonic()
+        token = request_id_context.set(item.request_id)
+        deadline = started + self._limits.max_processing_seconds
+        failure_code = "video_processing_failed"
+
+        def check_frame(frame_number=0, frame=None):
             if self._stop.is_set():
-                raise RuntimeError("Video worker is shutting down.")
+                raise AnalysisTimeoutError("Worker shutdown requested.")
+            if monotonic() >= deadline:
+                raise AnalysisTimeoutError("Video processing deadline exceeded.")
+            if frame is not None:
+                height, width = frame.shape[:2]
+                if (
+                    frame_number >= self._limits.max_video_source_frames
+                    or frame_number / reader.metadata.fps
+                    >= self._limits.max_video_duration_seconds
+                    or int(width * self._profile.scale_factor)
+                    * int(height * self._profile.scale_factor)
+                    > self._limits.max_processed_pixels
+                ):
+                    raise InvalidVideoAnalysisOptionsError(
+                        "Decoded video exceeds processing limits."
+                    )
+
+        try:
+            if started - item.submitted_at > self._limits.max_queue_seconds:
+                failure_code = "video_queue_timeout"
+                raise AnalysisTimeoutError("Video queue deadline exceeded.")
+            check_frame()
             self._mark_processing(item.session_id)
             detector = self._detector_provider()
             results = []
+            detection_count = 0
             with self._video_reader_factory(item.path) as reader:
-                sampled = sample_video_frames(reader, item.sampling_interval_seconds)
+
+                def bounded_samples():
+                    for index, sample in enumerate(
+                        sample_video_frames(
+                            reader,
+                            item.sampling_interval_seconds,
+                            check_frame=check_frame,
+                        )
+                    ):
+                        if (
+                            index >= self._limits.max_sampled_frames
+                            or sample.timestamp_seconds
+                            >= self._limits.max_video_duration_seconds
+                        ):
+                            raise InvalidVideoAnalysisOptionsError(
+                                "Decoded video exceeds sample or duration limits."
+                            )
+                        yield sample
+
                 for result in process_sampled_video_frames(
-                    sampled, detector, self._profile
+                    bounded_samples(), detector, self._profile
                 ):
-                    if self._stop.is_set():
-                        raise RuntimeError("Video worker is shutting down.")
+                    check_frame()
+                    detection_count += len(result.detection_records)
+                    if (
+                        len(results) >= self._limits.max_sampled_frames
+                        or detection_count > self._limits.max_video_detection_records
+                    ):
+                        raise InvalidVideoAnalysisOptionsError(
+                            "Video result storage budget exceeded."
+                        )
                     if item.grid_rows is not None and item.grid_columns is not None:
                         grid = count_detections_by_grid(
                             result.detection_records,
@@ -228,16 +338,59 @@ class VideoAnalysisService:
                     output_paths.append(result.output_file_path)
                     results.append(result)
                     self._update_progress(item.session_id, len(results))
+            check_frame()
             self._complete_job(item.session_id, results)
-        except Exception:
-            for output_path in output_paths:
-                output_path.unlink(missing_ok=True)
-            LOGGER.exception("Video analysis job %s failed", item.session_id)
-            self._fail_job(
-                item.session_id,
-                "video_processing_failed",
-                PUBLIC_PROCESSING_FAILURE,
+            LOGGER.info(
+                "video_completed",
+                extra={
+                    "session_id": item.session_id,
+                    "sampled_frames": len(results),
+                    "duration_seconds": round(monotonic() - started, 6),
+                },
             )
+        except Exception as error:
+            if (
+                isinstance(error, AnalysisTimeoutError)
+                and failure_code != "video_queue_timeout"
+            ):
+                failure_code = (
+                    "worker_interrupted"
+                    if self._stop.is_set()
+                    else "video_processing_timeout"
+                )
+            elif isinstance(error, InvalidVideoAnalysisOptionsError):
+                failure_code = "video_limit_exceeded"
+            for output_path in output_paths:
+                try:
+                    output_path.unlink(missing_ok=True)
+                except OSError:
+                    LOGGER.exception(
+                        "video_partial_cleanup_failed",
+                        extra={"session_id": item.session_id},
+                    )
+            LOGGER.exception(
+                "video_failed",
+                extra={
+                    "session_id": item.session_id,
+                    "failure_code": failure_code,
+                    "duration_seconds": round(monotonic() - started, 6),
+                },
+            )
+            try:
+                self._fail_job(
+                    item.session_id,
+                    failure_code,
+                    PUBLIC_PROCESSING_FAILURE,
+                )
+            except Exception:
+                LOGGER.exception(
+                    "video_failure_recording_failed",
+                    extra={"session_id": item.session_id},
+                )
+                raise
+        finally:
+            request_id_context.reset(token)
+            self._admission.release()
 
     def _store_frame_asset(self, result):
         if result.annotated_image is None:
@@ -280,10 +433,13 @@ class VideoAnalysisService:
         if (
             isinstance(sampling_interval_seconds, bool)
             or not math.isfinite(sampling_interval_seconds)
-            or not 0 < sampling_interval_seconds <= MAX_SAMPLING_INTERVAL_SECONDS
+            or not self._limits.min_sampling_interval_seconds
+            <= sampling_interval_seconds
+            <= MAX_SAMPLING_INTERVAL_SECONDS
         ):
             raise InvalidVideoAnalysisOptionsError(
-                "Sampling interval must be between 0 and 3600 seconds."
+                "Sampling interval must be between "
+                f"{self._limits.min_sampling_interval_seconds} and 3600 seconds."
             )
         if (grid_rows is None) != (grid_columns is None):
             raise InvalidVideoAnalysisOptionsError(

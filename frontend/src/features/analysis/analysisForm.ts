@@ -86,11 +86,12 @@ export function validateAnalysisDraft(
     samplingIntervalSeconds = Number(draft.samplingIntervalSeconds);
     if (
       !Number.isFinite(samplingIntervalSeconds) ||
-      samplingIntervalSeconds <= 0 ||
+      samplingIntervalSeconds <
+        capabilities.options.min_sampling_interval_seconds ||
       samplingIntervalSeconds >
         capabilities.options.max_sampling_interval_seconds
     ) {
-      errors.samplingIntervalSeconds = `Enter more than 0 and at most ${capabilities.options.max_sampling_interval_seconds} seconds.`;
+      errors.samplingIntervalSeconds = `Enter between ${capabilities.options.min_sampling_interval_seconds} and ${capabilities.options.max_sampling_interval_seconds} seconds.`;
     }
   }
 

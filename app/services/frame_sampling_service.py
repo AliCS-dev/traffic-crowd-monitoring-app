@@ -1,5 +1,5 @@
 import math
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 from dataclasses import dataclass
 
 import numpy as np
@@ -17,15 +17,21 @@ class SampledFrame:
 def sample_video_frames(
     video_reader: VideoReader,
     sampling_interval_seconds: float,
+    *,
+    check_frame: Callable | None = None,
 ) -> Iterator[SampledFrame]:
     fps = video_reader.metadata.fps
     frame_interval = calculate_frame_interval(fps, sampling_interval_seconds)
     frame_number = 0
 
     while True:
+        if check_frame is not None:
+            check_frame(frame_number, None)
         frame = video_reader.read_next_frame()
         if frame is None:
             return
+        if check_frame is not None:
+            check_frame(frame_number, frame)
 
         if frame_number % frame_interval == 0:
             yield SampledFrame(

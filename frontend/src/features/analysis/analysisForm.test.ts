@@ -35,10 +35,29 @@ const capabilities: AnalysisCapabilitiesResponse = {
     max_grid_dimension: 20,
     default_sampling_interval_seconds: 1,
     max_sampling_interval_seconds: 3600,
+    min_sampling_interval_seconds: 0.25,
+    max_video_duration_seconds: 300,
+    max_video_source_frames: 36000,
+    max_sampled_frames: 300,
+    max_processed_pixels: 40000000,
+    max_inflight_analyses: 3,
   },
 };
 
 describe("analysis form validation", () => {
+  it("rejects a video sampling interval below the server floor", () => {
+    const result = validateAnalysisDraft(
+      {
+        ...initialAnalysisFormDraft,
+        mode: "video",
+        samplingIntervalSeconds: "0.1",
+      },
+      capabilities,
+    );
+    expect(result.errors.samplingIntervalSeconds).toBe(
+      "Enter between 0.25 and 3600 seconds.",
+    );
+  });
   it("normalizes a valid image submission", () => {
     const file = new File(["image"], "AERIAL.JPG", { type: "image/jpeg" });
     const result = validateAnalysisDraft(
@@ -133,7 +152,7 @@ describe("analysis form validation", () => {
       sessionName: "Use at most 150 characters.",
       gridRows: "Enter 1-20.",
       gridColumns: "Enter 1-20.",
-      samplingIntervalSeconds: "Enter more than 0 and at most 3600 seconds.",
+      samplingIntervalSeconds: "Enter between 0.25 and 3600 seconds.",
     });
   });
 

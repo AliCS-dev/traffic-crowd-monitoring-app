@@ -120,6 +120,12 @@ def test_capabilities_report_public_runtime_constraints():
             "max_grid_dimension": 7,
             "default_sampling_interval_seconds": 1.0,
             "max_sampling_interval_seconds": 3600.0,
+            "min_sampling_interval_seconds": 0.25,
+            "max_video_duration_seconds": 300,
+            "max_video_source_frames": 36000,
+            "max_sampled_frames": 300,
+            "max_processed_pixels": 40000000,
+            "max_inflight_analyses": 3,
         },
     }
 
