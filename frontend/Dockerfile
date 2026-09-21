@@ -1,4 +1,4 @@
-FROM node:26-alpine@sha256:ef24c5053d50fdc3e4e56eb4e7ddb7861874ab0fdc797046ba897581deb8e868 AS build
+FROM node:26-alpine@sha256:dbaa92e5758cbbcf85d65d5403fdb530fe3442cbe8c6dbfb7ef23365450d5070 AS build
 WORKDIR /app
 COPY package.json package-lock.json .nvmrc ./
 RUN node -e "if (process.versions.node.split('.')[0] !== require('node:fs').readFileSync('.nvmrc', 'utf8').trim()) throw new Error('Docker Node version must match .nvmrc and CI')" \
@@ -8,7 +8,7 @@ COPY src/ ./src/
 ENV VITE_API_BASE_URL=""
 RUN npm run build
 
-FROM nginx:stable-alpine@sha256:dc5069ad14f19660b141b21236140b91656bf89bbc3e2417c70ae650cd66104c
+FROM nginx:stable-alpine@sha256:ef8676b33d681f272ba429b27658bdd7e640963279714c96bddf1dc76307f7b6
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /app/dist/ /usr/share/nginx/html/
 USER 101:101

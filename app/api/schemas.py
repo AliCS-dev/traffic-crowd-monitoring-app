@@ -43,6 +43,12 @@ class AnalysisOptionCapabilities(BaseModel):
     max_grid_dimension: int = Field(gt=0)
     default_sampling_interval_seconds: float = Field(gt=0)
     max_sampling_interval_seconds: float = Field(gt=0)
+    min_sampling_interval_seconds: float = Field(gt=0)
+    max_video_duration_seconds: int = Field(gt=0)
+    max_video_source_frames: int = Field(gt=0)
+    max_sampled_frames: int = Field(gt=0)
+    max_processed_pixels: int = Field(gt=0)
+    max_inflight_analyses: int = Field(gt=0)
 
 
 class AnalysisCapabilitiesResponse(BaseModel):

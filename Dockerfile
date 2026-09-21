@@ -24,6 +24,7 @@ COPY configs/runtime/ ./configs/runtime/
 COPY data/evaluation/dedicated_crowd_counting.json ./data/evaluation/dedicated_crowd_counting.json
 COPY scripts/migrate_database.py ./scripts/migrate_database.py
 COPY scripts/check_backend_runtime.py ./scripts/check_backend_runtime.py
+COPY scripts/cleanup_media.py ./scripts/cleanup_media.py
 RUN mkdir -p data/input data/output models /home/traffic/.config/ultralytics /home/traffic/.cache/matplotlib \
     && chown -R traffic:traffic data/input data/output /home/traffic
 
@@ -31,4 +32,4 @@ USER 10001:10001
 EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
     CMD ["python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/ready', timeout=8).close()"]
-CMD ["python", "-m", "uvicorn", "app.api.application:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]
+CMD ["python", "-m", "uvicorn", "app.api.application:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1", "--limit-concurrency", "16", "--timeout-graceful-shutdown", "30"]

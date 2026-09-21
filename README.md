@@ -53,6 +53,7 @@ images and sampled video frames.
 | Browser class filters | Implemented for detection records and frame/cell count tables |
 | Browser alert results | Implemented as read-only experimental threshold events |
 | Full application containers | Implemented with same-origin Nginx, backend, PostgreSQL, and explicit GPU mode |
+| Operational safeguards | Implemented with bounded workloads, request logs, deadlines, and offline orphan-media cleanup |
 
 The current detector gives us a measured starting point, but it is not reliable
 enough for final conclusions about aerial traffic or crowds. We compared three
@@ -67,6 +68,10 @@ The [quality-improvement roadmap](quality_roadmap.md) links the next accuracy,
 interface, and delivery issues. Current deployment checks are recorded in the
 [runtime recovery report](docs/runtime_recovery.md); model metrics remain in the
 [evaluation results index](docs/evaluation/results_index.md).
+
+The [operational safeguards guide](docs/operational_safeguards.md) records our
+workload limits, recovery boundaries, media retention and preliminary performance
+budgets. These checks concern application reliability, not detector accuracy.
 
 ## What We Use
 

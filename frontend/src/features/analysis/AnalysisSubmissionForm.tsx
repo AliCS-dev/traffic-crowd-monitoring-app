@@ -252,9 +252,9 @@ export function AnalysisSubmissionForm({
             slotProps={{
               htmlInput: {
                 inputMode: "decimal",
-                min: 0.01,
+                min: capabilities.options.min_sampling_interval_seconds,
                 max: capabilities.options.max_sampling_interval_seconds,
-                step: 0.1,
+                step: "any",
               },
             }}
             type="number"

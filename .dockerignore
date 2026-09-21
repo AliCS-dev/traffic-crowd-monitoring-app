@@ -13,6 +13,7 @@
 !scripts/
 !scripts/migrate_database.py
 !scripts/check_backend_runtime.py
+!scripts/cleanup_media.py
 **/__pycache__
 **/*.pyc
 **/.env*

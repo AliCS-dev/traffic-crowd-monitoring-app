@@ -1,0 +1,141 @@
+{
+  "purpose": "Operational smoke measurement, not final evaluation or accuracy",
+  "recorded_at": "2026-09-18T10:15:16.418404+00:00",
+  "commit": "6a518673d22c71a9536f1176cf2673c1f328bcc4",
+  "working_tree_dirty": false,
+  "backend_image": "sha256:03e92e4815de315ad17285cd2998b8948d28d34e05f35916c35a909e91da6eab",
+  "media": {
+    "image": {
+      "filename": "sample_image.jpg",
+      "sha256": "e494a93fde70cb0ee76442233499b4cc162219715336d5461cd0ca4ca81f7b4d",
+      "bytes": 62731
+    },
+    "video": {
+      "filename": "test_video.mp4",
+      "sha256": "3a247cda14c4bfd01d7d6a3a3db350b5154b9700e98c70ff014c9679d18ab1e6",
+      "bytes": 49024536
+    }
+  },
+  "budgets": {
+    "first_image_seconds": 60,
+    "warm_image_median_seconds": 10,
+    "video_seconds": 120,
+    "backend_sampled_memory_mib": 4096,
+    "gpu_device_sampled_memory_mib": 6144
+  },
+  "capabilities": {
+    "image": {
+      "extensions": [
+        ".jpg",
+        ".jpeg",
+        ".png"
+      ],
+      "mime_types": [
+        "image/jpeg",
+        "image/png"
+      ],
+      "mime_type_by_extension": {
+        ".jpg": "image/jpeg",
+        ".jpeg": "image/jpeg",
+        ".png": "image/png"
+      },
+      "max_upload_bytes": 10485760,
+      "max_pixels": 40000000
+    },
+    "video": {
+      "extensions": [
+        ".avi",
+        ".mkv",
+        ".mov",
+        ".mp4"
+      ],
+      "mime_types": [
+        "video/x-msvideo",
+        "video/x-matroska",
+        "video/quicktime",
+        "video/mp4"
+      ],
+      "mime_type_by_extension": {
+        ".avi": "video/x-msvideo",
+        ".mkv": "video/x-matroska",
+        ".mov": "video/quicktime",
+        ".mp4": "video/mp4"
+      },
+      "max_upload_bytes": 524288000,
+      "max_pixels": 40000000
+    },
+    "options": {
+      "max_session_name_length": 150,
+      "max_grid_dimension": 20,
+      "default_sampling_interval_seconds": 1.0,
+      "max_sampling_interval_seconds": 3600.0,
+      "min_sampling_interval_seconds": 0.25,
+      "max_video_duration_seconds": 300,
+      "max_video_source_frames": 36000,
+      "max_sampled_frames": 300,
+      "max_processed_pixels": 40000000,
+      "max_inflight_analyses": 3
+    }
+  },
+  "images": [
+    {
+      "session_id": 6,
+      "request_id": "e027aec9-c443-43e6-b8ee-4504931673a4",
+      "seconds": 21.743486285000017
+    },
+    {
+      "session_id": 7,
+      "request_id": "3807f11a-39e0-43ac-8482-65fc2639319d",
+      "seconds": 0.14739746999998715
+    },
+    {
+      "session_id": 8,
+      "request_id": "be8850b7-bf73-4474-8955-6bf3d1c74587",
+      "seconds": 0.14307086399981017
+    },
+    {
+      "session_id": 9,
+      "request_id": "1d56b243-6bff-4a47-87e5-258828253b76",
+      "seconds": 0.12618581900005665
+    }
+  ],
+  "video": {
+    "session_id": 10,
+    "seconds": 4.265452178000032,
+    "sampled_frames": 3,
+    "sampled_frames_per_second": 0.7033251985506089
+  },
+  "resource_sampling": {
+    "backend_samples": 22,
+    "gpu_samples": 22,
+    "errors": [],
+    "scope": "Sampled cgroup memory and whole GPU device use; not guaranteed allocation peaks. Other GPU applications affect readings."
+  },
+  "checks": {
+    "first_image_seconds": {
+      "observed": 21.743486285000017,
+      "maximum": 60,
+      "status": "pass"
+    },
+    "warm_image_median_seconds": {
+      "observed": 0.14307086399981017,
+      "maximum": 10,
+      "status": "pass"
+    },
+    "video_seconds": {
+      "observed": 4.265452178000032,
+      "maximum": 120,
+      "status": "pass"
+    },
+    "backend_sampled_memory_mib": {
+      "observed": 2965.10546875,
+      "maximum": 4096,
+      "status": "pass"
+    },
+    "gpu_device_sampled_memory_mib": {
+      "observed": 1085.0,
+      "maximum": 6144,
+      "status": "pass"
+    }
+  }
+}
