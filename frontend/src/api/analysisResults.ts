@@ -3,6 +3,22 @@ import type {
   MonitoringSessionSourceType,
 } from "./types.ts";
 
+export interface RuntimeProvenanceResult {
+  schema_version: 1;
+  captured_at: string;
+  application_commit: string | null;
+  source_dirty: boolean | null;
+  source_sha256: string;
+  python_version: string;
+  platform: string;
+  dependencies: Record<string, string>;
+  device: string;
+  gpu_name: string | null;
+  cuda_version: string | null;
+  cudnn_version: number | null;
+  container_id: string | null;
+}
+
 export interface ModelRunProfileResult {
   profile_id: string;
   model_id: string;
@@ -18,6 +34,7 @@ export interface ModelRunProfileResult {
   numeric_precision: "float16" | "float32";
   device: string;
   created_at: string;
+  runtime_provenance?: RuntimeProvenanceResult | null;
 }
 
 export interface InputSourceResult {

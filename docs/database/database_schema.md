@@ -85,6 +85,16 @@ older result was produced.
 Sessions created before migration `002` do not have a profile row. They remain
 valid historical records, but their exact model provenance was not captured.
 
+Migration `008` adds nullable `runtime_provenance` JSONB to the same snapshot.
+New runs include the application revision when available, a backend source
+fingerprint, installed Python package versions, Python/CUDA/cuDNN versions,
+device, GPU name, and container ID when available. The process captures this
+environment at startup and reuses it for its analyses. We restart the backend
+after changing code or packages. Sessions from before this migration keep null
+runtime provenance; we never reconstruct their environment from today's setup.
+The API and browser distinguish that absence from a measured runtime snapshot.
+Details and recovery records are in the [runtime guide](../runtime_provenance.md).
+
 ### `dense_crowd_analysis_results`
 
 Migration `005` adds one optional dense-crowd analysis record per monitoring

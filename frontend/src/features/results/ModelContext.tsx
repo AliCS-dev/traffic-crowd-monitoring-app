@@ -1,5 +1,8 @@
 import { Alert, Box, Typography } from "@mui/material";
-import type { ModelRunProfileResult } from "../../api/analysisResults.ts";
+import type {
+  ModelRunProfileResult,
+  RuntimeProvenanceResult,
+} from "../../api/analysisResults.ts";
 import type { DenseCrowdAnalysisResponse } from "../../api/types.ts";
 import { formatConfidence, formatLabel } from "./resultFormatting.ts";
 
@@ -92,12 +95,116 @@ export function ModelProvenance({
           <Typography component="dd" variant="body2">
             {profile.evaluation_reference}
           </Typography>
+          <Typography component="dt" variant="body2">
+            Checkpoint SHA-256
+          </Typography>
+          <Typography component="dd" variant="body2">
+            {profile.checkpoint_sha256}
+          </Typography>
+          <Typography component="dt" variant="body2">
+            Device
+          </Typography>
+          <Typography component="dd" variant="body2">
+            {profile.device}
+          </Typography>
         </Box>
       ) : (
         <Typography color="text.secondary">
           Model details were not stored for this session.
         </Typography>
       )}
+      <RuntimeProvenance runtime={profile?.runtime_provenance ?? null} />
+    </Box>
+  );
+}
+
+function RuntimeProvenance({
+  runtime,
+}: {
+  runtime: RuntimeProvenanceResult | null;
+}) {
+  if (!runtime) {
+    return (
+      <Typography color="text.secondary" sx={{ mt: 2 }}>
+        Runtime provenance unavailable for this session.
+      </Typography>
+    );
+  }
+  const fields = [
+    ["Application commit", runtime.application_commit ?? "Unavailable"],
+    [
+      "Source state",
+      runtime.source_dirty === null
+        ? "Unknown"
+        : runtime.source_dirty
+          ? "Modified"
+          : "Clean",
+    ],
+    ["Backend source SHA-256", runtime.source_sha256],
+    ["Captured", new Date(runtime.captured_at).toLocaleString()],
+    ["Python", runtime.python_version],
+    ["Platform", runtime.platform],
+    ["GPU", runtime.gpu_name ?? "Unavailable"],
+    ["CUDA", runtime.cuda_version ?? "Unavailable"],
+    ["cuDNN", runtime.cudnn_version ?? "Unavailable"],
+    ["Container ID", runtime.container_id ?? "Unavailable"],
+  ];
+  return (
+    <Box component="details" sx={{ mt: 2, minWidth: 0 }}>
+      <Box component="summary" sx={{ cursor: "pointer", py: 1 }}>
+        Runtime environment
+      </Box>
+      <Box
+        component="dl"
+        sx={{
+          m: 0,
+          display: "grid",
+          gridTemplateColumns: "minmax(100px, 1fr) minmax(0, 2fr)",
+          gap: 1,
+          "& dt": { color: "text.secondary" },
+          "& dd": { m: 0, overflowWrap: "anywhere" },
+        }}
+      >
+        {fields.map(([label, value]) => (
+          <Box key={label} sx={{ display: "contents" }}>
+            <Typography component="dt" variant="body2">
+              {label}
+            </Typography>
+            <Typography component="dd" variant="body2">
+              {value}
+            </Typography>
+          </Box>
+        ))}
+      </Box>
+      <Box component="details" sx={{ mt: 1 }}>
+        <Box component="summary" sx={{ cursor: "pointer", py: 1 }}>
+          Dependencies
+        </Box>
+        <Box
+          component="dl"
+          sx={{
+            m: 0,
+            display: "grid",
+            gridTemplateColumns: "minmax(0, 2fr) minmax(0, 1fr)",
+            gap: 1,
+            overflowWrap: "anywhere",
+            "& dd": { m: 0 },
+          }}
+        >
+          {Object.entries(runtime.dependencies)
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(([name, version]) => (
+              <Box key={name} sx={{ display: "contents" }}>
+                <Typography component="dt" variant="body2">
+                  {name}
+                </Typography>
+                <Typography component="dd" variant="body2">
+                  {version}
+                </Typography>
+              </Box>
+            ))}
+        </Box>
+      </Box>
     </Box>
   );
 }

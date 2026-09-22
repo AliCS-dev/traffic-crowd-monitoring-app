@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "purpose": "development regression, not accuracy",
+  "sources": [
+    {
+      "asset_id": "traffic_roundabout_near_3_f000006",
+      "source_group_id": "traffic_roundabout_near_3",
+      "dataset_role": "validation",
+      "source_url": "https://zenodo.org/records/5776219",
+      "license_id": "CC-BY-4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "image_sha256": "785414dccf5be9ecd1fbed0793ed32900069adbe8b8fe5953048141da7c45a4e"
+    },
+    {
+      "asset_id": "traffic_roundabout_near_3_f000018",
+      "source_group_id": "traffic_roundabout_near_3",
+      "dataset_role": "validation",
+      "source_url": "https://zenodo.org/records/5776219",
+      "license_id": "CC-BY-4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "image_sha256": "f000c84da8043e925bb13f337e33051842d8c0e5ea8fec36390f86b0d13046a1"
+    },
+    {
+      "asset_id": "traffic_roundabout_near_3_f000029",
+      "source_group_id": "traffic_roundabout_near_3",
+      "dataset_role": "validation",
+      "source_url": "https://zenodo.org/records/5776219",
+      "license_id": "CC-BY-4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "image_sha256": "1c63462c1511db556411844f0eb2e4d0392b0f0f54484146492735dd662c669a"
+    }
+  ],
+  "fixtures": [
+    {
+      "name": "roundabout_6.png",
+      "kind": "image",
+      "mime": "image/png",
+      "sha256": "785414dccf5be9ecd1fbed0793ed32900069adbe8b8fe5953048141da7c45a4e"
+    },
+    {
+      "name": "roundabout_29.png",
+      "kind": "image",
+      "mime": "image/png",
+      "sha256": "1c63462c1511db556411844f0eb2e4d0392b0f0f54484146492735dd662c669a"
+    },
+    {
+      "name": "roundabout_sequence.avi",
+      "kind": "video",
+      "mime": "video/x-msvideo",
+      "sha256": "d62fdd09d6963629f1c9a51258fab4ff8b90dff5efdae10f7d31bffe5e6ddc67"
+    }
+  ],
+  "sampling_interval_seconds": 1,
+  "tolerances": {
+    "box_pixels": 0.5,
+    "confidence": 0.0001,
+    "class_counts": "exact",
+    "rendered_sha256": "exact"
+  },
+  "video_transformation": "Each source image repeated 10 times at 10 fps, MJPEG. Artificial timeline, not original capture timing."
+}

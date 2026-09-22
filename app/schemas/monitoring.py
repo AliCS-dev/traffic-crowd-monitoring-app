@@ -72,6 +72,22 @@ class InputSourceResult(BaseModel):
     created_at: datetime
 
 
+class RuntimeProvenanceResult(BaseModel):
+    schema_version: Literal[1]
+    captured_at: datetime
+    application_commit: str | None
+    source_dirty: bool | None
+    source_sha256: str
+    python_version: str
+    platform: str
+    dependencies: dict[str, str]
+    device: str
+    gpu_name: str | None
+    cuda_version: str | None
+    cudnn_version: int | None
+    container_id: str | None
+
+
 class ModelRunProfileResult(BaseModel):
     profile_id: str
     model_id: str
@@ -87,6 +103,8 @@ class ModelRunProfileResult(BaseModel):
     numeric_precision: Literal["float16", "float32"]
     device: str
     created_at: datetime
+
+    runtime_provenance: RuntimeProvenanceResult | None = None
 
 
 class DenseCrowdAnalysisResult(BaseModel):

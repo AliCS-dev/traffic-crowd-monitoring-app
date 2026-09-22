@@ -21,6 +21,7 @@ from app.model_profile import (
     load_runtime_model_profile,
     verify_runtime_checkpoint,
 )
+from app.runtime_provenance import capture_runtime_provenance
 from app.services.alert_service import load_threshold_alert_rules
 from app.services.detection_service import ObjectDetector
 from app.services.image_analysis_service import ImageAnalysisService
@@ -161,6 +162,7 @@ def create_application_services(
     if settings.model_device is not None:
         profile = replace(profile, device=settings.model_device)
     crowd_analysis_decision = load_dense_crowd_analysis_decision()
+    capture_runtime_provenance(profile.device)
     alert_rules = load_threshold_alert_rules()
     admission = WorkloadAdmission(settings.workload.max_inflight_analyses)
     LOGGER.info(

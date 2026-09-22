@@ -20,11 +20,15 @@ COPY requirements-container.txt ./
 RUN python -m pip install -r requirements-container.txt && python -m pip check
 
 COPY app/ ./app/
+COPY Dockerfile ./
 COPY configs/runtime/ ./configs/runtime/
 COPY data/evaluation/dedicated_crowd_counting.json ./data/evaluation/dedicated_crowd_counting.json
 COPY scripts/migrate_database.py ./scripts/migrate_database.py
 COPY scripts/check_backend_runtime.py ./scripts/check_backend_runtime.py
 COPY scripts/cleanup_media.py ./scripts/cleanup_media.py
+ARG APP_REVISION=""
+ARG APP_SOURCE_DIRTY=unknown
+RUN APP_REVISION="$APP_REVISION" APP_SOURCE_DIRTY="$APP_SOURCE_DIRTY" python -m app.runtime_provenance --write-build-info
 RUN mkdir -p data/input data/output models /home/traffic/.config/ultralytics /home/traffic/.cache/matplotlib \
     && chown -R traffic:traffic data/input data/output /home/traffic
 

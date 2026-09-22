@@ -73,6 +73,43 @@ describe("ResultsPage", () => {
     expect(screen.getByText("evaluated-traffic-detector")).toBeInTheDocument();
   });
 
+  it("shows unavailable runtime metadata for older sessions", async () => {
+    renderResults();
+    expect(
+      await screen.findByText(
+        "Runtime provenance unavailable for this session.",
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it("renders the stored runtime rather than the current browser environment", async () => {
+    const result = analysisResultFixture();
+    result.model_profile!.runtime_provenance = {
+      schema_version: 1,
+      captured_at: "2026-09-22T12:00:00Z",
+      application_commit: "a".repeat(40),
+      source_dirty: false,
+      source_sha256: "b".repeat(64),
+      python_version: "3.12.0",
+      platform: "Stored test platform",
+      dependencies: { ultralytics: "8.4.155" },
+      device: "cuda:0",
+      gpu_name: "Stored GPU",
+      cuda_version: "13.0",
+      cudnn_version: 9000,
+      container_id: "abcdef012345",
+    };
+    mockResult(result);
+    renderResults();
+    expect(await screen.findByText("Runtime environment")).toBeInTheDocument();
+    expect(screen.getByText("Stored test platform")).toBeInTheDocument();
+    expect(screen.getByText("a".repeat(40))).toBeInTheDocument();
+    expect(screen.getByText("8.4.155")).toBeInTheDocument();
+    expect(
+      screen.queryByText("Runtime provenance unavailable for this session."),
+    ).not.toBeInTheDocument();
+  });
+
   it("keeps stored counts visible when the image cannot be loaded", async () => {
     renderResults();
     fireEvent.error(

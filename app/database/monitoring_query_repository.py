@@ -146,6 +146,7 @@ def _load_session(cursor, session_id):
             profiles.max_detections,
             profiles.numeric_precision,
             profiles.device,
+            profiles.runtime_provenance,
             profiles.created_at AS profile_created_at
         FROM monitoring_sessions AS sessions
         LEFT JOIN model_run_profiles AS profiles
@@ -379,6 +380,7 @@ def _build_model_profile(row):
         numeric_precision=row["numeric_precision"],
         device=row["device"],
         created_at=row["profile_created_at"],
+        runtime_provenance=row.get("runtime_provenance"),
     )
 
 

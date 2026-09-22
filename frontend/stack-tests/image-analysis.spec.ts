@@ -65,6 +65,23 @@ test("real image workflow through the Compose frontend", async ({
   expect(result.model_profile?.quality_gate_status).toBe("failed");
   expect(result.dense_crowd_analysis?.status).toBe("unsupported");
   expect(result.dense_crowd_analysis?.count).toBeNull();
+  expect(result.model_profile?.runtime_provenance?.schema_version).toBe(1);
+  expect(
+    result.model_profile?.runtime_provenance?.dependencies.ultralytics,
+  ).toBeTruthy();
+  await page.getByText("Runtime environment", { exact: true }).click();
+  await expect(
+    page.getByText("Backend source SHA-256", { exact: true }),
+  ).toBeVisible();
+  await page.getByText("Dependencies", { exact: true }).click();
+  await expect(page.getByText("ultralytics", { exact: true })).toBeVisible();
+  await page.getByText("Dependencies", { exact: true }).click();
+  await page
+    .getByRole("heading", { name: "Model used for this analysis" })
+    .scrollIntoViewIfNeeded();
+  await page.screenshot({
+    path: testInfo.outputPath("runtime-provenance.png"),
+  });
 
   const image = page.getByRole("img", { name: /^Detection result for / });
   await expect(image).toBeVisible();
@@ -96,9 +113,7 @@ test("real image workflow through the Compose frontend", async ({
   await page.reload();
   await expect(image).toBeVisible();
   await page.goto("/sessions");
-  await expect(
-    page.getByText(result.session_name!, { exact: true }),
-  ).toBeVisible();
+  await expect(page.locator(`a[href="/analyses/${result.id}"]`)).toBeVisible();
   expect(pageErrors).toEqual([]);
   expect(externalApiRequests).toEqual([]);
   const evidence = {
