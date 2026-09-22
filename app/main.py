@@ -7,6 +7,7 @@ from app.config import (
 from app.crowd_analysis import load_dense_crowd_analysis_decision
 from app.database.detection_repository import save_image_detection_results
 from app.model_profile import load_runtime_model_profile
+from app.runtime_provenance import capture_runtime_provenance
 from app.services.alert_service import (
     evaluate_threshold_alerts,
     load_threshold_alert_rules,
@@ -112,6 +113,7 @@ def print_database_storage_summary(stored_result) -> None:
 def main():
     args = parse_arguments()
     model_profile = load_runtime_model_profile()
+    capture_runtime_provenance(model_profile.device)
     crowd_analysis_decision = load_dense_crowd_analysis_decision()
     alert_rules = load_threshold_alert_rules()
     class_mapping = model_profile.class_mapping_dict()

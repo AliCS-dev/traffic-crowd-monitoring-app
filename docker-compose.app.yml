@@ -1,8 +1,12 @@
 name: traffic-monitoring-app
 
 x-backend: &backend
-  image: traffic-monitoring-backend:local
-  build: .
+  image: ${BACKEND_IMAGE:-traffic-monitoring-backend:local}
+  build:
+    context: .
+    args:
+      APP_REVISION: ${APP_REVISION:-}
+      APP_SOURCE_DIRTY: ${APP_SOURCE_DIRTY:-unknown}
   environment: &backend-environment
     DATABASE_URL: postgresql://
     PGHOST: postgres

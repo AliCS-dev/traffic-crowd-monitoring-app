@@ -166,6 +166,9 @@ def test_reads_complete_image_and_ordered_video_sessions_from_postgresql():
     assert image_session is not None
     assert image_session.sources[0].source_type == "image"
     assert image_session.model_profile.model_id == model_profile.model_id
+    assert image_session.model_profile.runtime_provenance.schema_version == 1
+    assert image_session.model_profile.runtime_provenance.dependencies["psycopg"]
+    assert video_session.model_profile.runtime_provenance.schema_version == 1
     assert image_session.dense_crowd_analysis.status == "unsupported"
     assert image_session.dense_crowd_analysis.count is None
     assert image_session.dense_crowd_analysis.model_id is None

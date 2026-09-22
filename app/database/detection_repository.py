@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 from app.crowd_analysis import DenseCrowdAnalysisDecision
 from app.database.connection import open_database_connection
 from app.model_profile import RuntimeModelProfile
+from app.runtime_provenance import capture_runtime_provenance
 from app.services.detection_service import build_object_count_summary_records
 
 if TYPE_CHECKING:
@@ -247,11 +248,12 @@ def create_model_run_profile(cursor, session_id, model_profile):
             scale_factor,
             max_detections,
             numeric_precision,
-            device
+            device,
+            runtime_provenance
         )
         VALUES (
             %s, %s, %s, %s, %s, %s, %s, CAST(%s AS JSONB),
-            %s, %s, %s, %s, %s, %s
+            %s, %s, %s, %s, %s, %s, CAST(%s AS JSONB)
         );
         """,
         (
@@ -269,6 +271,9 @@ def create_model_run_profile(cursor, session_id, model_profile):
             model_profile.max_detections,
             model_profile.numeric_precision,
             model_profile.device,
+            json.dumps(
+                capture_runtime_provenance(model_profile.device), sort_keys=True
+            ),
         ),
     )
 

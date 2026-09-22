@@ -35,6 +35,7 @@ images and sampled video frames.
 | Final held-out evaluation | Completed; quality gate failed |
 | Validated runtime model profile | Implemented; experimental YOLO26m profile |
 | Per-session model provenance | Implemented |
+| Per-session runtime provenance | Implemented; old sessions explicitly retain unavailable metadata |
 | Grid-based spatial counting | Implemented as an experimental component |
 | Grid-cell database storage | Implemented for image and sampled-video runs |
 | FastAPI backend foundation | Implemented with health and readiness endpoints |
@@ -72,6 +73,11 @@ interface, and delivery issues. Current deployment checks are recorded in the
 The [operational safeguards guide](docs/operational_safeguards.md) records our
 workload limits, recovery boundaries, media retention and preliminary performance
 budgets. These checks concern application reliability, not detector accuracy.
+
+The [runtime provenance guide](docs/runtime_provenance.md) explains how we record
+the actual backend environment, check dependency updates against licensed
+development fixtures, and restore a recorded container. These regression records
+are separate from the held-out accuracy results.
 
 ## What We Use
 

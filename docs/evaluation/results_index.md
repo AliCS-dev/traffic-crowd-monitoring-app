@@ -64,6 +64,7 @@ ordinary person detections from being interpreted as a measured crowd of zero.
 
 | Question | Main record |
 | --- | --- |
+| Did a runtime update change development outputs? | [Runtime provenance and regression](../runtime_provenance.md) |
 | What did we decide to measure and why? | [Evaluation protocol](evaluation_protocol.md) |
 | Which data did we use, and under what licences? | [Dataset card](dataset_card.md) |
 | How did we annotate and check the data? | [Annotation guide](annotation_guide.md) |

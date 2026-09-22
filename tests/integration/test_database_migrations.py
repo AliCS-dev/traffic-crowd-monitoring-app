@@ -11,6 +11,7 @@ from app.database.migration_runner import (
     MIGRATIONS_DIRECTORY,
     apply_pending_migrations,
 )
+from app.database.monitoring_query_repository import get_monitoring_session
 
 pytestmark = pytest.mark.skipif(
     os.getenv("RUN_DATABASE_INTEGRATION_TESTS") != "1",
@@ -65,6 +66,7 @@ def test_fresh_database_applies_migrations_once(isolated_database_schema):
         5,
         6,
         7,
+        8,
     ]
     assert second_result.applied == ()
     assert [migration.version for migration in second_result.previously_applied] == [
@@ -75,6 +77,7 @@ def test_fresh_database_applies_migrations_once(isolated_database_schema):
         5,
         6,
         7,
+        8,
     ]
 
     with connection_factory() as connection:
@@ -90,6 +93,7 @@ def test_fresh_database_applies_migrations_once(isolated_database_schema):
                 (5, "add_dense_crowd_analysis_results"),
                 (6, "add_video_analysis_jobs"),
                 (7, "add_threshold_alert_metadata"),
+                (8, "add_runtime_provenance"),
             ]
             cursor.execute("SELECT to_regclass('monitoring_sessions');")
             assert cursor.fetchone() == ("monitoring_sessions",)
@@ -138,6 +142,7 @@ def test_existing_initial_schema_is_adopted_without_data_loss(
         5,
         6,
         7,
+        8,
     ]
     with connection_factory() as connection:
         with connection.cursor() as cursor:
@@ -155,6 +160,7 @@ def test_existing_initial_schema_is_adopted_without_data_loss(
                 (5,),
                 (6,),
                 (7,),
+                (8,),
             ]
 
 
@@ -248,3 +254,42 @@ def test_failed_pending_migration_rolls_back_every_change(
             assert cursor.fetchone() == (None,)
             cursor.execute("SELECT to_regclass('migration_should_rollback');")
             assert cursor.fetchone() == (None,)
+
+
+def test_migration_preserves_historical_profile_without_inventing_runtime(
+    isolated_database_schema, tmp_path, monkeypatch
+):
+    _schema_name, connection_factory = isolated_database_schema
+    for path in sorted(MIGRATIONS_DIRECTORY.glob("*.sql"))[:7]:
+        shutil.copy(path, tmp_path / path.name)
+    apply_pending_migrations(tmp_path, connection_factory=connection_factory)
+    with connection_factory() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                "INSERT INTO monitoring_sessions (session_name, status) "
+                "VALUES ('historical', 'completed') RETURNING id;"
+            )
+            session_id = cursor.fetchone()[0]
+            cursor.execute(
+                """INSERT INTO model_run_profiles (
+                    session_id, profile_id, model_id, quality_gate_status,
+                    evaluation_reference, checkpoint_path, checkpoint_sha256,
+                    class_mapping, confidence, image_size, scale_factor,
+                    max_detections, numeric_precision, device
+                ) VALUES (%s, 'legacy', 'legacy', 'not_evaluated', 'unknown',
+                    'legacy.pt', %s, '{}', 0.25, 640, 1, 300, 'float32', 'cpu');""",
+                (session_id, "a" * 64),
+            )
+    result = apply_pending_migrations(connection_factory=connection_factory)
+    assert [migration.version for migration in result.applied] == [8]
+    monkeypatch.setattr(
+        "app.database.monitoring_query_repository.open_database_connection",
+        connection_factory,
+    )
+    session = get_monitoring_session(session_id)
+    assert session.session_name == "historical"
+    assert session.model_profile.profile_id == "legacy"
+    assert session.model_profile.runtime_provenance is None
+    assert (
+        session.model_dump(mode="json")["model_profile"]["runtime_provenance"] is None
+    )
