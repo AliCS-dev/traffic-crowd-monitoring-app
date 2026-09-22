@@ -120,7 +120,47 @@ also remain external requirements.
 - [Repeated run](../data/runtime-regression/latest.json): comparison with that baseline.
 - [Environment](../data/runtime-regression/environment.json): measured backend packages and immutable image identity.
 - [Fresh-container run](../data/runtime-regression/restore.json): reproduction with separate database and media volumes.
+- [Fresh-container environment](../data/runtime-regression/restore_environment.json): distinct container identity and the same backend image and package versions.
 
 The fresh-container check uses the same host GPU. It does not establish
 cross-hardware reproducibility, and it is not a test of restoring a database
-backup. Verification results are recorded below after the live checks finish.
+backup.
+
+### Verification on 22 September 2026
+
+We built backend commit `012bc6cebab302017b80031d8ced07bc22bf5bf7` with
+source fingerprint `d2717d1bc63e83de65b30c5547d10802389783566dd8bb7420d1272d0779bb4c`.
+The run used Python 3.12.3, Ultralytics 8.4.155, PyTorch 2.14.0, CUDA 13.0 and
+an NVIDIA GeForce RTX 5060 Laptop GPU. Exact installed versions, including base
+image packages, are in the environment manifests.
+
+| Fixture / frame | Total detections | Repeated run | Fresh-container run |
+| --- | ---: | --- | --- |
+| `roundabout_6.png` | 27 | Pass | Pass |
+| `roundabout_29.png` | 32 | Pass | Pass |
+| `roundabout_sequence.avi`, frame 0 | 21 | Pass | Pass |
+| `roundabout_sequence.avi`, frame 10 | 24 | Pass | Pass |
+| `roundabout_sequence.avi`, frame 20 | 30 | Pass | Pass |
+
+These are prediction counts, not reference labels or accuracy scores. The
+MJPEG frames are lossy derivatives, so their predictions need not match the PNG
+predictions. We compare each fixture only with its own frozen reference.
+
+We saved the backend image to `/tmp/traffic-issue112-backend.tar`, loaded it again,
+and started `traffic-issue112-restore` on port 8082 using the recorded image ID
+without rebuilding. All eight migrations ran on its new database. Sessions 1-3
+in that stack reproduced baseline sessions 18-20 from `traffic-stack-check`;
+repeat sessions 21-23 also passed. Counts, matched boxes, confidence values and
+rendered hashes met every declared check. The image ID and package versions
+matched between the two distinct containers. The temporary archive is local,
+not a committed or off-machine backup, and loading it while layers already exist
+does not test recovery after loss of the Docker installation.
+
+Verification also passed 427 Python tests, 11 PostgreSQL integration tests,
+106 frontend unit tests, eight mocked desktop/mobile browser tests and two live
+desktop/mobile image-upload checks. The latter inspected the expanded runtime
+panel, loaded the saved image, checked overflow and retained screenshots locally
+under `frontend/test-results/stack/`. Linting, formatting, the production frontend
+build and container `pip check` passed. Historical session 1 remained readable
+through the live API with null runtime provenance. The integration suite also
+verified a version-7 database migration without inventing historical metadata.

@@ -590,3 +590,23 @@ The [safeguards report](operational_safeguards.md) records the limits, tests and
 predeclared resource budgets. The isolated GPU workflow passed those preliminary
 budgets. Model accuracy and dense-crowd support remain unchanged; these checks
 establish operational bounds, not readiness for real-world monitoring.
+
+### Issue #112: Runtime Provenance (22 September 2026)
+
+We extended each new analysis snapshot with the measured backend environment,
+including source identity, installed dependency versions and device/container
+details. Older sessions keep unavailable runtime metadata rather than being
+assigned our current setup. The result page exposes the saved environment in a
+collapsible section.
+
+We added a small CC-BY-4.0 development fixture with two images and a sampled
+video, declared comparison tolerances and a dependency-PR evidence check. Repeated
+GPU predictions and a fresh-container run matched all five frame references.
+We exercised image save/load and started the restore stack with separate database
+and media volumes. The [runtime guide](runtime_provenance.md) links the exact
+predictions, manifests, restore commands, test results and limitations.
+
+This work makes changes in our runtime traceable. It does not improve or
+re-evaluate detection accuracy, and it does not change the failed quality gate
+or unsupported dense-crowd result. The fixture covers one development scene;
+we have not claimed general model equivalence or cross-hardware reproducibility.

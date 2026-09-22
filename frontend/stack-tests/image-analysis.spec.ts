@@ -75,6 +75,13 @@ test("real image workflow through the Compose frontend", async ({
   ).toBeVisible();
   await page.getByText("Dependencies", { exact: true }).click();
   await expect(page.getByText("ultralytics", { exact: true })).toBeVisible();
+  await page.getByText("Dependencies", { exact: true }).click();
+  await page
+    .getByRole("heading", { name: "Model used for this analysis" })
+    .scrollIntoViewIfNeeded();
+  await page.screenshot({
+    path: testInfo.outputPath("runtime-provenance.png"),
+  });
 
   const image = page.getByRole("img", { name: /^Detection result for / });
   await expect(image).toBeVisible();
@@ -106,9 +113,7 @@ test("real image workflow through the Compose frontend", async ({
   await page.reload();
   await expect(image).toBeVisible();
   await page.goto("/sessions");
-  await expect(
-    page.getByText(result.session_name!, { exact: true }),
-  ).toBeVisible();
+  await expect(page.locator(`a[href="/analyses/${result.id}"]`)).toBeVisible();
   expect(pageErrors).toEqual([]);
   expect(externalApiRequests).toEqual([]);
   const evidence = {

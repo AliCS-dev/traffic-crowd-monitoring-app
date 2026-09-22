@@ -88,6 +88,8 @@ def check_base(root, base_ref):
             raise ValueError(
                 "Reference changed with dependencies; review a separate baseline PR."
             )
+    if (DATA / "latest.json").as_posix() not in changed:
+        raise ValueError("Runtime updates require a new committed comparison record.")
     validate_evidence(root)
     return True
 

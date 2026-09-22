@@ -165,6 +165,22 @@ def test_non_runtime_pr_does_not_require_new_inference(evidence, monkeypatch):
     assert check_base(root, "main") is False
 
 
+def test_runtime_pr_requires_a_new_evidence_record(evidence, monkeypatch):
+    root, _ = evidence
+    monkeypatch.setattr(
+        subprocess, "check_output", lambda *a, **k: "requirements.txt\n"
+    )
+    monkeypatch.setattr(
+        subprocess,
+        "run",
+        lambda args, **k: subprocess.CompletedProcess(
+            args, 0, (root / args[-1].split(":", 1)[1]).read_bytes()
+        ),
+    )
+    with pytest.raises(ValueError, match="new committed comparison"):
+        check_base(root, "main")
+
+
 def test_manifest_exports_only_public_identity(monkeypatch):
     responses = iter(
         [
