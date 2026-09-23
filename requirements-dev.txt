@@ -3,3 +3,7 @@
 pytest
 ruff
 httpx2
+
+# Runtime regression comparison and dependency-evidence validation.
+scipy
+packaging
