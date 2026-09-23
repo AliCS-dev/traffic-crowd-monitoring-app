@@ -610,3 +610,13 @@ This work makes changes in our runtime traceable. It does not improve or
 re-evaluate detection accuracy, and it does not change the failed quality gate
 or unsupported dense-crowd result. The fixture covers one development scene;
 we have not claimed general model equivalence or cross-hardware reproducibility.
+
+### Runtime Regression CI Repair (23 September 2026)
+
+After #112 was merged, GitHub's Python job failed during test collection because
+SciPy was missing. Local tests had passed with SciPy already installed, which
+hid the undeclared dependency. We added SciPy and `packaging` as explicit
+development dependencies for the regression comparator and evidence validator.
+Both Python CI jobs now also check installed dependency compatibility with
+`pip check`. The pinned application container, model settings and recorded
+inference results are unchanged.
