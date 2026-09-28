@@ -620,3 +620,19 @@ development dependencies for the regression comparator and evidence validator.
 Both Python CI jobs now also check installed dependency compatibility with
 `pip check`. The pinned application container, model settings and recorded
 inference results are unchanged.
+
+### Issue #113: Historical Dataset Audit (28 September 2026)
+
+We added a reproducible coverage audit before planning evaluation v2. It uses
+the existing canonical loader, keeps box annotations separate from crowd-count
+references, and records class support, object sizes, conditions, review metadata
+and split limitations. All 346 local media checksums match the manifest, and
+technical validation passes. The [audit report](evaluation/dataset_audit_v1.md)
+links the exact counts and input hashes for thesis writing.
+
+The audit exposes missing bicycle evidence, sparse bus and motorcycle support,
+and no vehicle boxes in the local training split. It also records unknown
+occlusion/location metadata and a mismatch between manifest and review-ledger
+status. We have not changed labels, review records, exclusions or splits, and
+have not trained or evaluated another model. Issue #113 remains open for the
+scope decision, coverage targets, acquisition, review and independent holdout.

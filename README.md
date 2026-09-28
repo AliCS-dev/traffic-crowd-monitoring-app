@@ -70,6 +70,9 @@ interface, and delivery issues. Current deployment checks are recorded in the
 [runtime recovery report](docs/runtime_recovery.md); model metrics remain in the
 [evaluation results index](docs/evaluation/results_index.md).
 
+The [historical dataset audit](docs/evaluation/dataset_audit_v1.md) summarizes our
+current annotation coverage and the gaps we need to address before evaluation v2.
+
 The [operational safeguards guide](docs/operational_safeguards.md) records our
 workload limits, recovery boundaries, media retention and preliminary performance
 budgets. These checks concern application reliability, not detector accuracy.
