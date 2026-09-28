@@ -1,0 +1,1156 @@
+{
+  "by_collection": {
+    "dlr_acd": {
+      "bounding_box_images": 0,
+      "box_classes": {
+        "bicycle": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 0,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        },
+        "bus": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 0,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        },
+        "car_or_van": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 0,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        },
+        "motorcycle": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 0,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        },
+        "person": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 0,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        },
+        "truck": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 0,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        }
+      },
+      "conditions": {
+        "lighting": {
+          "daylight": 33
+        },
+        "location": {
+          "not_recorded": 33
+        },
+        "scene_type": {
+          "dense_crowd": 33
+        },
+        "viewpoint": {
+          "aerial_nadir": 33
+        },
+        "weather": {
+          "not_recorded": 33
+        }
+      },
+      "images": 33,
+      "point_count_images": 33,
+      "point_reference_people": 226336,
+      "source_groups": 2
+    },
+    "okutama_action": {
+      "bounding_box_images": 215,
+      "box_classes": {
+        "bicycle": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 0,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        },
+        "bus": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 0,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        },
+        "car_or_van": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 0,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        },
+        "motorcycle": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 0,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        },
+        "person": {
+          "boxes": 1176,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 215,
+          "images_with_boxes": 192,
+          "recorded_reviewed_boxes": 1176,
+          "size_counts": {
+            "large": 0,
+            "medium": 465,
+            "small": 711
+          },
+          "source_groups_with_boxes": 22
+        },
+        "truck": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 0,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        }
+      },
+      "conditions": {
+        "lighting": {
+          "morning": 105,
+          "noon": 110
+        },
+        "location": {
+          "Okutama Japan": 215
+        },
+        "scene_type": {
+          "staged_human_activity": 215
+        },
+        "viewpoint": {
+          "aerial": 215
+        },
+        "weather": {
+          "not_recorded": 215
+        }
+      },
+      "images": 215,
+      "point_count_images": 0,
+      "point_reference_people": 0,
+      "source_groups": 22
+    },
+    "traffic_uav": {
+      "bounding_box_images": 90,
+      "box_classes": {
+        "bicycle": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 0,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        },
+        "bus": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 0,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        },
+        "car_or_van": {
+          "boxes": 719,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 90,
+          "images_with_boxes": 90,
+          "recorded_reviewed_boxes": 719,
+          "size_counts": {
+            "large": 66,
+            "medium": 487,
+            "small": 166
+          },
+          "source_groups_with_boxes": 2
+        },
+        "motorcycle": {
+          "boxes": 20,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 30,
+          "images_with_boxes": 15,
+          "recorded_reviewed_boxes": 20,
+          "size_counts": {
+            "large": 0,
+            "medium": 19,
+            "small": 1
+          },
+          "source_groups_with_boxes": 1
+        },
+        "person": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 0,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        },
+        "truck": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 0,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        }
+      },
+      "conditions": {
+        "lighting": {
+          "daylight": 90
+        },
+        "location": {
+          "not_recorded": 90
+        },
+        "scene_type": {
+          "roundabout": 30,
+          "urban_intersection": 60
+        },
+        "viewpoint": {
+          "low_oblique": 90
+        },
+        "weather": {
+          "clear": 90
+        }
+      },
+      "images": 90,
+      "point_count_images": 0,
+      "point_reference_people": 0,
+      "source_groups": 2
+    },
+    "wikimedia": {
+      "bounding_box_images": 8,
+      "box_classes": {
+        "bicycle": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 8,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        },
+        "bus": {
+          "boxes": 10,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 8,
+          "images_with_boxes": 5,
+          "recorded_reviewed_boxes": 10,
+          "size_counts": {
+            "large": 4,
+            "medium": 3,
+            "small": 3
+          },
+          "source_groups_with_boxes": 2
+        },
+        "car_or_van": {
+          "boxes": 1396,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 8,
+          "images_with_boxes": 8,
+          "recorded_reviewed_boxes": 1396,
+          "size_counts": {
+            "large": 1,
+            "medium": 110,
+            "small": 1285
+          },
+          "source_groups_with_boxes": 2
+        },
+        "motorcycle": {
+          "boxes": 18,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 8,
+          "images_with_boxes": 1,
+          "recorded_reviewed_boxes": 18,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 18
+          },
+          "source_groups_with_boxes": 1
+        },
+        "person": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 0,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        },
+        "truck": {
+          "boxes": 38,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 8,
+          "images_with_boxes": 8,
+          "recorded_reviewed_boxes": 38,
+          "size_counts": {
+            "large": 3,
+            "medium": 17,
+            "small": 18
+          },
+          "source_groups_with_boxes": 2
+        }
+      },
+      "conditions": {
+        "lighting": {
+          "daylight": 7,
+          "night": 1
+        },
+        "location": {
+          "Chicago USA": 6,
+          "Taipei Taiwan": 2
+        },
+        "scene_type": {
+          "highway_interchange": 6,
+          "roundabout": 2
+        },
+        "viewpoint": {
+          "aerial_oblique": 8
+        },
+        "weather": {
+          "clear": 8
+        }
+      },
+      "images": 8,
+      "point_count_images": 0,
+      "point_reference_people": 0,
+      "source_groups": 2
+    }
+  },
+  "by_role": {
+    "held_out_test": {
+      "bounding_box_images": 116,
+      "box_classes": {
+        "bicycle": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 6,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        },
+        "bus": {
+          "boxes": 4,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 6,
+          "images_with_boxes": 4,
+          "recorded_reviewed_boxes": 4,
+          "size_counts": {
+            "large": 0,
+            "medium": 1,
+            "small": 3
+          },
+          "source_groups_with_boxes": 1
+        },
+        "car_or_van": {
+          "boxes": 1587,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 66,
+          "images_with_boxes": 66,
+          "recorded_reviewed_boxes": 1587,
+          "size_counts": {
+            "large": 19,
+            "medium": 329,
+            "small": 1239
+          },
+          "source_groups_with_boxes": 2
+        },
+        "motorcycle": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 6,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        },
+        "person": {
+          "boxes": 247,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 50,
+          "images_with_boxes": 42,
+          "recorded_reviewed_boxes": 247,
+          "size_counts": {
+            "large": 0,
+            "medium": 110,
+            "small": 137
+          },
+          "source_groups_with_boxes": 5
+        },
+        "truck": {
+          "boxes": 35,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 6,
+          "images_with_boxes": 6,
+          "recorded_reviewed_boxes": 35,
+          "size_counts": {
+            "large": 2,
+            "medium": 15,
+            "small": 18
+          },
+          "source_groups_with_boxes": 1
+        }
+      },
+      "conditions": {
+        "lighting": {
+          "daylight": 80,
+          "morning": 20,
+          "noon": 30
+        },
+        "location": {
+          "Chicago USA": 6,
+          "Okutama Japan": 50,
+          "not_recorded": 74
+        },
+        "scene_type": {
+          "dense_crowd": 14,
+          "highway_interchange": 6,
+          "staged_human_activity": 50,
+          "urban_intersection": 60
+        },
+        "viewpoint": {
+          "aerial": 50,
+          "aerial_nadir": 14,
+          "aerial_oblique": 6,
+          "low_oblique": 60
+        },
+        "weather": {
+          "clear": 66,
+          "not_recorded": 64
+        }
+      },
+      "images": 130,
+      "point_count_images": 14,
+      "point_reference_people": 88140,
+      "source_groups": 8
+    },
+    "training": {
+      "bounding_box_images": 130,
+      "box_classes": {
+        "bicycle": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 0,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        },
+        "bus": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 0,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        },
+        "car_or_van": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 0,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        },
+        "motorcycle": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 0,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        },
+        "person": {
+          "boxes": 749,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 130,
+          "images_with_boxes": 118,
+          "recorded_reviewed_boxes": 749,
+          "size_counts": {
+            "large": 0,
+            "medium": 287,
+            "small": 462
+          },
+          "source_groups_with_boxes": 13
+        },
+        "truck": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 0,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        }
+      },
+      "conditions": {
+        "lighting": {
+          "morning": 70,
+          "noon": 60
+        },
+        "location": {
+          "Okutama Japan": 130
+        },
+        "scene_type": {
+          "staged_human_activity": 130
+        },
+        "viewpoint": {
+          "aerial": 130
+        },
+        "weather": {
+          "not_recorded": 130
+        }
+      },
+      "images": 130,
+      "point_count_images": 0,
+      "point_reference_people": 0,
+      "source_groups": 13
+    },
+    "validation": {
+      "bounding_box_images": 67,
+      "box_classes": {
+        "bicycle": {
+          "boxes": 0,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 2,
+          "images_with_boxes": 0,
+          "recorded_reviewed_boxes": 0,
+          "size_counts": {
+            "large": 0,
+            "medium": 0,
+            "small": 0
+          },
+          "source_groups_with_boxes": 0
+        },
+        "bus": {
+          "boxes": 6,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 2,
+          "images_with_boxes": 1,
+          "recorded_reviewed_boxes": 6,
+          "size_counts": {
+            "large": 4,
+            "medium": 2,
+            "small": 0
+          },
+          "source_groups_with_boxes": 1
+        },
+        "car_or_van": {
+          "boxes": 528,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 32,
+          "images_with_boxes": 32,
+          "recorded_reviewed_boxes": 528,
+          "size_counts": {
+            "large": 48,
+            "medium": 268,
+            "small": 212
+          },
+          "source_groups_with_boxes": 2
+        },
+        "motorcycle": {
+          "boxes": 38,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 32,
+          "images_with_boxes": 16,
+          "recorded_reviewed_boxes": 38,
+          "size_counts": {
+            "large": 0,
+            "medium": 19,
+            "small": 19
+          },
+          "source_groups_with_boxes": 2
+        },
+        "person": {
+          "boxes": 180,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 35,
+          "images_with_boxes": 32,
+          "recorded_reviewed_boxes": 180,
+          "size_counts": {
+            "large": 0,
+            "medium": 68,
+            "small": 112
+          },
+          "source_groups_with_boxes": 4
+        },
+        "truck": {
+          "boxes": 3,
+          "boxes_with_side_below_4px": 0,
+          "declared_box_labelled_images": 2,
+          "images_with_boxes": 2,
+          "recorded_reviewed_boxes": 3,
+          "size_counts": {
+            "large": 1,
+            "medium": 2,
+            "small": 0
+          },
+          "source_groups_with_boxes": 1
+        }
+      },
+      "conditions": {
+        "lighting": {
+          "daylight": 50,
+          "morning": 15,
+          "night": 1,
+          "noon": 20
+        },
+        "location": {
+          "Okutama Japan": 35,
+          "Taipei Taiwan": 2,
+          "not_recorded": 49
+        },
+        "scene_type": {
+          "dense_crowd": 19,
+          "roundabout": 32,
+          "staged_human_activity": 35
+        },
+        "viewpoint": {
+          "aerial": 35,
+          "aerial_nadir": 19,
+          "aerial_oblique": 2,
+          "low_oblique": 30
+        },
+        "weather": {
+          "clear": 32,
+          "not_recorded": 54
+        }
+      },
+      "images": 86,
+      "point_count_images": 19,
+      "point_reference_people": 138196,
+      "source_groups": 7
+    }
+  },
+  "dataset_version": "1.0-draft",
+  "input_sha256": {
+    "data/evaluation/derived/annotations/dlr_person_counts.csv": "91c0ad43fd8923bad2e5dc04bb4c388ec726d758946836010bdb955457c14070",
+    "data/evaluation/derived/annotations/instances_held_out_test.json": "b4ddf1f4e28865083ded3e28c397b8d7473c714feccfd94b5a9379138029c24b",
+    "data/evaluation/derived/annotations/instances_training.json": "07284843d57de314cb952884384767846a97b5280f8b3d29a529109346232fd1",
+    "data/evaluation/derived/annotations/instances_validation.json": "8e6ad8147e4d59ccc9aff662c31ed8a9bd29068a69176aa9874e1c6a61d00f1d",
+    "data/evaluation/exclusions.csv": "82c3443eab4a5e2975511a39a1602248bf8cb447e6c3e6035aa2dc65ed0f629b",
+    "data/evaluation/manifest.csv": "8dabfe690a0aa162da3172bb46842216d4eac5ef7f73a6e6ba5ad48a2892f37d",
+    "data/evaluation/qc_reviews.csv": "99de6a925a721ae2cf3529d54bff4bda9d62c842b3bd06764a84224f2050bf44"
+  },
+  "media_hashes_verified": true,
+  "missing_source_metadata": {
+    "license_id": 0,
+    "license_url": 0,
+    "source_url": 0
+  },
+  "occlusion_by_collection": {
+    "okutama_action": {
+      "not_occluded": 1114,
+      "occluded": 62,
+      "unknown": 0
+    },
+    "traffic_uav": {
+      "not_occluded": 0,
+      "occluded": 0,
+      "unknown": 739
+    },
+    "wikimedia": {
+      "not_occluded": 0,
+      "occluded": 0,
+      "unknown": 1462
+    }
+  },
+  "out_of_scope_box_annotations": {
+    "wikimedia": {
+      "person": 79
+    }
+  },
+  "purpose": "Historical annotation coverage audit; not inference or a new holdout",
+  "quality_control": {
+    "excluded_asset_ids": [
+      "wikimedia_jane_byrne_f000609",
+      "wikimedia_jane_byrne_f000702",
+      "wikimedia_jane_byrne_f000796",
+      "wikimedia_jane_byrne_f000890"
+    ],
+    "excluded_assets_still_selected": [],
+    "manifest_review_status_disagreements": 346,
+    "manifest_status_counts": {
+      "pending": 346
+    },
+    "recorded_decisions": {
+      "confirmed": 341,
+      "corrected": 5
+    },
+    "recorded_reviewed_images": 346,
+    "reviewers": {
+      "Ali": 346
+    },
+    "unknown_review_asset_ids": [],
+    "without_accepted_review_record": []
+  },
+  "schema_version": 1,
+  "source_groups": [
+    {
+      "images": 14,
+      "roles": [
+        "held_out_test"
+      ],
+      "source_group_id": "dlr_published_test"
+    },
+    {
+      "images": 19,
+      "roles": [
+        "validation"
+      ],
+      "source_group_id": "dlr_published_train"
+    },
+    {
+      "images": 10,
+      "roles": [
+        "training"
+      ],
+      "source_group_id": "okutama_morning_01"
+    },
+    {
+      "images": 10,
+      "roles": [
+        "training"
+      ],
+      "source_group_id": "okutama_morning_02"
+    },
+    {
+      "images": 10,
+      "roles": [
+        "training"
+      ],
+      "source_group_id": "okutama_morning_03"
+    },
+    {
+      "images": 10,
+      "roles": [
+        "validation"
+      ],
+      "source_group_id": "okutama_morning_04"
+    },
+    {
+      "images": 10,
+      "roles": [
+        "training"
+      ],
+      "source_group_id": "okutama_morning_05"
+    },
+    {
+      "images": 10,
+      "roles": [
+        "training"
+      ],
+      "source_group_id": "okutama_morning_06"
+    },
+    {
+      "images": 10,
+      "roles": [
+        "training"
+      ],
+      "source_group_id": "okutama_morning_07"
+    },
+    {
+      "images": 10,
+      "roles": [
+        "held_out_test"
+      ],
+      "source_group_id": "okutama_morning_08"
+    },
+    {
+      "images": 10,
+      "roles": [
+        "held_out_test"
+      ],
+      "source_group_id": "okutama_morning_09"
+    },
+    {
+      "images": 10,
+      "roles": [
+        "training"
+      ],
+      "source_group_id": "okutama_morning_10"
+    },
+    {
+      "images": 5,
+      "roles": [
+        "validation"
+      ],
+      "source_group_id": "okutama_morning_11"
+    },
+    {
+      "images": 10,
+      "roles": [
+        "held_out_test"
+      ],
+      "source_group_id": "okutama_noon_01"
+    },
+    {
+      "images": 10,
+      "roles": [
+        "training"
+      ],
+      "source_group_id": "okutama_noon_02"
+    },
+    {
+      "images": 10,
+      "roles": [
+        "held_out_test"
+      ],
+      "source_group_id": "okutama_noon_03"
+    },
+    {
+      "images": 10,
+      "roles": [
+        "validation"
+      ],
+      "source_group_id": "okutama_noon_04"
+    },
+    {
+      "images": 10,
+      "roles": [
+        "training"
+      ],
+      "source_group_id": "okutama_noon_05"
+    },
+    {
+      "images": 10,
+      "roles": [
+        "training"
+      ],
+      "source_group_id": "okutama_noon_06"
+    },
+    {
+      "images": 10,
+      "roles": [
+        "training"
+      ],
+      "source_group_id": "okutama_noon_07"
+    },
+    {
+      "images": 10,
+      "roles": [
+        "validation"
+      ],
+      "source_group_id": "okutama_noon_08"
+    },
+    {
+      "images": 10,
+      "roles": [
+        "training"
+      ],
+      "source_group_id": "okutama_noon_09"
+    },
+    {
+      "images": 10,
+      "roles": [
+        "held_out_test"
+      ],
+      "source_group_id": "okutama_noon_10"
+    },
+    {
+      "images": 10,
+      "roles": [
+        "training"
+      ],
+      "source_group_id": "okutama_noon_11"
+    },
+    {
+      "images": 30,
+      "roles": [
+        "validation"
+      ],
+      "source_group_id": "traffic_roundabout_near_3"
+    },
+    {
+      "images": 60,
+      "roles": [
+        "held_out_test"
+      ],
+      "source_group_id": "traffic_urban_intersection"
+    },
+    {
+      "images": 6,
+      "roles": [
+        "held_out_test"
+      ],
+      "source_group_id": "wikimedia_jane_byrne_video"
+    },
+    {
+      "images": 2,
+      "roles": [
+        "validation"
+      ],
+      "source_group_id": "wikimedia_renai_roundabout"
+    }
+  ],
+  "split_checks": {
+    "duplicate_image_hash_groups": [],
+    "location_labels_crossing_roles": {
+      "Okutama Japan": [
+        "held_out_test",
+        "training",
+        "validation"
+      ]
+    },
+    "location_unknown_images": 123,
+    "missing_image_hashes": 0,
+    "near_duplicate_images": "not assessed by this audit",
+    "source_group_independence": "recorded grouping, not proof of independent locations or flights",
+    "source_groups_crossing_roles": {}
+  },
+  "summary": {
+    "bounding_box_images": 313,
+    "box_classes": {
+      "bicycle": {
+        "boxes": 0,
+        "boxes_with_side_below_4px": 0,
+        "declared_box_labelled_images": 8,
+        "images_with_boxes": 0,
+        "recorded_reviewed_boxes": 0,
+        "size_counts": {
+          "large": 0,
+          "medium": 0,
+          "small": 0
+        },
+        "source_groups_with_boxes": 0
+      },
+      "bus": {
+        "boxes": 10,
+        "boxes_with_side_below_4px": 0,
+        "declared_box_labelled_images": 8,
+        "images_with_boxes": 5,
+        "recorded_reviewed_boxes": 10,
+        "size_counts": {
+          "large": 4,
+          "medium": 3,
+          "small": 3
+        },
+        "source_groups_with_boxes": 2
+      },
+      "car_or_van": {
+        "boxes": 2115,
+        "boxes_with_side_below_4px": 0,
+        "declared_box_labelled_images": 98,
+        "images_with_boxes": 98,
+        "recorded_reviewed_boxes": 2115,
+        "size_counts": {
+          "large": 67,
+          "medium": 597,
+          "small": 1451
+        },
+        "source_groups_with_boxes": 4
+      },
+      "motorcycle": {
+        "boxes": 38,
+        "boxes_with_side_below_4px": 0,
+        "declared_box_labelled_images": 38,
+        "images_with_boxes": 16,
+        "recorded_reviewed_boxes": 38,
+        "size_counts": {
+          "large": 0,
+          "medium": 19,
+          "small": 19
+        },
+        "source_groups_with_boxes": 2
+      },
+      "person": {
+        "boxes": 1176,
+        "boxes_with_side_below_4px": 0,
+        "declared_box_labelled_images": 215,
+        "images_with_boxes": 192,
+        "recorded_reviewed_boxes": 1176,
+        "size_counts": {
+          "large": 0,
+          "medium": 465,
+          "small": 711
+        },
+        "source_groups_with_boxes": 22
+      },
+      "truck": {
+        "boxes": 38,
+        "boxes_with_side_below_4px": 0,
+        "declared_box_labelled_images": 8,
+        "images_with_boxes": 8,
+        "recorded_reviewed_boxes": 38,
+        "size_counts": {
+          "large": 3,
+          "medium": 17,
+          "small": 18
+        },
+        "source_groups_with_boxes": 2
+      }
+    },
+    "conditions": {
+      "lighting": {
+        "daylight": 130,
+        "morning": 105,
+        "night": 1,
+        "noon": 110
+      },
+      "location": {
+        "Chicago USA": 6,
+        "Okutama Japan": 215,
+        "Taipei Taiwan": 2,
+        "not_recorded": 123
+      },
+      "scene_type": {
+        "dense_crowd": 33,
+        "highway_interchange": 6,
+        "roundabout": 32,
+        "staged_human_activity": 215,
+        "urban_intersection": 60
+      },
+      "viewpoint": {
+        "aerial": 215,
+        "aerial_nadir": 33,
+        "aerial_oblique": 8,
+        "low_oblique": 90
+      },
+      "weather": {
+        "clear": 98,
+        "not_recorded": 248
+      }
+    },
+    "images": 346,
+    "point_count_images": 33,
+    "point_reference_people": 226336,
+    "source_groups": 28
+  }
+}

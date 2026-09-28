@@ -11,6 +11,10 @@ output after dependency updates; it does not supersede the frozen quality gate.
 The [quality roadmap](../../quality_roadmap.md) links the planned v2 evaluation
 and accuracy work. No v2 accuracy result has been produced yet.
 
+The [historical dataset audit](dataset_audit_v1.md) records class support,
+object sizes, scene coverage and split limitations before v2 acquisition. It
+describes our available evidence; it does not replace the accuracy results below.
+
 Application limits and preliminary resource budgets are recorded separately in
 the [operational safeguards guide](../operational_safeguards.md). Its upload,
 video and memory measurements do not change the model-quality results below.
@@ -67,6 +71,7 @@ ordinary person detections from being interpreted as a measured crowd of zero.
 | Did a runtime update change development outputs? | [Runtime provenance and regression](../runtime_provenance.md) |
 | What did we decide to measure and why? | [Evaluation protocol](evaluation_protocol.md) |
 | Which data did we use, and under what licences? | [Dataset card](dataset_card.md) |
+| What coverage is missing before evaluation v2? | [Historical dataset audit](dataset_audit_v1.md) |
 | How did we annotate and check the data? | [Annotation guide](annotation_guide.md) |
 | How did the original general model perform? | [Baseline selection](baseline_selection.md) |
 | Which aerial models did we compare? | [Aerial model decision](aerial_model_decision.md) |
