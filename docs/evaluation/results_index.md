@@ -15,6 +15,10 @@ The [historical dataset audit](dataset_audit_v1.md) records class support,
 object sizes, scene coverage and split limitations before v2 acquisition. It
 describes our available evidence; it does not replace the accuracy results below.
 
+The [v2 evaluation plan](evaluation_v2_plan.md) records the agreed daytime scope,
+provisional coverage targets and new-holdout rules. It is a planning document,
+not a new dataset release or a result. Historical metrics below remain unchanged.
+
 Application limits and preliminary resource budgets are recorded separately in
 the [operational safeguards guide](../operational_safeguards.md). Its upload,
 video and memory measurements do not change the model-quality results below.
@@ -72,6 +76,7 @@ ordinary person detections from being interpreted as a measured crowd of zero.
 | What did we decide to measure and why? | [Evaluation protocol](evaluation_protocol.md) |
 | Which data did we use, and under what licences? | [Dataset card](dataset_card.md) |
 | What coverage is missing before evaluation v2? | [Historical dataset audit](dataset_audit_v1.md) |
+| What are we planning for v2, and what still needs approval? | [V2 evaluation plan](evaluation_v2_plan.md) |
 | How did we annotate and check the data? | [Annotation guide](annotation_guide.md) |
 | How did the original general model perform? | [Baseline selection](baseline_selection.md) |
 | Which aerial models did we compare? | [Aerial model decision](aerial_model_decision.md) |

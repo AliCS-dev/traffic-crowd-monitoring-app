@@ -72,6 +72,8 @@ interface, and delivery issues. Current deployment checks are recorded in the
 
 The [historical dataset audit](docs/evaluation/dataset_audit_v1.md) summarizes our
 current annotation coverage and the gaps we need to address before evaluation v2.
+The [v2 evaluation plan](docs/evaluation/evaluation_v2_plan.md) records the agreed
+daytime scope, provisional coverage targets and rules for a new final holdout.
 
 The [operational safeguards guide](docs/operational_safeguards.md) records our
 workload limits, recovery boundaries, media retention and preliminary performance
