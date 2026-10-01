@@ -636,3 +636,18 @@ occlusion/location metadata and a mismatch between manifest and review-ledger
 status. We have not changed labels, review records, exclusions or splits, and
 have not trained or evaluated another model. Issue #113 remains open for the
 scope decision, coverage targets, acquisition, review and independent holdout.
+
+### Issue #113: V2 Scope And Evaluation Plan (1 October 2026)
+
+Ali confirmed daytime aerial road scenes with all six existing classes and
+individually distinguishable pedestrians, and provisionally approved 400 images
+from at least 40 independent scene groups. Dense crowds remain a separate task;
+night and adverse-weather claims are outside this scope. We documented proposed
+class/scene floors, review rules, independent holdout controls and uncertainty
+reporting in the [v2 plan](evaluation/evaluation_v2_plan.md).
+
+The plan retains historical aggregate thresholds and proposes additional
+per-class safeguards. Counts are acquisition targets, not measured results or
+a statistical guarantee. Source feasibility and review effort still need
+checking before collection and protocol freeze. We changed no labels, splits,
+models or runtime settings. Issue #113 remains open.
