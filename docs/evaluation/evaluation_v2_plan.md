@@ -6,6 +6,13 @@ floors below are proposals pending source feasibility and review-effort checks.
 This is a planning record for issue #113, not a frozen dataset, accuracy result
 or claim of deployment readiness. No v2 acquisition or training has begun.
 
+**4 October workload update:** Ali cannot take on the proposed annotation-review
+work. The custom dataset campaign is on hold. The
+[source inventory](source_inventory_v2.md) proposes checking existing published
+annotations for a lower-workload evaluation alternative. The targets below
+remain provisional and unfulfilled; changing the protocol requires approval
+before experiments.
+
 ## Scope We Agreed
 
 We will evaluate daytime aerial road scenes using all six existing classes:
@@ -84,11 +91,13 @@ a six-class success claim.
 
 ## Sources And Independent Holdout
 
-The next source inventory records URLs, annotation completeness, licence terms,
-attribution/restrictions, camera provenance, capture/location identifiers,
-available groups per class and estimated review effort. We approve it before
-bulk downloads or a manual annotation campaign. Metadata links alone are not
-permission to redistribute media or labels.
+The [4 October source inventory](source_inventory_v2.md) compares candidate
+labels, licence evidence, camera/location provenance, overlap risks and
+estimated review effort. It has not established eligible groups per class or
+the feasibility of the provisional targets. We still need a concrete acquisition
+proposal and an agreed review budget before bulk downloads or a manual
+annotation campaign. Metadata links alone are not permission to redistribute
+media or labels.
 
 We assign whole groups using seed `2026`, after metadata, exact-hash,
 decoded-image similarity and visual checks of suspected duplicates. We check

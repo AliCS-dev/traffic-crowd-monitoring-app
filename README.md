@@ -74,6 +74,11 @@ The [historical dataset audit](docs/evaluation/dataset_audit_v1.md) summarizes o
 current annotation coverage and the gaps we need to address before evaluation v2.
 The [v2 evaluation plan](docs/evaluation/evaluation_v2_plan.md) records the agreed
 daytime scope, provisional coverage targets and rules for a new final holdout.
+The [v2 source inventory](docs/evaluation/source_inventory_v2.md) compares candidate
+datasets, licence evidence, overlap risks and estimated human-review effort.
+The proposed coverage is not yet verified, and no new v2 data has been acquired.
+The manual-review campaign is on hold because of the available review capacity;
+we are assessing an alternative based on existing published annotations.
 
 The [operational safeguards guide](docs/operational_safeguards.md) records our
 workload limits, recovery boundaries, media retention and preliminary performance
