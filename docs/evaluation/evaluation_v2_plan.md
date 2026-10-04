@@ -6,6 +6,13 @@ floors below are proposals pending source feasibility and review-effort checks.
 This is a planning record for issue #113, not a frozen dataset, accuracy result
 or claim of deployment readiness. No v2 acquisition or training has begun.
 
+**4 October workload update:** Ali cannot take on the proposed annotation-review
+work. The custom dataset campaign is on hold. The
+[source inventory](source_inventory_v2.md) proposes checking existing published
+annotations for a lower-workload evaluation alternative. The targets below
+remain provisional and unfulfilled; changing the protocol requires approval
+before experiments.
+
 ## Scope We Agreed
 
 We will evaluate daytime aerial road scenes using all six existing classes:

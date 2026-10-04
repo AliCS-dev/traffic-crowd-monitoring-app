@@ -667,3 +667,10 @@ labels or known baseline exposure. Our workload estimates are assumptions,
 not measured review timings. We acquired no new media or annotation archives,
 changed no labels or results, and made no model-accuracy claim. Issue #113
 remains open for the remaining dataset work.
+
+After seeing the workload estimate, Ali said he cannot take on the proposed
+annotation-review work. We put the custom dataset campaign on hold and revised
+the next-step recommendation toward publisher-provided annotations, retaining
+source label policies and reporting unsupported classes. This alternative still
+needs a feasibility check and approval; automated validation is not human
+review, and the existing six-class protocol has not been replaced.

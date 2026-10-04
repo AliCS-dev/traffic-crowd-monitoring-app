@@ -23,6 +23,9 @@ The [v2 source inventory](source_inventory_v2.md) records candidate sources,
 permission gaps, model-overlap risks and estimated review effort. It has not
 established that the provisional coverage targets can be met; no new v2 data
 has been acquired.
+Ali cannot take on the proposed annotation-review workload. The custom dataset
+campaign is on hold while we assess existing-label alternatives; the six-class
+protocol and historical gate have not been replaced or declared passed.
 
 Application limits and preliminary resource budgets are recorded separately in
 the [operational safeguards guide](../operational_safeguards.md). Its upload,

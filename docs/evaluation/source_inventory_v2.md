@@ -13,6 +13,12 @@ an acceptable review workload. Published clip counts are not independent scene
 counts. A source with suitable labels is not automatically an independent test
 source for a model trained on it.
 
+**Workload decision:** after reviewing the estimates below, Ali said he cannot
+take on the proposed annotation-review work. We will not plan a manual
+annotation campaign or assume a review budget. The custom 400-image proposal
+is on hold pending an explicitly agreed alternative; its targets have not
+been silently reduced or declared satisfied.
+
 ## Shortlist
 
 The table describes source labels, not verified counts of usable v2 objects.
@@ -25,7 +31,7 @@ Mappings remain subject to our [annotation policy](annotation_guide.md).
 | UAVDT | Car, bus and truck only | 100 sequences; independent locations not established | Priority metadata check for vehicle coverage |
 | AU-AIR | All six, plus trailer outside our taxonomy | Eight videos at one intersection | At most one supplementary scene group; access and terms unresolved |
 | Traffic Images Captured from UAVs | Car and motorcycle only | Scene descriptions available; repeats need grouping | Check genuinely new locations before further use |
-| New Wikimedia Commons files | No supplied evaluation labels in the leads below | Per-file location and camera evidence | Small, manually reviewed supplement, not a ready-made dataset |
+| New Wikimedia Commons files | No supplied evaluation labels in the leads below | Per-file location and camera evidence | Deferred: would require manual annotation and review |
 
 These are candidates, not an approved acquisition list. For partial-label
 sources, an absent class annotation is not evidence that the object is absent.
@@ -186,29 +192,46 @@ and 80 unlabelled images would require about **33-67 hours** of review, plus
 an assumed **4-8 hours** for provenance and organization: roughly **37-75
 hours** overall, before adapter work. This mix is not an available or selected
 dataset. Even 400 compatible-label images imply roughly 20-40 review hours
-under these assumptions. We need Ali's actual time budget before committing to
-collection; we do not record reviews in his name that he has not performed.
+under these assumptions. Ali cannot take on this work, so these estimates
+explain why we are not proceeding with that campaign. We do not record reviews
+in his name that he has not performed.
 
 ## Recommended Next Step
 
-We propose one bounded metadata check of **SDD and UAVDT**, with no training or
-bulk media download. These are complementary annotation leads, not a promise
-that their combination meets the target. The single geolocated Commons
-roundabout image is a reserve lead, not a substitute for independent coverage.
+We propose one bounded metadata check of **SDD and UAVDT**, with no training,
+bulk media download or manual annotation. The aim is now to establish what we
+can evaluate using existing publisher-provided ground truth, not to assemble
+400 newly reviewed images. Commons acquisition is deferred because the leads
+need labels we do not have the capacity to produce.
+
+A possible alternative is separate source-specific benchmarks, retaining each
+source's label conventions and official split roles. We would report only
+supported classes and keep their scores separate. This is a proposal for Ali's
+approval, not a replacement already applied to the six-class protocol. It
+would not establish a new custom independent holdout or satisfy the original
+scene/class floors merely by combining datasets.
 
 The next deliverable would contain:
 
 1. Accessible annotation/attribute file listings, exact release identifiers
    and retained permission evidence. Any metadata download is identified and
    size-checked first; an unavailable link does not trigger a full media fetch.
-2. A location-group and class-coverage table distinguishing known counts,
-   unresolved grouping and classes that need manual labels. Official split
-   roles and historical/model overlap remain visible.
-3. A concrete acquisition proposal with file sizes, proposed group roles,
-   review workload and missing quotas. We compare this with Ali's time budget
-   before acquisition. If coverage is insufficient, we bring a smaller or
-   differently sourced plan for approval before experiments, rather than
-   quietly lowering the floors.
+2. A class-compatibility and location-group table distinguishing existing
+   usable labels, unresolved grouping and classes requiring manual changes.
+   The latter are not used for new accuracy claims. Official split roles and
+   historical/model overlap remain visible.
+3. A concrete proposal using existing annotations, with download sizes,
+   automatable conversion/validation checks and explicit unsupported claims.
+   Any change to the custom dataset, independence claims or success criteria
+   comes back for approval before experiments. An unsuitable source is
+   rejected, not turned into an unplanned manual annotation task.
+
+Automated checks can test file integrity, coordinates, category mapping,
+duplicates and split consistency. They cannot prove exhaustive annotation or
+correct semantic labels. Source-provided ground truth is identified as such,
+with the publisher's quality evidence and our lack of independent visual
+review disclosed. We do not present automated checks or model predictions as
+human annotation approval.
 
 An eventual acquisition record needs source release and item IDs, original
 labels, mapping/ignore policy, author and licence evidence, location/capture
