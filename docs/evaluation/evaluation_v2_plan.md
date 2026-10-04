@@ -84,11 +84,13 @@ a six-class success claim.
 
 ## Sources And Independent Holdout
 
-The next source inventory records URLs, annotation completeness, licence terms,
-attribution/restrictions, camera provenance, capture/location identifiers,
-available groups per class and estimated review effort. We approve it before
-bulk downloads or a manual annotation campaign. Metadata links alone are not
-permission to redistribute media or labels.
+The [4 October source inventory](source_inventory_v2.md) compares candidate
+labels, licence evidence, camera/location provenance, overlap risks and
+estimated review effort. It has not established eligible groups per class or
+the feasibility of the provisional targets. We still need a concrete acquisition
+proposal and an agreed review budget before bulk downloads or a manual
+annotation campaign. Metadata links alone are not permission to redistribute
+media or labels.
 
 We assign whole groups using seed `2026`, after metadata, exact-hash,
 decoded-image similarity and visual checks of suspected duplicates. We check

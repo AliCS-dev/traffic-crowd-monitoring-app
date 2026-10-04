@@ -651,3 +651,19 @@ per-class safeguards. Counts are acquisition targets, not measured results or
 a statistical guarantee. Source feasibility and review effort still need
 checking before collection and protocol freeze. We changed no labels, splits,
 models or runtime settings. Issue #113 remains open.
+
+### Issue #113: V2 Source Inventory (4 October 2026)
+
+We compared candidate aerial datasets and concrete Commons leads using
+publisher records, annotation documentation and the pinned baseline model card.
+The [source inventory](evaluation/source_inventory_v2.md) records class gaps,
+licence/access restrictions, scene independence, model exposure and estimated
+human-review effort. We propose inspecting SDD and UAVDT metadata next, before
+committing to media acquisition.
+
+The review has not established that 400 images from 40 independent groups can
+meet the proposed class floors. Some large sources have few locations, partial
+labels or known baseline exposure. Our workload estimates are assumptions,
+not measured review timings. We acquired no new media or annotation archives,
+changed no labels or results, and made no model-accuracy claim. Issue #113
+remains open for the remaining dataset work.
