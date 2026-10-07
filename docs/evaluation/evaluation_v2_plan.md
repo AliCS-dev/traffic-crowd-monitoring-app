@@ -4,7 +4,8 @@
 approved 400 images from at least 40 independent scene groups. Detailed coverage
 floors below are proposals pending source feasibility and review-effort checks.
 This is a planning record for issue #113, not a frozen dataset, accuracy result
-or claim of deployment readiness. No v2 acquisition or training has begun.
+or claim of deployment readiness. No v2 evaluation media acquisition or training
+has begun.
 
 **4 October workload update:** Ali cannot take on the proposed annotation-review
 work. The custom dataset campaign is on hold. The
@@ -12,6 +13,12 @@ work. The custom dataset campaign is on hold. The
 annotations for a lower-workload evaluation alternative. The targets below
 remain provisional and unfulfilled; changing the protocol requires approval
 before experiments.
+
+**7 October inspection update:** the [annotation feasibility report](annotation_feasibility_v2.md)
+records source-label counts and proposes a separate UAVDT vehicle evaluation.
+Only metadata and annotations were inspected, using pinned mirrors where
+publisher downloads were unavailable. No revised protocol has been approved;
+the provisional targets below remain unfulfilled.
 
 ## Scope We Agreed
 

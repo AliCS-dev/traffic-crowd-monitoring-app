@@ -1,0 +1,2729 @@
+{
+  "record_type": "annotation_feasibility_not_accuracy",
+  "inspection_date": "2026-10-07",
+  "media_downloaded": false,
+  "human_visual_review_performed": false,
+  "official_original_hashes_available": false,
+  "count_definitions": {
+    "box_rows": "One object annotation in one frame; repeated tracks across frames are not independent objects.",
+    "visible": "SDD lost=0, including occluded and interpolated source rows; not visually verified.",
+    "track_ids": "Distinct IDs within one source sequence and source class, not identities across sequences.",
+    "annotated_frames": "Distinct frame IDs with annotation rows; video length and pixel alignment not verified.",
+    "crc_check": "Internal ZIP integrity, not proof of agreement with original publisher files."
+  },
+  "sdd": {
+    "mirror_revision": "97ec1d5e1b579f26febeaa9083705952deac338a",
+    "mirror_url": "https://github.com/crowdbotp/OpenTraj/tree/97ec1d5e1b579f26febeaa9083705952deac338a/datasets/SDD",
+    "publisher_url": "https://cvgl.stanford.edu/projects/uav_data/",
+    "official_copy_match_verified": false,
+    "selection_rule": "smallest annotation file in each named scene, chosen only to bound inspection bytes; not an evaluation sample",
+    "inventory_annotation_files": 60,
+    "inventory_annotation_bytes": 444959624,
+    "files": [
+      {
+        "scene": "bookstore",
+        "video": "video6",
+        "bytes": 4735672,
+        "sha256": "0bda18338c92774084eeef50ee541a9336623695dca2df7c767c6c2ca1d15d98",
+        "git_blob_sha1": "edfa02890cf3f9ea688759a6eb6a4defadfe44f7",
+        "source_path": "datasets/SDD/bookstore/video6/annotations.txt",
+        "rows": 108886,
+        "lost_rows": 43942,
+        "visible_generated_rows": 63754,
+        "visible_occluded_rows": 7090,
+        "frame_min": 0,
+        "frame_max": 14557,
+        "annotated_frames": 14558,
+        "duplicate_track_frames": 0,
+        "nonpositive_visible_boxes": 0,
+        "visible_box_rows_by_source_class": {
+          "Biker": 7579,
+          "Pedestrian": 55969,
+          "Skater": 1396
+        },
+        "visible_track_ids_by_source_class": {
+          "Biker": 22,
+          "Pedestrian": 102,
+          "Skater": 4
+        }
+      },
+      {
+        "scene": "coupa",
+        "video": "video1",
+        "bytes": 4867529,
+        "sha256": "4b05e94a8a1cdcf8dea91ef22f2ffe8dc7101a5b73b4cf83aeaa1d06f68e0327",
+        "git_blob_sha1": "7afbd9ad0abb52a0913752e7c5e601fac0fb93a0",
+        "source_path": "datasets/SDD/coupa/video1/annotations.txt",
+        "rows": 117520,
+        "lost_rows": 45953,
+        "visible_generated_rows": 69532,
+        "visible_occluded_rows": 3760,
+        "frame_min": 0,
+        "frame_max": 11965,
+        "annotated_frames": 11966,
+        "duplicate_track_frames": 0,
+        "nonpositive_visible_boxes": 0,
+        "visible_box_rows_by_source_class": {
+          "Biker": 10089,
+          "Car": 57,
+          "Cart": 374,
+          "Pedestrian": 61047
+        },
+        "visible_track_ids_by_source_class": {
+          "Biker": 31,
+          "Car": 1,
+          "Cart": 1,
+          "Pedestrian": 54
+        }
+      },
+      {
+        "scene": "deathCircle",
+        "video": "video2",
+        "bytes": 597464,
+        "sha256": "13e13609aac8fae98ffcee07275a0bb6860a0a3402f66009f1fa807d7712d74f",
+        "git_blob_sha1": "04fde1c48d886ffb8b1447ead948b26898fe6ec2",
+        "source_path": "datasets/SDD/deathCircle/video2/annotations.txt",
+        "rows": 15085,
+        "lost_rows": 4580,
+        "visible_generated_rows": 10148,
+        "visible_occluded_rows": 1118,
+        "frame_min": 0,
+        "frame_max": 430,
+        "annotated_frames": 431,
+        "duplicate_track_frames": 0,
+        "nonpositive_visible_boxes": 0,
+        "visible_box_rows_by_source_class": {
+          "Biker": 3455,
+          "Cart": 822,
+          "Pedestrian": 6228
+        },
+        "visible_track_ids_by_source_class": {
+          "Biker": 14,
+          "Cart": 4,
+          "Pedestrian": 17
+        }
+      },
+      {
+        "scene": "gates",
+        "video": "video6",
+        "bytes": 792983,
+        "sha256": "f247a4255bbd25923b1379c2ee4aeaa7add6155398d6be1c58ffd7084ce6b3ce",
+        "git_blob_sha1": "40273c060634abac970cb24f33103fc978ca9732",
+        "source_path": "datasets/SDD/gates/video6/annotations.txt",
+        "rows": 18614,
+        "lost_rows": 10610,
+        "visible_generated_rows": 7823,
+        "visible_occluded_rows": 4,
+        "frame_min": 0,
+        "frame_max": 2081,
+        "annotated_frames": 2082,
+        "duplicate_track_frames": 0,
+        "nonpositive_visible_boxes": 0,
+        "visible_box_rows_by_source_class": {
+          "Biker": 1107,
+          "Bus": 215,
+          "Cart": 149,
+          "Pedestrian": 6401,
+          "Skater": 132
+        },
+        "visible_track_ids_by_source_class": {
+          "Biker": 6,
+          "Bus": 1,
+          "Cart": 1,
+          "Pedestrian": 18,
+          "Skater": 1
+        }
+      },
+      {
+        "scene": "hyang",
+        "video": "video9",
+        "bytes": 231102,
+        "sha256": "4f5b894f892b8412f70d439599aee44ac8c097ac953594cd2dc6eea05454911b",
+        "git_blob_sha1": "fd475194bfee9b6159818fcd3def187c3d3ec3ce",
+        "source_path": "datasets/SDD/hyang/video9/annotations.txt",
+        "rows": 5978,
+        "lost_rows": 4048,
+        "visible_generated_rows": 1852,
+        "visible_occluded_rows": 592,
+        "frame_min": 0,
+        "frame_max": 573,
+        "annotated_frames": 574,
+        "duplicate_track_frames": 0,
+        "nonpositive_visible_boxes": 0,
+        "visible_box_rows_by_source_class": {
+          "Biker": 1384,
+          "Pedestrian": 546
+        },
+        "visible_track_ids_by_source_class": {
+          "Biker": 6,
+          "Pedestrian": 5
+        }
+      },
+      {
+        "scene": "little",
+        "video": "video0",
+        "bytes": 2086527,
+        "sha256": "8da212a093d1c62103f163cfa3668fa446ffe967eed198e16f771657f1d3a9d8",
+        "git_blob_sha1": "4e3a01ce68921a6ef996427623771496ccc96c98",
+        "source_path": "datasets/SDD/little/video0/annotations.txt",
+        "rows": 51462,
+        "lost_rows": 26945,
+        "visible_generated_rows": 23877,
+        "visible_occluded_rows": 508,
+        "frame_min": 0,
+        "frame_max": 1517,
+        "annotated_frames": 1518,
+        "duplicate_track_frames": 0,
+        "nonpositive_visible_boxes": 0,
+        "visible_box_rows_by_source_class": {
+          "Biker": 10179,
+          "Pedestrian": 14338
+        },
+        "visible_track_ids_by_source_class": {
+          "Biker": 34,
+          "Pedestrian": 26
+        }
+      },
+      {
+        "scene": "nexus",
+        "video": "video5",
+        "bytes": 860946,
+        "sha256": "fafc23587384509d183965d2f4dc552fc01b8d846dfa11031fa38f69c5d9b370",
+        "git_blob_sha1": "7a8ac34416bc6a0fb1798354e30d222f85f93213",
+        "source_path": "datasets/SDD/nexus/video5/annotations.txt",
+        "rows": 22340,
+        "lost_rows": 5206,
+        "visible_generated_rows": 16572,
+        "visible_occluded_rows": 288,
+        "frame_min": 500,
+        "frame_max": 1061,
+        "annotated_frames": 562,
+        "duplicate_track_frames": 0,
+        "nonpositive_visible_boxes": 0,
+        "visible_box_rows_by_source_class": {
+          "Biker": 388,
+          "Bus": 124,
+          "Car": 12018,
+          "Pedestrian": 4554,
+          "Skater": 50
+        },
+        "visible_track_ids_by_source_class": {
+          "Biker": 1,
+          "Bus": 2,
+          "Car": 25,
+          "Pedestrian": 16,
+          "Skater": 1
+        }
+      },
+      {
+        "scene": "quad",
+        "video": "video3",
+        "bytes": 167867,
+        "sha256": "8715767873e2af1214d076211ee1f172eb8f90f3785f52f3f3dd341f1920b2b9",
+        "git_blob_sha1": "b7986ad66d8af0f45148b10deac7b3f277827cef",
+        "source_path": "datasets/SDD/quad/video3/annotations.txt",
+        "rows": 4072,
+        "lost_rows": 1624,
+        "visible_generated_rows": 2390,
+        "visible_occluded_rows": 0,
+        "frame_min": 0,
+        "frame_max": 508,
+        "annotated_frames": 509,
+        "duplicate_track_frames": 0,
+        "nonpositive_visible_boxes": 0,
+        "visible_box_rows_by_source_class": {
+          "Pedestrian": 2448
+        },
+        "visible_track_ids_by_source_class": {
+          "Pedestrian": 8
+        }
+      }
+    ]
+  },
+  "uavdt": {
+    "mirror_revision": "ad1cfbe161c183cfdee26f6c42c6fff6552a54dc",
+    "mirror_url": "https://huggingface.co/datasets/vanthanh/UAVDT-Benchmark-M/tree/ad1cfbe161c183cfdee26f6c42c6fff6552a54dc",
+    "publisher_url": "https://sites.google.com/view/grli-uavdt/",
+    "official_copy_match_verified": false,
+    "archive_bytes_from_metadata": 245719325,
+    "archive_sha256_advertised_not_locally_verified": "1e565da8c2a035bf1e56b1322de76c74b73702ea3b0f918f45debf69c2b26799",
+    "attribute_zip_bytes": 9503,
+    "attribute_zip_sha256": "ac6f85e355db3f4808cd64148b1f3c33933906ebd47c63939bb7eba6974824d1",
+    "toolkit_readme_sha256": "c293a22004729f90d87fc5572585373e40d43a69623e1ace5f4d5cd05ffb211c",
+    "attribute_readme_sha256": "55360817e6dac3b74eed6c7fa8ed5940e6afce39d2901aa44da2f6c29d87a4dc",
+    "downloaded_ranges": [
+      {
+        "offset": 43228793,
+        "bytes": 7616908,
+        "sha256": "bb829a7ea8ef390fcd06eb270f132aede2b177d708757d422ce45a784e2b2f32"
+      },
+      {
+        "offset": 245574921,
+        "bytes": 144404,
+        "sha256": "8fbf95a67ca152aa022f4b9f52ef8a6dc59e317579feed142f23ab1468be1ccf"
+      }
+    ],
+    "crc_checked_gt_members": 150,
+    "source_class_ids": {
+      "1": "car",
+      "2": "truck",
+      "3": "bus"
+    },
+    "attribute_order": [
+      "daylight",
+      "night",
+      "fog",
+      "low_alt",
+      "medium_alt",
+      "high_alt",
+      "front_view",
+      "side_view",
+      "bird_view",
+      "long_term"
+    ],
+    "daylight_filter": "daylight=1 and night=0 and fog=0; not a verified rain-free or independent-location filter",
+    "daylight_summary": {
+      "train": {
+        "all_sequences": 30,
+        "daylight_sequences": 17,
+        "sequence_ids": [
+          "M0101",
+          "M0201",
+          "M0207",
+          "M0210",
+          "M0301",
+          "M0401",
+          "M0402",
+          "M0603",
+          "M0604",
+          "M0605",
+          "M0702",
+          "M0703",
+          "M1201",
+          "M1202",
+          "M1304",
+          "M1305",
+          "M1306"
+        ],
+        "box_rows_by_source_class": {
+          "1": 246393,
+          "2": 14125,
+          "3": 8268
+        },
+        "class_positive_sequences": {
+          "1": 17,
+          "2": 15,
+          "3": 9
+        },
+        "track_ids_summed_within_sequences": {
+          "1": 824,
+          "2": 56,
+          "3": 22
+        },
+        "annotated_frames": 14365,
+        "ignore_rows": 34470,
+        "sequences_with_ignore_rows": 14,
+        "bird_view_flag_sequences": 4
+      },
+      "test": {
+        "all_sequences": 20,
+        "daylight_sequences": 12,
+        "sequence_ids": [
+          "M0208",
+          "M0209",
+          "M0403",
+          "M0601",
+          "M0602",
+          "M0606",
+          "M0801",
+          "M0802",
+          "M1301",
+          "M1302",
+          "M1303",
+          "M1401"
+        ],
+        "box_rows_by_source_class": {
+          "1": 214712,
+          "2": 2449,
+          "3": 2954
+        },
+        "class_positive_sequences": {
+          "1": 12,
+          "2": 7,
+          "3": 5
+        },
+        "track_ids_summed_within_sequences": {
+          "1": 759,
+          "2": 14,
+          "3": 10
+        },
+        "annotated_frames": 9376,
+        "ignore_rows": 22935,
+        "sequences_with_ignore_rows": 10,
+        "bird_view_flag_sequences": 1
+      }
+    },
+    "sequences": [
+      {
+        "sequence": "M0203",
+        "attribute_member": "M_attr/test/M0203_attr.txt",
+        "source_split": "test",
+        "attributes": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "daylight_only": false,
+        "attribute_sha256": "fc6c0b6f6ecfa638abfa502604919dcdd2d6ca6e60ccd541a9af792eb452793c",
+        "detection_sha256": "fd3dc9fcdb4bc936ad1bfc0a8b0a6c96a8aafba41655981640fff25e075a785c",
+        "ignore_sha256": "99f1604c35dc686f5806719f179dda3488272e14e58d6a49b8978198cb3d7385",
+        "detection_bytes": 157813,
+        "ignore_bytes": 6332,
+        "frame_min": 1,
+        "frame_max": 1007,
+        "annotated_frames": 995,
+        "ignore_rows": 209,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 5404,
+          "2": 215
+        },
+        "track_ids_by_source_class": {
+          "1": 54,
+          "2": 2
+        },
+        "out_of_view_codes": {
+          "1": 5033,
+          "2": 201,
+          "3": 385
+        },
+        "occlusion_codes": {
+          "1": 5619
+        }
+      },
+      {
+        "sequence": "M0205",
+        "attribute_member": "M_attr/test/M0205_attr.txt",
+        "source_split": "test",
+        "attributes": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "daylight_only": false,
+        "attribute_sha256": "f11e4d83411865113f6ca6dba2e2f349827c7da6a24a417a8b050ef7c5c407ec",
+        "detection_sha256": "b28ccb4add2b2289781dc196ef330011fceab006a17a5298da1ce7d8acb9f366",
+        "ignore_sha256": "6461fd396ac817ebcb1c856fb3a5be654a7a60132900e31b50c2ede7826123f1",
+        "detection_bytes": 148249,
+        "ignore_bytes": 2773,
+        "frame_min": 1,
+        "frame_max": 646,
+        "annotated_frames": 646,
+        "ignore_rows": 94,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 5412,
+          "2": 46
+        },
+        "track_ids_by_source_class": {
+          "1": 27,
+          "2": 1
+        },
+        "out_of_view_codes": {
+          "1": 5219,
+          "2": 68,
+          "3": 171
+        },
+        "occlusion_codes": {
+          "1": 4806,
+          "3": 10,
+          "4": 642
+        }
+      },
+      {
+        "sequence": "M0208",
+        "attribute_member": "M_attr/test/M0208_attr.txt",
+        "source_split": "test",
+        "attributes": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "32dc20850ff645ac73b5b6745d637d1028f6cd856c1c49d67e4dd95e6348eb59",
+        "detection_sha256": "275d33818bdce0773309684bb6f908a477c205551d0b707b517aec91d811b060",
+        "ignore_sha256": "0ec174cc59b36d5b3c704a3e8fda1b35a94e2b1b85aa996c08fc956442fda578",
+        "detection_bytes": 21082,
+        "ignore_bytes": 7579,
+        "frame_min": 1,
+        "frame_max": 265,
+        "annotated_frames": 265,
+        "ignore_rows": 265,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 790
+        },
+        "track_ids_by_source_class": {
+          "1": 10
+        },
+        "out_of_view_codes": {
+          "1": 784,
+          "3": 6
+        },
+        "occlusion_codes": {
+          "1": 790
+        }
+      },
+      {
+        "sequence": "M0209",
+        "attribute_member": "M_attr/test/M0209_attr.txt",
+        "source_split": "test",
+        "attributes": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "62b7b0710fcc71f012c22745ad9d44a3e48a2d776897659c443001fbcec5c78b",
+        "detection_sha256": "c571a2e2cc0563d32417953d75cdcf17a8990cd0bd5cefd9b90bd5803c8dd2d8",
+        "ignore_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "detection_bytes": 518112,
+        "ignore_bytes": 0,
+        "frame_min": 1,
+        "frame_max": 1576,
+        "annotated_frames": 1576,
+        "ignore_rows": 0,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 18226
+        },
+        "track_ids_by_source_class": {
+          "1": 58
+        },
+        "out_of_view_codes": {
+          "1": 15689,
+          "2": 1588,
+          "3": 949
+        },
+        "occlusion_codes": {
+          "1": 11813,
+          "2": 209,
+          "3": 149,
+          "4": 6055
+        }
+      },
+      {
+        "sequence": "M0403",
+        "attribute_member": "M_attr/test/M0403_attr.txt",
+        "source_split": "test",
+        "attributes": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "49e243ea46b432a9cb94ffd93f7fa9c7e2fa6817f0cdb514f1593be61559a205",
+        "detection_sha256": "a45a48bc7c00c2e7ee2b05242864117b21af08b59fd8b31f767b4627c25bf7b6",
+        "ignore_sha256": "b6bbc5fdb13f1135e529bda1bbec5d8282f6acea6be298c4dee6684607d2a424",
+        "detection_bytes": 863630,
+        "ignore_bytes": 20276,
+        "frame_min": 1,
+        "frame_max": 514,
+        "annotated_frames": 514,
+        "ignore_rows": 728,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 31403
+        },
+        "track_ids_by_source_class": {
+          "1": 99
+        },
+        "out_of_view_codes": {
+          "1": 30304,
+          "2": 514,
+          "3": 585
+        },
+        "occlusion_codes": {
+          "1": 31403
+        }
+      },
+      {
+        "sequence": "M0601",
+        "attribute_member": "M_attr/test/M0601_attr.txt",
+        "source_split": "test",
+        "attributes": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "3c9427867cbac2682ed1b29247f10d6f46b60123bfbf441c813a12647f269f25",
+        "detection_sha256": "4d0af443052d90c175fa220b9373e9f13215b0c95b6880f6c173aa796aa4a461",
+        "ignore_sha256": "85875b72f919f243e61b86faf6723193887c56518f2c9b9e30b8e86a5e52befb",
+        "detection_bytes": 287859,
+        "ignore_bytes": 8443,
+        "frame_min": 1,
+        "frame_max": 372,
+        "annotated_frames": 372,
+        "ignore_rows": 274,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 9908,
+          "2": 150,
+          "3": 365
+        },
+        "track_ids_by_source_class": {
+          "1": 50,
+          "2": 1,
+          "3": 1
+        },
+        "out_of_view_codes": {
+          "1": 10275,
+          "2": 87,
+          "3": 61
+        },
+        "occlusion_codes": {
+          "1": 10377,
+          "3": 31,
+          "4": 15
+        }
+      },
+      {
+        "sequence": "M0602",
+        "attribute_member": "M_attr/test/M0602_attr.txt",
+        "source_split": "test",
+        "attributes": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "32dc20850ff645ac73b5b6745d637d1028f6cd856c1c49d67e4dd95e6348eb59",
+        "detection_sha256": "a0f55659c3c8402991f8250ae8a162466e143c6ee15233aa1f657eb2e7ab4a97",
+        "ignore_sha256": "410999644143729f27f1cc50287494310bbcffa27b09292d31aae71d682c01e9",
+        "detection_bytes": 514474,
+        "ignore_bytes": 26991,
+        "frame_min": 1,
+        "frame_max": 480,
+        "annotated_frames": 480,
+        "ignore_rows": 914,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 16687,
+          "2": 383,
+          "3": 1658
+        },
+        "track_ids_by_source_class": {
+          "1": 74,
+          "2": 3,
+          "3": 4
+        },
+        "out_of_view_codes": {
+          "1": 18142,
+          "2": 295,
+          "3": 291
+        },
+        "occlusion_codes": {
+          "1": 15244,
+          "2": 446,
+          "3": 725,
+          "4": 2313
+        }
+      },
+      {
+        "sequence": "M0606",
+        "attribute_member": "M_attr/test/M0606_attr.txt",
+        "source_split": "test",
+        "attributes": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "49e243ea46b432a9cb94ffd93f7fa9c7e2fa6817f0cdb514f1593be61559a205",
+        "detection_sha256": "d3247532bd434221f6829c3e8f46a61a67705a390b957f5317af95b6320d73b9",
+        "ignore_sha256": "e99285cffaba302f734e5788416bd187ec12f2980d9c3effe486e17f903a4789",
+        "detection_bytes": 498994,
+        "ignore_bytes": 229781,
+        "frame_min": 1,
+        "frame_max": 1374,
+        "annotated_frames": 1374,
+        "ignore_rows": 7257,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 17071,
+          "2": 224,
+          "3": 459
+        },
+        "track_ids_by_source_class": {
+          "1": 93,
+          "2": 4,
+          "3": 3
+        },
+        "out_of_view_codes": {
+          "1": 17505,
+          "2": 73,
+          "3": 176
+        },
+        "occlusion_codes": {
+          "1": 17149,
+          "2": 9,
+          "3": 79,
+          "4": 517
+        }
+      },
+      {
+        "sequence": "M0701",
+        "attribute_member": "M_attr/test/M0701 _attr.txt",
+        "source_split": "test",
+        "attributes": [
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0
+        ],
+        "daylight_only": false,
+        "attribute_sha256": "e3818030be205b719b2ab8b171b031c3d64002c7bb534706b7c171089f733f91",
+        "detection_sha256": "1df5d7e5e70cfc3ed26ca45b40842463b4263df1ba0a53dcd5cbdb39d7c42660",
+        "ignore_sha256": "04a8e4a8062470cec1581827ca04788a418ca39617f73994ea39fb02a2c0bad6",
+        "detection_bytes": 2685715,
+        "ignore_bytes": 106740,
+        "frame_min": 1,
+        "frame_max": 1308,
+        "annotated_frames": 1308,
+        "ignore_rows": 3544,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 90563,
+          "2": 2472,
+          "3": 1008
+        },
+        "track_ids_by_source_class": {
+          "1": 178,
+          "2": 5,
+          "3": 2
+        },
+        "out_of_view_codes": {
+          "1": 75412,
+          "2": 14111,
+          "3": 4520
+        },
+        "occlusion_codes": {
+          "1": 94043
+        }
+      },
+      {
+        "sequence": "M0801",
+        "attribute_member": "M_attr/test/M0801_attr.txt",
+        "source_split": "test",
+        "attributes": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "94b61b49f32a4d6ff6a9a837181d88692685cc74dd41dc560ba818cf73c4ce54",
+        "detection_sha256": "88230a3755923f8e6cb54ccba1b3b00a03bf5771533a49ce571246bb6c85b3d7",
+        "ignore_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "detection_bytes": 112193,
+        "ignore_bytes": 0,
+        "frame_min": 1,
+        "frame_max": 298,
+        "annotated_frames": 298,
+        "ignore_rows": 0,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 3832,
+          "2": 108,
+          "3": 207
+        },
+        "track_ids_by_source_class": {
+          "1": 23,
+          "2": 1,
+          "3": 1
+        },
+        "out_of_view_codes": {
+          "1": 3967,
+          "2": 108,
+          "3": 72
+        },
+        "occlusion_codes": {
+          "1": 4147
+        }
+      },
+      {
+        "sequence": "M0802",
+        "attribute_member": "M_attr/test/M0802_attr.txt",
+        "source_split": "test",
+        "attributes": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "e54c0d19d5a3bde013ce13950953a626131cf0030472eb2915fd251be488846a",
+        "detection_sha256": "bfb8ce5d707ca12e66fefcc18fddf50aebdf0dbe936ca0745d7c334f47f870b2",
+        "ignore_sha256": "2b4f459582b5bab33b91b879e61ad86a3f8e9c9a780faa171b3d399b0be96ff8",
+        "detection_bytes": 893235,
+        "ignore_bytes": 128169,
+        "frame_min": 1,
+        "frame_max": 1101,
+        "annotated_frames": 1101,
+        "ignore_rows": 4217,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 31785,
+          "2": 289
+        },
+        "track_ids_by_source_class": {
+          "1": 68,
+          "2": 1
+        },
+        "out_of_view_codes": {
+          "1": 30535,
+          "2": 570,
+          "3": 969
+        },
+        "occlusion_codes": {
+          "1": 29525,
+          "2": 37,
+          "3": 25,
+          "4": 2487
+        }
+      },
+      {
+        "sequence": "M1001",
+        "attribute_member": "M_attr/test/M1001_attr.txt",
+        "source_split": "test",
+        "attributes": [
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1
+        ],
+        "daylight_only": false,
+        "attribute_sha256": "5d6744fcf27b702ccfc5e09c2e6f32ad459ed4b918d823a5dd213fe037bf2af9",
+        "detection_sha256": "10717236c128a622c419967f439484e37de44bbd2c468b58527af8e5d9ce2b9b",
+        "ignore_sha256": "5a139d4cacd85aced651f6cac1af301d90b134ed352a372c84e12abc4eb55485",
+        "detection_bytes": 645811,
+        "ignore_bytes": 292729,
+        "frame_min": 1,
+        "frame_max": 1859,
+        "annotated_frames": 1859,
+        "ignore_rows": 9335,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 18578,
+          "2": 1182,
+          "3": 2873
+        },
+        "track_ids_by_source_class": {
+          "1": 87,
+          "2": 2,
+          "3": 10
+        },
+        "out_of_view_codes": {
+          "1": 19501,
+          "2": 2006,
+          "3": 1126
+        },
+        "occlusion_codes": {
+          "1": 22234,
+          "2": 203,
+          "3": 36,
+          "4": 160
+        }
+      },
+      {
+        "sequence": "M1004",
+        "attribute_member": "M_attr/test/M1004_attr.txt",
+        "source_split": "test",
+        "attributes": [
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "daylight_only": false,
+        "attribute_sha256": "507c97126392f0231ea9ae7d7eaff4b9be64f7452e64d0e17bb0e22d30ae2337",
+        "detection_sha256": "32993ad92d832b6cbb02c0d5b5407b8bca1602863294bda91793892e9223fc64",
+        "ignore_sha256": "b63877d08b068c4946da20582f8be9d7d91fc974396d0b251953494a94608c5a",
+        "detection_bytes": 137148,
+        "ignore_bytes": 18850,
+        "frame_min": 1,
+        "frame_max": 269,
+        "annotated_frames": 269,
+        "ignore_rows": 637,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 4734,
+          "2": 173,
+          "3": 72
+        },
+        "track_ids_by_source_class": {
+          "1": 38,
+          "2": 1,
+          "3": 1
+        },
+        "out_of_view_codes": {
+          "1": 4887,
+          "2": 9,
+          "3": 83
+        },
+        "occlusion_codes": {
+          "1": 4907,
+          "4": 72
+        }
+      },
+      {
+        "sequence": "M1007",
+        "attribute_member": "M_attr/test/M1007_attr.txt",
+        "source_split": "test",
+        "attributes": [
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "daylight_only": false,
+        "attribute_sha256": "788586816adc0dde53fab9b25b4249a800a75abf7ecbb229621c7eb7a3e9bcc2",
+        "detection_sha256": "37ebd68bcc0e548db146eafa4ee50a01b037faaf8fcb62679557aea2d61d9fbf",
+        "ignore_sha256": "78a9e78137e36d67c135ef4a77c21fad20b09ed97b1ab1acc7754c234f4fba60",
+        "detection_bytes": 130403,
+        "ignore_bytes": 43185,
+        "frame_min": 1,
+        "frame_max": 659,
+        "annotated_frames": 659,
+        "ignore_rows": 1391,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 4675,
+          "3": 5
+        },
+        "track_ids_by_source_class": {
+          "1": 35,
+          "3": 1
+        },
+        "out_of_view_codes": {
+          "1": 4505,
+          "2": 50,
+          "3": 125
+        },
+        "occlusion_codes": {
+          "1": 4672,
+          "4": 8
+        }
+      },
+      {
+        "sequence": "M1009",
+        "attribute_member": "M_attr/test/M1009_attr.txt",
+        "source_split": "test",
+        "attributes": [
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "daylight_only": false,
+        "attribute_sha256": "cf7a476c4fe1c576a4d6ddfc4ee07bff649d00110db029eb5f25ee2a91dbd401",
+        "detection_sha256": "fac24ca3a1993fe76e64d8ca8b94aa34b4ce7a25e85cf644b942cfe015500005",
+        "ignore_sha256": "39a8991c5860a661039e5922b31ed7539c5f5ca8d541552554e60983768786f2",
+        "detection_bytes": 286785,
+        "ignore_bytes": 31938,
+        "frame_min": 1,
+        "frame_max": 604,
+        "annotated_frames": 604,
+        "ignore_rows": 1028,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 9408,
+          "2": 1058
+        },
+        "track_ids_by_source_class": {
+          "1": 29,
+          "2": 2
+        },
+        "out_of_view_codes": {
+          "1": 10201,
+          "2": 155,
+          "3": 110
+        },
+        "occlusion_codes": {
+          "1": 10387,
+          "4": 79
+        }
+      },
+      {
+        "sequence": "M1101",
+        "attribute_member": "M_attr/test/M1101_attr.txt",
+        "source_split": "test",
+        "attributes": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "daylight_only": false,
+        "attribute_sha256": "947bbf7876689b2f86640039bdd7fbc98ec32f6a32cc86b732597a338740ee7a",
+        "detection_sha256": "c2602f88d9e565c2cb0a583bf242d816401c77ef9895d35ba7963f7a5a8c4908",
+        "ignore_sha256": "32c9e2ec07a81ae2da8036875830bc2bf205b509c5b1f030cfbeb37c84cecc45",
+        "detection_bytes": 218546,
+        "ignore_bytes": 54722,
+        "frame_min": 1,
+        "frame_max": 864,
+        "annotated_frames": 864,
+        "ignore_rows": 1817,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 7569,
+          "3": 322
+        },
+        "track_ids_by_source_class": {
+          "1": 47,
+          "3": 1
+        },
+        "out_of_view_codes": {
+          "1": 7696,
+          "2": 89,
+          "3": 106
+        },
+        "occlusion_codes": {
+          "1": 7350,
+          "2": 43,
+          "3": 80,
+          "4": 418
+        }
+      },
+      {
+        "sequence": "M1301",
+        "attribute_member": "M_attr/test/M1301_attr.txt",
+        "source_split": "test",
+        "attributes": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "32dc20850ff645ac73b5b6745d637d1028f6cd856c1c49d67e4dd95e6348eb59",
+        "detection_sha256": "de8cb971b54733f626dcab300b829d851f173550527b7b97d7dd0f585cb91473",
+        "ignore_sha256": "113c60c9d5c388efaee0ac700fc8e2d438da4c9b0c6979771bdde48865350aac",
+        "detection_bytes": 1101590,
+        "ignore_bytes": 93451,
+        "frame_min": 1,
+        "frame_max": 1182,
+        "annotated_frames": 1182,
+        "ignore_rows": 3088,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 38491,
+          "2": 524,
+          "3": 265
+        },
+        "track_ids_by_source_class": {
+          "1": 116,
+          "2": 2,
+          "3": 1
+        },
+        "out_of_view_codes": {
+          "1": 37676,
+          "2": 702,
+          "3": 902
+        },
+        "occlusion_codes": {
+          "1": 34255,
+          "2": 523,
+          "3": 294,
+          "4": 4208
+        }
+      },
+      {
+        "sequence": "M1302",
+        "attribute_member": "M_attr/test/M1302_attr.txt",
+        "source_split": "test",
+        "attributes": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "2993124bf73edba01bfff9f6e057bcb9c1b430e0ed58ab55466757f7bc2eb347",
+        "detection_sha256": "00533411a93170a629ca2e3387fe6524a1303c5a9b3320ec4b4c979ccfa07141",
+        "ignore_sha256": "3e47c25fae3923b58227c3cd66c739c8c2de9e805f75b21c53cbbf819591995f",
+        "detection_bytes": 577885,
+        "ignore_bytes": 62901,
+        "frame_min": 1,
+        "frame_max": 719,
+        "annotated_frames": 719,
+        "ignore_rows": 2060,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 20067,
+          "2": 771
+        },
+        "track_ids_by_source_class": {
+          "1": 49,
+          "2": 2
+        },
+        "out_of_view_codes": {
+          "1": 20140,
+          "2": 492,
+          "3": 206
+        },
+        "occlusion_codes": {
+          "1": 12989,
+          "2": 758,
+          "3": 208,
+          "4": 6883
+        }
+      },
+      {
+        "sequence": "M1303",
+        "attribute_member": "M_attr/test/M1303_attr.txt",
+        "source_split": "test",
+        "attributes": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "e54c0d19d5a3bde013ce13950953a626131cf0030472eb2915fd251be488846a",
+        "detection_sha256": "c336362c8eca29514312809c0d7402fe1218bd5f7306dc79c3fc11fca2d7a228",
+        "ignore_sha256": "3d612e0e3d0967f53a68180dad54b425a8152a9bc5f0f7756b53dc331b743249",
+        "detection_bytes": 299125,
+        "ignore_bytes": 26985,
+        "frame_min": 1,
+        "frame_max": 445,
+        "annotated_frames": 445,
+        "ignore_rows": 912,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 10879
+        },
+        "track_ids_by_source_class": {
+          "1": 60
+        },
+        "out_of_view_codes": {
+          "1": 10149,
+          "2": 213,
+          "3": 517
+        },
+        "occlusion_codes": {
+          "1": 7276,
+          "2": 194,
+          "3": 262,
+          "4": 3147
+        }
+      },
+      {
+        "sequence": "M1401",
+        "attribute_member": "M_attr/test/M1401_attr.txt",
+        "source_split": "test",
+        "attributes": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "875dff3b50cb9856a28e8beb6783cbd408bb15e82a06adc55426ee8f50cb80ce",
+        "detection_sha256": "c9c35bfad237a433fc7d72f417cd1cd417749720b3a088dd89b31085f74b948d",
+        "ignore_sha256": "98a9ac9f3066a3c001b45efa7a33d1c0370e5bdbc0d4ba74c94f47c098f3eef0",
+        "detection_bytes": 429960,
+        "ignore_bytes": 96572,
+        "frame_min": 1,
+        "frame_max": 1050,
+        "annotated_frames": 1050,
+        "ignore_rows": 3220,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 15573
+        },
+        "track_ids_by_source_class": {
+          "1": 59
+        },
+        "out_of_view_codes": {
+          "1": 13286,
+          "2": 677,
+          "3": 1610
+        },
+        "occlusion_codes": {
+          "1": 13798,
+          "2": 566,
+          "3": 114,
+          "4": 1095
+        }
+      },
+      {
+        "sequence": "M0101",
+        "attribute_member": "M_attr/train/M0101_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "49e243ea46b432a9cb94ffd93f7fa9c7e2fa6817f0cdb514f1593be61559a205",
+        "detection_sha256": "0090a88ae02a32c6edd98b51bf3257453161f5964dd1e272fe3316195990a6ab",
+        "ignore_sha256": "f1a67457164093b7eb1aadb56266ba98dcff6b600500274841c3162f83bfb001",
+        "detection_bytes": 147922,
+        "ignore_bytes": 20407,
+        "frame_min": 1,
+        "frame_max": 407,
+        "annotated_frames": 407,
+        "ignore_rows": 670,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 5156,
+          "2": 188,
+          "3": 70
+        },
+        "track_ids_by_source_class": {
+          "1": 18,
+          "2": 1,
+          "3": 1
+        },
+        "out_of_view_codes": {
+          "1": 5251,
+          "2": 75,
+          "3": 88
+        },
+        "occlusion_codes": {
+          "1": 5354,
+          "4": 60
+        }
+      },
+      {
+        "sequence": "M0201",
+        "attribute_member": "M_attr/train/M0201_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "32dc20850ff645ac73b5b6745d637d1028f6cd856c1c49d67e4dd95e6348eb59",
+        "detection_sha256": "9ec25e082a37a81c5fce413c2be991f527416949f9690020045eb3da79fa22be",
+        "ignore_sha256": "0289990136c81bfe85ed75aa6dbd36a0046962363e10b116b356f40f3b5b8317",
+        "detection_bytes": 181750,
+        "ignore_bytes": 48250,
+        "frame_min": 1,
+        "frame_max": 1076,
+        "annotated_frames": 1076,
+        "ignore_rows": 1609,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 5829,
+          "2": 551,
+          "3": 137
+        },
+        "track_ids_by_source_class": {
+          "1": 37,
+          "2": 2,
+          "3": 1
+        },
+        "out_of_view_codes": {
+          "1": 6145,
+          "2": 46,
+          "3": 326
+        },
+        "occlusion_codes": {
+          "1": 5898,
+          "2": 176,
+          "3": 63,
+          "4": 380
+        }
+      },
+      {
+        "sequence": "M0202",
+        "attribute_member": "M_attr/train/M0202_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "daylight_only": false,
+        "attribute_sha256": "f11e4d83411865113f6ca6dba2e2f349827c7da6a24a417a8b050ef7c5c407ec",
+        "detection_sha256": "18ab9d72ee343a94c3c007edbb15d0457c8cdfb0fe4e5c26e508b463da5ea5c8",
+        "ignore_sha256": "c6629e0da56cea1e4e3407c573a63083bcd2c4c3d694031eed6a6b37de920f9e",
+        "detection_bytes": 103668,
+        "ignore_bytes": 1895,
+        "frame_min": 1,
+        "frame_max": 291,
+        "annotated_frames": 291,
+        "ignore_rows": 67,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 3817
+        },
+        "track_ids_by_source_class": {
+          "1": 23
+        },
+        "out_of_view_codes": {
+          "1": 3667,
+          "2": 79,
+          "3": 71
+        },
+        "occlusion_codes": {
+          "1": 3729,
+          "4": 88
+        }
+      },
+      {
+        "sequence": "M0204",
+        "attribute_member": "M_attr/train/M0204_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "daylight_only": false,
+        "attribute_sha256": "f11e4d83411865113f6ca6dba2e2f349827c7da6a24a417a8b050ef7c5c407ec",
+        "detection_sha256": "eff1f18143253ffc4394381a072b84f152c90a394311b41ea53de8d25c6807d0",
+        "ignore_sha256": "261d1be04c5d017c317650639f0f7c288358254f1f16bbb81054a5ef1f9ae5a6",
+        "detection_bytes": 91123,
+        "ignore_bytes": 16877,
+        "frame_min": 1,
+        "frame_max": 350,
+        "annotated_frames": 350,
+        "ignore_rows": 598,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 3222,
+          "2": 114
+        },
+        "track_ids_by_source_class": {
+          "1": 26,
+          "2": 1
+        },
+        "out_of_view_codes": {
+          "1": 3059,
+          "2": 54,
+          "3": 223
+        },
+        "occlusion_codes": {
+          "1": 2923,
+          "2": 60,
+          "3": 64,
+          "4": 289
+        }
+      },
+      {
+        "sequence": "M0206",
+        "attribute_member": "M_attr/train/M0206_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "daylight_only": false,
+        "attribute_sha256": "2c27999cf861e0e6884cf57d9ae9543db2fdf19386fff4ee9a70f5131bb6502f",
+        "detection_sha256": "3a3c45d76c2832438e232d01f483de518f8853aa9085ebb4f80c0e95de3398d6",
+        "ignore_sha256": "76d0498e1f7d8229097d026f4751c926f29e80474b43d482b92dbbfabcfc8740",
+        "detection_bytes": 145729,
+        "ignore_bytes": 47001,
+        "frame_min": 1,
+        "frame_max": 562,
+        "annotated_frames": 562,
+        "ignore_rows": 1578,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 5141,
+          "3": 142
+        },
+        "track_ids_by_source_class": {
+          "1": 18,
+          "3": 1
+        },
+        "out_of_view_codes": {
+          "1": 5071,
+          "2": 39,
+          "3": 173
+        },
+        "occlusion_codes": {
+          "1": 4028,
+          "3": 180,
+          "4": 1075
+        }
+      },
+      {
+        "sequence": "M0207",
+        "attribute_member": "M_attr/train/M0207_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "2993124bf73edba01bfff9f6e057bcb9c1b430e0ed58ab55466757f7bc2eb347",
+        "detection_sha256": "f2ffdf89fe67ea755650e6d5a7ad33f5330979a26192e30dd1347057ee41b66d",
+        "ignore_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "detection_bytes": 28853,
+        "ignore_bytes": 0,
+        "frame_min": 1,
+        "frame_max": 571,
+        "annotated_frames": 571,
+        "ignore_rows": 0,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 491,
+          "3": 571
+        },
+        "track_ids_by_source_class": {
+          "1": 2,
+          "3": 1
+        },
+        "out_of_view_codes": {
+          "1": 889,
+          "2": 120,
+          "3": 53
+        },
+        "occlusion_codes": {
+          "1": 759,
+          "2": 90,
+          "3": 134,
+          "4": 79
+        }
+      },
+      {
+        "sequence": "M0210",
+        "attribute_member": "M_attr/train/M0210_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "a7719d417e47ee902692f5dc6b0c3bf59edca87a62f44027c12b93e36d86eee5",
+        "detection_sha256": "ba328391a7e3f6b9c74dcd320b2bd29b3bf5b18094d56540bfcb1cc2d37d8f1f",
+        "ignore_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "detection_bytes": 177728,
+        "ignore_bytes": 0,
+        "frame_min": 1,
+        "frame_max": 583,
+        "annotated_frames": 583,
+        "ignore_rows": 0,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 4725,
+          "2": 1796
+        },
+        "track_ids_by_source_class": {
+          "1": 29,
+          "2": 7
+        },
+        "out_of_view_codes": {
+          "1": 6089,
+          "2": 189,
+          "3": 243
+        },
+        "occlusion_codes": {
+          "1": 5989,
+          "2": 312,
+          "3": 89,
+          "4": 131
+        }
+      },
+      {
+        "sequence": "M0301",
+        "attribute_member": "M_attr/train/M0301_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "32dc20850ff645ac73b5b6745d637d1028f6cd856c1c49d67e4dd95e6348eb59",
+        "detection_sha256": "f3c5bffd4642e8bbaa0214fd72fe3678016325dd0ab06a9bc4653aaaf17ac78d",
+        "ignore_sha256": "cf006a1ab20bf5185af6b6667b4589c67dc961ce968f0c206efc0142e7bf716e",
+        "detection_bytes": 44228,
+        "ignore_bytes": 10954,
+        "frame_min": 1,
+        "frame_max": 325,
+        "annotated_frames": 325,
+        "ignore_rows": 347,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 1568,
+          "2": 61
+        },
+        "track_ids_by_source_class": {
+          "1": 17,
+          "2": 1
+        },
+        "out_of_view_codes": {
+          "1": 1627,
+          "3": 2
+        },
+        "occlusion_codes": {
+          "1": 1629
+        }
+      },
+      {
+        "sequence": "M0401",
+        "attribute_member": "M_attr/train/M0401_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "32dc20850ff645ac73b5b6745d637d1028f6cd856c1c49d67e4dd95e6348eb59",
+        "detection_sha256": "680e6dd960541e5ea19f8f7afa1279c74353741ab9bf5687cf98f393e616ac09",
+        "ignore_sha256": "d42b87468a0a118b3810856794d59a54e3b43a2223f86d2914539b8b961dafd1",
+        "detection_bytes": 280467,
+        "ignore_bytes": 44456,
+        "frame_min": 1,
+        "frame_max": 613,
+        "annotated_frames": 613,
+        "ignore_rows": 1481,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 9950,
+          "2": 446
+        },
+        "track_ids_by_source_class": {
+          "1": 57,
+          "2": 4
+        },
+        "out_of_view_codes": {
+          "1": 10245,
+          "2": 63,
+          "3": 88
+        },
+        "occlusion_codes": {
+          "1": 10389,
+          "4": 7
+        }
+      },
+      {
+        "sequence": "M0402",
+        "attribute_member": "M_attr/train/M0402_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "2993124bf73edba01bfff9f6e057bcb9c1b430e0ed58ab55466757f7bc2eb347",
+        "detection_sha256": "3612376975c817c7ecd1539c36d62cad72aa435cd8523e0205cee1e8db9517e5",
+        "ignore_sha256": "f6b7ba9e02ae983206f2040ada0f32bfc584d42a0cc5e0ddb28f39199eb6b101",
+        "detection_bytes": 277656,
+        "ignore_bytes": 22349,
+        "frame_min": 1,
+        "frame_max": 410,
+        "annotated_frames": 410,
+        "ignore_rows": 754,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 10210
+        },
+        "track_ids_by_source_class": {
+          "1": 45
+        },
+        "out_of_view_codes": {
+          "1": 9688,
+          "2": 198,
+          "3": 324
+        },
+        "occlusion_codes": {
+          "1": 8402,
+          "3": 120,
+          "4": 1688
+        }
+      },
+      {
+        "sequence": "M0501",
+        "attribute_member": "M_attr/train/M0501_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        "daylight_only": false,
+        "attribute_sha256": "2ab656fe81c96f413988fcfeab8838ef3ccb5118c46024b619b942abafe63f4b",
+        "detection_sha256": "186d06137f4c1b618bae2c6c31b38c747e74b96f475dec07b7505645fdd3ef4b",
+        "ignore_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "detection_bytes": 124395,
+        "ignore_bytes": 0,
+        "frame_min": 1,
+        "frame_max": 352,
+        "annotated_frames": 352,
+        "ignore_rows": 0,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 4531,
+          "3": 52
+        },
+        "track_ids_by_source_class": {
+          "1": 20,
+          "3": 1
+        },
+        "out_of_view_codes": {
+          "1": 4468,
+          "2": 76,
+          "3": 39
+        },
+        "occlusion_codes": {
+          "1": 4583
+        }
+      },
+      {
+        "sequence": "M0603",
+        "attribute_member": "M_attr/train/M0603_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "6cc8fd6cb1e8693a10decc79acb3b7a4b1a88c60174a17db7e37765cf8e73056",
+        "detection_sha256": "c84af45f8cc474dec3a02da200345f312984ee00764fdd59239927c2834a6daf",
+        "ignore_sha256": "01abef6c350401bf5d411eb44fca9921fa86a2869a835e80450c63ec4f1b91aa",
+        "detection_bytes": 1261117,
+        "ignore_bytes": 174513,
+        "frame_min": 1,
+        "frame_max": 2035,
+        "annotated_frames": 2035,
+        "ignore_rows": 5980,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 41478,
+          "2": 1748,
+          "3": 1500
+        },
+        "track_ids_by_source_class": {
+          "1": 66,
+          "2": 4,
+          "3": 2
+        },
+        "out_of_view_codes": {
+          "1": 36129,
+          "2": 3552,
+          "3": 5045
+        },
+        "occlusion_codes": {
+          "1": 43368,
+          "2": 435,
+          "3": 574,
+          "4": 349
+        }
+      },
+      {
+        "sequence": "M0604",
+        "attribute_member": "M_attr/train/M0604_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "875dff3b50cb9856a28e8beb6783cbd408bb15e82a06adc55426ee8f50cb80ce",
+        "detection_sha256": "a2efc253e70d4ab36fc6b74faa4040c22380028c0132f23b573065fdd00370dc",
+        "ignore_sha256": "a8edf1fd74475054f7f9b3306485b56cb11a5becbcea4e9b8358f77dbe3350aa",
+        "detection_bytes": 435060,
+        "ignore_bytes": 186418,
+        "frame_min": 1,
+        "frame_max": 1079,
+        "annotated_frames": 1079,
+        "ignore_rows": 6138,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 13735,
+          "2": 1070,
+          "3": 653
+        },
+        "track_ids_by_source_class": {
+          "1": 40,
+          "2": 3,
+          "3": 2
+        },
+        "out_of_view_codes": {
+          "1": 13122,
+          "2": 888,
+          "3": 1448
+        },
+        "occlusion_codes": {
+          "1": 11942,
+          "3": 546,
+          "4": 2970
+        }
+      },
+      {
+        "sequence": "M0605",
+        "attribute_member": "M_attr/train/M0605_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "875dff3b50cb9856a28e8beb6783cbd408bb15e82a06adc55426ee8f50cb80ce",
+        "detection_sha256": "6a0c1fbbd010ddfb3eca37b32df869046756353e769c662dea752e46c7d07794",
+        "ignore_sha256": "624e882743521348d4c9008c6552505e998454ba6b58e90b584e9a2b7cec4066",
+        "detection_bytes": 320123,
+        "ignore_bytes": 107694,
+        "frame_min": 1,
+        "frame_max": 787,
+        "annotated_frames": 787,
+        "ignore_rows": 3693,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 11016,
+          "2": 620
+        },
+        "track_ids_by_source_class": {
+          "1": 69,
+          "2": 3
+        },
+        "out_of_view_codes": {
+          "1": 10921,
+          "2": 164,
+          "3": 551
+        },
+        "occlusion_codes": {
+          "1": 10776,
+          "2": 187,
+          "3": 298,
+          "4": 375
+        }
+      },
+      {
+        "sequence": "M0702",
+        "attribute_member": "M_attr/train/M0702_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "a7719d417e47ee902692f5dc6b0c3bf59edca87a62f44027c12b93e36d86eee5",
+        "detection_sha256": "59d4d930324166c79183a7714f9dbc4d1fc39e2490d110b1eab1086fa5784aa6",
+        "ignore_sha256": "bfe9ca77b9dac5977fecfb441eac928f70913b88a4e080b58dee59725d361073",
+        "detection_bytes": 1266517,
+        "ignore_bytes": 40955,
+        "frame_min": 1,
+        "frame_max": 777,
+        "annotated_frames": 777,
+        "ignore_rows": 1351,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 42042,
+          "2": 386,
+          "3": 3699
+        },
+        "track_ids_by_source_class": {
+          "1": 85,
+          "2": 4,
+          "3": 8
+        },
+        "out_of_view_codes": {
+          "1": 43334,
+          "2": 870,
+          "3": 1923
+        },
+        "occlusion_codes": {
+          "1": 42196,
+          "4": 3931
+        }
+      },
+      {
+        "sequence": "M0703",
+        "attribute_member": "M_attr/train/M0703_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "94b61b49f32a4d6ff6a9a837181d88692685cc74dd41dc560ba818cf73c4ce54",
+        "detection_sha256": "37131797120797e761db9bcc8ca834d3c73b2eb068b1fa9c940b976579bb3976",
+        "ignore_sha256": "e4a505a265a79ec6116a749b022918cbfe45e4413a6aa350f614b833b45c156a",
+        "detection_bytes": 450505,
+        "ignore_bytes": 116011,
+        "frame_min": 1,
+        "frame_max": 683,
+        "annotated_frames": 683,
+        "ignore_rows": 3963,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 15235,
+          "2": 643,
+          "3": 628
+        },
+        "track_ids_by_source_class": {
+          "1": 77,
+          "2": 8,
+          "3": 4
+        },
+        "out_of_view_codes": {
+          "1": 12832,
+          "2": 1040,
+          "3": 2634
+        },
+        "occlusion_codes": {
+          "1": 16503,
+          "4": 3
+        }
+      },
+      {
+        "sequence": "M0704",
+        "attribute_member": "M_attr/train/M0704_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "daylight_only": false,
+        "attribute_sha256": "cd51180e8c8225ff90f4c48d55ba7a7fd20dc2de581f502902dcd78a2d082163",
+        "detection_sha256": "aa5ac787c0bd510e904dd8a4ffa1b90023f86358a53d710ae23168f562d8a610",
+        "ignore_sha256": "77f8b33dfee283a70c9a3ef26db27ed1d517d126d86e7e437db3fda653fe3111",
+        "detection_bytes": 873042,
+        "ignore_bytes": 135982,
+        "frame_min": 1,
+        "frame_max": 832,
+        "annotated_frames": 832,
+        "ignore_rows": 4502,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 29635,
+          "2": 1893
+        },
+        "track_ids_by_source_class": {
+          "1": 92,
+          "2": 7
+        },
+        "out_of_view_codes": {
+          "1": 29746,
+          "2": 598,
+          "3": 1184
+        },
+        "occlusion_codes": {
+          "1": 27869,
+          "2": 482,
+          "3": 1294,
+          "4": 1883
+        }
+      },
+      {
+        "sequence": "M0901",
+        "attribute_member": "M_attr/train/M0901_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        "daylight_only": false,
+        "attribute_sha256": "52fa4f3d0814b811b8571a643eaf75139e49c2c3360f75403b8457a16ef8e42a",
+        "detection_sha256": "34857ef1e2a6d59dfbbcbb46da70e6958287af24e3c71db546a9c6bed906fe6c",
+        "ignore_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "detection_bytes": 420815,
+        "ignore_bytes": 0,
+        "frame_min": 1,
+        "frame_max": 1906,
+        "annotated_frames": 1906,
+        "ignore_rows": 0,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 15032
+        },
+        "track_ids_by_source_class": {
+          "1": 22
+        },
+        "out_of_view_codes": {
+          "1": 13789,
+          "2": 1024,
+          "3": 219
+        },
+        "occlusion_codes": {
+          "1": 14902,
+          "4": 130
+        }
+      },
+      {
+        "sequence": "M0902",
+        "attribute_member": "M_attr/train/M0902_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "daylight_only": false,
+        "attribute_sha256": "788586816adc0dde53fab9b25b4249a800a75abf7ecbb229621c7eb7a3e9bcc2",
+        "detection_sha256": "51ae6dc4323b3b3d6a6dbb79714b618fd12ee2fc5a788894c2c97d91963b6baf",
+        "ignore_sha256": "05c6014faff1d5453e621a4aeedb774e6f8dcc38699c7f71e924a0e057ac2e8e",
+        "detection_bytes": 79112,
+        "ignore_bytes": 4436,
+        "frame_min": 1,
+        "frame_max": 384,
+        "annotated_frames": 384,
+        "ignore_rows": 149,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 2966
+        },
+        "track_ids_by_source_class": {
+          "1": 12
+        },
+        "out_of_view_codes": {
+          "1": 2587,
+          "3": 379
+        },
+        "occlusion_codes": {
+          "1": 2582,
+          "4": 384
+        }
+      },
+      {
+        "sequence": "M1002",
+        "attribute_member": "M_attr/train/M1002_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "daylight_only": false,
+        "attribute_sha256": "2c27999cf861e0e6884cf57d9ae9543db2fdf19386fff4ee9a70f5131bb6502f",
+        "detection_sha256": "6ad17434c43fbbfe1d0dd58b8b4ea51d39f2581fc091a072e0e6dd2dbc756793",
+        "ignore_sha256": "33d01bbf1bd8ac71e4487d625ab47ef4fac69b8e39145a6096ad660b2a731c0a",
+        "detection_bytes": 317465,
+        "ignore_bytes": 94545,
+        "frame_min": 1,
+        "frame_max": 660,
+        "annotated_frames": 660,
+        "ignore_rows": 3057,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 10121,
+          "3": 1363
+        },
+        "track_ids_by_source_class": {
+          "1": 37,
+          "3": 3
+        },
+        "out_of_view_codes": {
+          "1": 11081,
+          "2": 183,
+          "3": 220
+        },
+        "occlusion_codes": {
+          "1": 11324,
+          "4": 160
+        }
+      },
+      {
+        "sequence": "M1003",
+        "attribute_member": "M_attr/train/M1003_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "daylight_only": false,
+        "attribute_sha256": "788586816adc0dde53fab9b25b4249a800a75abf7ecbb229621c7eb7a3e9bcc2",
+        "detection_sha256": "3b858780f7360212f556ae66c6fdded1d1803689d3d8b9d8fc3d408df09dd06a",
+        "ignore_sha256": "f2b469740634e2ef59a51d3873dfccc805dd8fc1f8b5535c99b27e7ed292cc48",
+        "detection_bytes": 370213,
+        "ignore_bytes": 64894,
+        "frame_min": 1,
+        "frame_max": 1346,
+        "annotated_frames": 1346,
+        "ignore_rows": 2213,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 12997,
+          "2": 237,
+          "3": 146
+        },
+        "track_ids_by_source_class": {
+          "1": 39,
+          "2": 2,
+          "3": 1
+        },
+        "out_of_view_codes": {
+          "1": 13202,
+          "2": 56,
+          "3": 122
+        },
+        "occlusion_codes": {
+          "1": 13118,
+          "3": 20,
+          "4": 242
+        }
+      },
+      {
+        "sequence": "M1005",
+        "attribute_member": "M_attr/train/M1005_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "daylight_only": false,
+        "attribute_sha256": "a00d31d618d8d6211a53910bdfae7236518379694547e997f7775e5748a5bca7",
+        "detection_sha256": "bcbfb83cacfb6bc958b1be8959b1c090e5453553422509e9c3b4e5ec80652a5e",
+        "ignore_sha256": "644f6b787389257067ab78b8c80d3c5a5abd12ffde1a4c60ffddc502d1bfdfe3",
+        "detection_bytes": 309345,
+        "ignore_bytes": 30309,
+        "frame_min": 1,
+        "frame_max": 537,
+        "annotated_frames": 537,
+        "ignore_rows": 1017,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 11140,
+          "2": 232
+        },
+        "track_ids_by_source_class": {
+          "1": 33,
+          "2": 1
+        },
+        "out_of_view_codes": {
+          "1": 10570,
+          "2": 267,
+          "3": 535
+        },
+        "occlusion_codes": {
+          "1": 6138,
+          "2": 38,
+          "3": 1059,
+          "4": 4137
+        }
+      },
+      {
+        "sequence": "M1006",
+        "attribute_member": "M_attr/train/M1006_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "daylight_only": false,
+        "attribute_sha256": "a00d31d618d8d6211a53910bdfae7236518379694547e997f7775e5748a5bca7",
+        "detection_sha256": "3b1c1ac2db30a7054cbd6986c4a5a863069e5acc4e9db125962e4d5b00a74dfe",
+        "ignore_sha256": "93406ac5c9b803e6f98ba12df6c77ac034265a51acfe7ab38f494b75661f0894",
+        "detection_bytes": 625043,
+        "ignore_bytes": 12240,
+        "frame_min": 1,
+        "frame_max": 708,
+        "annotated_frames": 708,
+        "ignore_rows": 408,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 21371,
+          "2": 890,
+          "3": 730
+        },
+        "track_ids_by_source_class": {
+          "1": 64,
+          "2": 3,
+          "3": 2
+        },
+        "out_of_view_codes": {
+          "1": 22411,
+          "2": 131,
+          "3": 449
+        },
+        "occlusion_codes": {
+          "1": 20059,
+          "2": 174,
+          "3": 332,
+          "4": 2426
+        }
+      },
+      {
+        "sequence": "M1008",
+        "attribute_member": "M_attr/train/M1008_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "daylight_only": false,
+        "attribute_sha256": "cf7a476c4fe1c576a4d6ddfc4ee07bff649d00110db029eb5f25ee2a91dbd401",
+        "detection_sha256": "d7d920569e31dd7ad61b2dd8f0e7c694468d868d15eab9dfc0888050ff287b41",
+        "ignore_sha256": "495a4b8657e3a8775888de04ed95587c5e6c3fd900228832f35a6cc1da5ec3fb",
+        "detection_bytes": 105947,
+        "ignore_bytes": 16393,
+        "frame_min": 1,
+        "frame_max": 569,
+        "annotated_frames": 569,
+        "ignore_rows": 569,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 3982
+        },
+        "track_ids_by_source_class": {
+          "1": 11
+        },
+        "out_of_view_codes": {
+          "1": 3553,
+          "2": 322,
+          "3": 107
+        },
+        "occlusion_codes": {
+          "1": 3982
+        }
+      },
+      {
+        "sequence": "M1102",
+        "attribute_member": "M_attr/train/M1102_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "daylight_only": false,
+        "attribute_sha256": "e1841e85ab986c2de95584de9a19a955420a83836a1871f856ffbc34f161329b",
+        "detection_sha256": "fb3f55f3f7dc00da6fd881f2dd9bbff6ff31d1bc14629c53ac8e355414ce5231",
+        "ignore_sha256": "b17fc34ba56f9999123ff6da3fadfc7b53105b9f86eaeeaf7593e58eb59aaa30",
+        "detection_bytes": 672842,
+        "ignore_bytes": 22786,
+        "frame_min": 1,
+        "frame_max": 967,
+        "annotated_frames": 967,
+        "ignore_rows": 769,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 24285,
+          "3": 86
+        },
+        "track_ids_by_source_class": {
+          "1": 62,
+          "3": 1
+        },
+        "out_of_view_codes": {
+          "1": 17687,
+          "2": 2941,
+          "3": 3743
+        },
+        "occlusion_codes": {
+          "1": 23570,
+          "3": 67,
+          "4": 734
+        }
+      },
+      {
+        "sequence": "M1201",
+        "attribute_member": "M_attr/train/M1201_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "49e243ea46b432a9cb94ffd93f7fa9c7e2fa6817f0cdb514f1593be61559a205",
+        "detection_sha256": "63d7e272a80b58d7d7967245d976923bd6d45547678dc85ac0ebf255de399abd",
+        "ignore_sha256": "5da244643930b51e1c6dff416c524865196e9e1d0b7de6715169a9d23902d23b",
+        "detection_bytes": 751487,
+        "ignore_bytes": 41025,
+        "frame_min": 1,
+        "frame_max": 1197,
+        "annotated_frames": 1197,
+        "ignore_rows": 1343,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 23080,
+          "2": 4188
+        },
+        "track_ids_by_source_class": {
+          "1": 52,
+          "2": 8
+        },
+        "out_of_view_codes": {
+          "1": 25103,
+          "2": 568,
+          "3": 1597
+        },
+        "occlusion_codes": {
+          "1": 24893,
+          "2": 23,
+          "3": 388,
+          "4": 1964
+        }
+      },
+      {
+        "sequence": "M1202",
+        "attribute_member": "M_attr/train/M1202_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "3f3ec6d626cccecf3054ef7c3b4ad9b2ae575f81f8ccdef1fe2831f243bf9e0e",
+        "detection_sha256": "e43b856298fdaf9a39d63c25e3d920b12ec04969ae892eabaed58ea9edec60d1",
+        "ignore_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "detection_bytes": 208344,
+        "ignore_bytes": 0,
+        "frame_min": 1,
+        "frame_max": 472,
+        "annotated_frames": 472,
+        "ignore_rows": 0,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 6646,
+          "2": 1092
+        },
+        "track_ids_by_source_class": {
+          "1": 21,
+          "2": 3
+        },
+        "out_of_view_codes": {
+          "1": 7498,
+          "2": 123,
+          "3": 117
+        },
+        "occlusion_codes": {
+          "1": 4926,
+          "2": 854,
+          "3": 443,
+          "4": 1515
+        }
+      },
+      {
+        "sequence": "M1304",
+        "attribute_member": "M_attr/train/M1304_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "e54c0d19d5a3bde013ce13950953a626131cf0030472eb2915fd251be488846a",
+        "detection_sha256": "4a40075737119d6a8d432644c11bac0f8c1f64947ff2f075651adbbec73990e7",
+        "ignore_sha256": "655aa5b6fb1fa781e6d104b1c9215d24800704299ee5e264145574165c17b3d6",
+        "detection_bytes": 696074,
+        "ignore_bytes": 131582,
+        "frame_min": 1,
+        "frame_max": 1550,
+        "annotated_frames": 1550,
+        "ignore_rows": 4458,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 24074,
+          "2": 761
+        },
+        "track_ids_by_source_class": {
+          "1": 76,
+          "2": 5
+        },
+        "out_of_view_codes": {
+          "1": 24127,
+          "2": 278,
+          "3": 430
+        },
+        "occlusion_codes": {
+          "1": 22940,
+          "2": 161,
+          "3": 59,
+          "4": 1675
+        }
+      },
+      {
+        "sequence": "M1305",
+        "attribute_member": "M_attr/train/M1305_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "32dc20850ff645ac73b5b6745d637d1028f6cd856c1c49d67e4dd95e6348eb59",
+        "detection_sha256": "d9026e30aa928db67fb1a25c2f025bf57b3a21ae44e6e11768f463c96d3e5793",
+        "ignore_sha256": "7d10ff9a3bc875474e536abfdfc3fb657fbdd869bb377ff7bcf0ad92fbae52b2",
+        "detection_bytes": 308893,
+        "ignore_bytes": 43199,
+        "frame_min": 1,
+        "frame_max": 600,
+        "annotated_frames": 600,
+        "ignore_rows": 1461,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 11064,
+          "2": 97,
+          "3": 33
+        },
+        "track_ids_by_source_class": {
+          "1": 63,
+          "2": 1,
+          "3": 1
+        },
+        "out_of_view_codes": {
+          "1": 10912,
+          "2": 92,
+          "3": 190
+        },
+        "occlusion_codes": {
+          "1": 9484,
+          "2": 1044,
+          "3": 218,
+          "4": 448
+        }
+      },
+      {
+        "sequence": "M1306",
+        "attribute_member": "M_attr/train/M1306_attr.txt",
+        "source_split": "train",
+        "attributes": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "daylight_only": true,
+        "attribute_sha256": "3f3ec6d626cccecf3054ef7c3b4ad9b2ae575f81f8ccdef1fe2831f243bf9e0e",
+        "detection_sha256": "8c916661c21320a4a2fdff9c4ec96f3a3aac0bf3ace26482cd1addb1e8478779",
+        "ignore_sha256": "2f7278f82184dbe729cb8da65ef3a9b4ea42d6287b362b9c55ceb80cd853f90e",
+        "detection_bytes": 596866,
+        "ignore_bytes": 37059,
+        "frame_min": 1,
+        "frame_max": 1200,
+        "annotated_frames": 1200,
+        "ignore_rows": 1222,
+        "duplicate_track_frames": 0,
+        "nonpositive_boxes": 0,
+        "box_rows_by_source_class": {
+          "1": 20094,
+          "2": 478,
+          "3": 977
+        },
+        "track_ids_by_source_class": {
+          "1": 70,
+          "2": 2,
+          "3": 2
+        },
+        "out_of_view_codes": {
+          "1": 19350,
+          "2": 1045,
+          "3": 1154
+        },
+        "occlusion_codes": {
+          "1": 8431,
+          "2": 2272,
+          "3": 2064,
+          "4": 8782
+        }
+      }
+    ]
+  }
+}

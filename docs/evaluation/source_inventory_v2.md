@@ -6,6 +6,11 @@ pages, papers, annotation documentation and the pinned baseline model card.
 We downloaded no new media or annotation archives, counted no new boxes and
 changed no historical labels, splits, weights or results.
 
+**Follow-up, 7 October:** the [annotation feasibility report](annotation_feasibility_v2.md)
+now records inspected SDD/UAVDT labels, access limitations and a proposed
+vehicle-only evaluation. It does not replace this dated source review or mean
+that the custom six-class dataset is ready.
+
 The [v2 plan](evaluation_v2_plan.md) defines our agreed daytime, six-class scope
 and provisional 400-image, 40-scene-group target. The source review has **not
 established that this target or its proposed class floors can be met** within

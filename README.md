@@ -76,7 +76,10 @@ The [v2 evaluation plan](docs/evaluation/evaluation_v2_plan.md) records the agre
 daytime scope, provisional coverage targets and rules for a new final holdout.
 The [v2 source inventory](docs/evaluation/source_inventory_v2.md) compares candidate
 datasets, licence evidence, overlap risks and estimated human-review effort.
-The proposed coverage is not yet verified, and no new v2 data has been acquired.
+The proposed coverage is not yet verified, and no new v2 evaluation media has
+been acquired. The [annotation feasibility report](docs/evaluation/annotation_feasibility_v2.md)
+records inspected source labels and proposes a separate UAVDT vehicle evaluation;
+its linked counts are dataset inventory, not model-accuracy results.
 The manual-review campaign is on hold because of the available review capacity;
 we are assessing an alternative based on existing published annotations.
 
