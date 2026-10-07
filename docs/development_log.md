@@ -674,3 +674,22 @@ the next-step recommendation toward publisher-provided annotations, retaining
 source label policies and reporting unsupported classes. This alternative still
 needs a feasibility check and approval; automated validation is not human
 review, and the existing six-class protocol has not been replaced.
+
+### Issue #113: Existing-Annotation Feasibility (7 October 2026)
+
+We inspected eight SDD annotation files and UAVDT's sequence attributes and
+ground-truth files using pinned research/public mirrors. Publisher downloads
+were unavailable during the check; original-copy equivalence remains unverified.
+The [feasibility report](evaluation/annotation_feasibility_v2.md) and linked JSON
+retain the input hashes, coverage counts, source policies and limitations.
+
+The UAVDT attributes identify 17 daytime training sequences and 12 daytime test
+sequences. Existing car, truck and bus labels make a separate vehicle evaluation
+plausible, but ignored regions require evaluator support and tests first. SDD
+is deferred because of label-policy differences and unresolved media access.
+These inventory counts are not model results or independently verified scenes.
+
+We propose a source-specific protocol for approval, without assigning Ali a
+manual annotation campaign. We downloaded no evaluation images or videos,
+changed no application behavior, ran no inference or training, and left the
+historical metrics and six-class protocol unchanged. Issue #113 remains open.

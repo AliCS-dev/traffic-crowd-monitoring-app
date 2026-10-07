@@ -21,11 +21,16 @@ not a new dataset release or a result. Historical metrics below remain unchanged
 
 The [v2 source inventory](source_inventory_v2.md) records candidate sources,
 permission gaps, model-overlap risks and estimated review effort. It has not
-established that the provisional coverage targets can be met; no new v2 data
-has been acquired.
+established that the provisional coverage targets can be met; no new v2
+evaluation media has been acquired.
 Ali cannot take on the proposed annotation-review workload. The custom dataset
 campaign is on hold while we assess existing-label alternatives; the six-class
 protocol and historical gate have not been replaced or declared passed.
+
+The [existing-annotation feasibility report](annotation_feasibility_v2.md)
+records measured SDD/UAVDT annotation coverage, mirror provenance and the
+ignore-region integration gap. Its proposed UAVDT-only vehicle evaluation is
+pending approval. The linked JSON contains inventory counts, not accuracy scores.
 
 Application limits and preliminary resource budgets are recorded separately in
 the [operational safeguards guide](../operational_safeguards.md). Its upload,
@@ -86,6 +91,7 @@ ordinary person detections from being interpreted as a measured crowd of zero.
 | What coverage is missing before evaluation v2? | [Historical dataset audit](dataset_audit_v1.md) |
 | What are we planning for v2, and what still needs approval? | [V2 evaluation plan](evaluation_v2_plan.md) |
 | Which new sources are suitable, and how much review might they need? | [V2 source inventory](source_inventory_v2.md) |
+| What do existing SDD/UAVDT annotations actually support? | [Annotation feasibility](annotation_feasibility_v2.md) |
 | How did we annotate and check the data? | [Annotation guide](annotation_guide.md) |
 | How did the original general model perform? | [Baseline selection](baseline_selection.md) |
 | Which aerial models did we compare? | [Aerial model decision](aerial_model_decision.md) |
