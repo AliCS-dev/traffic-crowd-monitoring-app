@@ -20,6 +20,12 @@ Only metadata and annotations were inspected, using pinned mirrors where
 publisher downloads were unavailable. No revised protocol has been approved;
 the provisional targets below remain unfulfilled.
 
+**10 October implementation update:** Ali approved the bounded UAVDT vehicle
+adapter and ignore-aware metric support. The [adapter notes](uavdt_adapter.md)
+record the implemented policy and tests. This separate three-class comparison
+does not replace the six-class scope below. Media acquisition, frame selection
+and the experiment protocol remain pending; no new accuracy claim is made.
+
 ## Scope We Agreed
 
 We will evaluate daytime aerial road scenes using all six existing classes:

@@ -83,6 +83,11 @@ its linked counts are dataset inventory, not model-accuracy results.
 The manual-review campaign is on hold because of the available review capacity;
 we are assessing an alternative based on existing published annotations.
 
+The [UAVDT adapter notes](docs/evaluation/uavdt_adapter.md) describe the approved
+three-class evaluation work, tested annotation conversion and ignore handling.
+Media verification and protocol freeze are still pending; no new accuracy
+results have been produced.
+
 The [operational safeguards guide](docs/operational_safeguards.md) records our
 workload limits, recovery boundaries, media retention and preliminary performance
 budgets. These checks concern application reliability, not detector accuracy.

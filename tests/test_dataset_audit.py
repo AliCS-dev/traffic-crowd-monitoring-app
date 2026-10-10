@@ -205,7 +205,7 @@ def test_nonfinite_box_cannot_inflate_size_counts(dataset):
     data = json.loads(path.read_text())
     data["annotations"][0]["bbox"][2] = float("nan")
     path.write_text(json.dumps(data))
-    with pytest.raises(ValueError, match="Invalid box geometry"):
+    with pytest.raises(ValueError, match="COCO bounding box is invalid"):
         audit_dataset(dataset)
 
 

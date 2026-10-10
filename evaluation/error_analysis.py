@@ -35,6 +35,7 @@ from evaluation.evaluation_metrics import (
     _build_coco_inputs,
     _run_operating_evaluation,
     calculate_detection_metrics,
+    filter_ignored_predictions,
 )
 
 ERROR_TYPES = (
@@ -427,6 +428,7 @@ def analyze_detection_errors(
     operating_iou: float,
     max_detections: int,
 ) -> DetectionErrorAnalysis:
+    predictions = filter_ignored_predictions(dataset, predictions)
     true_positives, false_positives, false_negatives = _collect_unmatched(
         dataset,
         predictions,

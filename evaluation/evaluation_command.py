@@ -80,6 +80,12 @@ def execute_detector_evaluation(
     progress("Recorded model, dataset, software, and hardware provenance.")
     seed_random_generators(config.random_seed)
     dataset = load_evaluation_dataset(repository_root, config.dataset)
+    if dataset.ignore_policy is not None:
+        raise EvaluationCommandError(
+            "Source-ignore datasets are supported by the metric functions, but "
+            "this command still uses historical dataset-readiness checks. "
+            "A source-specific media check and frozen run protocol are required."
+        )
     progress(
         f"Loaded {len(dataset.assets)} {dataset.role} assets from dataset "
         f"version {dataset.version}."

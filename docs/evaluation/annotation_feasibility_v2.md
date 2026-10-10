@@ -1,5 +1,10 @@
 # Existing-Annotation Feasibility
 
+**Follow-up, 10 October:** Ali approved the separate UAVDT adapter implementation.
+The [adapter notes](uavdt_adapter.md) record the verified source exclusion rule,
+conversion support and tests. The proposal below records the earlier decision
+point; media verification and experiment freeze are still pending.
+
 **7 October 2026, issue #113.** We inspected SDD annotation samples and UAVDT
 metadata/ground truth without acquiring evaluation images or videos, running
 inference, training a model or asking Ali to annotate. This follows the

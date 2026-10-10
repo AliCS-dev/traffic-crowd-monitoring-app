@@ -693,3 +693,23 @@ We propose a source-specific protocol for approval, without assigning Ali a
 manual annotation campaign. We downloaded no evaluation images or videos,
 changed no application behavior, ran no inference or training, and left the
 historical metrics and six-class protocol unchanged. Issue #113 remains open.
+
+### Issue #113: UAVDT Annotation And Ignore Support (10 October 2026)
+
+Ali approved the separate daytime car/truck/bus implementation. We added a
+strict DET annotation adapter, explicit source-ignore metadata and consistent
+prediction exclusions for detection, counting and qualitative error analysis.
+The [adapter notes](evaluation/uavdt_adapter.md) record the source rule,
+COCO-versus-official-score distinction and future conversion command.
+
+Synthetic tests cover class/attribute mapping, source splits, frame identity,
+missing labels, media checksums/dimensions, overwrite protection and exclusion
+boundaries. The new parser accepted the retained 50 DET files (798,795 rows),
+50 ignore files (90,387 rows) and 50 attribute files. These are format checks,
+not new accuracy measurements or human annotation review.
+
+The standard experiment command remains blocked for source-ignore datasets
+until source-specific readiness checks and a frozen protocol exist. We acquired
+no media, selected no test frames and ran no inference or training. Historical
+results, model settings and the six-class protocol are unchanged. Issue #113
+remains open for media, selection, evaluation readiness and wider dataset work.

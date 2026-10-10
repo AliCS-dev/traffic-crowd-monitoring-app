@@ -13,12 +13,40 @@ from evaluation.evaluation_runner import PredictionBatch
 CONFIG_PATH = Path("configs/evaluation/yolo26n_validation.json")
 
 
+def test_source_specific_protocol_cannot_use_historical_readiness_checks(
+    tmp_path, monkeypatch
+):
+    monkeypatch.setattr(
+        evaluation_command,
+        "validate_dataset",
+        Mock(return_value=SimpleNamespace(dataset_ready=True)),
+    )
+    monkeypatch.setattr(evaluation_command, "collect_run_provenance", Mock())
+    monkeypatch.setattr(evaluation_command, "seed_random_generators", Mock())
+    monkeypatch.setattr(
+        evaluation_command,
+        "load_evaluation_dataset",
+        Mock(return_value=SimpleNamespace(ignore_policy="uavdt_strict_containment_v1")),
+    )
+    detector_factory = Mock()
+    with pytest.raises(
+        evaluation_command.EvaluationCommandError, match="source-specific"
+    ):
+        evaluation_command.execute_detector_evaluation(
+            tmp_path,
+            load_evaluation_config(CONFIG_PATH),
+            detector_factory=detector_factory,
+        )
+    detector_factory.assert_not_called()
+
+
 def test_evaluation_command_connects_the_reproducible_pipeline(tmp_path, monkeypatch):
     config = load_evaluation_config(CONFIG_PATH)
     dataset = SimpleNamespace(
         assets=(object(), object()),
         role="validation",
         version="1.0-draft",
+        ignore_policy=None,
     )
     predictions = PredictionBatch(("first", "second"), ())
     detection_metrics = object()
