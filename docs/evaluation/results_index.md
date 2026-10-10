@@ -29,8 +29,10 @@ protocol and historical gate have not been replaced or declared passed.
 
 The [existing-annotation feasibility report](annotation_feasibility_v2.md)
 records measured SDD/UAVDT annotation coverage, mirror provenance and the
-ignore-region integration gap. Its proposed UAVDT-only vehicle evaluation is
-pending approval. The linked JSON contains inventory counts, not accuracy scores.
+ignore-region integration gap. On 10 October Ali approved the separate UAVDT
+vehicle evaluation implementation. The [adapter notes](uavdt_adapter.md) record
+the tested conversion and exclusion policy; media verification and protocol
+freeze are still pending. The linked counts are inventory, not accuracy scores.
 
 Application limits and preliminary resource budgets are recorded separately in
 the [operational safeguards guide](../operational_safeguards.md). Its upload,

@@ -1,5 +1,6 @@
 import csv
 import json
+import math
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
@@ -13,6 +14,7 @@ from evaluation.evaluation_config import (
 )
 
 ANNOTATION_TYPES = ("bounding_box", "point_count")
+UAVDT_IGNORE_POLICY = "uavdt_strict_containment_v1"
 MANIFEST_FIELDS = {
     "asset_id",
     "dataset_version",
@@ -40,6 +42,8 @@ class BoundingBox:
     height: float
 
     def __post_init__(self) -> None:
+        if not all(math.isfinite(value) for value in self.as_xywh()):
+            raise ValueError("Bounding-box coordinates must be finite")
         if self.width <= 0 or self.height <= 0:
             raise ValueError("Bounding-box width and height must be positive")
 
@@ -128,6 +132,17 @@ class CountReference:
 
 
 @dataclass(frozen=True)
+class IgnoredRegion:
+    asset_id: str
+    box: BoundingBox
+
+    def contains(self, box: BoundingBox) -> bool:
+        left, top, right, bottom = self.box.as_xyxy()
+        x_min, y_min, x_max, y_max = box.as_xyxy()
+        return left < x_min and top < y_min and x_max < right and y_max < bottom
+
+
+@dataclass(frozen=True)
 class PredictionRecord:
     asset_id: str
     source_class: str
@@ -149,6 +164,8 @@ class EvaluationDataset:
     assets: tuple[EvaluationAsset, ...]
     ground_truth_boxes: tuple[GroundTruthBox, ...]
     count_references: tuple[CountReference, ...]
+    ignored_regions: tuple[IgnoredRegion, ...] = ()
+    ignore_policy: str | None = None
 
     def __post_init__(self) -> None:
         asset_ids = [asset.asset_id for asset in self.assets]
@@ -159,7 +176,12 @@ class EvaluationDataset:
 
         known_assets = set(asset_ids)
         referenced_assets = {
-            item.asset_id for item in (*self.ground_truth_boxes, *self.count_references)
+            item.asset_id
+            for item in (
+                *self.ground_truth_boxes,
+                *self.count_references,
+                *self.ignored_regions,
+            )
         }
         unknown_assets = referenced_assets - known_assets
         if unknown_assets:
@@ -167,6 +189,16 @@ class EvaluationDataset:
                 "Annotations reference unknown assets: "
                 f"{', '.join(sorted(unknown_assets))}"
             )
+        if self.ignore_policy not in (None, UAVDT_IGNORE_POLICY):
+            raise EvaluationDataError(f"Unknown ignore policy: {self.ignore_policy}")
+        if self.ignored_regions and self.ignore_policy is None:
+            raise EvaluationDataError("Ignored regions require an explicit policy")
+        assets = self.asset_by_id()
+        if any(
+            assets[region.asset_id].annotation_type != "bounding_box"
+            for region in self.ignored_regions
+        ):
+            raise EvaluationDataError("Ignored regions require bounding-box assets")
 
     def asset_by_id(self) -> dict[str, EvaluationAsset]:
         return {asset.asset_id: asset for asset in self.assets}
@@ -308,7 +340,7 @@ def _load_coco_boxes(
     path: Path,
     expected_asset_ids: set[str],
     assets: dict[str, EvaluationAsset],
-) -> list[GroundTruthBox]:
+) -> tuple[list[GroundTruthBox], list[IgnoredRegion], str | None]:
     values = _read_json(path)
     categories = _category_lookup(values, path)
     images = values.get("images")
@@ -338,6 +370,11 @@ def _load_coco_boxes(
     for annotation in annotations:
         if not isinstance(annotation, dict):
             raise EvaluationDataError(f"COCO annotation is invalid: {path}")
+        if annotation.get("iscrowd", 0) != 0 or annotation.get("ignore", 0) != 0:
+            raise EvaluationDataError(
+                f"COCO crowd/ignore annotations are unsupported; "
+                f"use explicit ignored_regions and ignore_policy: {path}"
+            )
         asset_id = image_assets.get(annotation.get("image_id"))
         project_class = categories.get(annotation.get("category_id"))
         bbox = annotation.get("bbox")
@@ -360,7 +397,32 @@ def _load_coco_boxes(
                 box=box,
             )
         )
-    return boxes
+    policy = values.get("ignore_policy")
+    if policy not in (None, UAVDT_IGNORE_POLICY):
+        raise EvaluationDataError(f"Unknown ignore policy: {policy}")
+    if "ignored_regions" in values and policy is None:
+        raise EvaluationDataError("Ignored regions require an explicit policy")
+    regions = values.get("ignored_regions", [])
+    if not isinstance(regions, list) or (policy and "ignored_regions" not in values):
+        raise EvaluationDataError(f"Ignored regions are missing or invalid: {path}")
+    ignored = []
+    for region in regions:
+        if not isinstance(region, dict):
+            raise EvaluationDataError(f"Ignored region is invalid: {path}")
+        asset_id = image_assets.get(region.get("image_id"))
+        bbox = region.get("bbox")
+        if asset_id is None or not isinstance(bbox, list) or len(bbox) != 4:
+            raise EvaluationDataError(
+                f"Ignored region reference or box is invalid: {path}"
+            )
+        try:
+            box = BoundingBox(*(float(value) for value in bbox))
+        except (TypeError, ValueError) as error:
+            raise EvaluationDataError(
+                f"Ignored region box is invalid: {path}"
+            ) from error
+        ignored.append(IgnoredRegion(asset_id, box))
+    return boxes, ignored, policy
 
 
 def _load_count_references(
@@ -412,6 +474,8 @@ def load_evaluation_dataset(
 
     boxes = []
     references = []
+    ignored_regions = []
+    ignore_policy = None
     for (annotation_type, relative_path), asset_ids in sorted(
         annotation_groups.items()
     ):
@@ -419,7 +483,13 @@ def load_evaluation_dataset(
             repository_root, relative_path, "canonical_annotation_path"
         )
         if annotation_type == "bounding_box":
-            boxes.extend(_load_coco_boxes(path, asset_ids, asset_lookup))
+            source_boxes, source_regions, source_policy = _load_coco_boxes(
+                path, asset_ids, asset_lookup
+            )
+            boxes.extend(source_boxes)
+            ignored_regions.extend(source_regions)
+            if source_policy:
+                ignore_policy = source_policy
         elif annotation_type == "point_count":
             references.extend(_load_count_references(path, asset_ids))
         else:
@@ -431,4 +501,6 @@ def load_evaluation_dataset(
         assets=tuple(assets),
         ground_truth_boxes=tuple(boxes),
         count_references=tuple(references),
+        ignored_regions=tuple(ignored_regions),
+        ignore_policy=ignore_policy,
     )

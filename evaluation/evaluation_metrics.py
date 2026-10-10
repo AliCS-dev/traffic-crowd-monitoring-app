@@ -1,5 +1,5 @@
 import io
-from collections import Counter
+from collections import Counter, defaultdict
 from contextlib import redirect_stdout
 from dataclasses import dataclass
 
@@ -8,13 +8,33 @@ from pycocotools.coco import COCO
 from pycocotools.cocoeval import COCOeval
 
 from evaluation.evaluation_config import PROJECT_CLASSES
-from evaluation.evaluation_data import EvaluationDataset, PredictionRecord
+from evaluation.evaluation_data import (
+    EvaluationDataset,
+    IgnoredRegion,
+    PredictionRecord,
+)
 
 ROAD_VEHICLE_CLASSES = frozenset(
     {"bicycle", "motorcycle", "car_or_van", "bus", "truck"}
 )
 ROAD_VEHICLE_TOTAL = "road_vehicle_total"
 CATEGORY_IDS = {name: index for index, name in enumerate(PROJECT_CLASSES, start=1)}
+
+
+def filter_ignored_predictions(
+    dataset: EvaluationDataset, predictions: list[PredictionRecord]
+) -> list[PredictionRecord]:
+    """Apply the source exclusion before confidence filtering and COCO matching."""
+    regions: dict[str, list[IgnoredRegion]] = defaultdict(list)
+    for region in dataset.ignored_regions:
+        regions[region.asset_id].append(region)
+    return [
+        prediction
+        for prediction in predictions
+        if not any(
+            region.contains(prediction.box) for region in regions[prediction.asset_id]
+        )
+    ]
 
 
 @dataclass(frozen=True)
@@ -143,7 +163,9 @@ def calculate_count_metrics(
         raise ValueError("Low-support threshold must be positive")
 
     ground_truth = _ground_truth_counts(dataset)
-    predicted = _prediction_counts(dataset, predictions, operating_confidence)
+    predicted = _prediction_counts(
+        dataset, filter_ignored_predictions(dataset, predictions), operating_confidence
+    )
     results = []
     for project_class in PROJECT_CLASSES:
         asset_ids = [
@@ -187,6 +209,7 @@ def _build_coco_inputs(
     predictions: list[PredictionRecord],
     confidence_floor: float,
 ) -> tuple[COCO, list[dict], dict[str, int], Counter[str]]:
+    predictions = filter_ignored_predictions(dataset, predictions)
     detection_assets = [
         asset for asset in dataset.assets if asset.annotation_type == "bounding_box"
     ]

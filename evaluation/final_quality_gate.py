@@ -116,6 +116,10 @@ def _subset_dataset(
         count_references=tuple(
             count for count in dataset.count_references if count.asset_id in asset_ids
         ),
+        ignored_regions=tuple(
+            region for region in dataset.ignored_regions if region.asset_id in asset_ids
+        ),
+        ignore_policy=dataset.ignore_policy,
     )
 
 
