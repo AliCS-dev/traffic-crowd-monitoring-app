@@ -1,0 +1,700 @@
+{
+  "canonical_sha256": "30492dcfa814d1c61f8f7520cf07408f438d0b6f44fa2439e5d334507b93cc4f",
+  "canonical_source_files": [
+    {
+      "path": "data/evaluation/raw/uavdt_media_check_20261013/GT/M0101_gt_whole.txt",
+      "sha256": "0090a88ae02a32c6edd98b51bf3257453161f5964dd1e272fe3316195990a6ab"
+    },
+    {
+      "path": "data/evaluation/raw/uavdt_media_check_20261013/GT/M0101_gt_ignore.txt",
+      "sha256": "f1a67457164093b7eb1aadb56266ba98dcff6b600500274841c3162f83bfb001"
+    },
+    {
+      "path": "data/evaluation/raw/uavdt_media_check_20261013/attributes/train/M0101_attr.txt",
+      "sha256": "49e243ea46b432a9cb94ffd93f7fa9c7e2fa6817f0cdb514f1593be61559a205"
+    },
+    {
+      "path": "data/evaluation/raw/uavdt_media_check_20261013/GT/M0210_gt_whole.txt",
+      "sha256": "ba328391a7e3f6b9c74dcd320b2bd29b3bf5b18094d56540bfcb1cc2d37d8f1f"
+    },
+    {
+      "path": "data/evaluation/raw/uavdt_media_check_20261013/GT/M0210_gt_ignore.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "data/evaluation/raw/uavdt_media_check_20261013/attributes/train/M0210_attr.txt",
+      "sha256": "a7719d417e47ee902692f5dc6b0c3bf59edca87a62f44027c12b93e36d86eee5"
+    },
+    {
+      "path": "data/evaluation/raw/uavdt_media_check_20261013/GT/M0702_gt_whole.txt",
+      "sha256": "59d4d930324166c79183a7714f9dbc4d1fc39e2490d110b1eab1086fa5784aa6"
+    },
+    {
+      "path": "data/evaluation/raw/uavdt_media_check_20261013/GT/M0702_gt_ignore.txt",
+      "sha256": "bfe9ca77b9dac5977fecfb441eac928f70913b88a4e080b58dee59725d361073"
+    },
+    {
+      "path": "data/evaluation/raw/uavdt_media_check_20261013/attributes/train/M0702_attr.txt",
+      "sha256": "a7719d417e47ee902692f5dc6b0c3bf59edca87a62f44027c12b93e36d86eee5"
+    }
+  ],
+  "downloads": [
+    {
+      "archive_bytes": 245719325,
+      "downloaded_bytes": 466937,
+      "ranges": [
+        {
+          "bytes": 22,
+          "end": 245719324,
+          "sha256": "0561bfaca3688269c16ff0930c75faff2f566b62098888f26336755c80cf1a59",
+          "start": 245719303
+        },
+        {
+          "bytes": 20,
+          "end": 245719302,
+          "sha256": "19782402d7eb0581fbce65fbbfad163d128e62a95033a5d61241ecd858f2cc57",
+          "start": 245719283
+        },
+        {
+          "bytes": 144382,
+          "end": 245719302,
+          "sha256": "86e9505c44d9f47af64b99716468f12d969095669d4b169ef52dc571ff315990",
+          "start": 245574921
+        },
+        {
+          "bytes": 30,
+          "end": 43262434,
+          "sha256": "8b12590d912cd1a5272531a4cf4f04678efd13c6123815a59f68c7a1d4866cd8",
+          "start": 43262405
+        },
+        {
+          "bytes": 45,
+          "end": 43262479,
+          "sha256": "87d8f8bb4b5711ab22c34f8b6a271f9af42acff580439da08e013fb0e4090754",
+          "start": 43262435
+        },
+        {
+          "bytes": 29806,
+          "end": 43292285,
+          "sha256": "1f9e9b0702800b076701f658fca7245dc0800aff4870a457a44c905103a0ba98",
+          "start": 43262480
+        },
+        {
+          "bytes": 30,
+          "end": 43258748,
+          "sha256": "676637424347b7490c84f5562c5cdbda709674dbddc1fac51fe091fc91e1f958",
+          "start": 43258719
+        },
+        {
+          "bytes": 46,
+          "end": 43258794,
+          "sha256": "64ae629ac907cd976e2d7cd5099d9a11d188ad9f23b393b5b78b2121ec9ca1e2",
+          "start": 43258749
+        },
+        {
+          "bytes": 3610,
+          "end": 43262404,
+          "sha256": "58819840883af93ff8ff19fbe708a5df1ad59a0a03feb93cdfc97cbdfd6318e0",
+          "start": 43258795
+        },
+        {
+          "bytes": 30,
+          "end": 43920310,
+          "sha256": "77186c4d9c2d4fd0fa878965fdc8397d1cd5ade7e4979bbb6ce299abf1f0bcd1",
+          "start": 43920281
+        },
+        {
+          "bytes": 45,
+          "end": 43920355,
+          "sha256": "76061d6f0e7f4983799890ff39d7cb1814436d136e0f415f8ad206f80f4c5671",
+          "start": 43920311
+        },
+        {
+          "bytes": 36112,
+          "end": 43956467,
+          "sha256": "6bbfe04ff5f7d3f026d6100be1c6864c67e864e9b7e1733f884e2a0c51270787",
+          "start": 43920356
+        },
+        {
+          "bytes": 30,
+          "end": 43920234,
+          "sha256": "403e5ebc07f0d148b63e292f9c66b4efa6996e2be5c5f2ab4d6ad2f907e46c82",
+          "start": 43920205
+        },
+        {
+          "bytes": 46,
+          "end": 43920280,
+          "sha256": "a8d033dc2e9ff7c8ad6f8e58fed158cc4ed1b79637b8718c493e0c71d8d9e22b",
+          "start": 43920235
+        },
+        {
+          "bytes": 30,
+          "end": 46435966,
+          "sha256": "3e2ce9799bb6070a3011a4ada8ac6306eb930651ff89e518af45cba4cd82875d",
+          "start": 46435937
+        },
+        {
+          "bytes": 45,
+          "end": 46436011,
+          "sha256": "61c68704654165ca9199992dbc16e853f59eafd04e3b58330a1a2ca84d77bd48",
+          "start": 46435967
+        },
+        {
+          "bytes": 246167,
+          "end": 46682178,
+          "sha256": "59132013274790089aa7c19788338a64362c861224c354c33df5627885893cac",
+          "start": 46436012
+        },
+        {
+          "bytes": 30,
+          "end": 46429525,
+          "sha256": "1823eef2a83c2de0efa644b442115b8ab932749cb91c777740eb184e8b7142d3",
+          "start": 46429496
+        },
+        {
+          "bytes": 46,
+          "end": 46429571,
+          "sha256": "16b08f8de7dbc888879f4df01a8a69765bbef2bd2befd1299e561d43857c1de3",
+          "start": 46429526
+        },
+        {
+          "bytes": 6365,
+          "end": 46435936,
+          "sha256": "75dc37738ffb6cab607c59920c865ac88f796a8deb7c6115f69426d30fbd8376",
+          "start": 46429572
+        }
+      ],
+      "url": "https://huggingface.co/datasets/vanthanh/UAVDT-Benchmark-M/resolve/ad1cfbe161c183cfdee26f6c42c6fff6552a54dc/UAV-benchmark-MOTD_v1.0.zip"
+    },
+    {
+      "archive_bytes": 6790452113,
+      "downloaded_bytes": 7080897,
+      "ranges": [
+        {
+          "bytes": 22,
+          "end": 6790452112,
+          "sha256": "bdfbddf42554de807dbc88f0a8c3739520f53f7288936c32582027b4c514564a",
+          "start": 6790452091
+        },
+        {
+          "bytes": 20,
+          "end": 6790452090,
+          "sha256": "1291a5278470be927ffbd598dae8a57a26b785ddd7d9f3fd5a2e0a1470b02580",
+          "start": 6790452071
+        },
+        {
+          "bytes": 56,
+          "end": 6790452070,
+          "sha256": "38c4381943bc1ee94ddb4829a96cdf5ac0d83bda9dc54098c18617c64de970ac",
+          "start": 6790452015
+        },
+        {
+          "bytes": 4963905,
+          "end": 6790452014,
+          "sha256": "08d6e27ca4a8b889c6864469f3ef37038644bc753d1cdaf5dd1d10fa518c27d9",
+          "start": 6785488110
+        },
+        {
+          "bytes": 30,
+          "end": 127,
+          "sha256": "8b2cbd07a4aa6241fb9d07f771d72d6a1ccf1642b16670ba6af9d835102fe31f",
+          "start": 98
+        },
+        {
+          "bytes": 35,
+          "end": 162,
+          "sha256": "b5a745693920ecd0c1d45b4c702fe3aa4167d63a158feade9841a3da2d74114a",
+          "start": 128
+        },
+        {
+          "bytes": 223989,
+          "end": 224151,
+          "sha256": "26ef6859cf38db8ed664e7955ee8204a0331e3ead5b5144990c9e9e210d3511f",
+          "start": 163
+        },
+        {
+          "bytes": 30,
+          "end": 45567865,
+          "sha256": "b7869474bbcf91cd8f31047452937da3670d94c3a3e421de6086e735879a7425",
+          "start": 45567836
+        },
+        {
+          "bytes": 35,
+          "end": 45567900,
+          "sha256": "bb38bd25235559b43aef70a9dd9abb166dfb064c043d0f468f74075ee3a43aa9",
+          "start": 45567866
+        },
+        {
+          "bytes": 216846,
+          "end": 45784746,
+          "sha256": "dbdb87e34dd2317fb9b6eb11e68c5fd6019c27e7e3cb5212607e297b615d10f8",
+          "start": 45567901
+        },
+        {
+          "bytes": 30,
+          "end": 90999664,
+          "sha256": "2bf375adcf5ea605d838eb7fa139a556d87193647923c4cbf295c2e669a407e0",
+          "start": 90999635
+        },
+        {
+          "bytes": 35,
+          "end": 90999699,
+          "sha256": "88b9629fe664c3777f16c931532d2a6241f5d247d96c704b001fe67afed25900",
+          "start": 90999665
+        },
+        {
+          "bytes": 219500,
+          "end": 91219199,
+          "sha256": "b5a525591a9241a2b784b1393ad55ec7c45a8ef7252506cd0943cc844c4c9f38",
+          "start": 90999700
+        },
+        {
+          "bytes": 30,
+          "end": 1303332028,
+          "sha256": "f395c705ed5a3ff335791f5b9d58005a2e43d0cdcb5ae17e45225b1dbacbf6f7",
+          "start": 1303331999
+        },
+        {
+          "bytes": 35,
+          "end": 1303332063,
+          "sha256": "8579b4e8792474f76e23063aaf160b897c6f92ad2f70ca2172aaa77005fd3883",
+          "start": 1303332029
+        },
+        {
+          "bytes": 244317,
+          "end": 1303576380,
+          "sha256": "ed7fde64fd2ed798ca10ba8aa254ef4248d87fb2421ba53aa996cbb39113b9e6",
+          "start": 1303332064
+        },
+        {
+          "bytes": 30,
+          "end": 1379352241,
+          "sha256": "35f09d886ef67d9a834038b82ec9c554695862b74b7c6ea9447196dc11ab185f",
+          "start": 1379352212
+        },
+        {
+          "bytes": 35,
+          "end": 1379352276,
+          "sha256": "532eab01a96325e0d61a8940465f8e82ea9e80c7e504158cb15d34554e70fc1d",
+          "start": 1379352242
+        },
+        {
+          "bytes": 275845,
+          "end": 1379628121,
+          "sha256": "7a0835015453324db6306060cdae717abc41031b58df4a2224462e5f7460ef2e",
+          "start": 1379352277
+        },
+        {
+          "bytes": 30,
+          "end": 1450757575,
+          "sha256": "c3fbf887c983fa86d32d1750e4f07e49f5156ae2fc868d83af8cf7d4122ad244",
+          "start": 1450757546
+        },
+        {
+          "bytes": 35,
+          "end": 1450757610,
+          "sha256": "69e415d663f167228398293f6ff502c02071f6cdf1ba5f429c5ad3578bd787dc",
+          "start": 1450757576
+        },
+        {
+          "bytes": 219428,
+          "end": 1450977038,
+          "sha256": "57646f3248b58539cc0a8c484b1b18f74df13549d411386b93d47c962d629695",
+          "start": 1450757611
+        },
+        {
+          "bytes": 30,
+          "end": 3211801693,
+          "sha256": "fa959b662714778fd1da1b80c8b78564435b2925022fd5be986350fe771ef2d8",
+          "start": 3211801664
+        },
+        {
+          "bytes": 35,
+          "end": 3211801728,
+          "sha256": "ae0b11c86c4fe99019373fd34af5b0eeec447b8dfc7463bae6dad9c1b4070247",
+          "start": 3211801694
+        },
+        {
+          "bytes": 226775,
+          "end": 3212028503,
+          "sha256": "8ad80fbca801a555fb569934979ca06558d11c8aa391ca47f077f4b85b63abab",
+          "start": 3211801729
+        },
+        {
+          "bytes": 30,
+          "end": 3298940425,
+          "sha256": "024998cc841b9f6596b8ad1bbc7d8690c70f5f599e8257dda149c7bcb69d246b",
+          "start": 3298940396
+        },
+        {
+          "bytes": 35,
+          "end": 3298940460,
+          "sha256": "2784942d7e7dbb6de57d841633035a0ba825dee97dc96406f239475ba31a2e0a",
+          "start": 3298940426
+        },
+        {
+          "bytes": 235584,
+          "end": 3299176044,
+          "sha256": "c312bc01beb42414492f7686309be845e67c64d9320792cfea5673a1e6e39c05",
+          "start": 3298940461
+        },
+        {
+          "bytes": 30,
+          "end": 3394876616,
+          "sha256": "7bcd0fc13515dfb33fb7086f998f670b3254bde1ae8068556722566a60c3906f",
+          "start": 3394876587
+        },
+        {
+          "bytes": 35,
+          "end": 3394876651,
+          "sha256": "f5d9264bec87a8ee5feed0116944f61e548d222fe4273979ef7c7596b645315a",
+          "start": 3394876617
+        },
+        {
+          "bytes": 254025,
+          "end": 3395130676,
+          "sha256": "9f88687879b06e97282df785fa9bfb8dc033643c4147e0d1f623725e59c0eb6a",
+          "start": 3394876652
+        }
+      ],
+      "url": "https://huggingface.co/datasets/vanthanh/UAVDT-Benchmark-M/resolve/ad1cfbe161c183cfdee26f6c42c6fff6552a54dc/UAV-benchmark-M.zip"
+    }
+  ],
+  "duplicate_image_hashes": 0,
+  "frames": [
+    {
+      "annotation_type": "bounding_box",
+      "asset_id": "uavdt_M0101_000001",
+      "box_counts": {
+        "bus": 1,
+        "car_or_van": 13,
+        "truck": 1
+      },
+      "bytes": 224111,
+      "canonical_annotation_path": "data/evaluation/raw/uavdt_media_check_20261013/instances_training.json",
+      "collection_id": "uavdt",
+      "dataset_role": "training",
+      "dataset_version": "uavdt-media-check-v1",
+      "evaluation_image_path": "data/evaluation/raw/uavdt_media_check_20261013/images/M0101/img000001.jpg",
+      "frame_number": 1,
+      "gt_strictly_inside_ignore": 0,
+      "height": 540,
+      "ignore_regions": 3,
+      "image_sha256": "96f04bec238781ef40f000d2cc14b67d4d3ea15a525bb42eaeae11f3f37e296d",
+      "out_of_bounds_boxes": 0,
+      "overlay_path": "data/evaluation/raw/uavdt_media_check_20261013/overlays/uavdt_M0101_000001.png",
+      "overlay_sha256": "28396b385ba99bc0419f390b6f4c639bbfb6c6f5d93b8921355c688ed2ce94fa",
+      "quality_flags": {
+        "class_conflict_pairs": 0,
+        "duplicate_pairs": 0,
+        "edge_boxes": 0,
+        "unusually_large_boxes": 0,
+        "very_small_boxes": 0
+      },
+      "sha256": "96f04bec238781ef40f000d2cc14b67d4d3ea15a525bb42eaeae11f3f37e296d",
+      "source_group_id": "M0101",
+      "source_split": "train",
+      "target_classes": "car_or_van;bus;truck",
+      "width": 1024,
+      "zip_crc32": "29493098",
+      "zip_member": "UAV-benchmark-M/M0101/img000001.jpg"
+    },
+    {
+      "annotation_type": "bounding_box",
+      "asset_id": "uavdt_M0101_000204",
+      "box_counts": {
+        "car_or_van": 13
+      },
+      "bytes": 216971,
+      "canonical_annotation_path": "data/evaluation/raw/uavdt_media_check_20261013/instances_training.json",
+      "collection_id": "uavdt",
+      "dataset_role": "training",
+      "dataset_version": "uavdt-media-check-v1",
+      "evaluation_image_path": "data/evaluation/raw/uavdt_media_check_20261013/images/M0101/img000204.jpg",
+      "frame_number": 204,
+      "gt_strictly_inside_ignore": 0,
+      "height": 540,
+      "ignore_regions": 2,
+      "image_sha256": "386a4cb266ab8bc0e48d14a82023be554078f9d4832be7a9011ccf846ad4653a",
+      "out_of_bounds_boxes": 0,
+      "overlay_path": "data/evaluation/raw/uavdt_media_check_20261013/overlays/uavdt_M0101_000204.png",
+      "overlay_sha256": "6b42ef33d8f1256848d11e9b0d842bfd6b2bec81d1663e46636da0302edb4046",
+      "quality_flags": {
+        "class_conflict_pairs": 0,
+        "duplicate_pairs": 0,
+        "edge_boxes": 0,
+        "unusually_large_boxes": 0,
+        "very_small_boxes": 0
+      },
+      "sha256": "386a4cb266ab8bc0e48d14a82023be554078f9d4832be7a9011ccf846ad4653a",
+      "source_group_id": "M0101",
+      "source_split": "train",
+      "target_classes": "car_or_van;bus;truck",
+      "width": 1024,
+      "zip_crc32": "65fa2c4c",
+      "zip_member": "UAV-benchmark-M/M0101/img000204.jpg"
+    },
+    {
+      "annotation_type": "bounding_box",
+      "asset_id": "uavdt_M0101_000407",
+      "box_counts": {
+        "car_or_van": 9
+      },
+      "bytes": 219625,
+      "canonical_annotation_path": "data/evaluation/raw/uavdt_media_check_20261013/instances_training.json",
+      "collection_id": "uavdt",
+      "dataset_role": "training",
+      "dataset_version": "uavdt-media-check-v1",
+      "evaluation_image_path": "data/evaluation/raw/uavdt_media_check_20261013/images/M0101/img000407.jpg",
+      "frame_number": 407,
+      "gt_strictly_inside_ignore": 0,
+      "height": 540,
+      "ignore_regions": 1,
+      "image_sha256": "8353baee7be165a2d4c937544db2ac53ce76444187fb03d198e931af42c0ef34",
+      "out_of_bounds_boxes": 0,
+      "overlay_path": "data/evaluation/raw/uavdt_media_check_20261013/overlays/uavdt_M0101_000407.png",
+      "overlay_sha256": "e5f0a8f6ec488c2c6910513a455c4bedaefe498bdbb0d3a994813fbd1b957a9b",
+      "quality_flags": {
+        "class_conflict_pairs": 0,
+        "duplicate_pairs": 0,
+        "edge_boxes": 0,
+        "unusually_large_boxes": 0,
+        "very_small_boxes": 0
+      },
+      "sha256": "8353baee7be165a2d4c937544db2ac53ce76444187fb03d198e931af42c0ef34",
+      "source_group_id": "M0101",
+      "source_split": "train",
+      "target_classes": "car_or_van;bus;truck",
+      "width": 1024,
+      "zip_crc32": "add0b9c5",
+      "zip_member": "UAV-benchmark-M/M0101/img000407.jpg"
+    },
+    {
+      "annotation_type": "bounding_box",
+      "asset_id": "uavdt_M0210_000001",
+      "box_counts": {
+        "car_or_van": 4,
+        "truck": 2
+      },
+      "bytes": 244430,
+      "canonical_annotation_path": "data/evaluation/raw/uavdt_media_check_20261013/instances_training.json",
+      "collection_id": "uavdt",
+      "dataset_role": "training",
+      "dataset_version": "uavdt-media-check-v1",
+      "evaluation_image_path": "data/evaluation/raw/uavdt_media_check_20261013/images/M0210/img000001.jpg",
+      "frame_number": 1,
+      "gt_strictly_inside_ignore": 0,
+      "height": 540,
+      "ignore_regions": 0,
+      "image_sha256": "9f9a50136085a7d923cfbdc31a1a88c451cdaa59d2568533da47514f31bd8458",
+      "out_of_bounds_boxes": 0,
+      "overlay_path": "data/evaluation/raw/uavdt_media_check_20261013/overlays/uavdt_M0210_000001.png",
+      "overlay_sha256": "42ad6caf88833a8f02eacc60e1b5bb0d5ba88384abb9678e0278396b82d49a7d",
+      "quality_flags": {
+        "class_conflict_pairs": 0,
+        "duplicate_pairs": 0,
+        "edge_boxes": 0,
+        "unusually_large_boxes": 0,
+        "very_small_boxes": 0
+      },
+      "sha256": "9f9a50136085a7d923cfbdc31a1a88c451cdaa59d2568533da47514f31bd8458",
+      "source_group_id": "M0210",
+      "source_split": "train",
+      "target_classes": "car_or_van;bus;truck",
+      "width": 1024,
+      "zip_crc32": "df88a66b",
+      "zip_member": "UAV-benchmark-M/M0210/img000001.jpg"
+    },
+    {
+      "annotation_type": "bounding_box",
+      "asset_id": "uavdt_M0210_000292",
+      "box_counts": {
+        "car_or_van": 7,
+        "truck": 4
+      },
+      "bytes": 275952,
+      "canonical_annotation_path": "data/evaluation/raw/uavdt_media_check_20261013/instances_training.json",
+      "collection_id": "uavdt",
+      "dataset_role": "training",
+      "dataset_version": "uavdt-media-check-v1",
+      "evaluation_image_path": "data/evaluation/raw/uavdt_media_check_20261013/images/M0210/img000292.jpg",
+      "frame_number": 292,
+      "gt_strictly_inside_ignore": 0,
+      "height": 540,
+      "ignore_regions": 0,
+      "image_sha256": "a82f4f8b5356f33abbf179d2759dadfad659ffe17778c3cbcf0211871c5d421b",
+      "out_of_bounds_boxes": 0,
+      "overlay_path": "data/evaluation/raw/uavdt_media_check_20261013/overlays/uavdt_M0210_000292.png",
+      "overlay_sha256": "804520ccdf06405d78b3d0bd7cb01e1a74ce2efe087ca40e94b9f0aabf9fcc7a",
+      "quality_flags": {
+        "class_conflict_pairs": 0,
+        "duplicate_pairs": 0,
+        "edge_boxes": 0,
+        "unusually_large_boxes": 0,
+        "very_small_boxes": 0
+      },
+      "sha256": "a82f4f8b5356f33abbf179d2759dadfad659ffe17778c3cbcf0211871c5d421b",
+      "source_group_id": "M0210",
+      "source_split": "train",
+      "target_classes": "car_or_van;bus;truck",
+      "width": 1024,
+      "zip_crc32": "a700e2da",
+      "zip_member": "UAV-benchmark-M/M0210/img000292.jpg"
+    },
+    {
+      "annotation_type": "bounding_box",
+      "asset_id": "uavdt_M0210_000583",
+      "box_counts": {
+        "car_or_van": 15,
+        "truck": 5
+      },
+      "bytes": 219590,
+      "canonical_annotation_path": "data/evaluation/raw/uavdt_media_check_20261013/instances_training.json",
+      "collection_id": "uavdt",
+      "dataset_role": "training",
+      "dataset_version": "uavdt-media-check-v1",
+      "evaluation_image_path": "data/evaluation/raw/uavdt_media_check_20261013/images/M0210/img000583.jpg",
+      "frame_number": 583,
+      "gt_strictly_inside_ignore": 0,
+      "height": 540,
+      "ignore_regions": 0,
+      "image_sha256": "c49adba411438d79c95ff4d5eaad0e75964dd3020ae337640c51639208632772",
+      "out_of_bounds_boxes": 0,
+      "overlay_path": "data/evaluation/raw/uavdt_media_check_20261013/overlays/uavdt_M0210_000583.png",
+      "overlay_sha256": "8588f63f09b5f52a4ec72e9dd2c0a29c168ae057523941e4f8cb941b1194a5de",
+      "quality_flags": {
+        "class_conflict_pairs": 0,
+        "duplicate_pairs": 0,
+        "edge_boxes": 1,
+        "unusually_large_boxes": 0,
+        "very_small_boxes": 0
+      },
+      "sha256": "c49adba411438d79c95ff4d5eaad0e75964dd3020ae337640c51639208632772",
+      "source_group_id": "M0210",
+      "source_split": "train",
+      "target_classes": "car_or_van;bus;truck",
+      "width": 1024,
+      "zip_crc32": "4610dd24",
+      "zip_member": "UAV-benchmark-M/M0210/img000583.jpg"
+    },
+    {
+      "annotation_type": "bounding_box",
+      "asset_id": "uavdt_M0702_000001",
+      "box_counts": {
+        "bus": 3,
+        "car_or_van": 36,
+        "truck": 1
+      },
+      "bytes": 226908,
+      "canonical_annotation_path": "data/evaluation/raw/uavdt_media_check_20261013/instances_training.json",
+      "collection_id": "uavdt",
+      "dataset_role": "training",
+      "dataset_version": "uavdt-media-check-v1",
+      "evaluation_image_path": "data/evaluation/raw/uavdt_media_check_20261013/images/M0702/img000001.jpg",
+      "frame_number": 1,
+      "gt_strictly_inside_ignore": 0,
+      "height": 540,
+      "ignore_regions": 3,
+      "image_sha256": "426e55eb46c3028e6a092829827ceaf9c02eb1f1987e2f4849767186f9fddb15",
+      "out_of_bounds_boxes": 0,
+      "overlay_path": "data/evaluation/raw/uavdt_media_check_20261013/overlays/uavdt_M0702_000001.png",
+      "overlay_sha256": "30900af89ee40feb76e43f2d379ed2a243f4d880328e6f4a720897b7bd2bcaae",
+      "quality_flags": {
+        "class_conflict_pairs": 0,
+        "duplicate_pairs": 0,
+        "edge_boxes": 1,
+        "unusually_large_boxes": 0,
+        "very_small_boxes": 0
+      },
+      "sha256": "426e55eb46c3028e6a092829827ceaf9c02eb1f1987e2f4849767186f9fddb15",
+      "source_group_id": "M0702",
+      "source_split": "train",
+      "target_classes": "car_or_van;bus;truck",
+      "width": 1024,
+      "zip_crc32": "76b09f08",
+      "zip_member": "UAV-benchmark-M/M0702/img000001.jpg"
+    },
+    {
+      "annotation_type": "bounding_box",
+      "asset_id": "uavdt_M0702_000389",
+      "box_counts": {
+        "bus": 6,
+        "car_or_van": 58
+      },
+      "bytes": 235701,
+      "canonical_annotation_path": "data/evaluation/raw/uavdt_media_check_20261013/instances_training.json",
+      "collection_id": "uavdt",
+      "dataset_role": "training",
+      "dataset_version": "uavdt-media-check-v1",
+      "evaluation_image_path": "data/evaluation/raw/uavdt_media_check_20261013/images/M0702/img000389.jpg",
+      "frame_number": 389,
+      "gt_strictly_inside_ignore": 0,
+      "height": 540,
+      "ignore_regions": 1,
+      "image_sha256": "ee3b722dc0a71f9f7e6496f8874459b123982062bbeb40ca1dc347b5fc195718",
+      "out_of_bounds_boxes": 0,
+      "overlay_path": "data/evaluation/raw/uavdt_media_check_20261013/overlays/uavdt_M0702_000389.png",
+      "overlay_sha256": "a652d8dad72312b543fa4c276066c271c2ee08246740883b009b57fc6617f819",
+      "quality_flags": {
+        "class_conflict_pairs": 0,
+        "duplicate_pairs": 0,
+        "edge_boxes": 2,
+        "unusually_large_boxes": 0,
+        "very_small_boxes": 0
+      },
+      "sha256": "ee3b722dc0a71f9f7e6496f8874459b123982062bbeb40ca1dc347b5fc195718",
+      "source_group_id": "M0702",
+      "source_split": "train",
+      "target_classes": "car_or_van;bus;truck",
+      "width": 1024,
+      "zip_crc32": "1080e00a",
+      "zip_member": "UAV-benchmark-M/M0702/img000389.jpg"
+    },
+    {
+      "annotation_type": "bounding_box",
+      "asset_id": "uavdt_M0702_000777",
+      "box_counts": {
+        "bus": 4,
+        "car_or_van": 51,
+        "truck": 2
+      },
+      "bytes": 254144,
+      "canonical_annotation_path": "data/evaluation/raw/uavdt_media_check_20261013/instances_training.json",
+      "collection_id": "uavdt",
+      "dataset_role": "training",
+      "dataset_version": "uavdt-media-check-v1",
+      "evaluation_image_path": "data/evaluation/raw/uavdt_media_check_20261013/images/M0702/img000777.jpg",
+      "frame_number": 777,
+      "gt_strictly_inside_ignore": 0,
+      "height": 540,
+      "ignore_regions": 3,
+      "image_sha256": "1f79b7bc011d6c123ab2db8da54af78ece2f4ded4a5649b3b1ae8f64d6c5ea83",
+      "out_of_bounds_boxes": 0,
+      "overlay_path": "data/evaluation/raw/uavdt_media_check_20261013/overlays/uavdt_M0702_000777.png",
+      "overlay_sha256": "cddcff44158a45f7bc04c19839358867eb91af0c30703065c9450467dd17b66e",
+      "quality_flags": {
+        "class_conflict_pairs": 0,
+        "duplicate_pairs": 0,
+        "edge_boxes": 2,
+        "unusually_large_boxes": 0,
+        "very_small_boxes": 0
+      },
+      "sha256": "1f79b7bc011d6c123ab2db8da54af78ece2f4ded4a5649b3b1ae8f64d6c5ea83",
+      "source_group_id": "M0702",
+      "source_split": "train",
+      "target_classes": "car_or_van;bus;truck",
+      "width": 1024,
+      "zip_crc32": "bec519d3",
+      "zip_member": "UAV-benchmark-M/M0702/img000777.jpg"
+    }
+  ],
+  "human_annotation_review": false,
+  "manifest_sha256": "5b6bc0c30091c6a80606a6f49594f892bc5b715d3c4127ac609e5b257aaf8e3f",
+  "mirror_revision": "ad1cfbe161c183cfdee26f6c42c6fff6552a54dc",
+  "model_inference_run": false,
+  "original_publisher_equivalence_verified": false,
+  "record_type": "uavdt_training_media_compatibility_not_accuracy",
+  "selection_purpose": "front/side and bird views, vehicle classes, empty/nonempty ignores",
+  "selection_rule": "M0101/M0210/M0702 training only; first/middle/last labelled frame",
+  "test_media_downloaded": false
+}

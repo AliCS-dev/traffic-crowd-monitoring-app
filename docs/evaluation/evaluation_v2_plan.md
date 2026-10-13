@@ -26,6 +26,11 @@ record the implemented policy and tests. This separate three-class comparison
 does not replace the six-class scope below. Media acquisition, frame selection
 and the experiment protocol remain pending; no new accuracy claim is made.
 
+**13 October media update:** the [compatibility check](uavdt_media_check.md)
+retrieved nine training frames and tested conversion on real pixels. It records
+two source-label concerns without changing annotations or evaluating a model.
+This is not the final v2 selection; sampling and protocol freeze remain pending.
+
 ## Scope We Agreed
 
 We will evaluate daytime aerial road scenes using all six existing classes:

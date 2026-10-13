@@ -713,3 +713,23 @@ until source-specific readiness checks and a frozen protocol exist. We acquired
 no media, selected no test frames and ran no inference or training. Historical
 results, model settings and the six-class protocol are unchanged. Issue #113
 remains open for media, selection, evaluation readiness and wider dataset work.
+
+### Issue #113: UAVDT Training Media Check (13 October 2026)
+
+We retrieved the first, middle and last labelled frames from three preselected
+daytime training sequences, using bounded ZIP range requests. Nine real images
+passed decoding, checksums, label conversion and geometry checks. The native
+files are 1024 x 540. No test pixels, model predictions or training were used.
+
+The [media check report](evaluation/uavdt_media_check.md) links reproducible
+metadata and local overlay locations. We inspected all nine overlays and found
+two questionable source records in M0210 frame 583, including a large car box
+over vegetation/road and a target obscured by the toll canopy. Native labels
+remain unchanged; these observations are not independent human review by Ali.
+
+The step establishes that the real-data adapter works, while demonstrating
+that a structurally valid source label can still be questionable. We added
+tests for strict download limits, exact HTTP ranges, training-only access,
+integrity failures, frame selection and the conversion/overlay workflow.
+The original six-class targets and failed quality gate are unchanged. Issue
+#113 remains in progress for the source-label decision and protocol freeze.

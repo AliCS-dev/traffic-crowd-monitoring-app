@@ -76,17 +76,18 @@ The [v2 evaluation plan](docs/evaluation/evaluation_v2_plan.md) records the agre
 daytime scope, provisional coverage targets and rules for a new final holdout.
 The [v2 source inventory](docs/evaluation/source_inventory_v2.md) compares candidate
 datasets, licence evidence, overlap risks and estimated human-review effort.
-The proposed coverage is not yet verified, and no new v2 evaluation media has
-been acquired. The [annotation feasibility report](docs/evaluation/annotation_feasibility_v2.md)
-records inspected source labels and proposes a separate UAVDT vehicle evaluation;
+The proposed coverage is not yet verified. The
+[annotation feasibility report](docs/evaluation/annotation_feasibility_v2.md)
+records inspected source labels and the separate UAVDT vehicle evaluation proposal;
 its linked counts are dataset inventory, not model-accuracy results.
 The manual-review campaign is on hold because of the available review capacity;
 we are assessing an alternative based on existing published annotations.
 
 The [UAVDT adapter notes](docs/evaluation/uavdt_adapter.md) describe the approved
 three-class evaluation work, tested annotation conversion and ignore handling.
-Media verification and protocol freeze are still pending; no new accuracy
-results have been produced.
+The [media compatibility check](docs/evaluation/uavdt_media_check.md) covers nine
+training images and records two source-label concerns. Sampling and protocol
+freeze are still pending; no new accuracy results have been produced.
 
 The [operational safeguards guide](docs/operational_safeguards.md) records our
 workload limits, recovery boundaries, media retention and preliminary performance
