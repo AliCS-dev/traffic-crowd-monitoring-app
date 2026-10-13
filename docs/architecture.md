@@ -1,5 +1,7 @@
 # Application Architecture
 
+[Documentation index](README.md) | [Illustrated walkthrough](user_guide.md)
+
 ## Why We Use This Structure
 
 We want the application to stay understandable while it grows from a single

@@ -1,5 +1,7 @@
 # Full Application with Docker Compose
 
+[Documentation index](README.md) | [Illustrated walkthrough](user_guide.md)
+
 We run the browser application, API, and PostgreSQL as separate services. Nginx
 serves the compiled React application and forwards `/api/` requests to FastAPI.
 Only Nginx is published, on localhost port 8080. The backend and database remain

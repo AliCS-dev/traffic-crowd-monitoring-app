@@ -1,5 +1,8 @@
 # Development Log
 
+Current setup and usage are in the [documentation index](README.md). The entries
+below record work at the time it was completed, not a checklist of today's state.
+
 This log follows the main stages of our BSc thesis application. We update it when
 work is implemented and tested, so it reflects what we have actually built rather
 than everything we hope to add later.
@@ -733,3 +736,30 @@ tests for strict download limits, exact HTTP ranges, training-only access,
 integrity failures, frame selection and the conversion/overlay workflow.
 The original six-class targets and failed quality gate are unchanged. Issue
 #113 remains in progress for the source-label decision and protocol freeze.
+
+### Documentation Walkthrough (13 October 2026)
+
+We shortened the project README and added a [documentation index](README.md)
+and [illustrated user guide](user_guide.md). The longer setup, API, command-line
+and evaluation examples now have separate pages. Existing experiment reports
+and metrics are unchanged.
+
+Four screenshots follow a real image run in a separate `traffic-docs` Compose
+project: submission, grid inspection, the model/crowd status and session history.
+The image comes from our attributed CC BY 4.0 development fixtures. The run
+stored 27 predictions and six cells; frame and cell counts agreed, and the saved
+result reopened through the browser. This checks the workflow, not accuracy.
+
+The [screenshot record](images/user-guide/README.md) includes capture commands,
+source credit and file hashes. Desktop and 390-pixel browser checks found no
+horizontal overflow or page errors. We built the current containers and checked
+documentation links and formatting; we did not repeat the full Python suite
+for this documentation-only application change. A frontend install audit also
+reported a high-severity `source-map-js` advisory; dependency remediation remains
+separate from this documentation work.
+
+We also replaced the database's text-only relationship sketch with a rendered
+[database diagram](database/database_schema.md#how-the-tables-are-connected).
+It shows all 11 tables and 13 foreign keys, including nullable grid references
+and the separate migration-history table. The editable Graphviz source, PNG
+and SVG remain together so future migrations can be reflected in the figure.

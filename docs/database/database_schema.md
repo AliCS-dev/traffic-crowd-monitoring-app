@@ -1,5 +1,7 @@
 # Database Schema
 
+[Documentation index](../README.md) | [Local database setup](../local_development.md#working-with-postgresql)
+
 ## Why We Use PostgreSQL
 
 We use PostgreSQL to keep the structured information produced during image and
@@ -40,30 +42,50 @@ as new migration files; applied files are immutable.
 
 ## How the Tables Are Connected
 
-```text
-monitoring_sessions
-  |
-  +-- model_run_profiles
-  |
-  +-- dense_crowd_analysis_results
-  |
-  +-- video_analysis_jobs
-  |
-  +-- input_sources
-  |     |
-  |     +-- processed_frames
-  |             |
-  |             +-- detection_results
-  |             +-- grid_cells
-  |             +-- object_count_summaries
-  |             +-- alerts
-  |
-  +-- processed_frames
-```
+![Database diagram showing sessions, sources, processed frames and their detection, grid, count and alert records, with model, crowd and video-job records linked to sessions](database_schema.png)
+
+*Database relationships after migrations 001-008, checked against the local
+PostgreSQL schema on 13 October 2026. All 11 tables and 13 foreign-key
+relationships are shown; each table lists selected fields, not every column.*
+
+[Open the full-size image](database_schema.png) |
+[Vector version for the thesis](database_schema.svg) |
+[Editable diagram source](database_schema.dot)
+
+Arrows run from the referenced table to the table holding the foreign key.
+`1 : 0..*` means that each child belongs to one parent, while the parent can
+have no children or many. `1 : 0..1` allows at most one child record. For
+example, an older session may have no model profile, but cannot have two.
+`PK` marks a primary key, `FK` a foreign key and `UQ` a unique column.
+
+The dashed links and `FK?` mark nullable grid-cell references. A whole-frame
+count has no grid cell; a per-cell count has one. For current alerts, the scope
+constraint requires no cell reference for a frame event and a non-null reference
+for a grid-cell event. The diagram describes the database relationships, not a
+guarantee that every processing run has every kind of result.
+
+`schema_migrations` sits separately because it records schema changes rather
+than monitoring data. The migration runner creates this table itself.
 
 Each processed frame also points directly to its monitoring session. We use this
 to make session-based queries straightforward, while the application keeps the
 session and input-source relationships consistent.
+
+### Updating the Diagram
+
+We keep the [Graphviz source](database_schema.dot) beside the rendered images.
+After a schema change, update the table fields and relationships, then render
+both versions from the repository root with Graphviz installed:
+
+```bash
+dot -Tpng -Gdpi=150 docs/database/database_schema.dot -o docs/database/database_schema.png
+dot -Tsvg docs/database/database_schema.dot -o docs/database/database_schema.svg
+```
+
+These images were rendered with Graphviz 2.43.0 and DejaVu Sans. The PNG is
+included directly in the documentation; the SVG keeps text and lines sharp
+when resized for a thesis figure. Neither image contains database rows or
+credentials. Rendering the diagram does not connect to or change PostgreSQL.
 
 ## What We Store
 

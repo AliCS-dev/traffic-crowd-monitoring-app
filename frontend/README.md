@@ -1,5 +1,8 @@
 # Frontend Application
 
+For an illustrated walkthrough, see the [user guide](../docs/user_guide.md).
+The [documentation index](../docs/README.md) links setup and thesis evidence.
+
 The frontend is a separate React and TypeScript application for the traffic and
 crowd monitoring workflow. It calls the FastAPI backend over HTTP and does not
 import Python modules or access PostgreSQL directly.
@@ -16,7 +19,7 @@ For the compiled frontend served by Nginx with the backend and database, we use
 the [full application Compose setup](../docs/compose_stack.md). That image uses
 same-origin API requests. The Vite workflow below remains available for editing.
 
-We use Node.js 24 LTS and the committed npm lockfile. From `frontend/`, we
+We use the Node.js version in `.nvmrc` and the committed npm lockfile. From `frontend/`, we
 install the exact dependency versions with:
 
 ```bash
@@ -27,7 +30,7 @@ The browser reads the backend address from `VITE_API_BASE_URL`. We can create a
 local configuration from the safe example:
 
 ```bash
-cp .env.example .env
+cp -n .env.example .env
 ```
 
 With the FastAPI server listening on port 8000, we start the frontend with:
