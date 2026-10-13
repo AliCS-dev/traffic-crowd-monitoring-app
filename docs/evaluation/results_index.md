@@ -21,8 +21,7 @@ not a new dataset release or a result. Historical metrics below remain unchanged
 
 The [v2 source inventory](source_inventory_v2.md) records candidate sources,
 permission gaps, model-overlap risks and estimated review effort. It has not
-established that the provisional coverage targets can be met; no new v2
-evaluation media has been acquired.
+established that the provisional coverage targets can be met.
 Ali cannot take on the proposed annotation-review workload. The custom dataset
 campaign is on hold while we assess existing-label alternatives; the six-class
 protocol and historical gate have not been replaced or declared passed.
@@ -33,6 +32,11 @@ ignore-region integration gap. On 10 October Ali approved the separate UAVDT
 vehicle evaluation implementation. The [adapter notes](uavdt_adapter.md) record
 the tested conversion and exclusion policy; media verification and protocol
 freeze are still pending. The linked counts are inventory, not accuracy scores.
+
+The [13 October media check](uavdt_media_check.md) records nine training-image
+overlays, checksums and measured class counts, plus two unresolved source-label
+concerns. Its [JSON record](../../data/evaluation/uavdt_media_check.json) contains
+technical evidence, not model metrics. No test images or predictions were used.
 
 Application limits and preliminary resource budgets are recorded separately in
 the [operational safeguards guide](../operational_safeguards.md). Its upload,

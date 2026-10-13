@@ -1,5 +1,10 @@
 # UAVDT Annotation And Ignore Handling
 
+**13 October follow-up:** the [media check](uavdt_media_check.md) exercised this
+adapter on nine real training images. Technical checks passed for the sample,
+but visual inspection raised two source-label concerns. The experiment protocol
+and final evaluation selection are still pending.
+
 **10 October 2026, issue #113.** Ali approved implementation of a separate
 daytime UAVDT car/truck/bus evaluation after the
 [annotation feasibility inspection](annotation_feasibility_v2.md). We have added
