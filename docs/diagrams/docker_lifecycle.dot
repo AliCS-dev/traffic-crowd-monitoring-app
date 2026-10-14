@@ -1,0 +1,38 @@
+digraph docker_lifecycle {
+  graph [rankdir=TB, bgcolor="white", pad=0.3, nodesep=0.55, ranksep=0.6,
+    fontname="DejaVu Sans", fontsize=22, labelloc=t,
+    label="Docker Compose | build and startup"];
+  node [shape=box, style=filled, fillcolor="white", color="#62737C",
+    fontname="DejaVu Sans", fontsize=12, margin="0.18,0.12"];
+  edge [fontname="DejaVu Sans", fontsize=10, color="#52646C", arrowsize=0.7];
+
+  subgraph cluster_build {
+    label="1. Build the application images"; color="#99ADB7"; fontsize=15; margin=18;
+    frontend_source [label="frontend/ source + package-lock.json"];
+    node_build [fillcolor="#DCEFEA", label="Node build stage\nnpm ci, TypeScript check, Vite build"];
+    frontend_image [fillcolor="#DCEFEA", label="Frontend image\nNginx + compiled static files\nNo Node server at runtime"];
+    backend_source [label="Python source + requirements-container.txt\nRuntime config, migrations and crowd decision"];
+    python_build [fillcolor="#E5EDF5", label="PyTorch/CUDA base + Python dependencies\nRecord build revision and source fingerprint"];
+    backend_image [fillcolor="#E5EDF5", label="Backend image\nUsed by backend and migrate services\nModel weights and .env are excluded"];
+    frontend_source -> node_build -> frontend_image;
+    backend_source -> python_build -> backend_image;
+    { rank=same; frontend_source; backend_source; }
+    { rank=same; node_build; python_build; }
+    { rank=same; frontend_image; backend_image; }
+  }
+  compose [fillcolor="#FBF0D2", label="2. Compose creates the local deployment\nReads .env settings; creates network and named volumes\nMounts ./models read-only; GPU override is optional"];
+  frontend_image -> compose;
+  backend_image -> compose;
+  db [shape=cylinder, fillcolor="#E5EDF5", label="postgres starts from postgres:16\npg_isready healthcheck succeeds"];
+  migrate [fillcolor="#E5EDF5", label="migrate runs ordered SQL migrations\nSuccessful exit (code 0)"];
+  backend [fillcolor="#DCEFEA", label="backend starts one API process\n/api/ready verifies database, checkpoint and selected device"];
+  frontend [fillcolor="#DCEFEA", label="frontend starts Nginx\n/healthz responds; localhost:8080 is published"];
+  browser [label="3. Open the browser\nFirst analysis loads the detector\nVideo jobs continue in the backend's local worker"];
+  compose -> db;
+  db -> migrate [label="service_healthy"];
+  migrate -> backend [label="service_completed_successfully\nPostgreSQL must also be healthy"];
+  backend -> frontend [label="service_healthy"];
+  frontend -> browser;
+  notes [shape=plain, label="A failed prerequisite blocks dependent startup. Health checks do not measure model accuracy.\nCompose down removes containers and the network; named volumes remain unless explicitly deleted.\nOnly backend gets GPU access. CPU mode uses the same image without a GPU reservation."];
+  browser -> notes [style=invis];
+}

@@ -1,0 +1,95 @@
+digraph application_architecture {
+  graph [rankdir=TB, bgcolor="white", compound=true, pad=0.3,
+    nodesep=0.45, ranksep=0.65, splines=polyline, outputorder=edgesfirst,
+    fontname="DejaVu Sans", fontsize=23, labelloc=t,
+    label="Traffic and Crowd Monitoring\nApplication architecture | local Docker Compose deployment"];
+  node [shape=box, style=filled, fillcolor="white", color="#62737C",
+    fontname="DejaVu Sans", fontsize=12, margin="0.18,0.12"];
+  edge [fontname="DejaVu Sans", fontsize=10, color="#52646C", arrowsize=0.7];
+
+  browser [fillcolor="#DCEFEA", label="BROWSER | React + TypeScript + Material UI\nUpload image/video, inspect grids and counts, reopen history\nReact Query: API state and video progress; React Router: pages"];
+
+  subgraph cluster_compose {
+    label="Docker Compose project"; labeljust=l;
+    color="#99ADB7"; penwidth=1.5; fontsize=16; margin=24;
+
+    subgraph cluster_network {
+      label="Internal network | service-name DNS"; labeljust=l;
+      color="#CCD7DC"; style=dashed; fontsize=13; margin=20;
+
+      frontend [fillcolor="#DCEFEA", label="frontend container | Nginx :8080\nServes the Vite-built HTML, CSS and JavaScript\nProxies /api/* to backend:8000; /healthz checks Nginx\nOnly published port: 127.0.0.1:8080 by default"];
+
+      subgraph cluster_backend {
+        label="backend container | :8000\nFastAPI + Uvicorn | one API process"; labeljust=l;
+        color="#28776F"; bgcolor="#F5FAF8"; style=solid; fontsize=14; margin=20;
+
+        api [fillcolor="#DCEFEA", label="HTTP routes and typed responses\nUpload validation and capability limits\n/api/health, /api/ready, /api/capabilities"];
+        image [label="Image analysis service\nSynchronous request\nDecode and validate JPG / PNG"];
+        video [label="Video analysis service\nPersist queued job, then return HTTP 202\nLocal worker: decode and sample frames\nPersist progress and failure state"];
+        read [label="History, results and asset services\nPaginated sessions and stored frame results\nResolve public UUID to a permitted media path"];
+        inference [fillcolor="#DCEFEA", label="Shared detection services\nOpenCV preprocessing + YOLO / PyTorch inference\nVerified checkpoint; detector loaded on first use\nClass mapping, boxes and confidence scores"];
+        summaries [fillcolor="#DCEFEA", label="Per-frame results\nClass counts; optional grid counts by box centre\nExperimental count-threshold rules\nAnnotated JPEG output"];
+        profile [fillcolor="#E5EDF5", label="Recorded configuration\nModel profile + checkpoint identity\nRuntime environment snapshot\nCrowd decision: unsupported, no count"];
+        repositories [fillcolor="#E5EDF5", label="Database repositories | Psycopg\nSession and job records; transactional result writes\nBulk result reads; frame and grid summaries\nInterrupted video jobs marked failed on startup"];
+
+        api -> image [label="POST /analyses/images"];
+        api -> video [label="POST /analyses/videos"];
+        api -> read [label="GET history / result / asset"];
+        image -> inference [label="one image"];
+        video -> inference [label="sampled frames"];
+        inference -> summaries;
+        summaries -> repositories [label="completed results"];
+        video -> repositories [label="job state"];
+        read -> repositories [label="queries"];
+        profile -> inference [style=dashed, label="settings", constraint=false];
+        profile -> repositories [style=dashed, label="saved with session"];
+        { rank=same; image; video; read; }
+        { rank=same; inference; profile; }
+      }
+
+      postgres [shape=cylinder, fillcolor="#E5EDF5", label="postgres container | PostgreSQL 16 :5432\nSessions, sources, jobs and frames\nDetections, grids, counts and alerts\nModel/crowd records and migration history\nNo published database port in this stack"];
+      migrate [fillcolor="#FBF0D2", label="migrate container | one-time startup task\nUses the same image as backend\nApplies checked, ordered SQL migrations\nExits successfully before backend starts"];
+      frontend -> api [dir=both, label="HTTP /api/*\nrequests, JSON and JPEG responses"];
+      repositories -> postgres [dir=both, label="SQL over internal network"];
+      migrate -> postgres [style=dashed, label="startup schema changes"];
+      { rank=same; postgres; migrate; }
+    }
+
+    subgraph cluster_volumes {
+      label="Named volumes"; labeljust=l;
+      color="#B5BDC2"; fontsize=13; margin=18;
+      uploads [shape=folder, fillcolor="#F0F2F3", label="uploads\n/app/data/input\nOriginal submitted media"];
+      outputs [shape=folder, fillcolor="#F0F2F3", label="outputs\n/app/data/output\nAnnotated images and sampled-frame JPEGs"];
+      database [shape=folder, fillcolor="#F0F2F3", label="postgres_data\n/var/lib/postgresql/data\nDatabase files"];
+      { rank=same; uploads; outputs; database; }
+    }
+    image -> uploads [constraint=false];
+    video -> uploads [constraint=false];
+    summaries -> outputs [label="write JPEGs"];
+    read -> outputs [constraint=false];
+    postgres -> database [label="database storage"];
+  }
+
+  subgraph cluster_host {
+    label="Host resources | not containers"; fontsize=13; color="#B5BDC2";
+    weights [shape=folder, fillcolor="#F0F2F3", label="./models on host\nRead-only bind mount at /app/models\nWeights are not built into the image"];
+    gpu [fillcolor="#FBF0D2", label="Optional NVIDIA GPU\ndocker-compose.gpu.yml exposes one GPU\nOnly backend receives CUDA access\nWithout override: explicit CPU mode"];
+  }
+  weights -> inference [style=dashed, label="verified weights", constraint=false];
+  gpu -> inference [style=dashed, label="optional compute", constraint=false];
+  browser -> frontend [dir=both, label="http://localhost:8080\nstatic app, uploads and API responses"];
+
+  notes [shape=plain, label=<
+    <TABLE BORDER="0" CELLBORDER="0" CELLPADDING="5">
+      <TR><TD ALIGN="LEFT"><B>Boundaries and other entry points</B></TD></TR>
+      <TR><TD ALIGN="LEFT">Solid lines: calls or storage access. Dashed lines: configuration, hardware or startup work.</TD></TR>
+      <TR><TD ALIGN="LEFT">React runs in the browser; Node/Vite are build tools, not another runtime service.</TD></TR>
+      <TR><TD ALIGN="LEFT">The backend has one local video worker and no separate queue service; volumes are storage, not network services.</TD></TR>
+      <TR><TD ALIGN="LEFT">The image CLI reuses Python services outside this web deployment; evaluation/training run separately.</TD></TR>
+      <TR><TD ALIGN="LEFT">GitHub Actions tests and builds the project; it does not automatically deploy this local application.</TD></TR>
+      <TR><TD ALIGN="LEFT">Local demonstration only: no authentication, public TLS endpoint, object tracking or calibrated ground density.</TD></TR>
+    </TABLE>
+  >];
+  outputs -> notes [style=invis];
+  database -> notes [style=invis];
+}

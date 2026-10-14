@@ -1,5 +1,7 @@
 # Database Schema
 
+[Documentation index](../README.md) | [Local database setup](../local_development.md#working-with-postgresql)
+
 ## Why We Use PostgreSQL
 
 We use PostgreSQL to keep the structured information produced during image and
@@ -40,30 +42,65 @@ as new migration files; applied files are immutable.
 
 ## How the Tables Are Connected
 
-```text
-monitoring_sessions
-  |
-  +-- model_run_profiles
-  |
-  +-- dense_crowd_analysis_results
-  |
-  +-- video_analysis_jobs
-  |
-  +-- input_sources
-  |     |
-  |     +-- processed_frames
-  |             |
-  |             +-- detection_results
-  |             +-- grid_cells
-  |             +-- object_count_summaries
-  |             +-- alerts
-  |
-  +-- processed_frames
-```
+![Crow's-foot entity-relationship diagram showing all PostgreSQL tables, columns, data types, keys and optional or one-to-many relationships](database_schema.png)
+
+*Physical entity-relationship diagram after migrations 001-008, checked against
+the local PostgreSQL schema on 14 October 2026. It includes all 11 tables,
+104 columns and 13 foreign-key relationships. Open the full-size version to
+read the column details.*
+
+[Open the full-size image](database_schema.png) |
+[Vector version for the thesis](database_schema.svg) |
+[Editable diagram source](database_schema.dot)
+
+The line ends use crow's-foot notation: a double bar means exactly one,
+a circle with a bar means zero or one, and a circle with a crow foot means
+zero or many. These are relationships, not processing arrows. Numeric labels
+also give the referenced-table (parent) count followed by the referencing-table
+(child) count. `1 : 0..*` means that each child belongs to one parent, while
+the parent can have no children or many. For example, a session can have many
+processed frames, but each frame has one session.
+
+`PK` marks a primary key, `FK` a foreign key and `UQ` a unique key. Combined
+keys are listed below their table's columns. `UQ*` marks the partial unique
+index on non-null output asset IDs. The `Null?` column describes whether
+PostgreSQL permits a missing value. Types come from PostgreSQL's schema,
+so auto-generated `BIGSERIAL` identifiers appear as their stored `bigint` type.
+Defaults and detailed `CHECK` constraints remain in the migration SQL.
+
+The optional grid-cell relationships allow a whole-frame count to have no
+grid cell and a per-cell count to have one. For current alerts, the scope
+constraint requires no cell reference for a frame event and a non-null reference
+for a grid-cell event. The diagram describes the database relationships, not a
+guarantee that every processing run has every kind of result.
+
+`schema_migrations` sits separately because it records schema changes rather
+than monitoring data. The migration runner creates this table itself.
+
+The three session-level records use `session_id` as both their primary key
+and foreign key: model profiles, crowd results and video jobs. Each session
+can therefore have zero or one of each, not several. Older sessions may have
+no model or crowd record; image sessions have no video job.
 
 Each processed frame also points directly to its monitoring session. We use this
 to make session-based queries straightforward, while the application keeps the
 session and input-source relationships consistent.
+
+### Updating the Diagram
+
+We keep the [Graphviz source](database_schema.dot) beside the rendered images.
+After a schema change, update the table fields and relationships, then render
+both versions from the repository root with Graphviz installed:
+
+```bash
+dot -Tpng -Gdpi=150 docs/database/database_schema.dot -o docs/database/database_schema.png
+dot -Tsvg docs/database/database_schema.dot -o docs/database/database_schema.svg
+```
+
+These images were rendered with Graphviz 2.43.0 and DejaVu Sans. The PNG is
+included directly in the documentation; the SVG keeps text and lines sharp
+when resized for a thesis figure. Neither image contains database rows or
+credentials. Rendering the diagram does not connect to or change PostgreSQL.
 
 ## What We Store
 

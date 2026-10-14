@@ -163,6 +163,13 @@ the experimental model's predictions as expected test data.
 
 ## Keeping the Documents Current
 
+The [documentation index](README.md) is our entry point for current guides.
+When a browser workflow changes, we update the [user guide](user_guide.md) and
+recapture any affected screenshots using the
+[capture procedure](images/user-guide/README.md). We keep image attribution and
+the application version with the screenshots. Historical verification reports
+remain dated records rather than being rewritten as current results.
+
 We update documentation in the same pull request as the related behavior. The
 README follows setup and user-visible commands, the architecture document follows
 module responsibilities, and the database document follows stored data. We add
