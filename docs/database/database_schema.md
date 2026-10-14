@@ -42,30 +42,45 @@ as new migration files; applied files are immutable.
 
 ## How the Tables Are Connected
 
-![Database diagram showing sessions, sources, processed frames and their detection, grid, count and alert records, with model, crowd and video-job records linked to sessions](database_schema.png)
+![Crow's-foot entity-relationship diagram showing all PostgreSQL tables, columns, data types, keys and optional or one-to-many relationships](database_schema.png)
 
-*Database relationships after migrations 001-008, checked against the local
-PostgreSQL schema on 13 October 2026. All 11 tables and 13 foreign-key
-relationships are shown; each table lists selected fields, not every column.*
+*Physical entity-relationship diagram after migrations 001-008, checked against
+the local PostgreSQL schema on 14 October 2026. It includes all 11 tables,
+104 columns and 13 foreign-key relationships. Open the full-size version to
+read the column details.*
 
 [Open the full-size image](database_schema.png) |
 [Vector version for the thesis](database_schema.svg) |
 [Editable diagram source](database_schema.dot)
 
-Arrows run from the referenced table to the table holding the foreign key.
-`1 : 0..*` means that each child belongs to one parent, while the parent can
-have no children or many. `1 : 0..1` allows at most one child record. For
-example, an older session may have no model profile, but cannot have two.
-`PK` marks a primary key, `FK` a foreign key and `UQ` a unique column.
+The line ends use crow's-foot notation: a double bar means exactly one,
+a circle with a bar means zero or one, and a circle with a crow foot means
+zero or many. These are relationships, not processing arrows. Numeric labels
+also give the referenced-table (parent) count followed by the referencing-table
+(child) count. `1 : 0..*` means that each child belongs to one parent, while
+the parent can have no children or many. For example, a session can have many
+processed frames, but each frame has one session.
 
-The dashed links and `FK?` mark nullable grid-cell references. A whole-frame
-count has no grid cell; a per-cell count has one. For current alerts, the scope
+`PK` marks a primary key, `FK` a foreign key and `UQ` a unique key. Combined
+keys are listed below their table's columns. `UQ*` marks the partial unique
+index on non-null output asset IDs. The `Null?` column describes whether
+PostgreSQL permits a missing value. Types come from PostgreSQL's schema,
+so auto-generated `BIGSERIAL` identifiers appear as their stored `bigint` type.
+Defaults and detailed `CHECK` constraints remain in the migration SQL.
+
+The optional grid-cell relationships allow a whole-frame count to have no
+grid cell and a per-cell count to have one. For current alerts, the scope
 constraint requires no cell reference for a frame event and a non-null reference
 for a grid-cell event. The diagram describes the database relationships, not a
 guarantee that every processing run has every kind of result.
 
 `schema_migrations` sits separately because it records schema changes rather
 than monitoring data. The migration runner creates this table itself.
+
+The three session-level records use `session_id` as both their primary key
+and foreign key: model profiles, crowd results and video jobs. Each session
+can therefore have zero or one of each, not several. Older sessions may have
+no model or crowd record; image sessions have no video job.
 
 Each processed frame also points directly to its monitoring session. We use this
 to make session-based queries straightforward, while the application keeps the

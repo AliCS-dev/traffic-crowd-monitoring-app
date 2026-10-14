@@ -2,6 +2,89 @@
 
 [Documentation index](README.md) | [Illustrated walkthrough](user_guide.md)
 
+## The Running Application
+
+We separate the browser interface, Python processing and database storage, but
+they still form one local application. This diagram shows the full Compose
+deployment and the main calls inside the backend. The boxes inside that backend
+are Python components, not additional containers.
+
+![Application architecture with browser, Nginx, FastAPI processing services, PostgreSQL, migration task, named volumes and optional NVIDIA access](diagrams/application_architecture.png)
+
+[Full-size SVG](diagrams/application_architecture.svg) |
+[Editable source](diagrams/application_architecture.dot)
+
+The browser receives the compiled React application from Nginx and sends its
+uploads and API requests back to the same origin. Nginx forwards `/api/` to
+`backend:8000`; it does not run inference or query PostgreSQL. The backend
+talks to `postgres:5432` using Psycopg. Those names are Docker service names,
+not addresses the browser needs to resolve.
+
+Image analysis completes within its request. Video analysis commits a queued
+job before returning HTTP `202`, then uses an in-process worker to sample and
+analyse frames. Job updates and result queries use the database repositories.
+There is no Redis broker, Celery service or separate worker container. The
+API has one process and the Compose setup selects one video worker.
+
+The backend records the model profile, actual runtime environment and crowd
+capability with a session. The crowd record currently says unsupported; the
+diagram does not imply that a crowd model is running. Both image and video
+results may include grids and experimental threshold events. Those counts are
+per frame and image region, not unique tracked objects or ground-area density.
+
+| Storage | Mount in the container | What we keep there |
+| --- | --- | --- |
+| `postgres_data` named volume | `/var/lib/postgresql/data` in PostgreSQL | Database files |
+| `uploads` named volume | `/app/data/input` in the backend | Submitted image and video files |
+| `outputs` named volume | `/app/data/output` in the backend | Generated image and sampled-frame JPEGs |
+| `./models` host directory | `/app/models`, read-only in the backend | Verified model weights |
+
+PostgreSQL contains the relationships and private file references. The backend
+resolves public asset UUIDs to files within its allowed output directories.
+Database backups alone therefore do not preserve the media. The
+[database ER diagram](database/database_schema.md#how-the-tables-are-connected)
+shows the corresponding tables and keys.
+
+## How Docker Builds and Starts the App
+
+![Docker lifecycle showing separate frontend and backend builds, Compose configuration, PostgreSQL readiness, migrations, backend readiness and Nginx startup](diagrams/docker_lifecycle.png)
+
+[Full-size SVG](diagrams/docker_lifecycle.svg) |
+[Editable source](diagrams/docker_lifecycle.dot)
+
+The frontend Dockerfile builds TypeScript and bundles the UI with Node and
+Vite, then copies only the compiled files into Nginx. Node is not another
+running application service. The backend image includes Python dependencies,
+runtime configuration and migrations, but not `.env` or model weights.
+The migration task and API use the same backend image with different commands.
+
+Compose reads local environment settings and creates the service network and
+named volumes. PostgreSQL must pass its healthcheck before migrations run.
+The migration task must exit successfully before the API starts; PostgreSQL
+must also remain healthy at that startup boundary. Nginx starts after the API's
+readiness check passes. These conditions control startup order, not continuous
+recovery of dependent services after a later failure.
+
+The GPU override adds a device reservation only to the backend. CPU mode uses
+the same image without that reservation. `/api/ready` checks the database,
+checkpoint identity and selected device without loading the detector for
+inference. `/healthz` checks Nginx alone. Neither healthcheck establishes
+detection accuracy.
+
+The normal published address is `127.0.0.1:8080`; `FRONTEND_PORT` can change
+the port. There is no authentication or public TLS setup, so we keep this
+deployment local. `docker-compose.yml` is a separate database-only development
+setup; it is not an extra layer of the full-stack Compose file.
+
+The image CLI and evaluation/training commands run separately from the web
+deployment. They reuse project code, but no browser request starts training or
+opens a held-out benchmark. GitHub Actions runs checks and container builds;
+it does not deploy the local stack automatically.
+
+The [Compose guide](compose_stack.md) contains the working commands. The
+[diagram notes](diagrams/README.md) identify the source files behind these
+figures and explain how to regenerate them.
+
 ## Why We Use This Structure
 
 We want the application to stay understandable while it grows from a single

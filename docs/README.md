@@ -19,8 +19,9 @@ answer more specific questions.
 
 | Topic | Reference |
 | --- | --- |
-| Components, processing flows and design decisions | [Architecture](architecture.md) |
-| Tables, relationships and migrations | [Database schema and diagram](database/database_schema.md#how-the-tables-are-connected) |
+| Containers, processing flows and design decisions | [Application architecture](architecture.md#the-running-application) |
+| Image builds, storage and service startup order | [Docker lifecycle diagram](architecture.md#how-docker-builds-and-starts-the-app) |
+| Tables, keys, column types and relationships | [Database ER diagram](database/database_schema.md#how-the-tables-are-connected) |
 | Backend container and GPU setup | [Backend container](backend_container.md) |
 | Checks, branches and dependency updates | [Development workflow](development_workflow.md) |
 | Model and dependency details recorded with results | [Runtime provenance](runtime_provenance.md) |

@@ -1,149 +1,230 @@
 digraph database_schema {
-  graph [
-    rankdir=TB, bgcolor="white", pad=0.35, nodesep=0.55, ranksep=0.75,
+  graph [rankdir=TB, bgcolor="white", pad=0.35, nodesep=0.55, ranksep=0.8,
     splines=polyline, outputorder=edgesfirst, fontname="DejaVu Sans",
-    fontsize=22, labelloc=t, labeljust=l,
-    label="Traffic and Crowd Monitoring\nDatabase relationships | migrations 001-008"
-  ];
-  node [shape=plain, fontname="DejaVu Sans", fontsize=11];
+    fontsize=23, labelloc=t,
+    label="Traffic and Crowd Monitoring\nPhysical entity-relationship diagram | migrations 001-008"];
+  node [shape=plain, fontname="DejaVu Sans", fontsize=10];
   edge [fontname="DejaVu Sans", fontsize=10, color="#52646C",
-        fontcolor="#35464E", arrowsize=0.7];
+    fontcolor="#35464E", dir=both, arrowsize=0.85];
+
+  alerts [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#62737C">
+      <TR><TD COLSPAN="4" BGCOLOR="#FBF0D2"><B>alerts</B></TD></TR>
+      <TR><TD><B>Key</B></TD><TD ALIGN="LEFT"><B>Column</B></TD><TD ALIGN="LEFT"><B>Type</B></TD><TD><B>Null?</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD><TD ALIGN="LEFT">bigint</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">processed_frame_id</TD><TD ALIGN="LEFT">bigint</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">grid_cell_id</TD><TD ALIGN="LEFT">bigint</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">alert_type</TD><TD ALIGN="LEFT">varchar(100)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">severity</TD><TD ALIGN="LEFT">varchar(30)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">message</TD><TD ALIGN="LEFT">text</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">measured_value</TD><TD ALIGN="LEFT">numeric(12,3)</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">threshold_value</TD><TD ALIGN="LEFT">numeric(12,3)</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">created_at</TD><TD ALIGN="LEFT">timestamptz</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">resolved_at</TD><TD ALIGN="LEFT">timestamptz</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">analysis_method</TD><TD ALIGN="LEFT">varchar(50)</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">object_class</TD><TD ALIGN="LEFT">varchar(100)</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">scope</TD><TD ALIGN="LEFT">varchar(20)</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">comparison_operator</TD><TD ALIGN="LEFT">varchar(30)</TD><TD>yes</TD></TR>
+      <TR><TD COLSPAN="4" ALIGN="LEFT" BGCOLOR="#F3F5F6">UQ (processed_frame_id, grid_cell_id, alert_type)</TD></TR>
+      <TR><TD COLSPAN="4" ALIGN="LEFT">Unique index treats null grid_cell_id values as equal</TD></TR>
+    </TABLE>
+  >];
+
+  dense_crowd_analysis_results [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#62737C">
+      <TR><TD COLSPAN="4" BGCOLOR="#FBF0D2"><B>dense_crowd_analysis_results</B></TD></TR>
+      <TR><TD><B>Key</B></TD><TD ALIGN="LEFT"><B>Column</B></TD><TD ALIGN="LEFT"><B>Type</B></TD><TD><B>Null?</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK, FK</TD><TD ALIGN="LEFT">session_id</TD><TD ALIGN="LEFT">bigint</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">status</TD><TD ALIGN="LEFT">varchar(30)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">crowd_count</TD><TD ALIGN="LEFT">integer</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">method_id</TD><TD ALIGN="LEFT">varchar(150)</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">model_id</TD><TD ALIGN="LEFT">varchar(150)</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">evaluated_candidate_id</TD><TD ALIGN="LEFT">varchar(150)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">quality_gate_status</TD><TD ALIGN="LEFT">varchar(30)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">evaluation_reference</TD><TD ALIGN="LEFT">text</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">reason_code</TD><TD ALIGN="LEFT">varchar(100)</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">message</TD><TD ALIGN="LEFT">text</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">created_at</TD><TD ALIGN="LEFT">timestamptz</TD><TD>no</TD></TR>
+    </TABLE>
+  >];
+
+  detection_results [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#62737C">
+      <TR><TD COLSPAN="4" BGCOLOR="#DCEFEA"><B>detection_results</B></TD></TR>
+      <TR><TD><B>Key</B></TD><TD ALIGN="LEFT"><B>Column</B></TD><TD ALIGN="LEFT"><B>Type</B></TD><TD><B>Null?</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD><TD ALIGN="LEFT">bigint</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">processed_frame_id</TD><TD ALIGN="LEFT">bigint</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">object_class</TD><TD ALIGN="LEFT">varchar(100)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">confidence</TD><TD ALIGN="LEFT">numeric(6,5)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">bbox_x_min</TD><TD ALIGN="LEFT">numeric(10,2)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">bbox_y_min</TD><TD ALIGN="LEFT">numeric(10,2)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">bbox_x_max</TD><TD ALIGN="LEFT">numeric(10,2)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">bbox_y_max</TD><TD ALIGN="LEFT">numeric(10,2)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">created_at</TD><TD ALIGN="LEFT">timestamptz</TD><TD>no</TD></TR>
+    </TABLE>
+  >];
+
+  grid_cells [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#62737C">
+      <TR><TD COLSPAN="4" BGCOLOR="#DCEFEA"><B>grid_cells</B></TD></TR>
+      <TR><TD><B>Key</B></TD><TD ALIGN="LEFT"><B>Column</B></TD><TD ALIGN="LEFT"><B>Type</B></TD><TD><B>Null?</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD><TD ALIGN="LEFT">bigint</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">processed_frame_id</TD><TD ALIGN="LEFT">bigint</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">row_index</TD><TD ALIGN="LEFT">integer</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">column_index</TD><TD ALIGN="LEFT">integer</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">x_min</TD><TD ALIGN="LEFT">numeric(10,2)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">y_min</TD><TD ALIGN="LEFT">numeric(10,2)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">x_max</TD><TD ALIGN="LEFT">numeric(10,2)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">y_max</TD><TD ALIGN="LEFT">numeric(10,2)</TD><TD>no</TD></TR>
+      <TR><TD COLSPAN="4" ALIGN="LEFT" BGCOLOR="#F3F5F6">UQ (processed_frame_id, row_index, column_index)</TD></TR>
+    </TABLE>
+  >];
+
+  input_sources [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#62737C">
+      <TR><TD COLSPAN="4" BGCOLOR="#DCEFEA"><B>input_sources</B></TD></TR>
+      <TR><TD><B>Key</B></TD><TD ALIGN="LEFT"><B>Column</B></TD><TD ALIGN="LEFT"><B>Type</B></TD><TD><B>Null?</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD><TD ALIGN="LEFT">bigint</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">session_id</TD><TD ALIGN="LEFT">bigint</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">source_type</TD><TD ALIGN="LEFT">varchar(20)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">file_path</TD><TD ALIGN="LEFT">text</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">original_filename</TD><TD ALIGN="LEFT">varchar(255)</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">created_at</TD><TD ALIGN="LEFT">timestamptz</TD><TD>no</TD></TR>
+    </TABLE>
+  >];
+
+  model_run_profiles [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#62737C">
+      <TR><TD COLSPAN="4" BGCOLOR="#E5EDF5"><B>model_run_profiles</B></TD></TR>
+      <TR><TD><B>Key</B></TD><TD ALIGN="LEFT"><B>Column</B></TD><TD ALIGN="LEFT"><B>Type</B></TD><TD><B>Null?</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK, FK</TD><TD ALIGN="LEFT">session_id</TD><TD ALIGN="LEFT">bigint</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">profile_id</TD><TD ALIGN="LEFT">varchar(150)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">model_id</TD><TD ALIGN="LEFT">varchar(150)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">quality_gate_status</TD><TD ALIGN="LEFT">varchar(30)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">evaluation_reference</TD><TD ALIGN="LEFT">text</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">checkpoint_path</TD><TD ALIGN="LEFT">text</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">checkpoint_sha256</TD><TD ALIGN="LEFT">char(64)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">class_mapping</TD><TD ALIGN="LEFT">jsonb</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">confidence</TD><TD ALIGN="LEFT">numeric(6,5)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">image_size</TD><TD ALIGN="LEFT">integer</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">scale_factor</TD><TD ALIGN="LEFT">integer</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">max_detections</TD><TD ALIGN="LEFT">integer</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">numeric_precision</TD><TD ALIGN="LEFT">varchar(20)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">device</TD><TD ALIGN="LEFT">varchar(50)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">created_at</TD><TD ALIGN="LEFT">timestamptz</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">runtime_provenance</TD><TD ALIGN="LEFT">jsonb</TD><TD>yes</TD></TR>
+    </TABLE>
+  >];
 
   monitoring_sessions [label=<
-    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#28776F">
-      <TR><TD BGCOLOR="#DCEFEA"><B>monitoring_sessions</B></TD></TR>
-      <TR><TD ALIGN="LEFT">PK  id</TD></TR>
-      <TR><TD ALIGN="LEFT">session_name, status</TD></TR>
-      <TR><TD ALIGN="LEFT">started_at, completed_at</TD></TR>
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#62737C">
+      <TR><TD COLSPAN="4" BGCOLOR="#DCEFEA"><B>monitoring_sessions</B></TD></TR>
+      <TR><TD><B>Key</B></TD><TD ALIGN="LEFT"><B>Column</B></TD><TD ALIGN="LEFT"><B>Type</B></TD><TD><B>Null?</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD><TD ALIGN="LEFT">bigint</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">session_name</TD><TD ALIGN="LEFT">varchar(150)</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">status</TD><TD ALIGN="LEFT">varchar(30)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">started_at</TD><TD ALIGN="LEFT">timestamptz</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">completed_at</TD><TD ALIGN="LEFT">timestamptz</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">notes</TD><TD ALIGN="LEFT">text</TD><TD>yes</TD></TR>
     </TABLE>
   >];
-  input_sources [label=<
-    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#28776F">
-      <TR><TD BGCOLOR="#DCEFEA"><B>input_sources</B></TD></TR>
-      <TR><TD ALIGN="LEFT">PK  id</TD></TR>
-      <TR><TD ALIGN="LEFT">FK  session_id</TD></TR>
-      <TR><TD ALIGN="LEFT">source_type, original_filename</TD></TR>
-      <TR><TD ALIGN="LEFT">file_path</TD></TR>
-    </TABLE>
-  >];
-  processed_frames [label=<
-    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#28776F">
-      <TR><TD BGCOLOR="#DCEFEA"><B>processed_frames</B></TD></TR>
-      <TR><TD ALIGN="LEFT">PK  id</TD></TR>
-      <TR><TD ALIGN="LEFT">FK  session_id</TD></TR>
-      <TR><TD ALIGN="LEFT">FK  input_source_id</TD></TR>
-      <TR><TD ALIGN="LEFT">frame_number, frame_timestamp_seconds</TD></TR>
-      <TR><TD ALIGN="LEFT">image_width, image_height</TD></TR>
-      <TR><TD ALIGN="LEFT">output_asset_id, output_file_path</TD></TR>
-    </TABLE>
-  >];
-  model_run_profiles [label=<
-    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#52718B">
-      <TR><TD BGCOLOR="#E5EDF5"><B>model_run_profiles</B></TD></TR>
-      <TR><TD ALIGN="LEFT">PK / FK  session_id</TD></TR>
-      <TR><TD ALIGN="LEFT">profile_id, model_id</TD></TR>
-      <TR><TD ALIGN="LEFT">checkpoint_sha256, quality_gate_status</TD></TR>
-      <TR><TD ALIGN="LEFT">class_mapping, runtime_provenance</TD></TR>
-    </TABLE>
-  >];
-  dense_crowd_analysis_results [label=<
-    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#A77922">
-      <TR><TD BGCOLOR="#FBF0D2"><B>dense_crowd_analysis_results</B></TD></TR>
-      <TR><TD ALIGN="LEFT">PK / FK  session_id</TD></TR>
-      <TR><TD ALIGN="LEFT">status, crowd_count</TD></TR>
-      <TR><TD ALIGN="LEFT">method_id, model_id, reason_code</TD></TR>
-      <TR><TD ALIGN="LEFT">quality_gate_status, evaluation_reference</TD></TR>
-    </TABLE>
-  >];
-  video_analysis_jobs [label=<
-    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#52718B">
-      <TR><TD BGCOLOR="#E5EDF5"><B>video_analysis_jobs</B></TD></TR>
-      <TR><TD ALIGN="LEFT">PK / FK  session_id</TD></TR>
-      <TR><TD ALIGN="LEFT">FK / UQ  input_source_id</TD></TR>
-      <TR><TD ALIGN="LEFT">status, sampling_interval_seconds</TD></TR>
-      <TR><TD ALIGN="LEFT">sampled_frames_total</TD></TR>
-      <TR><TD ALIGN="LEFT">sampled_frames_processed, failure_code</TD></TR>
-    </TABLE>
-  >];
-  detection_results [label=<
-    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#28776F">
-      <TR><TD BGCOLOR="#DCEFEA"><B>detection_results</B></TD></TR>
-      <TR><TD ALIGN="LEFT">PK  id</TD></TR>
-      <TR><TD ALIGN="LEFT">FK  processed_frame_id</TD></TR>
-      <TR><TD ALIGN="LEFT">object_class, confidence</TD></TR>
-      <TR><TD ALIGN="LEFT">bbox_x_min, bbox_y_min</TD></TR>
-      <TR><TD ALIGN="LEFT">bbox_x_max, bbox_y_max</TD></TR>
-    </TABLE>
-  >];
-  grid_cells [label=<
-    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#28776F">
-      <TR><TD BGCOLOR="#DCEFEA"><B>grid_cells</B></TD></TR>
-      <TR><TD ALIGN="LEFT">PK  id</TD></TR>
-      <TR><TD ALIGN="LEFT">FK  processed_frame_id</TD></TR>
-      <TR><TD ALIGN="LEFT">row_index, column_index</TD></TR>
-      <TR><TD ALIGN="LEFT">x_min, y_min, x_max, y_max</TD></TR>
-    </TABLE>
-  >];
+
   object_count_summaries [label=<
-    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#28776F">
-      <TR><TD BGCOLOR="#DCEFEA"><B>object_count_summaries</B></TD></TR>
-      <TR><TD ALIGN="LEFT">PK  id</TD></TR>
-      <TR><TD ALIGN="LEFT">FK  processed_frame_id</TD></TR>
-      <TR><TD ALIGN="LEFT">FK?  grid_cell_id</TD></TR>
-      <TR><TD ALIGN="LEFT">object_class, object_count</TD></TR>
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#62737C">
+      <TR><TD COLSPAN="4" BGCOLOR="#DCEFEA"><B>object_count_summaries</B></TD></TR>
+      <TR><TD><B>Key</B></TD><TD ALIGN="LEFT"><B>Column</B></TD><TD ALIGN="LEFT"><B>Type</B></TD><TD><B>Null?</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD><TD ALIGN="LEFT">bigint</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">processed_frame_id</TD><TD ALIGN="LEFT">bigint</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">grid_cell_id</TD><TD ALIGN="LEFT">bigint</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">object_class</TD><TD ALIGN="LEFT">varchar(100)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">object_count</TD><TD ALIGN="LEFT">integer</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">created_at</TD><TD ALIGN="LEFT">timestamptz</TD><TD>no</TD></TR>
     </TABLE>
   >];
-  alerts [label=<
-    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#A77922">
-      <TR><TD BGCOLOR="#FBF0D2"><B>alerts</B></TD></TR>
-      <TR><TD ALIGN="LEFT">PK  id</TD></TR>
-      <TR><TD ALIGN="LEFT">FK  processed_frame_id</TD></TR>
-      <TR><TD ALIGN="LEFT">FK?  grid_cell_id</TD></TR>
-      <TR><TD ALIGN="LEFT">alert_type, severity, scope</TD></TR>
-      <TR><TD ALIGN="LEFT">object_class, measured_value</TD></TR>
-      <TR><TD ALIGN="LEFT">threshold_value, comparison_operator</TD></TR>
+
+  processed_frames [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#62737C">
+      <TR><TD COLSPAN="4" BGCOLOR="#DCEFEA"><B>processed_frames</B></TD></TR>
+      <TR><TD><B>Key</B></TD><TD ALIGN="LEFT"><B>Column</B></TD><TD ALIGN="LEFT"><B>Type</B></TD><TD><B>Null?</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD><TD ALIGN="LEFT">bigint</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">session_id</TD><TD ALIGN="LEFT">bigint</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">input_source_id</TD><TD ALIGN="LEFT">bigint</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">frame_number</TD><TD ALIGN="LEFT">integer</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">frame_timestamp_seconds</TD><TD ALIGN="LEFT">numeric(12,3)</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">image_width</TD><TD ALIGN="LEFT">integer</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">image_height</TD><TD ALIGN="LEFT">integer</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">processed_at</TD><TD ALIGN="LEFT">timestamptz</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT">UQ*</TD><TD ALIGN="LEFT">output_asset_id</TD><TD ALIGN="LEFT">uuid</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">output_file_path</TD><TD ALIGN="LEFT">text</TD><TD>yes</TD></TR>
+      <TR><TD COLSPAN="4" ALIGN="LEFT" BGCOLOR="#F3F5F6">UQ (input_source_id, frame_number)</TD></TR>
+      <TR><TD COLSPAN="4" ALIGN="LEFT" BGCOLOR="#F3F5F6">UQ*: output_asset_id is unique when not null</TD></TR>
     </TABLE>
   >];
+
   schema_migrations [label=<
-    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#899398">
-      <TR><TD BGCOLOR="#EDF0F1"><B>schema_migrations</B></TD></TR>
-      <TR><TD ALIGN="LEFT">PK  version</TD></TR>
-      <TR><TD ALIGN="LEFT">name, checksum, applied_at</TD></TR>
-      <TR><TD ALIGN="LEFT"><I>Migration history; no foreign keys</I></TD></TR>
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#62737C">
+      <TR><TD COLSPAN="4" BGCOLOR="#EDF0F1"><B>schema_migrations</B></TD></TR>
+      <TR><TD><B>Key</B></TD><TD ALIGN="LEFT"><B>Column</B></TD><TD ALIGN="LEFT"><B>Type</B></TD><TD><B>Null?</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">version</TD><TD ALIGN="LEFT">integer</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">name</TD><TD ALIGN="LEFT">varchar(255)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">checksum</TD><TD ALIGN="LEFT">char(64)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">applied_at</TD><TD ALIGN="LEFT">timestamptz</TD><TD>no</TD></TR>
+      <TR><TD COLSPAN="4" ALIGN="LEFT">Migration history; no foreign-key relationships</TD></TR>
     </TABLE>
   >];
 
-  // Edges point from the referenced table to the table holding the foreign key.
-  monitoring_sessions -> input_sources [label="1 : 0..*", weight=5];
-  monitoring_sessions -> processed_frames [label="1 : 0..*", constraint=false];
-  monitoring_sessions -> model_run_profiles [label="1 : 0..1"];
-  monitoring_sessions -> dense_crowd_analysis_results [label="1 : 0..1"];
-  monitoring_sessions -> video_analysis_jobs [label="1 : 0..1"];
-  input_sources -> processed_frames [label="1 : 0..*", weight=5];
-  input_sources -> video_analysis_jobs [label="1 : 0..1"];
-  processed_frames -> detection_results [label="1 : 0..*"];
-  processed_frames -> grid_cells [label="1 : 0..*", weight=5];
-  processed_frames -> object_count_summaries [label="1 : 0..*"];
-  processed_frames -> alerts [label="1 : 0..*"];
-  grid_cells -> object_count_summaries [label="0..1 : 0..*", style=dashed];
-  grid_cells -> alerts [label="0..1 : 0..*", style=dashed];
+  video_analysis_jobs [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#62737C">
+      <TR><TD COLSPAN="4" BGCOLOR="#E5EDF5"><B>video_analysis_jobs</B></TD></TR>
+      <TR><TD><B>Key</B></TD><TD ALIGN="LEFT"><B>Column</B></TD><TD ALIGN="LEFT"><B>Type</B></TD><TD><B>Null?</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK, FK</TD><TD ALIGN="LEFT">session_id</TD><TD ALIGN="LEFT">bigint</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT">FK, UQ</TD><TD ALIGN="LEFT">input_source_id</TD><TD ALIGN="LEFT">bigint</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">status</TD><TD ALIGN="LEFT">varchar(30)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">sampling_interval_seconds</TD><TD ALIGN="LEFT">numeric(10,3)</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">grid_rows</TD><TD ALIGN="LEFT">integer</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">grid_columns</TD><TD ALIGN="LEFT">integer</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">total_source_frames</TD><TD ALIGN="LEFT">integer</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">sampled_frames_total</TD><TD ALIGN="LEFT">integer</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">sampled_frames_processed</TD><TD ALIGN="LEFT">integer</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">failure_code</TD><TD ALIGN="LEFT">varchar(100)</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">failure_message</TD><TD ALIGN="LEFT">text</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">queued_at</TD><TD ALIGN="LEFT">timestamptz</TD><TD>no</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">started_at</TD><TD ALIGN="LEFT">timestamptz</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">finished_at</TD><TD ALIGN="LEFT">timestamptz</TD><TD>yes</TD></TR>
+    </TABLE>
+  >];
 
+  // Crow-foot endpoints express cardinality, not data-flow direction.
+  monitoring_sessions -> input_sources [label="1 : 0..*", arrowtail="teetee", arrowhead="crowodot", weight=5];
+  monitoring_sessions -> processed_frames [label="1 : 0..*", arrowtail="teetee", arrowhead="crowodot", constraint=false];
+  input_sources -> processed_frames [label="1 : 0..*", arrowtail="teetee", arrowhead="crowodot", weight=5];
+  processed_frames -> grid_cells [label="1 : 0..*", arrowtail="teetee", arrowhead="crowodot", weight=5];
+  processed_frames -> detection_results [label="1 : 0..*", arrowtail="teetee", arrowhead="crowodot"];
+  processed_frames -> object_count_summaries [label="1 : 0..*", arrowtail="teetee", arrowhead="crowodot"];
+  grid_cells -> object_count_summaries [label="0..1 : 0..*", arrowtail="teeodot", arrowhead="crowodot"];
+  processed_frames -> alerts [label="1 : 0..*", arrowtail="teetee", arrowhead="crowodot"];
+  grid_cells -> alerts [label="0..1 : 0..*", arrowtail="teeodot", arrowhead="crowodot"];
+  monitoring_sessions -> model_run_profiles [label="1 : 0..1", arrowtail="teetee", arrowhead="teeodot"];
+  monitoring_sessions -> dense_crowd_analysis_results [label="1 : 0..1", arrowtail="teetee", arrowhead="teeodot"];
+  monitoring_sessions -> video_analysis_jobs [label="1 : 0..1", arrowtail="teetee", arrowhead="teeodot"];
+  input_sources -> video_analysis_jobs [label="1 : 0..1", arrowtail="teetee", arrowhead="teeodot"];
+
+  { rank=same; monitoring_sessions; schema_migrations; }
   { rank=same; model_run_profiles; input_sources; dense_crowd_analysis_results; }
   { rank=same; video_analysis_jobs; processed_frames; }
   { rank=same; detection_results; grid_cells; }
   { rank=same; object_count_summaries; alerts; }
-  { rank=same; monitoring_sessions; schema_migrations; }
 
   legend [label=<
-    <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5">
-      <TR><TD ALIGN="LEFT"><B>Reading the diagram</B></TD></TR>
-      <TR><TD ALIGN="LEFT">PK = primary key   FK = foreign key   FK? = nullable foreign key   UQ = unique</TD></TR>
-      <TR><TD ALIGN="LEFT">Arrows: parent to child. Labels: parent count : child count. * = many.</TD></TR>
-      <TR><TD ALIGN="LEFT">1 : 0..* means each child has one parent; a parent can have no children or many.</TD></TR>
-      <TR><TD ALIGN="LEFT">Dashed links are optional: a count or alert may have no grid-cell reference.</TD></TR>
-      <TR><TD ALIGN="LEFT">Selected fields only. Every table and foreign-key relationship is shown.</TD></TR>
+    <TABLE BORDER="0" CELLBORDER="0" CELLPADDING="5">
+      <TR><TD ALIGN="LEFT"><B>Reading this ER diagram</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK = primary key; FK = foreign key; UQ = unique. Types are PostgreSQL types.</TD></TR>
+      <TR><TD ALIGN="LEFT">Double bar = exactly one; circle + bar = zero or one; circle + crow foot = zero or many.</TD></TR>
+      <TR><TD ALIGN="LEFT">Numeric labels give parent : child cardinality, not the number of rows currently stored.</TD></TR>
+      <TR><TD ALIGN="LEFT">All 11 tables, 104 columns and 13 foreign keys are shown. Defaults and CHECK rules remain in SQL.</TD></TR>
+      <TR><TD ALIGN="LEFT">A nullable grid reference supports frame-level records; scope checks still constrain current alerts.</TD></TR>
     </TABLE>
   >];
-  alerts -> legend [style=invis];
-  object_count_summaries -> legend [style=invis];
+  alerts -> legend [style=invis, dir=none];
+  object_count_summaries -> legend [style=invis, dir=none];
 }

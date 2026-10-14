@@ -763,3 +763,17 @@ We also replaced the database's text-only relationship sketch with a rendered
 It shows all 11 tables and 13 foreign keys, including nullable grid references
 and the separate migration-history table. The editable Graphviz source, PNG
 and SVG remain together so future migrations can be reflected in the figure.
+
+### Application Architecture and ER Diagram (14 October 2026)
+
+We replaced the README's opening screenshot with the full application
+architecture. The [architecture guide](architecture.md#the-running-application)
+now shows the Docker service boundaries, request paths, image/video processing,
+database and media storage, optional GPU access, and the build/startup sequence.
+The screenshot walkthrough remains in the user guide.
+
+The [database figure](database/database_schema.md#how-the-tables-are-connected)
+is now a crow's-foot ER diagram with all 104 columns, types, nullability and
+keys, alongside the 11 tables and 13 foreign-key relationships. We checked its
+details against PostgreSQL schema metadata and the migrations. No stored data,
+application code, Compose configuration or model settings changed.

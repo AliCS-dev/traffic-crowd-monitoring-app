@@ -9,11 +9,12 @@ has not passed our accuracy requirements, and dense-crowd counting is currently
 unsupported.** A completed analysis means processing finished, not that every
 object was correctly detected.
 
-![An aerial image result with detections, a selected grid cell and separate object counts](docs/images/user-guide/image-result.png)
+![Full application architecture showing the browser, Docker containers, image and video processing, PostgreSQL, persistent media volumes and optional GPU](docs/diagrams/application_architecture.png)
 
-*A real development-image run, not a ground-truth annotation or accuracy
-benchmark. Image credit: Sergio Ghisler, Javier Sanchez-Soriano and Sergio
-Bemposta Rosende, CC BY 4.0. [Screenshot details and attribution](docs/images/user-guide/README.md).*
+*The current local application, including its Docker boundaries and storage.
+[Open the full-size diagram](docs/diagrams/application_architecture.svg),
+read the [architecture guide](docs/architecture.md#the-running-application),
+or see the [application screenshots](docs/user_guide.md).*
 
 ## What We Can Do
 
@@ -57,25 +58,33 @@ localhost demonstration without authentication, not a public hosting setup.
 
 ## How It Fits Together
 
-We use React and TypeScript for the browser, FastAPI and Python for processing,
-YOLO for object detection, and PostgreSQL for structured results. Uploaded media
-and generated images live in local files or Docker volumes.
+We run three long-lived containers and one short-lived migration task:
 
-```mermaid
-flowchart LR
-    Browser[Browser] --> Web[React served by Nginx]
-    Web --> API[FastAPI]
-    API --> Processing[Image and sampled-video processing]
-    Processing --> Detector[YOLO detector]
-    Processing --> Counts[Grid counts and threshold events]
-    API --> DB[(PostgreSQL)]
-    Processing --> Media[(Media files)]
-    API --> Media
-```
+| Service | Its role |
+| --- | --- |
+| `frontend` | Nginx serves the built React application and forwards `/api/` requests to the backend. Only this service publishes a localhost port. React itself runs in the browser. |
+| `backend` | One FastAPI process validates uploads, runs detection, stores results and serves saved media. Video work runs in a local background worker inside this container. |
+| `postgres` | PostgreSQL stores sessions, job progress, frame records, detections, counts, grids, alerts and model information. It is reached through the internal Docker network. |
+| `migrate` | Uses the backend image to apply ordered SQL migrations, then exits before the backend starts. |
 
-The browser talks to the API, not directly to the database. Processing results
-are stored before we reopen them from history. The
-[architecture guide](docs/architecture.md) explains the boundaries and decisions.
+An image request runs validation, OpenCV preprocessing, YOLO inference and
+counting before returning its saved result. A video request first creates a
+persistent job and returns HTTP `202`. The background worker samples frames,
+processes them through the same detection services and updates progress while
+the browser polls the job. Completed results can be reopened without repeating
+inference.
+
+The database stores structured records and media references, not the image or
+video bytes. Three named volumes keep database files, uploads and generated
+images separate. Model weights come from a read-only host mount. The GPU
+override gives NVIDIA access only to the backend; without it, the stack uses
+CPU mode explicitly.
+
+Compose waits for PostgreSQL readiness, successful migrations and backend
+readiness before starting Nginx. The
+[Docker build and startup diagram](docs/architecture.md#how-docker-builds-and-starts-the-app)
+shows that order. Our [database ER diagram](docs/database/database_schema.md#how-the-tables-are-connected)
+shows the tables, keys and relationships behind the stored results.
 
 ## Documentation
 
