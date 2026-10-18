@@ -1,3 +1,4 @@
+from dataclasses import replace
 from datetime import datetime, timezone
 from pathlib import Path
 from types import SimpleNamespace
@@ -40,13 +41,18 @@ def test_source_specific_protocol_cannot_use_historical_readiness_checks(
     detector_factory.assert_not_called()
 
 
-def test_evaluation_command_connects_the_reproducible_pipeline(tmp_path, monkeypatch):
+@pytest.mark.parametrize("source_protocol", [False, True])
+def test_evaluation_command_connects_the_reproducible_pipeline(
+    tmp_path, monkeypatch, source_protocol
+):
     config = load_evaluation_config(CONFIG_PATH)
+    if source_protocol:
+        config = replace(config, protocol_version=evaluation_command.PROTOCOL_VERSION)
     dataset = SimpleNamespace(
         assets=(object(), object()),
         role="validation",
         version="1.0-draft",
-        ignore_policy=None,
+        ignore_policy="uavdt_strict_containment_v1" if source_protocol else None,
     )
     predictions = PredictionBatch(("first", "second"), ())
     detection_metrics = object()
@@ -77,6 +83,11 @@ def test_evaluation_command_connects_the_reproducible_pipeline(tmp_path, monkeyp
     )
     monkeypatch.setattr(evaluation_command, "load_evaluation_config", load_config)
     monkeypatch.setattr(evaluation_command, "validate_dataset", validation)
+    source_readiness = {"status": "ready_for_source_label_development_baseline_only"}
+    validate_source = Mock(return_value=source_readiness)
+    monkeypatch.setattr(
+        evaluation_command, "validate_uavdt_evaluation", validate_source
+    )
     monkeypatch.setattr(evaluation_command, "load_evaluation_dataset", load_dataset)
     monkeypatch.setattr(evaluation_command, "generate_predictions", generate)
     monkeypatch.setattr(evaluation_command, "calculate_detection_metrics", detection)
@@ -98,7 +109,13 @@ def test_evaluation_command_connects_the_reproducible_pipeline(tmp_path, monkeyp
 
     assert result is saved
     load_config.assert_called_once_with(tmp_path / CONFIG_PATH)
-    validation.assert_called_once_with(tmp_path)
+    if source_protocol:
+        validation.assert_not_called()
+        validate_source.assert_called_once_with(tmp_path, config)
+        assert provenance["source_evaluation_readiness"] == source_readiness
+    else:
+        validation.assert_called_once_with(tmp_path)
+        validate_source.assert_not_called()
     collect_provenance.assert_called_once_with(tmp_path, config)
     seed.assert_called_once_with(2026)
     load_dataset.assert_called_once_with(tmp_path, config.dataset)
@@ -164,3 +181,29 @@ def test_evaluation_command_rejects_a_dataset_that_is_not_ready(tmp_path, monkey
         )
 
     detector_factory.assert_not_called()
+
+
+def test_uavdt_failure_stops_before_provenance_seeding_or_detector(
+    tmp_path, monkeypatch
+):
+    config = replace(
+        load_evaluation_config(CONFIG_PATH),
+        protocol_version=evaluation_command.PROTOCOL_VERSION,
+    )
+    monkeypatch.setattr(
+        evaluation_command,
+        "validate_uavdt_evaluation",
+        Mock(side_effect=ValueError("changed media")),
+    )
+    provenance, seed, detector = Mock(), Mock(), Mock()
+    monkeypatch.setattr(evaluation_command, "collect_run_provenance", provenance)
+    monkeypatch.setattr(evaluation_command, "seed_random_generators", seed)
+    with pytest.raises(
+        evaluation_command.EvaluationCommandError, match="changed media"
+    ):
+        evaluation_command.execute_detector_evaluation(
+            tmp_path, config, detector_factory=detector
+        )
+    provenance.assert_not_called()
+    seed.assert_not_called()
+    detector.assert_not_called()

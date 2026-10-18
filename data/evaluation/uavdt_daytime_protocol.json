@@ -1,0 +1,412 @@
+{
+  "attribute_zip_sha256": "ac6f85e355db3f4808cd64148b1f3c33933906ebd47c63939bb7eba6974824d1",
+  "baseline_config_sha256": "2fe255954a95b2c1e166ab0463348e504e6f0ba8b8673e9cbaacbe0b8659511e",
+  "checkpoint_sha256": "e57204b8d77b5b22ea9253cbd5664b707623aeb7c19dbaa9034fe5a60bed6571",
+  "dataset_role": "validation",
+  "final_holdout_authorized": false,
+  "human_annotation_review": false,
+  "ignore_policy": "uavdt_strict_containment_v1",
+  "independent_locations_verified": false,
+  "known_label_concerns": [
+    {
+      "decision": "retain_native_label",
+      "frame": 583,
+      "observation": "Large car box over vegetation/road; target not identifiable",
+      "sequence": "M0210",
+      "track_id": 34
+    },
+    {
+      "decision": "retain_native_label",
+      "frame": 583,
+      "observation": "Box over toll canopy; target not identifiable in the still image",
+      "sequence": "M0210",
+      "track_id": 18
+    }
+  ],
+  "label_policy": "retain_all_native_DET_boxes_and_occlusion_codes_without_corrections",
+  "model_adoption_authorized": false,
+  "official_publisher_equivalence_verified": false,
+  "protocol_version": "uavdt-daytime-source-labels-v1",
+  "record_type": "development_source_label_protocol_not_accuracy",
+  "reserved_test_sequences": [
+    "M0208",
+    "M0209",
+    "M0403",
+    "M0601",
+    "M0602",
+    "M0606",
+    "M0801",
+    "M0802",
+    "M1301",
+    "M1302",
+    "M1303",
+    "M1401"
+  ],
+  "schema_version": 1,
+  "selection_rule": "ten frames per daytime training sequence: 1 + floor(i*(N-1)/9), i=0..9",
+  "sequences": [
+    {
+      "attribute_member": "M_attr/train/M0101_attr.txt",
+      "attribute_sha256": "49e243ea46b432a9cb94ffd93f7fa9c7e2fa6817f0cdb514f1593be61559a205",
+      "detection_sha256": "0090a88ae02a32c6edd98b51bf3257453161f5964dd1e272fe3316195990a6ab",
+      "frames": [
+        1,
+        46,
+        91,
+        136,
+        181,
+        226,
+        271,
+        316,
+        361,
+        407
+      ],
+      "ignore_sha256": "f1a67457164093b7eb1aadb56266ba98dcff6b600500274841c3162f83bfb001",
+      "last_labelled_frame": 407,
+      "sequence": "M0101",
+      "source_split": "train"
+    },
+    {
+      "attribute_member": "M_attr/train/M0201_attr.txt",
+      "attribute_sha256": "32dc20850ff645ac73b5b6745d637d1028f6cd856c1c49d67e4dd95e6348eb59",
+      "detection_sha256": "9ec25e082a37a81c5fce413c2be991f527416949f9690020045eb3da79fa22be",
+      "frames": [
+        1,
+        120,
+        239,
+        359,
+        478,
+        598,
+        717,
+        837,
+        956,
+        1076
+      ],
+      "ignore_sha256": "0289990136c81bfe85ed75aa6dbd36a0046962363e10b116b356f40f3b5b8317",
+      "last_labelled_frame": 1076,
+      "sequence": "M0201",
+      "source_split": "train"
+    },
+    {
+      "attribute_member": "M_attr/train/M0207_attr.txt",
+      "attribute_sha256": "2993124bf73edba01bfff9f6e057bcb9c1b430e0ed58ab55466757f7bc2eb347",
+      "detection_sha256": "f2ffdf89fe67ea755650e6d5a7ad33f5330979a26192e30dd1347057ee41b66d",
+      "frames": [
+        1,
+        64,
+        127,
+        191,
+        254,
+        317,
+        381,
+        444,
+        507,
+        571
+      ],
+      "ignore_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "last_labelled_frame": 571,
+      "sequence": "M0207",
+      "source_split": "train"
+    },
+    {
+      "attribute_member": "M_attr/train/M0210_attr.txt",
+      "attribute_sha256": "a7719d417e47ee902692f5dc6b0c3bf59edca87a62f44027c12b93e36d86eee5",
+      "detection_sha256": "ba328391a7e3f6b9c74dcd320b2bd29b3bf5b18094d56540bfcb1cc2d37d8f1f",
+      "frames": [
+        1,
+        65,
+        130,
+        195,
+        259,
+        324,
+        389,
+        453,
+        518,
+        583
+      ],
+      "ignore_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "last_labelled_frame": 583,
+      "sequence": "M0210",
+      "source_split": "train"
+    },
+    {
+      "attribute_member": "M_attr/train/M0301_attr.txt",
+      "attribute_sha256": "32dc20850ff645ac73b5b6745d637d1028f6cd856c1c49d67e4dd95e6348eb59",
+      "detection_sha256": "f3c5bffd4642e8bbaa0214fd72fe3678016325dd0ab06a9bc4653aaaf17ac78d",
+      "frames": [
+        1,
+        37,
+        73,
+        109,
+        145,
+        181,
+        217,
+        253,
+        289,
+        325
+      ],
+      "ignore_sha256": "cf006a1ab20bf5185af6b6667b4589c67dc961ce968f0c206efc0142e7bf716e",
+      "last_labelled_frame": 325,
+      "sequence": "M0301",
+      "source_split": "train"
+    },
+    {
+      "attribute_member": "M_attr/train/M0401_attr.txt",
+      "attribute_sha256": "32dc20850ff645ac73b5b6745d637d1028f6cd856c1c49d67e4dd95e6348eb59",
+      "detection_sha256": "680e6dd960541e5ea19f8f7afa1279c74353741ab9bf5687cf98f393e616ac09",
+      "frames": [
+        1,
+        69,
+        137,
+        205,
+        273,
+        341,
+        409,
+        477,
+        545,
+        613
+      ],
+      "ignore_sha256": "d42b87468a0a118b3810856794d59a54e3b43a2223f86d2914539b8b961dafd1",
+      "last_labelled_frame": 613,
+      "sequence": "M0401",
+      "source_split": "train"
+    },
+    {
+      "attribute_member": "M_attr/train/M0402_attr.txt",
+      "attribute_sha256": "2993124bf73edba01bfff9f6e057bcb9c1b430e0ed58ab55466757f7bc2eb347",
+      "detection_sha256": "3612376975c817c7ecd1539c36d62cad72aa435cd8523e0205cee1e8db9517e5",
+      "frames": [
+        1,
+        46,
+        91,
+        137,
+        182,
+        228,
+        273,
+        319,
+        364,
+        410
+      ],
+      "ignore_sha256": "f6b7ba9e02ae983206f2040ada0f32bfc584d42a0cc5e0ddb28f39199eb6b101",
+      "last_labelled_frame": 410,
+      "sequence": "M0402",
+      "source_split": "train"
+    },
+    {
+      "attribute_member": "M_attr/train/M0603_attr.txt",
+      "attribute_sha256": "6cc8fd6cb1e8693a10decc79acb3b7a4b1a88c60174a17db7e37765cf8e73056",
+      "detection_sha256": "c84af45f8cc474dec3a02da200345f312984ee00764fdd59239927c2834a6daf",
+      "frames": [
+        1,
+        227,
+        453,
+        679,
+        905,
+        1131,
+        1357,
+        1583,
+        1809,
+        2035
+      ],
+      "ignore_sha256": "01abef6c350401bf5d411eb44fca9921fa86a2869a835e80450c63ec4f1b91aa",
+      "last_labelled_frame": 2035,
+      "sequence": "M0603",
+      "source_split": "train"
+    },
+    {
+      "attribute_member": "M_attr/train/M0604_attr.txt",
+      "attribute_sha256": "875dff3b50cb9856a28e8beb6783cbd408bb15e82a06adc55426ee8f50cb80ce",
+      "detection_sha256": "a2efc253e70d4ab36fc6b74faa4040c22380028c0132f23b573065fdd00370dc",
+      "frames": [
+        1,
+        120,
+        240,
+        360,
+        480,
+        599,
+        719,
+        839,
+        959,
+        1079
+      ],
+      "ignore_sha256": "a8edf1fd74475054f7f9b3306485b56cb11a5becbcea4e9b8358f77dbe3350aa",
+      "last_labelled_frame": 1079,
+      "sequence": "M0604",
+      "source_split": "train"
+    },
+    {
+      "attribute_member": "M_attr/train/M0605_attr.txt",
+      "attribute_sha256": "875dff3b50cb9856a28e8beb6783cbd408bb15e82a06adc55426ee8f50cb80ce",
+      "detection_sha256": "6a0c1fbbd010ddfb3eca37b32df869046756353e769c662dea752e46c7d07794",
+      "frames": [
+        1,
+        88,
+        175,
+        263,
+        350,
+        437,
+        525,
+        612,
+        699,
+        787
+      ],
+      "ignore_sha256": "624e882743521348d4c9008c6552505e998454ba6b58e90b584e9a2b7cec4066",
+      "last_labelled_frame": 787,
+      "sequence": "M0605",
+      "source_split": "train"
+    },
+    {
+      "attribute_member": "M_attr/train/M0702_attr.txt",
+      "attribute_sha256": "a7719d417e47ee902692f5dc6b0c3bf59edca87a62f44027c12b93e36d86eee5",
+      "detection_sha256": "59d4d930324166c79183a7714f9dbc4d1fc39e2490d110b1eab1086fa5784aa6",
+      "frames": [
+        1,
+        87,
+        173,
+        259,
+        345,
+        432,
+        518,
+        604,
+        690,
+        777
+      ],
+      "ignore_sha256": "bfe9ca77b9dac5977fecfb441eac928f70913b88a4e080b58dee59725d361073",
+      "last_labelled_frame": 777,
+      "sequence": "M0702",
+      "source_split": "train"
+    },
+    {
+      "attribute_member": "M_attr/train/M0703_attr.txt",
+      "attribute_sha256": "94b61b49f32a4d6ff6a9a837181d88692685cc74dd41dc560ba818cf73c4ce54",
+      "detection_sha256": "37131797120797e761db9bcc8ca834d3c73b2eb068b1fa9c940b976579bb3976",
+      "frames": [
+        1,
+        76,
+        152,
+        228,
+        304,
+        379,
+        455,
+        531,
+        607,
+        683
+      ],
+      "ignore_sha256": "e4a505a265a79ec6116a749b022918cbfe45e4413a6aa350f614b833b45c156a",
+      "last_labelled_frame": 683,
+      "sequence": "M0703",
+      "source_split": "train"
+    },
+    {
+      "attribute_member": "M_attr/train/M1201_attr.txt",
+      "attribute_sha256": "49e243ea46b432a9cb94ffd93f7fa9c7e2fa6817f0cdb514f1593be61559a205",
+      "detection_sha256": "63d7e272a80b58d7d7967245d976923bd6d45547678dc85ac0ebf255de399abd",
+      "frames": [
+        1,
+        133,
+        266,
+        399,
+        532,
+        665,
+        798,
+        931,
+        1064,
+        1197
+      ],
+      "ignore_sha256": "5da244643930b51e1c6dff416c524865196e9e1d0b7de6715169a9d23902d23b",
+      "last_labelled_frame": 1197,
+      "sequence": "M1201",
+      "source_split": "train"
+    },
+    {
+      "attribute_member": "M_attr/train/M1202_attr.txt",
+      "attribute_sha256": "3f3ec6d626cccecf3054ef7c3b4ad9b2ae575f81f8ccdef1fe2831f243bf9e0e",
+      "detection_sha256": "e43b856298fdaf9a39d63c25e3d920b12ec04969ae892eabaed58ea9edec60d1",
+      "frames": [
+        1,
+        53,
+        105,
+        158,
+        210,
+        262,
+        315,
+        367,
+        419,
+        472
+      ],
+      "ignore_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "last_labelled_frame": 472,
+      "sequence": "M1202",
+      "source_split": "train"
+    },
+    {
+      "attribute_member": "M_attr/train/M1304_attr.txt",
+      "attribute_sha256": "e54c0d19d5a3bde013ce13950953a626131cf0030472eb2915fd251be488846a",
+      "detection_sha256": "4a40075737119d6a8d432644c11bac0f8c1f64947ff2f075651adbbec73990e7",
+      "frames": [
+        1,
+        173,
+        345,
+        517,
+        689,
+        861,
+        1033,
+        1205,
+        1377,
+        1550
+      ],
+      "ignore_sha256": "655aa5b6fb1fa781e6d104b1c9215d24800704299ee5e264145574165c17b3d6",
+      "last_labelled_frame": 1550,
+      "sequence": "M1304",
+      "source_split": "train"
+    },
+    {
+      "attribute_member": "M_attr/train/M1305_attr.txt",
+      "attribute_sha256": "32dc20850ff645ac73b5b6745d637d1028f6cd856c1c49d67e4dd95e6348eb59",
+      "detection_sha256": "d9026e30aa928db67fb1a25c2f025bf57b3a21ae44e6e11768f463c96d3e5793",
+      "frames": [
+        1,
+        67,
+        134,
+        200,
+        267,
+        333,
+        400,
+        466,
+        533,
+        600
+      ],
+      "ignore_sha256": "7d10ff9a3bc875474e536abfdfc3fb657fbdd869bb377ff7bcf0ad92fbae52b2",
+      "last_labelled_frame": 600,
+      "sequence": "M1305",
+      "source_split": "train"
+    },
+    {
+      "attribute_member": "M_attr/train/M1306_attr.txt",
+      "attribute_sha256": "3f3ec6d626cccecf3054ef7c3b4ad9b2ae575f81f8ccdef1fe2831f243bf9e0e",
+      "detection_sha256": "8c916661c21320a4a2fdff9c4ec96f3a3aac0bf3ace26482cd1addb1e8478779",
+      "frames": [
+        1,
+        134,
+        267,
+        400,
+        533,
+        667,
+        800,
+        933,
+        1066,
+        1200
+      ],
+      "ignore_sha256": "2f7278f82184dbe729cb8da65ef3a9b4ea42d6287b362b9c55ceb80cd853f90e",
+      "last_labelled_frame": 1200,
+      "sequence": "M1306",
+      "source_split": "train"
+    }
+  ],
+  "source_inventory_sha256": "7867bc129eb464b248d1a0d68d8d104a03049bc826186f699606261e599b7c75",
+  "target_classes": [
+    "car_or_van",
+    "bus",
+    "truck"
+  ]
+}

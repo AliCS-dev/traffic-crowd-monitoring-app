@@ -20,6 +20,7 @@ from evaluation.evaluation_results import (
 )
 from evaluation.evaluation_runner import generate_predictions
 from evaluation.evaluation_timing import run_runtime_benchmark
+from evaluation.uavdt_readiness import PROTOCOL_VERSION, validate_uavdt_evaluation
 
 
 class EvaluationCommandError(RuntimeError):
@@ -69,18 +70,30 @@ def execute_detector_evaluation(
     created_at: datetime | None = None,
 ) -> SavedEvaluationRun:
     """Run the complete evaluation pipeline from an already validated config."""
-    dataset_validation = validate_dataset(repository_root)
-    if not dataset_validation.dataset_ready:
-        details = (*dataset_validation.errors, *dataset_validation.incomplete)
-        message = details[0] if details else "dataset quality checks did not pass"
-        raise EvaluationCommandError(f"Evaluation dataset is not ready: {message}")
-    progress("Evaluation dataset quality checks passed.")
+    source_readiness = None
+    if config.protocol_version == PROTOCOL_VERSION:
+        try:
+            source_readiness = validate_uavdt_evaluation(repository_root, config)
+        except (OSError, ValueError, KeyError, TypeError) as error:
+            raise EvaluationCommandError(
+                f"UAVDT baseline is not ready: {error}"
+            ) from error
+        progress("UAVDT source-label development checks passed; not an accuracy gate.")
+    else:
+        dataset_validation = validate_dataset(repository_root)
+        if not dataset_validation.dataset_ready:
+            details = (*dataset_validation.errors, *dataset_validation.incomplete)
+            message = details[0] if details else "dataset quality checks did not pass"
+            raise EvaluationCommandError(f"Evaluation dataset is not ready: {message}")
+        progress("Evaluation dataset quality checks passed.")
     run_started_at = created_at or datetime.now(timezone.utc)
     provenance = collect_run_provenance(repository_root, config)
+    if source_readiness is not None:
+        provenance["source_evaluation_readiness"] = source_readiness
     progress("Recorded model, dataset, software, and hardware provenance.")
     seed_random_generators(config.random_seed)
     dataset = load_evaluation_dataset(repository_root, config.dataset)
-    if dataset.ignore_policy is not None:
+    if dataset.ignore_policy is not None and source_readiness is None:
         raise EvaluationCommandError(
             "Source-ignore datasets are supported by the metric functions, but "
             "this command still uses historical dataset-readiness checks. "

@@ -1,5 +1,18 @@
 # UAVDT Annotation And Ignore Handling
 
+**18 October follow-up:** the fixed 170-image training-source sample is complete
+and passes the source-specific readiness check. Its
+[preparation record](../../data/evaluation/uavdt_daytime_preparation.json) lists
+source counts and ten labels inside ignored regions. No new model result or
+human annotation review is implied. The earlier dated entries describe the
+state at those stages.
+
+**15 October follow-up:** the [development protocol](uavdt_daytime_protocol.md)
+now fixes a training-source sample, retains native labels with their documented
+uncertainty, and adds source-specific readiness checks. Only its exact baseline
+configuration can use the full evaluation command. Historical configurations
+still reject source-ignore datasets; no held-out run or model adoption is enabled.
+
 **13 October follow-up:** the [media check](uavdt_media_check.md) exercised this
 adapter on nine real training images. Technical checks passed for the sample,
 but visual inspection raised two source-label concerns. The experiment protocol
@@ -125,11 +138,11 @@ After media verification and a recorded selection exist, the command shape is:
   --output data/evaluation/derived/uavdt/instances_validation.json
 ```
 
-These are future example paths, not files created in this step. `--help` works
-now. The shared loader and metric functions support converted data. The full
-`run_detector_evaluation.py` command deliberately rejects source-ignore datasets
-until its historical readiness checks are replaced with source-specific checks
-and a frozen run protocol. We cannot treat a passing v1 check as v2 readiness.
+These are generic example paths, not the frozen development sample's paths.
+The shared loader and metric functions support converted data. The full
+`run_detector_evaluation.py` command accepts source-ignore data only under the
+new source-specific baseline protocol and its readiness checks. We cannot treat
+a passing v1 check as v2 readiness.
 
 ## Verification And Next Step
 
@@ -159,8 +172,8 @@ format-validation evidence, not new labels, independent objects or accuracy
 measurements. ZIP CRC reads succeeded; original-publisher equivalence and
 annotation correctness remain unverified.
 
-Next we need a bounded media-access check, image/label overlays, an explicit
-frame-selection rule and a frozen source-specific evaluation configuration.
-Test sequences remain reserved for the final comparison, not development smoke
-fixtures. We have not assigned Ali a manual annotation campaign. Issue #113
-remains in progress, with its wider coverage and holdout requirements unresolved.
+The later [media check](uavdt_media_check.md) and
+[development protocol](uavdt_daytime_protocol.md) record the following steps.
+Test sequences remain reserved, not development smoke fixtures. We have not
+assigned Ali a manual annotation campaign. Issue #113 remains in progress,
+with its wider coverage and independent-holdout requirements unresolved.

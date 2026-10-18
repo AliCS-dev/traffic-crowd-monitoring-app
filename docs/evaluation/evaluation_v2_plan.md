@@ -31,6 +31,20 @@ retrieved nine training frames and tested conversion on real pixels. It records
 two source-label concerns without changing annotations or evaluating a model.
 This is not the final v2 selection; sampling and protocol freeze remain pending.
 
+**15 October protocol update:** the [separate UAVDT baseline](uavdt_daytime_protocol.md)
+fixes 170 development frames from all 17 daytime source training sequences.
+Native labels and occlusion codes are retained, including the two questioned
+records. Source-specific checks permit only the fixed development baseline,
+not test inference or model adoption. This does not fulfil the six-class,
+human-review or independent-scene requirements below.
+
+**18 October preparation update:** all 170 selected training-source images have
+been acquired and passed the source-specific technical readiness check. The
+[preparation record](../../data/evaluation/uavdt_daytime_preparation.json) retains
+the actual counts and annotation warnings. No baseline inference, model training
+or held-out image acquisition was performed. The broader requirements below
+remain unfulfilled.
+
 ## Scope We Agreed
 
 We will evaluate daytime aerial road scenes using all six existing classes:

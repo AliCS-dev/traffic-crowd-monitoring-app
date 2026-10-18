@@ -148,7 +148,7 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def convert_uavdt_manifest(
+def build_uavdt_annotations(
     *,
     repository_root: Path,
     manifest_path: Path,
@@ -165,8 +165,6 @@ def convert_uavdt_manifest(
     output = _relative_path(root, str(output_path))
     gt_root = _relative_path(root, str(gt_directory))
     attrs_root = _relative_path(root, str(attributes_directory))
-    if output.exists():
-        raise FileExistsError(f"Refusing to overwrite annotations: {output}")
     with manifest.open(encoding="utf-8", newline="") as handle:
         reader = csv.DictReader(handle)
         required = MANIFEST_FIELDS | {"frame_number", "source_split", "image_sha256"}
@@ -318,6 +316,29 @@ def convert_uavdt_manifest(
             item for item in PROJECT_CATEGORIES if item["name"] in TARGET_CLASSES
         ],
     }
+    return result
+
+
+def convert_uavdt_manifest(
+    *,
+    repository_root: Path,
+    manifest_path: Path,
+    gt_directory: Path,
+    attributes_directory: Path,
+    role: str,
+    output_path: Path,
+) -> dict:
+    output = _relative_path(repository_root.resolve(), str(output_path))
+    if output.exists():
+        raise FileExistsError(f"Refusing to overwrite annotations: {output}")
+    result = build_uavdt_annotations(
+        repository_root=repository_root,
+        manifest_path=manifest_path,
+        gt_directory=gt_directory,
+        attributes_directory=attributes_directory,
+        role=role,
+        output_path=output_path,
+    )
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open("x", encoding="utf-8") as handle:
         json.dump(result, handle, indent=2, sort_keys=True, allow_nan=False)

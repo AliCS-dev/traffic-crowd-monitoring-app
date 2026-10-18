@@ -5,9 +5,10 @@
 These commands reproduce the existing evaluation workflow. They require local
 data, annotations and weights; cloning the repository alone is not enough.
 The [dataset card](dataset_card.md) describes the data, and the
-[protocol](evaluation_protocol.md) defines the measurements. The new UAVDT
-protocol is not yet frozen, so these are not instructions for a completed v2 run.
-All commands run from the repository root.
+[protocol](evaluation_protocol.md) defines the historical measurements. The
+separate [UAVDT development protocol](uavdt_daytime_protocol.md) has its own
+preparation command, readiness check and fixed configuration; it is not a
+completed v2 accuracy result. All commands run from the repository root.
 
 ## Running the Detector Evaluation
 
