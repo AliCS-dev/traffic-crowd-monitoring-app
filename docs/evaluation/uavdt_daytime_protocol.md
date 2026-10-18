@@ -212,7 +212,9 @@ next step is the actual baseline run on the documented GPU environment:
   --config configs/evaluation/uavdt_daytime_baseline.json
 ```
 
-Results will be saved under `data/evaluation/derived/uavdt_daytime_runs/` and
-linked from the [results index](results_index.md). This command has not been run
-as part of data preparation. We will record measured results there rather than
-copying guessed or sample-derived accuracy into the thesis.
+Results are saved under `data/evaluation/derived/uavdt_daytime_runs/` and linked
+from the [results index](results_index.md). This command was not run as part of
+data preparation. After PR #143 merged, we completed the separately authorized
+baseline on 18 October. Its [results report](uavdt_daytime_baseline.md) records
+the measured values and limitations; the frozen protocol and settings above
+were not changed in response to those results.

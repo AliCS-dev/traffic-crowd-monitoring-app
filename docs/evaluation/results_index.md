@@ -9,7 +9,8 @@ Deployment checks are separate from these model metrics. The
 [September 15 runtime report](../runtime_recovery.md) records a changed sample
 output after dependency updates; it does not supersede the frozen quality gate.
 The [quality roadmap](../../quality_roadmap.md) links the planned v2 evaluation
-and accuracy work. No v2 accuracy result has been produced yet.
+and accuracy work. The separate UAVDT development baseline below now has
+measured results; the broader six-class v2 evaluation remains incomplete.
 
 The [historical dataset audit](dataset_audit_v1.md) records class support,
 object sizes, scene coverage and split limitations before v2 acquisition. It
@@ -49,6 +50,20 @@ The [preparation record](../../data/evaluation/uavdt_daytime_preparation.json)
 retains the hashes, per-sequence counts and ten labels inside ignored regions.
 These are dataset inventory figures; no new accuracy measurements have been
 produced by this step.
+
+## UAVDT Development Result
+
+After preparation, we ran the fixed baseline on 18 October. The
+[UAVDT results report](uavdt_daytime_baseline.md) records mAP50 **0.7228**,
+mAP50-95 **0.4314**, macro precision **0.6347**, macro recall **0.8552** and
+three-class vehicle-count NAE **0.3295**. Counts show overprediction and vary
+substantially between source sequences. Median in-memory latency was
+**115.20 ms** at the low AP confidence floor; this is not full-app throughput.
+
+The [exact result record](../../data/evaluation/uavdt_daytime_baseline.json)
+contains per-class metrics, sequence counts, runtime and artifact hashes.
+This is agreement with native labels on development data, not a new final
+quality-gate pass. No training, tuning or held-out images were used.
 
 Application limits and preliminary resource budgets are recorded separately in
 the [operational safeguards guide](../operational_safeguards.md). Its upload,
@@ -111,6 +126,7 @@ ordinary person detections from being interpreted as a measured crowd of zero.
 | Which new sources are suitable, and how much review might they need? | [V2 source inventory](source_inventory_v2.md) |
 | What do existing SDD/UAVDT annotations actually support? | [Annotation feasibility](annotation_feasibility_v2.md) |
 | What is fixed for the separate UAVDT vehicle baseline? | [UAVDT development protocol](uavdt_daytime_protocol.md) |
+| What did the fixed UAVDT development baseline measure? | [UAVDT baseline results](uavdt_daytime_baseline.md) |
 | How did we annotate and check the data? | [Annotation guide](annotation_guide.md) |
 | How did the original general model perform? | [Baseline selection](baseline_selection.md) |
 | Which aerial models did we compare? | [Aerial model decision](aerial_model_decision.md) |
@@ -127,6 +143,8 @@ settings. For **System Design and Implementation**, we can describe the
 evaluation modules, saved-run format, checksums, and report generation. For
 **Results and Discussion**, the final quality-gate report supplies the tables,
 scene comparison, uncertainty, error cases, and limitations.
+The UAVDT report adds a separate development comparison; its scores should not
+be mixed with the historical held-out table or described as a model improvement.
 
 We should not copy every value into several documents. This index and the final
 report are the maintained reference; the LaTeX chapter can cite selected values
@@ -140,6 +158,7 @@ When present, the complete local evidence is under:
 data/evaluation/derived/runs/                 Quantitative runs and provenance
 data/evaluation/derived/error_analysis/       Error cases and contact sheets
 data/evaluation/derived/final_reports/         Final plots and compact evidence
+data/evaluation/derived/uavdt_daytime_runs/    UAVDT development run and predictions
 data/evaluation/derived/training/              Fine-tuning datasets and logs
 ```
 
