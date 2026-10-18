@@ -30,13 +30,25 @@ The [existing-annotation feasibility report](annotation_feasibility_v2.md)
 records measured SDD/UAVDT annotation coverage, mirror provenance and the
 ignore-region integration gap. On 10 October Ali approved the separate UAVDT
 vehicle evaluation implementation. The [adapter notes](uavdt_adapter.md) record
-the tested conversion and exclusion policy; media verification and protocol
-freeze are still pending. The linked counts are inventory, not accuracy scores.
+the tested conversion and exclusion policy. The linked counts are inventory,
+not accuracy scores.
 
 The [13 October media check](uavdt_media_check.md) records nine training-image
 overlays, checksums and measured class counts, plus two unresolved source-label
 concerns. Its [JSON record](../../data/evaluation/uavdt_media_check.json) contains
 technical evidence, not model metrics. No test images or predictions were used.
+
+The [15 October UAVDT development protocol](uavdt_daytime_protocol.md) fixes
+170 training-source frames from 17 daytime sequences and the current detector's
+baseline settings. We retain native labels, including the two questioned
+records, and document their uncertainty. The source-specific readiness check
+authorizes a development baseline only, not the six-class quality gate or a
+final holdout. Acquisition finished on 18 October: all 170 images passed the
+readiness check, with 3,059 native labelled instances and 371 ignored rectangles.
+The [preparation record](../../data/evaluation/uavdt_daytime_preparation.json)
+retains the hashes, per-sequence counts and ten labels inside ignored regions.
+These are dataset inventory figures; no new accuracy measurements have been
+produced by this step.
 
 Application limits and preliminary resource budgets are recorded separately in
 the [operational safeguards guide](../operational_safeguards.md). Its upload,
@@ -98,6 +110,7 @@ ordinary person detections from being interpreted as a measured crowd of zero.
 | What are we planning for v2, and what still needs approval? | [V2 evaluation plan](evaluation_v2_plan.md) |
 | Which new sources are suitable, and how much review might they need? | [V2 source inventory](source_inventory_v2.md) |
 | What do existing SDD/UAVDT annotations actually support? | [Annotation feasibility](annotation_feasibility_v2.md) |
+| What is fixed for the separate UAVDT vehicle baseline? | [UAVDT development protocol](uavdt_daytime_protocol.md) |
 | How did we annotate and check the data? | [Annotation guide](annotation_guide.md) |
 | How did the original general model perform? | [Baseline selection](baseline_selection.md) |
 | Which aerial models did we compare? | [Aerial model decision](aerial_model_decision.md) |

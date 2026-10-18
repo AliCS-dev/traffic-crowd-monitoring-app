@@ -1,6 +1,7 @@
 import hashlib
 import io
 import json
+from urllib.error import URLError
 from zipfile import ZIP_DEFLATED, ZipFile
 
 import cv2
@@ -81,6 +82,17 @@ def test_range_budget_refuses_unbounded_archive_download(monkeypatch):
         reader.read()
     with pytest.raises(ValueError, match="Negative"):
         reader.seek(-1)
+
+
+def test_zip_reader_preserves_network_error_context(monkeypatch):
+    def unavailable(*args, **kwargs):
+        raise URLError("Temporary failure in name resolution")
+
+    monkeypatch.setattr(remote_zip, "urlopen", unavailable)
+    reader = remote_zip.HTTPRangeReader("https://example.test/file.zip", 100)
+    with pytest.raises(ValueError, match="HTTP range request failed.*name resolution"):
+        ZipFile(reader)
+    assert reader.downloaded_bytes == 0
 
 
 @pytest.mark.parametrize("frames", [set(), {0, 1}, {1, 3}])

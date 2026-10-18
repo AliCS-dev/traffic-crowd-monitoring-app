@@ -56,16 +56,22 @@ class HTTPRangeReader(io.RawIOBase):
             f"{self.url}{separator}byte_range={start}-{end}",
             headers={"Range": f"bytes={start}-{end}", "Accept-Encoding": "identity"},
         )
-        with urlopen(request, timeout=45) as response:
-            if (
-                response.status != 206
-                or response.headers.get("Content-Range")
-                != f"bytes {start}-{end}/{self.size}"
-            ):
-                raise ValueError("Server did not return the exact requested byte range")
-            data = response.read(length + 1)
-            if len(data) != length:
-                raise ValueError("HTTP range response length mismatch")
+        try:
+            with urlopen(request, timeout=45) as response:
+                if (
+                    response.status != 206
+                    or response.headers.get("Content-Range")
+                    != f"bytes {start}-{end}/{self.size}"
+                ):
+                    raise ValueError(
+                        "Server did not return the exact requested byte range"
+                    )
+                data = response.read(length + 1)
+                if len(data) != length:
+                    raise ValueError("HTTP range response length mismatch")
+        except OSError as error:
+            # zipfile masks OSError from the end-record read as a corrupt archive.
+            raise ValueError(f"HTTP range request failed: {error}") from error
         self.downloaded_bytes += length
         self.requests.append(
             {

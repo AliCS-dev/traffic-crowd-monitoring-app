@@ -1,0 +1,162 @@
+{
+  "box_counts": {
+    "bus": 91,
+    "car_or_van": 2804,
+    "truck": 164
+  },
+  "cached_images_at_attempt_start": 55,
+  "canonical_sha256": "3d18909518299b384eb52e2ae834bfc6985362c3e27a443be5bff4f3f72e0dcd",
+  "download_accounting": "Successful payload bytes in this attempt only; previous attempts are logged separately when available",
+  "downloads": [
+    {
+      "byte_budget": 32000000,
+      "downloaded_bytes": 1430378,
+      "requests": 68,
+      "url": "https://huggingface.co/datasets/vanthanh/UAVDT-Benchmark-M/resolve/ad1cfbe161c183cfdee26f6c42c6fff6552a54dc/UAV-benchmark-MOTD_v1.0.zip"
+    },
+    {
+      "byte_budget": 384000000,
+      "downloaded_bytes": 27672190,
+      "requests": 349,
+      "url": "https://huggingface.co/datasets/vanthanh/UAVDT-Benchmark-M/resolve/ad1cfbe161c183cfdee26f6c42c6fff6552a54dc/UAV-benchmark-M.zip"
+    }
+  ],
+  "duplicate_image_hashes": 0,
+  "ground_truth_strictly_inside_ignore": [
+    {
+      "asset_id": "uavdt_M0301_000253",
+      "track_id": 18
+    },
+    {
+      "asset_id": "uavdt_M0301_000253",
+      "track_id": 19
+    },
+    {
+      "asset_id": "uavdt_M0401_000613",
+      "track_id": 1
+    },
+    {
+      "asset_id": "uavdt_M0401_000613",
+      "track_id": 2
+    },
+    {
+      "asset_id": "uavdt_M0401_000613",
+      "track_id": 3
+    },
+    {
+      "asset_id": "uavdt_M0401_000613",
+      "track_id": 4
+    },
+    {
+      "asset_id": "uavdt_M0401_000613",
+      "track_id": 68
+    },
+    {
+      "asset_id": "uavdt_M0401_000613",
+      "track_id": 69
+    },
+    {
+      "asset_id": "uavdt_M1304_001205",
+      "track_id": 65
+    },
+    {
+      "asset_id": "uavdt_M1304_001205",
+      "track_id": 66
+    }
+  ],
+  "human_annotation_review": false,
+  "ignored_regions": 371,
+  "images": 170,
+  "manifest_sha256": "cef011f0e71a3e9fc9c534434b50ecfa773c2265ac6b971f83126559a886a89c",
+  "mirror_revision": "ad1cfbe161c183cfdee26f6c42c6fff6552a54dc",
+  "model_inference_run": false,
+  "occlusion_code_counts": {
+    "1": 2666,
+    "2": 72,
+    "3": 48,
+    "4": 273
+  },
+  "out_of_bounds_boxes": [],
+  "per_sequence_box_counts": {
+    "M0101": {
+      "bus": 2,
+      "car_or_van": 126,
+      "truck": 5
+    },
+    "M0201": {
+      "bus": 1,
+      "car_or_van": 57,
+      "truck": 6
+    },
+    "M0207": {
+      "bus": 10,
+      "car_or_van": 8
+    },
+    "M0210": {
+      "car_or_van": 81,
+      "truck": 32
+    },
+    "M0301": {
+      "car_or_van": 48,
+      "truck": 3
+    },
+    "M0401": {
+      "car_or_van": 173,
+      "truck": 8
+    },
+    "M0402": {
+      "car_or_van": 249
+    },
+    "M0603": {
+      "bus": 8,
+      "car_or_van": 192,
+      "truck": 8
+    },
+    "M0604": {
+      "bus": 6,
+      "car_or_van": 132,
+      "truck": 9
+    },
+    "M0605": {
+      "car_or_van": 136,
+      "truck": 8
+    },
+    "M0702": {
+      "bus": 46,
+      "car_or_van": 529,
+      "truck": 6
+    },
+    "M0703": {
+      "bus": 9,
+      "car_or_van": 220,
+      "truck": 12
+    },
+    "M1201": {
+      "car_or_van": 192,
+      "truck": 33
+    },
+    "M1202": {
+      "car_or_van": 142,
+      "truck": 22
+    },
+    "M1304": {
+      "car_or_van": 167,
+      "truck": 7
+    },
+    "M1305": {
+      "bus": 1,
+      "car_or_van": 187,
+      "truck": 1
+    },
+    "M1306": {
+      "bus": 8,
+      "car_or_van": 165,
+      "truck": 4
+    }
+  },
+  "protocol_sha256": "df2cd653980ae707707e1c0cb5bf553230d7b3964f450c0035dd6f3ad86a15b3",
+  "record_type": "prepared_source_label_development_data_not_accuracy",
+  "schema_version": 1,
+  "sequences": 17,
+  "test_media_downloaded": false
+}

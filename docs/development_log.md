@@ -777,3 +777,71 @@ is now a crow's-foot ER diagram with all 104 columns, types, nullability and
 keys, alongside the 11 tables and 13 foreign-key relationships. We checked its
 details against PostgreSQL schema metadata and the migrations. No stored data,
 application code, Compose configuration or model settings changed.
+
+### Issue #113: UAVDT Development Protocol and Readiness (15 October 2026)
+
+We fixed a separate source-label baseline: ten evenly spaced frames from each
+of the 17 daytime UAVDT training sequences, using the current YOLO26m VisDrone
+checkpoint and operating settings. The 12 daytime test sequences remain
+reserved. The [protocol](evaluation/uavdt_daytime_protocol.md) retains the two
+questioned native labels and all occlusion codes, with explicit uncertainty;
+no human annotation approval or independent-location claim is implied.
+
+The preparation command verifies source hashes, bounded archive reads, image
+decoding and exact duplicates. Its resume option checks cached image sizes and
+ZIP CRCs without overwriting mismatches. The new readiness validator compares
+the exact selection and settings, source/media hashes, checkpoint and rebuilt
+native annotations before the evaluator can load a model. Historical dataset
+checks remain separate. The saved run will include the readiness hashes.
+
+Acquisition reached 28 of 170 images before DNS resolution failed for the
+mirror's download host, `us.aws.cdn.hf.co`. No complete manifest, canonical file
+or preparation receipt exists yet, and readiness remains blocked. Partial files
+are preserved locally. Network errors now retain their context instead of
+appearing as a corrupt ZIP. Initial unsuccessful attempts predated per-attempt
+logging, so total session download bytes are not claimed.
+
+No detector predictions, training or held-out media were used. Issue #113 remains
+in progress; this does not fulfil its broader six-class, review or independent-
+holdout requirements. Dependency PRs and application runtime behavior are unchanged.
+
+Verification passed with 547 Python tests; 11 opt-in database tests were skipped.
+Lint, formatting, compilation and installed dependency checks passed. Synthetic
+archives exercise complete preparation, interrupted/resumed downloads, corrupt
+cache rejection and evaluator integration. All 28 retrieved images decode as
+1024 x 540, match the selected training frames and have distinct hashes; six
+downloaded native label files match the recorded source hashes. The real-data
+readiness command correctly fails without a complete preparation receipt.
+
+### Issue #113: UAVDT Development Sample Completed (18 October 2026)
+
+We resumed the interrupted acquisition without changing the fixed selection.
+All 170 training-source images are now present at 1024 x 540, spanning 17 source
+sequences. There are 3,059 labelled instances: 2,804 cars/vans, 164 trucks and
+91 buses, plus 371 ignored rectangles. The
+[preparation receipt](../data/evaluation/uavdt_daytime_preparation.json) records
+hashes, per-sequence counts and annotation warnings, and is linked from the
+[results index](evaluation/results_index.md). Restricted source media and box
+coordinates remain outside Git.
+
+There are no exact image duplicates or out-of-bounds target boxes. Ten native
+labels lie strictly inside ignored rectangles; we retain and report them under
+the predeclared policy rather than removing them after inspecting predictions.
+The two known M0210 label concerns are also preserved. Readiness now returns
+these warnings along with its hashes and counts. This is a source-label
+development comparison, not certification of annotation correctness or scene
+independence.
+
+DNS and connection failures recurred during acquisition. We completed the final
+attempt using a temporary requests session with connection reuse. TLS, exact
+range checks, byte budgets, source hashes and ZIP CRC verification remained
+active. No system DNS setting, repository transport dependency or application
+runtime behavior changed. The final attempt reused 55 cached images; its recorded
+29,102,568 range-payload bytes exclude earlier attempts.
+
+The actual dataset passes the readiness validator. Local verification passed
+with 548 Python tests and 11 opt-in database tests skipped, plus lint, formatting,
+compilation and dependency checks. The added warning test confirms that native
+out-of-bounds and ignore-contained labels are reported, not silently dropped.
+No inference, training or held-out image download occurred. The wider #113
+remains open; the next step is the fixed development baseline after code review.
