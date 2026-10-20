@@ -25,6 +25,12 @@ from evaluation.evaluation_data import (
 from evaluation.evaluation_runner import PredictionBatch
 
 
+def test_overlay_categories_use_the_shared_legend():
+    assert review.CATEGORY_NAMES[review.CATEGORY_IDS["bus"]] == "bus"
+    assert review.CATEGORY_NAMES[review.CATEGORY_IDS["truck"]] == "truck"
+    assert set(review.CATEGORY_IDS) == {"car_or_van", "bus", "truck"}
+
+
 @pytest.fixture
 def sample(tmp_path):
     image = tmp_path / "image.png"
@@ -45,7 +51,10 @@ def sample(tmp_path):
         "validation",
         "test",
         (asset, replace(asset, asset_id="empty", source_group_id="M0001")),
-        (GroundTruthBox("first", "bus", box),),
+        (
+            GroundTruthBox("first", "bus", box),
+            GroundTruthBox("empty", "car_or_van", box),
+        ),
         (),
         (IgnoredRegion("first", BoundingBox(0, 0, 30, 30)),),
         UAVDT_IGNORE_POLICY,
@@ -189,7 +198,7 @@ def test_complete_saved_review_and_artifact_manifest(sample, tmp_path, monkeypat
         "metrics": {
             "detection": {
                 "per_class": [
-                    {"true_positives": 1, "false_positives": 1, "false_negatives": 0}
+                    {"true_positives": 1, "false_positives": 1, "false_negatives": 1}
                 ]
             }
         },

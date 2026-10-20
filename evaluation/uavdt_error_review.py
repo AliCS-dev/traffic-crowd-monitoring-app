@@ -9,6 +9,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 
+from evaluation.annotation_preview import CATEGORY_NAMES
 from evaluation.confidence_sweep import (
     load_source_evaluation_run,
     verify_source_dataset_identity,
@@ -21,12 +22,17 @@ from evaluation.error_analysis import (
 )
 from evaluation.evaluation_data import load_evaluation_dataset
 from evaluation.evaluation_metrics import filter_ignored_predictions
+from evaluation.uavdt_annotations import TARGET_CLASSES
 from evaluation.uavdt_media_check import render_overlay
 from evaluation.uavdt_readiness import file_sha256, validate_uavdt_evaluation
 
 BASELINE_RECORD = Path("data/evaluation/uavdt_daytime_baseline.json")
 OUTPUT_DIRECTORY = Path("data/evaluation/derived/uavdt_error_review")
-CATEGORY_IDS = {"car_or_van": 4, "truck": 5, "bus": 6}
+CATEGORY_IDS = {
+    name: category_id
+    for category_id, name in CATEGORY_NAMES.items()
+    if name in TARGET_CLASSES
+}
 
 
 def prediction_inventory(dataset, predictions, *, confidence, max_detections):
