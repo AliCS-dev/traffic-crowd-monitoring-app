@@ -1,0 +1,660 @@
+{
+  "analysis_directory": "data/evaluation/derived/uavdt_error_review/20261020T085821Z-uavdt-saved-prediction-review",
+  "analysis_id": "20261020T085821Z-uavdt-saved-prediction-review",
+  "annotations_changed": false,
+  "baseline_record_sha256": "3456e2ef266c0ad9019945c19076cd5800e3b58db68987336a8fb5be546b66a9",
+  "error_types": {
+    "class_confusion": 67,
+    "false_negative": 155,
+    "false_positive": 1135
+  },
+  "human_annotation_review": false,
+  "inventory": {
+    "capped_images_with_tail_at_or_above_operating_confidence": 0,
+    "capped_tail_max": 0.05623525753617287,
+    "capped_tail_min": 0.0010059907799586654,
+    "ignored_predictions_at_floor": 14520,
+    "images_at_candidate_cap": 141,
+    "operating_target_predictions": 4039,
+    "raw_predictions": 47950
+  },
+  "matching_totals": {
+    "false_negatives": 222,
+    "false_positives": 1202,
+    "true_positives": 2837
+  },
+  "new_inference_run": false,
+  "operating_confidence": 0.25,
+  "operating_iou": 0.5,
+  "paired_class_disagreements": {
+    "bus->car_or_van": 8,
+    "bus->truck": 6,
+    "car_or_van->bus": 17,
+    "car_or_van->truck": 29,
+    "truck->car_or_van": 7
+  },
+  "record_type": "saved_prediction_diagnostics_not_new_accuracy",
+  "schema_version": 1,
+  "selected_error_ids": [
+    "confusion-uavdt_M0101_000361-124-177",
+    "confusion-uavdt_M0402_000137-652-1022",
+    "confusion-uavdt_M0402_000273-731-1118",
+    "confusion-uavdt_M0402_000364-774-1178",
+    "confusion-uavdt_M0605_000263-1224-1854",
+    "confusion-uavdt_M1305_000533-2865-3791",
+    "fn-uavdt_M0210_000001-221",
+    "fn-uavdt_M0301_000253-365",
+    "fn-uavdt_M0604_000839-1118",
+    "fn-uavdt_M0604_000959-1134",
+    "fn-uavdt_M0702_000690-1801",
+    "fn-uavdt_M0703_000228-1968",
+    "fp-uavdt_M0207_000507-413",
+    "fp-uavdt_M0207_000507-416",
+    "fp-uavdt_M0207_000507-440",
+    "fp-uavdt_M0702_000173-2154",
+    "fp-uavdt_M1304_000173-3408",
+    "fp-uavdt_M1306_000533-3950"
+  ],
+  "selection_rule": "all ten M0207 frames; existing size/scene-diverse selector, up to three errors per type for each of bus and truck; deduplicate IDs",
+  "sequence_comparisons": [
+    "m0207/uavdt_M0207_000001.png",
+    "m0207/uavdt_M0207_000064.png",
+    "m0207/uavdt_M0207_000127.png",
+    "m0207/uavdt_M0207_000191.png",
+    "m0207/uavdt_M0207_000254.png",
+    "m0207/uavdt_M0207_000317.png",
+    "m0207/uavdt_M0207_000381.png",
+    "m0207/uavdt_M0207_000444.png",
+    "m0207/uavdt_M0207_000507.png",
+    "m0207/uavdt_M0207_000571.png"
+  ],
+  "source_manifest_sha256": "d7b3959cf1d386ad4c23484a9cc654be3b5a32516cd9f08ce2a86fb93b7ca1b8",
+  "source_run_id": "20261018T111801Z-yolo26m-uavdt-daytime-source-baseline",
+  "m0207_images": [
+    {
+      "asset_id": "uavdt_M0207_000001",
+      "at_candidate_cap": false,
+      "lowest_saved_confidence": 0.0010011261329054832,
+      "predicted": {
+        "bus": 2,
+        "car_or_van": 7,
+        "truck": 0
+      },
+      "raw_predictions": 135,
+      "reference": {
+        "bus": 1,
+        "car_or_van": 0,
+        "truck": 0
+      },
+      "sequence": "M0207"
+    },
+    {
+      "asset_id": "uavdt_M0207_000064",
+      "at_candidate_cap": false,
+      "lowest_saved_confidence": 0.0010329458164051175,
+      "predicted": {
+        "bus": 2,
+        "car_or_van": 6,
+        "truck": 0
+      },
+      "raw_predictions": 117,
+      "reference": {
+        "bus": 1,
+        "car_or_van": 0,
+        "truck": 0
+      },
+      "sequence": "M0207"
+    },
+    {
+      "asset_id": "uavdt_M0207_000127",
+      "at_candidate_cap": false,
+      "lowest_saved_confidence": 0.0010154972551390529,
+      "predicted": {
+        "bus": 2,
+        "car_or_van": 7,
+        "truck": 0
+      },
+      "raw_predictions": 109,
+      "reference": {
+        "bus": 1,
+        "car_or_van": 0,
+        "truck": 0
+      },
+      "sequence": "M0207"
+    },
+    {
+      "asset_id": "uavdt_M0207_000191",
+      "at_candidate_cap": false,
+      "lowest_saved_confidence": 0.001013609697110951,
+      "predicted": {
+        "bus": 2,
+        "car_or_van": 8,
+        "truck": 0
+      },
+      "raw_predictions": 127,
+      "reference": {
+        "bus": 1,
+        "car_or_van": 1,
+        "truck": 0
+      },
+      "sequence": "M0207"
+    },
+    {
+      "asset_id": "uavdt_M0207_000254",
+      "at_candidate_cap": false,
+      "lowest_saved_confidence": 0.0010085750836879015,
+      "predicted": {
+        "bus": 2,
+        "car_or_van": 13,
+        "truck": 1
+      },
+      "raw_predictions": 211,
+      "reference": {
+        "bus": 1,
+        "car_or_van": 2,
+        "truck": 0
+      },
+      "sequence": "M0207"
+    },
+    {
+      "asset_id": "uavdt_M0207_000317",
+      "at_candidate_cap": false,
+      "lowest_saved_confidence": 0.001001842669211328,
+      "predicted": {
+        "bus": 2,
+        "car_or_van": 21,
+        "truck": 0
+      },
+      "raw_predictions": 297,
+      "reference": {
+        "bus": 1,
+        "car_or_van": 2,
+        "truck": 0
+      },
+      "sequence": "M0207"
+    },
+    {
+      "asset_id": "uavdt_M0207_000381",
+      "at_candidate_cap": true,
+      "lowest_saved_confidence": 0.0013923788210377097,
+      "predicted": {
+        "bus": 2,
+        "car_or_van": 25,
+        "truck": 0
+      },
+      "raw_predictions": 300,
+      "reference": {
+        "bus": 1,
+        "car_or_van": 2,
+        "truck": 0
+      },
+      "sequence": "M0207"
+    },
+    {
+      "asset_id": "uavdt_M0207_000444",
+      "at_candidate_cap": true,
+      "lowest_saved_confidence": 0.001366458716802299,
+      "predicted": {
+        "bus": 2,
+        "car_or_van": 28,
+        "truck": 1
+      },
+      "raw_predictions": 300,
+      "reference": {
+        "bus": 1,
+        "car_or_van": 1,
+        "truck": 0
+      },
+      "sequence": "M0207"
+    },
+    {
+      "asset_id": "uavdt_M0207_000507",
+      "at_candidate_cap": true,
+      "lowest_saved_confidence": 0.0013855657307431102,
+      "predicted": {
+        "bus": 3,
+        "car_or_van": 26,
+        "truck": 1
+      },
+      "raw_predictions": 300,
+      "reference": {
+        "bus": 1,
+        "car_or_van": 0,
+        "truck": 0
+      },
+      "sequence": "M0207"
+    },
+    {
+      "asset_id": "uavdt_M0207_000571",
+      "at_candidate_cap": true,
+      "lowest_saved_confidence": 0.002596281236037612,
+      "predicted": {
+        "bus": 3,
+        "car_or_van": 33,
+        "truck": 1
+      },
+      "raw_predictions": 300,
+      "reference": {
+        "bus": 1,
+        "car_or_van": 0,
+        "truck": 0
+      },
+      "sequence": "M0207"
+    }
+  ],
+  "review_manifest_sha256": "ae946fcf5fbb0a3dda341920250ca69f8319757ddca2e6237b82b33cb0dd0981",
+  "review_json_sha256": "1657c63979535d52acfa45297635efb81c76277919b00b8c190528cd5e8cbbbd",
+  "verified_artifact_count": 33,
+  "review_date": "2026-10-20",
+  "visual_review": {
+    "performed_by": "assistant",
+    "independent_human_annotation_review": false,
+    "annotation_corrections_approved": false,
+    "scope": "All ten M0207 comparisons and the 18 selected bus/truck crops; diagnostic selection, not a prevalence estimate."
+  },
+  "native_checks": {
+    "m0207_native_rows": 1062,
+    "m0207_unique_track_ids": 3,
+    "m0207_ignore_bytes": 0,
+    "native_files": [
+      {
+        "path": "data/evaluation/raw/uavdt_daytime_v1/GT/M0207_gt_whole.txt",
+        "sha256": "f2ffdf89fe67ea755650e6d5a7ad33f5330979a26192e30dd1347057ee41b66d"
+      },
+      {
+        "path": "data/evaluation/raw/uavdt_daytime_v1/GT/M0207_gt_ignore.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "data/evaluation/raw/uavdt_daytime_v1/GT/M0402_gt_whole.txt",
+        "sha256": "3612376975c817c7ecd1539c36d62cad72aa435cd8523e0205cee1e8db9517e5"
+      }
+    ],
+    "m0402_questioned_records": [
+      {
+        "frame": 137,
+        "track_id": 9,
+        "native_category": 1
+      },
+      {
+        "frame": 273,
+        "track_id": 17,
+        "native_category": 1
+      },
+      {
+        "frame": 364,
+        "track_id": 17,
+        "native_category": 1
+      }
+    ]
+  },
+  "review_provenance": {
+    "dependencies": {
+      "numpy": "2.2.6",
+      "opencv-python": "4.13.0.92",
+      "pycocotools": "2.0.11"
+    },
+    "git": {
+      "commit": "92e73b0e3b6a4164a9e3ff79494b82582e6020a0",
+      "dirty": false
+    },
+    "python_version": "3.10.12"
+  },
+  "superseded_review": {
+    "analysis_id": "20261020T085633Z-uavdt-saved-prediction-review",
+    "reason": "M0207 panels used swapped bus/truck colour IDs. Shared category mapping corrected; numerical diagnostics and baseline unchanged."
+  },
+  "selected_case_geometry": [
+    {
+      "error_id": "confusion-uavdt_M0101_000361-124-177",
+      "asset_id": "uavdt_M0101_000361",
+      "error_type": "class_confusion",
+      "expected_class": "car_or_van",
+      "predicted_class": "truck",
+      "confidence": 0.5178471207618713,
+      "iou": 0.9136469045077601,
+      "reference_inside_ignore": false,
+      "best_reference_overlap": {
+        "iou": 0.9136469045077601,
+        "class": "car_or_van"
+      },
+      "higher_confidence_same_class_overlap": 0,
+      "best_scored_prediction_overlap": {
+        "iou": 0.9136469045077601,
+        "class": "truck",
+        "confidence": 0.5178471207618713
+      }
+    },
+    {
+      "error_id": "confusion-uavdt_M0402_000137-652-1022",
+      "asset_id": "uavdt_M0402_000137",
+      "error_type": "class_confusion",
+      "expected_class": "car_or_van",
+      "predicted_class": "truck",
+      "confidence": 0.9504911303520203,
+      "iou": 0.9253214763099361,
+      "reference_inside_ignore": false,
+      "best_reference_overlap": {
+        "iou": 0.9253214763099361,
+        "class": "car_or_van"
+      },
+      "higher_confidence_same_class_overlap": 0,
+      "best_scored_prediction_overlap": {
+        "iou": 0.9253214763099361,
+        "class": "truck",
+        "confidence": 0.9504911303520203
+      }
+    },
+    {
+      "error_id": "confusion-uavdt_M0402_000273-731-1118",
+      "asset_id": "uavdt_M0402_000273",
+      "error_type": "class_confusion",
+      "expected_class": "car_or_van",
+      "predicted_class": "bus",
+      "confidence": 0.9573137164115906,
+      "iou": 0.9703794281229182,
+      "reference_inside_ignore": false,
+      "best_reference_overlap": {
+        "iou": 0.9703794281229182,
+        "class": "car_or_van"
+      },
+      "higher_confidence_same_class_overlap": 0,
+      "best_scored_prediction_overlap": {
+        "iou": 0.9703794281229182,
+        "class": "bus",
+        "confidence": 0.9573137164115906
+      }
+    },
+    {
+      "error_id": "confusion-uavdt_M0402_000364-774-1178",
+      "asset_id": "uavdt_M0402_000364",
+      "error_type": "class_confusion",
+      "expected_class": "car_or_van",
+      "predicted_class": "bus",
+      "confidence": 0.9296131730079651,
+      "iou": 0.962228287647595,
+      "reference_inside_ignore": false,
+      "best_reference_overlap": {
+        "iou": 0.962228287647595,
+        "class": "car_or_van"
+      },
+      "higher_confidence_same_class_overlap": 0,
+      "best_scored_prediction_overlap": {
+        "iou": 0.962228287647595,
+        "class": "bus",
+        "confidence": 0.9296131730079651
+      }
+    },
+    {
+      "error_id": "confusion-uavdt_M0605_000263-1224-1854",
+      "asset_id": "uavdt_M0605_000263",
+      "error_type": "class_confusion",
+      "expected_class": "car_or_van",
+      "predicted_class": "truck",
+      "confidence": 0.708936870098114,
+      "iou": 0.8704617968757076,
+      "reference_inside_ignore": false,
+      "best_reference_overlap": {
+        "iou": 0.8704617968757076,
+        "class": "car_or_van"
+      },
+      "higher_confidence_same_class_overlap": 0,
+      "best_scored_prediction_overlap": {
+        "iou": 0.8704617968757076,
+        "class": "truck",
+        "confidence": 0.708936870098114
+      }
+    },
+    {
+      "error_id": "confusion-uavdt_M1305_000533-2865-3791",
+      "asset_id": "uavdt_M1305_000533",
+      "error_type": "class_confusion",
+      "expected_class": "car_or_van",
+      "predicted_class": "bus",
+      "confidence": 0.9282845854759216,
+      "iou": 0.8169012444607102,
+      "reference_inside_ignore": false,
+      "best_reference_overlap": {
+        "iou": 0.8169012444607102,
+        "class": "car_or_van"
+      },
+      "higher_confidence_same_class_overlap": 0,
+      "best_scored_prediction_overlap": {
+        "iou": 0.8169012444607102,
+        "class": "bus",
+        "confidence": 0.9282845854759216
+      }
+    },
+    {
+      "error_id": "fn-uavdt_M0210_000001-221",
+      "asset_id": "uavdt_M0210_000001",
+      "error_type": "false_negative",
+      "expected_class": "truck",
+      "predicted_class": null,
+      "confidence": null,
+      "iou": null,
+      "reference_inside_ignore": false,
+      "best_scored_prediction_overlap": {
+        "iou": 0,
+        "class": "car_or_van",
+        "confidence": 0.942567765712738
+      }
+    },
+    {
+      "error_id": "fn-uavdt_M0301_000253-365",
+      "asset_id": "uavdt_M0301_000253",
+      "error_type": "false_negative",
+      "expected_class": "truck",
+      "predicted_class": null,
+      "confidence": null,
+      "iou": null,
+      "reference_inside_ignore": true,
+      "best_scored_prediction_overlap": {
+        "iou": 0.04462570830644501,
+        "class": "car_or_van",
+        "confidence": 0.7218772768974304
+      }
+    },
+    {
+      "error_id": "fn-uavdt_M0604_000839-1118",
+      "asset_id": "uavdt_M0604_000839",
+      "error_type": "false_negative",
+      "expected_class": "truck",
+      "predicted_class": null,
+      "confidence": null,
+      "iou": null,
+      "reference_inside_ignore": false,
+      "best_scored_prediction_overlap": {
+        "iou": 0.30406499233674433,
+        "class": "car_or_van",
+        "confidence": 0.4558112621307373
+      }
+    },
+    {
+      "error_id": "fn-uavdt_M0604_000959-1134",
+      "asset_id": "uavdt_M0604_000959",
+      "error_type": "false_negative",
+      "expected_class": "bus",
+      "predicted_class": null,
+      "confidence": null,
+      "iou": null,
+      "reference_inside_ignore": false,
+      "best_scored_prediction_overlap": {
+        "iou": 0.04627320428027229,
+        "class": "car_or_van",
+        "confidence": 0.8211543560028076
+      }
+    },
+    {
+      "error_id": "fn-uavdt_M0702_000690-1801",
+      "asset_id": "uavdt_M0702_000690",
+      "error_type": "false_negative",
+      "expected_class": "bus",
+      "predicted_class": null,
+      "confidence": null,
+      "iou": null,
+      "reference_inside_ignore": false,
+      "best_scored_prediction_overlap": {
+        "iou": 0.10304124265245222,
+        "class": "car_or_van",
+        "confidence": 0.9312700629234314
+      }
+    },
+    {
+      "error_id": "fn-uavdt_M0703_000228-1968",
+      "asset_id": "uavdt_M0703_000228",
+      "error_type": "false_negative",
+      "expected_class": "bus",
+      "predicted_class": null,
+      "confidence": null,
+      "iou": null,
+      "reference_inside_ignore": false,
+      "best_scored_prediction_overlap": {
+        "iou": 0.06532843704750939,
+        "class": "car_or_van",
+        "confidence": 0.95345538854599
+      }
+    },
+    {
+      "error_id": "fp-uavdt_M0207_000507-413",
+      "asset_id": "uavdt_M0207_000507",
+      "error_type": "false_positive",
+      "expected_class": null,
+      "predicted_class": "bus",
+      "confidence": 0.9574541449546814,
+      "iou": null,
+      "reference_inside_ignore": false,
+      "best_reference_overlap": {
+        "iou": 0,
+        "class": "bus"
+      },
+      "higher_confidence_same_class_overlap": 0
+    },
+    {
+      "error_id": "fp-uavdt_M0207_000507-416",
+      "asset_id": "uavdt_M0207_000507",
+      "error_type": "false_positive",
+      "expected_class": null,
+      "predicted_class": "truck",
+      "confidence": 0.9433106780052185,
+      "iou": null,
+      "reference_inside_ignore": false,
+      "best_reference_overlap": {
+        "iou": 0,
+        "class": "bus"
+      },
+      "higher_confidence_same_class_overlap": 0
+    },
+    {
+      "error_id": "fp-uavdt_M0207_000507-440",
+      "asset_id": "uavdt_M0207_000507",
+      "error_type": "false_positive",
+      "expected_class": null,
+      "predicted_class": "bus",
+      "confidence": 0.42445123195648193,
+      "iou": null,
+      "reference_inside_ignore": false,
+      "best_reference_overlap": {
+        "iou": 0.8946078493663315,
+        "class": "bus"
+      },
+      "higher_confidence_same_class_overlap": 0.9746998460418883
+    },
+    {
+      "error_id": "fp-uavdt_M0702_000173-2154",
+      "asset_id": "uavdt_M0702_000173",
+      "error_type": "false_positive",
+      "expected_class": null,
+      "predicted_class": "bus",
+      "confidence": 0.9086119532585144,
+      "iou": null,
+      "reference_inside_ignore": false,
+      "best_reference_overlap": {
+        "iou": 0,
+        "class": "car_or_van"
+      },
+      "higher_confidence_same_class_overlap": 0
+    },
+    {
+      "error_id": "fp-uavdt_M1304_000173-3408",
+      "asset_id": "uavdt_M1304_000173",
+      "error_type": "false_positive",
+      "expected_class": null,
+      "predicted_class": "truck",
+      "confidence": 0.9167599081993103,
+      "iou": null,
+      "reference_inside_ignore": false,
+      "best_reference_overlap": {
+        "iou": 0,
+        "class": "truck"
+      },
+      "higher_confidence_same_class_overlap": 0
+    },
+    {
+      "error_id": "fp-uavdt_M1306_000533-3950",
+      "asset_id": "uavdt_M1306_000533",
+      "error_type": "false_positive",
+      "expected_class": null,
+      "predicted_class": "truck",
+      "confidence": 0.9333622455596924,
+      "iou": null,
+      "reference_inside_ignore": false,
+      "best_reference_overlap": {
+        "iou": 0,
+        "class": "bus"
+      },
+      "higher_confidence_same_class_overlap": 0
+    }
+  ],
+  "geometry_method": "Supplementary read-only IoU checks against the saved operating predictions (after ignore filtering at confidence 0.25), same-image native references and higher-confidence same-class predictions. Maximum overlap is descriptive, not a replacement for COCO matching; a zero-IoU class is not an association.",
+  "observations": [
+    {
+      "assets": [
+        "uavdt_M0207_000001",
+        "uavdt_M0207_000064",
+        "uavdt_M0207_000127",
+        "uavdt_M0207_000191",
+        "uavdt_M0207_000254",
+        "uavdt_M0207_000317",
+        "uavdt_M0207_000381",
+        "uavdt_M0207_000444",
+        "uavdt_M0207_000507",
+        "uavdt_M0207_000571"
+      ],
+      "finding": "Visible vehicles lack native reference boxes. The local full-sequence file contains only three track IDs and its ignore file is empty. Cause and original release semantics unresolved; no corrected counts produced."
+    },
+    {
+      "error_ids": [
+        "confusion-uavdt_M0402_000137-652-1022",
+        "confusion-uavdt_M0402_000273-731-1118",
+        "confusion-uavdt_M0402_000364-774-1178"
+      ],
+      "finding": "Visible vehicles appear to be a box-body truck and a long green bus, but their native category is car. Frames 273 and 364 share track 17. These are source-label concerns, not approved relabelling."
+    },
+    {
+      "error_ids": [
+        "fn-uavdt_M0210_000001-221"
+      ],
+      "finding": "Reference covers a toll-canopy area; corresponding vehicle cannot be identified confidently in the still."
+    },
+    {
+      "error_ids": [
+        "fn-uavdt_M0301_000253-365"
+      ],
+      "finding": "Reference is strictly inside an ignored region; retained under fixed policy while contained predictions are filtered."
+    },
+    {
+      "error_ids": [
+        "fn-uavdt_M0604_000839-1118"
+      ],
+      "finding": "Large foreground vehicle is partly obscured. Best scored prediction IoU is below matching threshold; cause not established."
+    },
+    {
+      "error_ids": [
+        "fp-uavdt_M0207_000507-440"
+      ],
+      "finding": "Nearly coincident lower-confidence bus prediction overlaps a higher-confidence bus and the native reference; evidence of an overlapping duplicate."
+    }
+  ],
+  "decision": "Verify original annotation release, task semantics and image-to-label pairing before model comparisons. No post-prediction exclusions or relabelling. Historical gate and issue #113 remain unresolved."
+}

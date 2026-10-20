@@ -103,3 +103,23 @@ weights:
 ```bash
 .venv/bin/python scripts/validate_model_candidates.py
 ```
+
+## Reviewing the Saved UAVDT Baseline
+
+The separate [UAVDT error review](uavdt_error_review.md) reuses the tracked
+18 October development run without loading a detector or changing annotations:
+
+```bash
+.venv/bin/python scripts/review_uavdt_predictions.py
+```
+
+It requires the original local run, prepared images, native annotations and
+checkpoint file for identity verification, but no GPU or database. The command
+checks source hashes and the original matching totals, then writes a timestamped
+directory under `data/evaluation/derived/uavdt_error_review/`.
+
+Each directory contains M0207 side-by-side images, selected bus/truck crops,
+a contact sheet, full error records, counts and a checksum manifest. Generated
+images and coordinates stay outside Git. The tracked compact report records
+which review was inspected; rerunning the command does not replace that record
+or produce a new accuracy result.

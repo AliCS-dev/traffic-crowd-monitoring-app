@@ -16,6 +16,11 @@ The [compact result record](../../data/evaluation/uavdt_daytime_baseline.json)
 retains exact metrics, settings, provenance, artifact hashes and counts for all
 17 sequences. Values below are rounded for reading.
 
+**Follow-up, 20 October:** the [saved-prediction review](uavdt_error_review.md)
+found missing reference coverage in M0207 and possible source-label semantics
+issues, alongside model errors. We retain the measurements below as agreement
+with the downloaded native labels; the review does not correct or replace them.
+
 ## Detection
 
 All 170 images and 3,059 reference boxes were evaluated. Precision and recall

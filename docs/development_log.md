@@ -872,3 +872,35 @@ metrics exactly from the saved predictions. The
 settings, provenance, sequence counts and exact measurements. Restricted media
 and raw predictions remain outside Git. The source-label concerns, broader
 evaluation requirements and historical failed quality gate remain unresolved.
+
+### Issue #113: Saved UAVDT Prediction Review (20 October 2026)
+
+With Ali's approval, we merged baseline-report PR #144 after its eight checks
+passed and started a separate review branch. We reused the saved predictions
+and existing error matcher; no new inference, training, tuning or label changes
+were made. The [review report](evaluation/uavdt_error_review.md) and its compact
+JSON record are linked from the results index.
+
+The local review includes all ten M0207 frames and 18 selected bus/truck error
+crops. Assistant-assisted visual inspection found visible vehicles without
+reference boxes in M0207 and possible native class-label disagreements in M0402.
+It also found a nearly coincident duplicate bus prediction. These observations
+are not a human annotation review or approved corrections. Source-label
+verification is the next step before further model comparisons.
+
+The 300-candidate cap was reached on 141 images, but the lowest saved confidence
+on each was below the 0.25 operating threshold. The cap remains a potential AP
+limitation; we did not test a higher value. The original 2,837 true positives,
+1,202 false positives and 222 false negatives were reproduced exactly.
+
+An initial local overlay used swapped bus/truck colour IDs. We replaced that
+mapping with the shared category definitions, added a regression test and
+regenerated the review. This affected display colours only; inventories,
+matching and baseline results did not change. All 33 final review artifact
+hashes and the original source identities were verified.
+
+Verification passed with 558 Python tests, with 11 opt-in database tests skipped,
+plus lint and formatting. New tests cover source rejection, inventory filtering,
+case selection, shared overlay labels and a complete synthetic review. Restricted
+images and detailed boxes remain local. Issue #113 stays open; neither the
+six-class evaluation requirements nor the historical quality gate are resolved.
