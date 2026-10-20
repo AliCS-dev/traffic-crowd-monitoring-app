@@ -65,6 +65,12 @@ contains per-class metrics, sequence counts, runtime and artifact hashes.
 This is agreement with native labels on development data, not a new final
 quality-gate pass. No training, tuning or held-out images were used.
 
+The [20 October saved-prediction review](uavdt_error_review.md) explains why we
+cannot treat every disagreement as a detector mistake. M0207 has visible
+vehicles without reference boxes, and selected bus/truck cases raise label
+semantics concerns. An overlapping duplicate and unmatched references also
+remain. No scores or labels changed; source verification comes before tuning.
+
 Application limits and preliminary resource budgets are recorded separately in
 the [operational safeguards guide](../operational_safeguards.md). Its upload,
 video and memory measurements do not change the model-quality results below.
@@ -127,6 +133,7 @@ ordinary person detections from being interpreted as a measured crowd of zero.
 | What do existing SDD/UAVDT annotations actually support? | [Annotation feasibility](annotation_feasibility_v2.md) |
 | What is fixed for the separate UAVDT vehicle baseline? | [UAVDT development protocol](uavdt_daytime_protocol.md) |
 | What did the fixed UAVDT development baseline measure? | [UAVDT baseline results](uavdt_daytime_baseline.md) |
+| What explains the UAVDT prediction disagreements? | [Saved-prediction review](uavdt_error_review.md) |
 | How did we annotate and check the data? | [Annotation guide](annotation_guide.md) |
 | How did the original general model perform? | [Baseline selection](baseline_selection.md) |
 | Which aerial models did we compare? | [Aerial model decision](aerial_model_decision.md) |
@@ -159,6 +166,7 @@ data/evaluation/derived/runs/                 Quantitative runs and provenance
 data/evaluation/derived/error_analysis/       Error cases and contact sheets
 data/evaluation/derived/final_reports/         Final plots and compact evidence
 data/evaluation/derived/uavdt_daytime_runs/    UAVDT development run and predictions
+data/evaluation/derived/uavdt_error_review/    UAVDT local comparison images and cases
 data/evaluation/derived/training/              Fine-tuning datasets and logs
 ```
 
