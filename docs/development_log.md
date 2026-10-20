@@ -845,3 +845,30 @@ compilation and dependency checks. The added warning test confirms that native
 out-of-bounds and ignore-contained labels are reported, not silently dropped.
 No inference, training or held-out image download occurred. The wider #113
 remains open; the next step is the fixed development baseline after code review.
+
+### Issue #113: First UAVDT Baseline Results (18 October 2026)
+
+With Ali's approval, we reviewed and merged frontend dependency PR #139 and
+UAVDT preparation PR #143. The dependency update includes source-map-js 1.2.2;
+GitHub marked alert #15 fixed. Both PRs had eight passing checks, and all four
+post-merge checks passed on main. No other dependency PR was merged.
+
+We then ran the fixed UAVDT baseline from clean commit
+`60c105f046e16329974cf9c08be7c1bd95a3ea62` on the RTX 5060. A sandboxed startup
+stopped before inference when CUDA was unavailable; the unchanged command
+completed with GPU access. No model, threshold, image selection or protocol
+setting changed, and no held-out images or training were used.
+
+The [results report](evaluation/uavdt_daytime_baseline.md) records mAP50 0.7228,
+mAP50-95 0.4314, macro precision 0.6347, macro recall 0.8552 and vehicle-count
+NAE 0.3295. Counts overpredict overall, with considerable sequence variation.
+The fixed low-confidence run reached 300 raw predictions on 141 images, a
+limitation retained in the report. Median in-memory processing was 115.20 ms;
+this excludes the API, database and frontend.
+
+We verified all saved artifact checksums and reproduced the detection and count
+metrics exactly from the saved predictions. The
+[compact record](../data/evaluation/uavdt_daytime_baseline.json) retains the
+settings, provenance, sequence counts and exact measurements. Restricted media
+and raw predictions remain outside Git. The source-label concerns, broader
+evaluation requirements and historical failed quality gate remain unresolved.
