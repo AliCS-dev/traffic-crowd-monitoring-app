@@ -1,0 +1,400 @@
+{
+  "all_requested_members_equal": true,
+  "annotation_members": [
+    {
+      "bytes": 147922,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0101_gt_whole.txt",
+      "sha256": "0090a88ae02a32c6edd98b51bf3257453161f5964dd1e272fe3316195990a6ab"
+    },
+    {
+      "bytes": 20407,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0101_gt_ignore.txt",
+      "sha256": "f1a67457164093b7eb1aadb56266ba98dcff6b600500274841c3162f83bfb001"
+    },
+    {
+      "bytes": 181750,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0201_gt_whole.txt",
+      "sha256": "9ec25e082a37a81c5fce413c2be991f527416949f9690020045eb3da79fa22be"
+    },
+    {
+      "bytes": 48250,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0201_gt_ignore.txt",
+      "sha256": "0289990136c81bfe85ed75aa6dbd36a0046962363e10b116b356f40f3b5b8317"
+    },
+    {
+      "bytes": 28853,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0207_gt_whole.txt",
+      "sha256": "f2ffdf89fe67ea755650e6d5a7ad33f5330979a26192e30dd1347057ee41b66d"
+    },
+    {
+      "bytes": 0,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0207_gt_ignore.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 177728,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0210_gt_whole.txt",
+      "sha256": "ba328391a7e3f6b9c74dcd320b2bd29b3bf5b18094d56540bfcb1cc2d37d8f1f"
+    },
+    {
+      "bytes": 0,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0210_gt_ignore.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 44228,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0301_gt_whole.txt",
+      "sha256": "f3c5bffd4642e8bbaa0214fd72fe3678016325dd0ab06a9bc4653aaaf17ac78d"
+    },
+    {
+      "bytes": 10954,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0301_gt_ignore.txt",
+      "sha256": "cf006a1ab20bf5185af6b6667b4589c67dc961ce968f0c206efc0142e7bf716e"
+    },
+    {
+      "bytes": 280467,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0401_gt_whole.txt",
+      "sha256": "680e6dd960541e5ea19f8f7afa1279c74353741ab9bf5687cf98f393e616ac09"
+    },
+    {
+      "bytes": 44456,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0401_gt_ignore.txt",
+      "sha256": "d42b87468a0a118b3810856794d59a54e3b43a2223f86d2914539b8b961dafd1"
+    },
+    {
+      "bytes": 277656,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0402_gt_whole.txt",
+      "sha256": "3612376975c817c7ecd1539c36d62cad72aa435cd8523e0205cee1e8db9517e5"
+    },
+    {
+      "bytes": 22349,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0402_gt_ignore.txt",
+      "sha256": "f6b7ba9e02ae983206f2040ada0f32bfc584d42a0cc5e0ddb28f39199eb6b101"
+    },
+    {
+      "bytes": 1261117,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0603_gt_whole.txt",
+      "sha256": "c84af45f8cc474dec3a02da200345f312984ee00764fdd59239927c2834a6daf"
+    },
+    {
+      "bytes": 174513,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0603_gt_ignore.txt",
+      "sha256": "01abef6c350401bf5d411eb44fca9921fa86a2869a835e80450c63ec4f1b91aa"
+    },
+    {
+      "bytes": 435060,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0604_gt_whole.txt",
+      "sha256": "a2efc253e70d4ab36fc6b74faa4040c22380028c0132f23b573065fdd00370dc"
+    },
+    {
+      "bytes": 186418,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0604_gt_ignore.txt",
+      "sha256": "a8edf1fd74475054f7f9b3306485b56cb11a5becbcea4e9b8358f77dbe3350aa"
+    },
+    {
+      "bytes": 320123,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0605_gt_whole.txt",
+      "sha256": "6a0c1fbbd010ddfb3eca37b32df869046756353e769c662dea752e46c7d07794"
+    },
+    {
+      "bytes": 107694,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0605_gt_ignore.txt",
+      "sha256": "624e882743521348d4c9008c6552505e998454ba6b58e90b584e9a2b7cec4066"
+    },
+    {
+      "bytes": 1266517,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0702_gt_whole.txt",
+      "sha256": "59d4d930324166c79183a7714f9dbc4d1fc39e2490d110b1eab1086fa5784aa6"
+    },
+    {
+      "bytes": 40955,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0702_gt_ignore.txt",
+      "sha256": "bfe9ca77b9dac5977fecfb441eac928f70913b88a4e080b58dee59725d361073"
+    },
+    {
+      "bytes": 450505,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0703_gt_whole.txt",
+      "sha256": "37131797120797e761db9bcc8ca834d3c73b2eb068b1fa9c940b976579bb3976"
+    },
+    {
+      "bytes": 116011,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M0703_gt_ignore.txt",
+      "sha256": "e4a505a265a79ec6116a749b022918cbfe45e4413a6aa350f614b833b45c156a"
+    },
+    {
+      "bytes": 751487,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M1201_gt_whole.txt",
+      "sha256": "63d7e272a80b58d7d7967245d976923bd6d45547678dc85ac0ebf255de399abd"
+    },
+    {
+      "bytes": 41025,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M1201_gt_ignore.txt",
+      "sha256": "5da244643930b51e1c6dff416c524865196e9e1d0b7de6715169a9d23902d23b"
+    },
+    {
+      "bytes": 208344,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M1202_gt_whole.txt",
+      "sha256": "e43b856298fdaf9a39d63c25e3d920b12ec04969ae892eabaed58ea9edec60d1"
+    },
+    {
+      "bytes": 0,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M1202_gt_ignore.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 696074,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M1304_gt_whole.txt",
+      "sha256": "4a40075737119d6a8d432644c11bac0f8c1f64947ff2f075651adbbec73990e7"
+    },
+    {
+      "bytes": 131582,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M1304_gt_ignore.txt",
+      "sha256": "655aa5b6fb1fa781e6d104b1c9215d24800704299ee5e264145574165c17b3d6"
+    },
+    {
+      "bytes": 308893,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M1305_gt_whole.txt",
+      "sha256": "d9026e30aa928db67fb1a25c2f025bf57b3a21ae44e6e11768f463c96d3e5793"
+    },
+    {
+      "bytes": 43199,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M1305_gt_ignore.txt",
+      "sha256": "7d10ff9a3bc875474e536abfdfc3fb657fbdd869bb377ff7bcf0ad92fbae52b2"
+    },
+    {
+      "bytes": 596866,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M1306_gt_whole.txt",
+      "sha256": "8c916661c21320a4a2fdff9c4ec96f3a3aac0bf3ace26482cd1addb1e8478779"
+    },
+    {
+      "bytes": 37059,
+      "member": "UAV-benchmark-MOTD_v1.0/GT/M1306_gt_ignore.txt",
+      "sha256": "2f7278f82184dbe729cb8da65ef3a9b4ea42d6287b362b9c55ceb80cd853f90e"
+    }
+  ],
+  "annotations_changed": false,
+  "audit_code_sha256": "0bb0ebca606f75709aab1dafa57be48b6741709bff32b71bd315bf6720d4cbd2",
+  "baseline_readiness_unchanged": true,
+  "baseline_record_sha256": "3456e2ef266c0ad9019945c19076cd5800e3b58db68987336a8fb5be546b66a9",
+  "created_at_utc": "20261024T092117Z",
+  "full_archive_equivalence_verified": false,
+  "human_annotation_review": false,
+  "image_members": [
+    {
+      "asset_id": "uavdt_M0207_000001",
+      "bytes": 229728,
+      "member": "UAV-benchmark-M/M0207/img000001.jpg",
+      "sha256": "ecb9a32681647412cac6c5cbb1c69920821be25c3b22327ffab9496909366ea9"
+    },
+    {
+      "asset_id": "uavdt_M0207_000064",
+      "bytes": 222863,
+      "member": "UAV-benchmark-M/M0207/img000064.jpg",
+      "sha256": "ae369d5995bccd0fb10f2b0413ab189abb721bec62a1b63b301a810424055229"
+    },
+    {
+      "asset_id": "uavdt_M0207_000127",
+      "bytes": 228838,
+      "member": "UAV-benchmark-M/M0207/img000127.jpg",
+      "sha256": "4204db1213f275f463cdf7ddda3a5a554994824adaf8467fc0c5a025c68a006c"
+    },
+    {
+      "asset_id": "uavdt_M0207_000191",
+      "bytes": 231329,
+      "member": "UAV-benchmark-M/M0207/img000191.jpg",
+      "sha256": "a70339b9cd10abca1ca9fa6c2f0820f4d4ef620ca3daacf416609d32286d2553"
+    },
+    {
+      "asset_id": "uavdt_M0207_000254",
+      "bytes": 235745,
+      "member": "UAV-benchmark-M/M0207/img000254.jpg",
+      "sha256": "23512567eaa483882314550ca6f7d859536d78a0bbf202eaf665087657204f01"
+    },
+    {
+      "asset_id": "uavdt_M0207_000317",
+      "bytes": 246762,
+      "member": "UAV-benchmark-M/M0207/img000317.jpg",
+      "sha256": "c2217ce9ef091d3136932dc4ae80c86654e0239221c60a26f7cd776b25ed6ad0"
+    },
+    {
+      "asset_id": "uavdt_M0207_000381",
+      "bytes": 261056,
+      "member": "UAV-benchmark-M/M0207/img000381.jpg",
+      "sha256": "74b6aff888ea903265bab73a617d3a2863d353af0b205ddabf938464ea063316"
+    },
+    {
+      "asset_id": "uavdt_M0207_000444",
+      "bytes": 286940,
+      "member": "UAV-benchmark-M/M0207/img000444.jpg",
+      "sha256": "ed39e819ffb80682ab2b11482274c67339e0db06621c2d62c5164f6a95b2759a"
+    },
+    {
+      "asset_id": "uavdt_M0207_000507",
+      "bytes": 298349,
+      "member": "UAV-benchmark-M/M0207/img000507.jpg",
+      "sha256": "3103b155adb594469d9f9e9af36d1c03dd6b9363d1dcd098cb359dbc4e64bc3d"
+    },
+    {
+      "asset_id": "uavdt_M0207_000571",
+      "bytes": 295689,
+      "member": "UAV-benchmark-M/M0207/img000571.jpg",
+      "sha256": "83f68810fedb4a9152e2fe68d78aa7acde5d295bce47400b1fd14eb1c6835596"
+    },
+    {
+      "asset_id": "uavdt_M0402_000001",
+      "bytes": 189295,
+      "member": "UAV-benchmark-M/M0402/img000001.jpg",
+      "sha256": "835fafec40c66bb5e1b3470bb118c36bb60b08e684b8ab26791373842f1aebec"
+    },
+    {
+      "asset_id": "uavdt_M0402_000046",
+      "bytes": 192387,
+      "member": "UAV-benchmark-M/M0402/img000046.jpg",
+      "sha256": "4e5b710243c39bd3ae6c78f47b72617870722788bf8f8d908feb3b79b57cbb53"
+    },
+    {
+      "asset_id": "uavdt_M0402_000091",
+      "bytes": 186718,
+      "member": "UAV-benchmark-M/M0402/img000091.jpg",
+      "sha256": "55b8bc0537fcd3976140065cc19cc36258de50cc9193badccd092a8247e61a93"
+    },
+    {
+      "asset_id": "uavdt_M0402_000137",
+      "bytes": 187253,
+      "member": "UAV-benchmark-M/M0402/img000137.jpg",
+      "sha256": "79a186fbea17d7c26bc9981133f5267ae59cd1aee4b16e775ee2f79c5cf35d07"
+    },
+    {
+      "asset_id": "uavdt_M0402_000182",
+      "bytes": 197830,
+      "member": "UAV-benchmark-M/M0402/img000182.jpg",
+      "sha256": "162f5c7d9798f382b51d3283e98c962f922f41a348143256695e8446ad23fb1a"
+    },
+    {
+      "asset_id": "uavdt_M0402_000228",
+      "bytes": 191037,
+      "member": "UAV-benchmark-M/M0402/img000228.jpg",
+      "sha256": "8fc4516fdb9117e596dd0e62c43a7050e7cdfdb9a64ca12259ec53e831e65b61"
+    },
+    {
+      "asset_id": "uavdt_M0402_000273",
+      "bytes": 187053,
+      "member": "UAV-benchmark-M/M0402/img000273.jpg",
+      "sha256": "cb2e5a238fb54e39eb0b34fb11320d255935a626030d4950923cfc71c3fba15e"
+    },
+    {
+      "asset_id": "uavdt_M0402_000319",
+      "bytes": 187692,
+      "member": "UAV-benchmark-M/M0402/img000319.jpg",
+      "sha256": "672e8c682d4739b606346b2b18d9cc71088aee543293a48469f3aaf9649ea3fc"
+    },
+    {
+      "asset_id": "uavdt_M0402_000364",
+      "bytes": 193327,
+      "member": "UAV-benchmark-M/M0402/img000364.jpg",
+      "sha256": "8432c658ddce756b22719ba689058c32285321de74dab971951fa658c550d7aa"
+    },
+    {
+      "asset_id": "uavdt_M0402_000410",
+      "bytes": 192450,
+      "member": "UAV-benchmark-M/M0402/img000410.jpg",
+      "sha256": "10786a7670d572e34c26af42e38d00fe5bf73bda49f9b17545ba9924a38d3667"
+    }
+  ],
+  "new_inference_run": false,
+  "protocol_sha256": "df2cd653980ae707707e1c0cb5bf553230d7b3964f450c0035dd6f3ad86a15b3",
+  "publisher_page": "https://sites.google.com/view/grli-uavdt/",
+  "record_type": "publisher_member_comparison_not_accuracy",
+  "schema_version": 1,
+  "sequence_diagnostics": {
+    "M0207": {
+      "detection_and_tracking_geometry_equal": true,
+      "detection_frame_max": 571,
+      "detection_frame_min": 1,
+      "detection_rows": 1062,
+      "native_category_counts": {
+        "1": 491,
+        "3": 571
+      },
+      "tracking_rows": 1062,
+      "tracking_sha256": "386a1008cdf7b366a26a20a2ecdcc2f403d980060956006e85be89959fd6a5a4",
+      "unique_detection_track_ids": 3
+    },
+    "M0402": {
+      "detection_and_tracking_geometry_equal": true,
+      "detection_frame_max": 410,
+      "detection_frame_min": 1,
+      "detection_rows": 10210,
+      "native_category_counts": {
+        "1": 10210
+      },
+      "tracking_rows": 10210,
+      "tracking_sha256": "293631396a1ee8ee3e515b4eb9e0e6e9fdfa75c52954d8c2eaf0e54e3b051aaf",
+      "unique_detection_track_ids": 45
+    }
+  },
+  "source_manifest_sha256": "d7b3959cf1d386ad4c23484a9cc654be3b5a32516cd9f08ce2a86fb93b7ca1b8",
+  "test_images_downloaded": false,
+  "toolkit_readme_sha256": "c293a22004729f90d87fc5572585373e40d43a69623e1ace5f4d5cd05ffb211c",
+  "local_audit_directory": "data/evaluation/derived/uavdt_source_audit/20261024T092117Z-publisher-comparison",
+  "audit_json_sha256": "7cd57edce5beddbe74065cfe206297951fb719853753e035a999ef7829d10f3a",
+  "download_attempt_sha256": "10dfbbbba42eaa1dc4d57b5e6a5f11014c9bd0590cbc71bbd2cf16c69b0383aa",
+  "downloads": [
+    {
+      "byte_budget": 9000000,
+      "downloaded_bytes": 7761312,
+      "url": "https://drive.usercontent.google.com/download?export=download&confirm=t&id=19498uJd7T9w4quwnQEy62nibt3uyT9pq",
+      "successful_range_requests": 2
+    },
+    {
+      "byte_budget": 24000000,
+      "downloaded_bytes": 9405009,
+      "url": "https://drive.usercontent.google.com/download?export=download&confirm=t&id=1m8KA6oPIRK_Iwt9TYFquC87vBc_8wRVc",
+      "successful_range_requests": 64
+    }
+  ],
+  "audit_code_commit": "9cccdfb",
+  "review_date": "2026-10-24",
+  "scope": {
+    "annotation_sequences": 17,
+    "annotation_files": 34,
+    "verified_image_sequences": [
+      "M0207",
+      "M0402"
+    ],
+    "verified_images": 20,
+    "remaining_baseline_images_not_compared_to_publisher": 150,
+    "attributes_compared_to_publisher": false,
+    "whole_archive_hashes_verified": false
+  },
+  "sources": [
+    {
+      "title": "UAVDT publisher project and download links",
+      "url": "https://sites.google.com/view/grli-uavdt/",
+      "accessed": "2026-10-24"
+    },
+    {
+      "title": "Publisher DET/MOT toolkit",
+      "url": "https://drive.google.com/file/d/19498uJd7T9w4quwnQEy62nibt3uyT9pq/view",
+      "accessed": "2026-10-24"
+    },
+    {
+      "title": "Publisher UAVDT-Benchmark-M images",
+      "url": "https://drive.google.com/file/d/1m8KA6oPIRK_Iwt9TYFquC87vBc_8wRVc/view",
+      "accessed": "2026-10-24"
+    },
+    {
+      "title": "SFTrack, IROS 2024: sections IV-A and IV-B",
+      "url": "https://arxiv.org/html/2410.20079v1",
+      "accessed": "2026-10-24",
+      "use": "Independent report of annotation omissions in a tracking study; not proof of corrections for our DET examples."
+    }
+  ],
+  "decision": {
+    "mirror_or_local_pairing_difference_found": false,
+    "native_label_completeness_certified": false,
+    "three_class_label_semantics_resolved": false,
+    "frozen_baseline_changed": false,
+    "next_step": "Keep UAVDT as a source-label development result. Require a task-compatible, independently checked reference before treating count/class discrepancies as model-selection evidence. Do not silently relabel, drop sequences or substitute tracking labels."
+  }
+}

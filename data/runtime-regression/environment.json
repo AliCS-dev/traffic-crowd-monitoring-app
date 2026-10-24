@@ -1,14 +1,14 @@
 {
-  "container_id": "ef6807c01ebde692c27fe8b9493889f7bf007a2822427e7195eab51a4df57701",
-  "image_id": "sha256:d510ffb2929266b5d50ab40bfad1e903eb92744ae6754683214fbd5613ed2deb",
+  "container_id": "1d523af370703e1e959e25a20feca093d8bb5bd675a84f0deffc14e134bf39e1",
+  "image_id": "sha256:3d43d769f384a996dd880f239259da33e691c095b2719264e6e38a7f0e0cb037",
   "image_repo_digests": [
-    "traffic-monitoring-backend@sha256:d510ffb2929266b5d50ab40bfad1e903eb92744ae6754683214fbd5613ed2deb"
+    "traffic-monitoring-backend@sha256:3d43d769f384a996dd880f239259da33e691c095b2719264e6e38a7f0e0cb037"
   ],
-  "recorded_at": "2026-09-22T14:47:48.048337+00:00",
+  "recorded_at": "2026-10-24T09:50:10.580324+00:00",
   "runtime": {
-    "application_commit": "012bc6cebab302017b80031d8ced07bc22bf5bf7",
-    "captured_at": "2026-09-22T14:47:46.930260+00:00",
-    "container_id": "ef6807c01ebd",
+    "application_commit": "c00f232ad3b741ac65506a7622cadda5de4ee478",
+    "captured_at": "2026-10-24T09:50:10.227048+00:00",
+    "container_id": "1d523af37070",
     "cuda_version": "13.0",
     "cudnn_version": 92400,
     "dependencies": {
@@ -75,7 +75,7 @@
       "parso": "0.8.7",
       "pathspec": "1.1.1",
       "pexpect": "4.9.0",
-      "pillow": "12.3.0",
+      "pillow": "13.0.0",
       "pip": "24.0",
       "polars": "1.44.2",
       "polars-runtime-32": "1.44.2",
@@ -129,7 +129,7 @@
     "python_version": "3.12.3",
     "schema_version": 1,
     "source_dirty": false,
-    "source_sha256": "d2717d1bc63e83de65b30c5547d10802389783566dd8bb7420d1272d0779bb4c"
+    "source_sha256": "44ebff748dcfe77d771cbd68ae8662a561e9566437af234a5fcf7dd4b374327a"
   },
   "schema_version": 1,
   "scope": "backend; separate process snapshot in the running container"

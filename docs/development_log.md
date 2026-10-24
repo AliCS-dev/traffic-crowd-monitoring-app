@@ -845,3 +845,109 @@ compilation and dependency checks. The added warning test confirms that native
 out-of-bounds and ignore-contained labels are reported, not silently dropped.
 No inference, training or held-out image download occurred. The wider #113
 remains open; the next step is the fixed development baseline after code review.
+
+### Issue #113: First UAVDT Baseline Results (18 October 2026)
+
+With Ali's approval, we reviewed and merged frontend dependency PR #139 and
+UAVDT preparation PR #143. The dependency update includes source-map-js 1.2.2;
+GitHub marked alert #15 fixed. Both PRs had eight passing checks, and all four
+post-merge checks passed on main. No other dependency PR was merged.
+
+We then ran the fixed UAVDT baseline from clean commit
+`60c105f046e16329974cf9c08be7c1bd95a3ea62` on the RTX 5060. A sandboxed startup
+stopped before inference when CUDA was unavailable; the unchanged command
+completed with GPU access. No model, threshold, image selection or protocol
+setting changed, and no held-out images or training were used.
+
+The [results report](evaluation/uavdt_daytime_baseline.md) records mAP50 0.7228,
+mAP50-95 0.4314, macro precision 0.6347, macro recall 0.8552 and vehicle-count
+NAE 0.3295. Counts overpredict overall, with considerable sequence variation.
+The fixed low-confidence run reached 300 raw predictions on 141 images, a
+limitation retained in the report. Median in-memory processing was 115.20 ms;
+this excludes the API, database and frontend.
+
+We verified all saved artifact checksums and reproduced the detection and count
+metrics exactly from the saved predictions. The
+[compact record](../data/evaluation/uavdt_daytime_baseline.json) retains the
+settings, provenance, sequence counts and exact measurements. Restricted media
+and raw predictions remain outside Git. The source-label concerns, broader
+evaluation requirements and historical failed quality gate remain unresolved.
+
+### Issue #113: Saved UAVDT Prediction Review (20 October 2026)
+
+With Ali's approval, we merged baseline-report PR #144 after its eight checks
+passed and started a separate review branch. We reused the saved predictions
+and existing error matcher; no new inference, training, tuning or label changes
+were made. The [review report](evaluation/uavdt_error_review.md) and its compact
+JSON record are linked from the results index.
+
+The local review includes all ten M0207 frames and 18 selected bus/truck error
+crops. Assistant-assisted visual inspection found visible vehicles without
+reference boxes in M0207 and possible native class-label disagreements in M0402.
+It also found a nearly coincident duplicate bus prediction. These observations
+are not a human annotation review or approved corrections. Source-label
+verification is the next step before further model comparisons.
+
+The 300-candidate cap was reached on 141 images, but the lowest saved confidence
+on each was below the 0.25 operating threshold. The cap remains a potential AP
+limitation; we did not test a higher value. The original 2,837 true positives,
+1,202 false positives and 222 false negatives were reproduced exactly.
+
+An initial local overlay used swapped bus/truck colour IDs. We replaced that
+mapping with the shared category definitions, added a regression test and
+regenerated the review. This affected display colours only; inventories,
+matching and baseline results did not change. All 33 final review artifact
+hashes and the original source identities were verified.
+
+Verification passed with 558 Python tests, with 11 opt-in database tests skipped,
+plus lint and formatting. New tests cover source rejection, inventory filtering,
+case selection, shared overlay labels and a complete synthetic review. Restricted
+images and detailed boxes remain local. Issue #113 stays open; neither the
+six-class evaluation requirements nor the historical quality gate are resolved.
+
+### Issue #113: Publisher Source Verification (24 October 2026)
+
+PR #147 was merged with all eight checks passing. We began this follow-up on
+a separate branch to determine whether its label concerns came from the
+mirror, local image pairing or the publisher's files.
+
+The publisher downloads were accessible today. Our bounded comparison found
+byte equality for all 34 DET/ignore files used by the 17 baseline sequences
+and all 20 selected images from M0207 and M0402. The two sequences' DET and MOT
+files contain identical frame/track/box inventories, so changing file types
+would not supply the missing reference boxes. The publisher README agrees
+with the adapter's detection fields and category mapping.
+
+The [source-check report](evaluation/uavdt_source_audit.md) and compact JSON
+record preserve the scope and hashes. This confirms source identity for the
+checked inputs, not annotation correctness. We also cite SFTrack's independent
+report of UAVDT omissions, without treating its tracking refinement as a
+validated replacement for our detection labels.
+
+No model, labels, thresholds or application code changed, and no test images
+or new predictions were obtained. The frozen readiness and baseline records
+remain unchanged. The successful audit read about 17.2 MB of range payloads;
+preliminary access probes are excluded from that total. No source pixels or
+box coordinates are committed. The wider #113 remains open.
+
+We added one verification command and 12 focused tests. Local verification
+passed with 570 Python tests and 11 opt-in database tests skipped, plus lint
+and formatting. The next decision concerns a suitable independent reference
+for model selection, not another threshold change on these uncertain labels.
+
+### Branch Review and Pillow Security Update (24 October 2026)
+
+We merged source-verification PR #149 and reviewed dependency PRs #134, #140
+and #146 before merging them. Each had eight passing checks; main then passed
+its four post-merge checks. We removed their branches and three older branches
+whose work was already merged, checking squash-merged history before deletion.
+
+The three remaining backend PRs failed the evidence guard because they had no
+new committed GPU comparison, rather than a reported prediction regression.
+We tested the Pillow security update first in a separate Compose project.
+The [runtime notes](runtime_provenance.md#pillow-security-update-on-24-october-2026)
+record its five-frame comparison, package versions and validation results.
+All reference outputs matched; neither the frozen baseline nor its tolerances
+changed. We also passed 11 database integration tests and two live browser
+workflows with the updated frontend. This is maintenance evidence, not a new
+accuracy result.

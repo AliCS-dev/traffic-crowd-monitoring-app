@@ -103,3 +103,39 @@ weights:
 ```bash
 .venv/bin/python scripts/validate_model_candidates.py
 ```
+
+## Reviewing the Saved UAVDT Baseline
+
+The separate [UAVDT error review](uavdt_error_review.md) reuses the tracked
+18 October development run without loading a detector or changing annotations:
+
+```bash
+.venv/bin/python scripts/review_uavdt_predictions.py
+```
+
+It requires the original local run, prepared images, native annotations and
+checkpoint file for identity verification, but no GPU or database. The command
+checks source hashes and the original matching totals, then writes a timestamped
+directory under `data/evaluation/derived/uavdt_error_review/`.
+
+Each directory contains M0207 side-by-side images, selected bus/truck crops,
+a contact sheet, full error records, counts and a checksum manifest. Generated
+images and coordinates stay outside Git. The tracked compact report records
+which review was inspected; rerunning the command does not replace that record
+or produce a new accuracy result.
+
+## Checking UAVDT Publisher Sources
+
+The [publisher source check](uavdt_source_audit.md) compares our frozen native
+annotations and the 20 selected M0207/M0402 images with publisher-hosted files:
+
+```bash
+.venv/bin/python scripts/audit_uavdt_sources.py
+```
+
+This requires network access and the prepared baseline inputs, but no database
+or GPU. Bounded requests avoid full archive downloads. A new timestamped
+directory under `data/evaluation/derived/uavdt_source_audit/` records successful
+comparisons and transfer hashes. Mismatches stop the check, without overwriting
+any inputs or issuing a success report. This verifies source identity, not
+annotation completeness or detector accuracy.

@@ -45,6 +45,13 @@ the actual counts and annotation warnings. No baseline inference, model training
 or held-out image acquisition was performed. The broader requirements below
 remain unfulfilled.
 
+**18 October baseline follow-up:** after PR #143 merged, the separately
+authorized [UAVDT development baseline](uavdt_daytime_baseline.md) completed.
+It reports three-class metrics against native labels, with substantial count
+overprediction and source-label limitations. There was no training, tuning,
+held-out evaluation or model adoption. This does not complete the broader v2
+requirements or change the historical gate.
+
 ## Scope We Agreed
 
 We will evaluate daytime aerial road scenes using all six existing classes:
