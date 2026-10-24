@@ -139,6 +139,12 @@ selected cases and the original baseline metrics are identical between reviews.
 
 ## Next Decision
 
+**Follow-up, 24 October:** the [publisher source check](uavdt_source_audit.md)
+confirmed byte equality for all 34 baseline annotation files and the 20 selected
+M0207/M0402 images. Their DET and MOT box inventories also agree. This resolves
+the mirror/local-pairing question for those examples, not label correctness.
+The original next-step rationale below is retained for context.
+
 We will first check the annotation release and image-to-label pairing for M0207
 and the questioned M0402 records against the original source documentation.
 Any correction or exclusion would require a documented dataset revision and a

@@ -123,3 +123,19 @@ a contact sheet, full error records, counts and a checksum manifest. Generated
 images and coordinates stay outside Git. The tracked compact report records
 which review was inspected; rerunning the command does not replace that record
 or produce a new accuracy result.
+
+## Checking UAVDT Publisher Sources
+
+The [publisher source check](uavdt_source_audit.md) compares our frozen native
+annotations and the 20 selected M0207/M0402 images with publisher-hosted files:
+
+```bash
+.venv/bin/python scripts/audit_uavdt_sources.py
+```
+
+This requires network access and the prepared baseline inputs, but no database
+or GPU. Bounded requests avoid full archive downloads. A new timestamped
+directory under `data/evaluation/derived/uavdt_source_audit/` records successful
+comparisons and transfer hashes. Mismatches stop the check, without overwriting
+any inputs or issuing a success report. This verifies source identity, not
+annotation completeness or detector accuracy.

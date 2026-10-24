@@ -904,3 +904,33 @@ plus lint and formatting. New tests cover source rejection, inventory filtering,
 case selection, shared overlay labels and a complete synthetic review. Restricted
 images and detailed boxes remain local. Issue #113 stays open; neither the
 six-class evaluation requirements nor the historical quality gate are resolved.
+
+### Issue #113: Publisher Source Verification (24 October 2026)
+
+PR #147 was merged with all eight checks passing. We began this follow-up on
+a separate branch to determine whether its label concerns came from the
+mirror, local image pairing or the publisher's files.
+
+The publisher downloads were accessible today. Our bounded comparison found
+byte equality for all 34 DET/ignore files used by the 17 baseline sequences
+and all 20 selected images from M0207 and M0402. The two sequences' DET and MOT
+files contain identical frame/track/box inventories, so changing file types
+would not supply the missing reference boxes. The publisher README agrees
+with the adapter's detection fields and category mapping.
+
+The [source-check report](evaluation/uavdt_source_audit.md) and compact JSON
+record preserve the scope and hashes. This confirms source identity for the
+checked inputs, not annotation correctness. We also cite SFTrack's independent
+report of UAVDT omissions, without treating its tracking refinement as a
+validated replacement for our detection labels.
+
+No model, labels, thresholds or application code changed, and no test images
+or new predictions were obtained. The frozen readiness and baseline records
+remain unchanged. The successful audit read about 17.2 MB of range payloads;
+preliminary access probes are excluded from that total. No source pixels or
+box coordinates are committed. The wider #113 remains open.
+
+We added one verification command and 12 focused tests. Local verification
+passed with 570 Python tests and 11 opt-in database tests skipped, plus lint
+and formatting. The next decision concerns a suitable independent reference
+for model selection, not another threshold change on these uncertain labels.
