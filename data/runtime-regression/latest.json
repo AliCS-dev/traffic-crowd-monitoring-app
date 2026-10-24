@@ -1419,11 +1419,11 @@
     "scale_factor": 2
   },
   "purpose": "development regression, not accuracy",
-  "recorded_at": "2026-10-24T10:06:53.739809+00:00",
+  "recorded_at": "2026-10-24T10:10:29.505794+00:00",
   "runtime": {
-    "application_commit": "521677a8133927b43d940d98015dc0eaa9dcabe4",
-    "captured_at": "2026-10-24T10:06:36.065674Z",
-    "container_id": "7c589d83387d",
+    "application_commit": "c9547cfd7e743c02fab1f08d56d8e72c94573b02",
+    "captured_at": "2026-10-24T10:09:56.987045Z",
+    "container_id": "a1b8aac8d2e1",
     "cuda_version": "13.0",
     "cudnn_version": 92400,
     "dependencies": {
@@ -1445,7 +1445,7 @@
       "dnspython": "2.8.0",
       "executing": "2.2.1",
       "expecttest": "0.3.0",
-      "fastapi": "0.143.2",
+      "fastapi": "0.156.8",
       "filelock": "4.0.7",
       "fonttools": "4.67.0",
       "fsspec": "2026.9.0",
@@ -1519,7 +1519,7 @@
       "sortedcontainers": "2.4.0",
       "spin": "0.18",
       "stack-data": "0.6.3",
-      "starlette": "1.8.0",
+      "starlette": "1.9.0",
       "sympy": "1.14.0",
       "torch": "2.14.1+cu130",
       "torchaudio": "2.11.0+cu130",
@@ -1529,9 +1529,9 @@
       "triton": "3.8.0",
       "typing-extensions": "4.16.0",
       "typing-inspection": "0.4.4",
-      "ultralytics": "8.4.178",
-      "ultralytics-platform": "0.1.89",
-      "ultralytics-thop": "2.2.2",
+      "ultralytics": "8.4.183",
+      "ultralytics-platform": "0.1.90",
+      "ultralytics-thop": "2.2.3",
       "urllib3": "2.8.0",
       "uv": "0.12.21",
       "uvicorn": "0.54.0",
@@ -1545,13 +1545,13 @@
     "python_version": "3.12.3",
     "schema_version": 1,
     "source_dirty": false,
-    "source_sha256": "88a91fdd5946ce2bca10e6e402b9905a5c88a928a483152181d4745e04e8b0da"
+    "source_sha256": "7a81c85cf48f67314139eab210e91f7ba1a9860d1a26329fd9bb97922816526a"
   },
   "schema_version": 1,
   "sessions": [
-    12,
-    13,
-    14
+    15,
+    16,
+    17
   ],
   "status": "pass"
 }

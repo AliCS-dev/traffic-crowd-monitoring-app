@@ -951,3 +951,21 @@ All reference outputs matched; neither the frozen baseline nor its tolerances
 changed. We also passed 11 database integration tests and two live browser
 workflows with the updated frontend. This is maintenance evidence, not a new
 accuracy result.
+
+### Coordinated Python Runtime Update (24 October 2026)
+
+Pillow PR #148 passed all eight checks and was merged; main then passed its
+four CI checks. We combined PR #135's PyTorch image with PR #145's matching
+Python pins and retained the Pillow security fix. The update introduced a
+FastAPI dependency on `opentelemetry-api`, which we pinned to the tested version.
+When Dependabot refreshed #145 during the review, we incorporated its newer
+package versions and reran the checks instead of overwriting the bot's update.
+
+The final candidate passed the unchanged five-frame GPU regression, all 581
+Python tests in a disposable container with database integration enabled, and
+both live desktop/mobile workflows. The frontend also passed its 106 unit
+tests and eight mocked browser tests. The
+[runtime notes](runtime_provenance.md#combined-runtime-update-on-24-october-2026)
+link the measured environment and comparison record. Neither application
+behavior nor historical accuracy results were deliberately changed, and no
+test reference was weakened to accept the updates.
