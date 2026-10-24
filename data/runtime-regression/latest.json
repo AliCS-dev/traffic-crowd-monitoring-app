@@ -1419,11 +1419,11 @@
     "scale_factor": 2
   },
   "purpose": "development regression, not accuracy",
-  "recorded_at": "2026-09-22T14:48:32.101287+00:00",
+  "recorded_at": "2026-10-24T09:49:44.797597+00:00",
   "runtime": {
-    "application_commit": "012bc6cebab302017b80031d8ced07bc22bf5bf7",
-    "captured_at": "2026-09-22T14:47:11.599010Z",
-    "container_id": "ef6807c01ebd",
+    "application_commit": "c00f232ad3b741ac65506a7622cadda5de4ee478",
+    "captured_at": "2026-10-24T09:48:59.515344Z",
+    "container_id": "1d523af37070",
     "cuda_version": "13.0",
     "cudnn_version": 92400,
     "dependencies": {
@@ -1490,7 +1490,7 @@
       "parso": "0.8.7",
       "pathspec": "1.1.1",
       "pexpect": "4.9.0",
-      "pillow": "12.3.0",
+      "pillow": "13.0.0",
       "pip": "24.0",
       "polars": "1.44.2",
       "polars-runtime-32": "1.44.2",
@@ -1544,13 +1544,13 @@
     "python_version": "3.12.3",
     "schema_version": 1,
     "source_dirty": false,
-    "source_sha256": "d2717d1bc63e83de65b30c5547d10802389783566dd8bb7420d1272d0779bb4c"
+    "source_sha256": "44ebff748dcfe77d771cbd68ae8662a561e9566437af234a5fcf7dd4b374327a"
   },
   "schema_version": 1,
   "sessions": [
-    21,
-    22,
-    23
+    1,
+    2,
+    3
   ],
   "status": "pass"
 }

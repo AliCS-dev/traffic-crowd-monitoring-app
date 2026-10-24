@@ -119,8 +119,8 @@ also remain external requirements.
 - [Baseline](../data/runtime-regression/baseline.json): initial predictions and settings.
 - [Repeated run](../data/runtime-regression/latest.json): comparison with that baseline.
 - [Environment](../data/runtime-regression/environment.json): measured backend packages and immutable image identity.
-- [Fresh-container run](../data/runtime-regression/restore.json): reproduction with separate database and media volumes.
-- [Fresh-container environment](../data/runtime-regression/restore_environment.json): distinct container identity and the same backend image and package versions.
+- [Fresh-container run](../data/runtime-regression/restore.json): September reproduction with separate database and media volumes.
+- [Fresh-container environment](../data/runtime-regression/restore_environment.json): the September restore used a distinct container with the same image and packages as that month's baseline run. It is not a restore check of subsequent dependency updates.
 
 The fresh-container check uses the same host GPU. It does not establish
 cross-hardware reproducibility, and it is not a test of restoring a database
@@ -164,3 +164,27 @@ under `frontend/test-results/stack/`. Linting, formatting, the production fronte
 build and container `pip check` passed. Historical session 1 remained readable
 through the live API with null runtime provenance. The integration suite also
 verified a version-7 database migration without inventing historical metadata.
+
+### Pillow Security Update on 24 October 2026
+
+We tested PR #148 from clean commit
+`c00f232ad3b741ac65506a7622cadda5de4ee478`, after bringing it up to date with
+main. Pillow changed from 12.3.0 to 13.0.0; the detector checkpoint, runtime
+settings and other pinned backend dependencies did not change. The new source
+fingerprint is
+`44ebff748dcfe77d771cbd68ae8662a561e9566437af234a5fcf7dd4b374327a`.
+
+The isolated `traffic-dependency-review` stack used the RTX 5060 and CUDA 13.0.
+All five fixture frames passed against the unchanged September reference:
+counts remained 27, 32, 21, 24 and 30, with no reported differences in boxes,
+confidence values or rendered JPEG hashes. The latest comparison and environment
+records above now describe this Pillow run; the older baseline and restore
+records remain unchanged.
+
+The container dependency check, CUDA smoke test, 11 PostgreSQL integration tests
+and two live desktop/mobile image workflows passed. We ran integration tests in
+a separate test database because the maintenance test requires no active API
+lease. The host Python suite also passed 570 tests, with the 11 opt-in database
+tests skipped there. These checks support the dependency update, not improved
+detector accuracy or a passed model quality gate. Historical evaluation results
+are unchanged.

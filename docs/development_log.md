@@ -934,3 +934,20 @@ We added one verification command and 12 focused tests. Local verification
 passed with 570 Python tests and 11 opt-in database tests skipped, plus lint
 and formatting. The next decision concerns a suitable independent reference
 for model selection, not another threshold change on these uncertain labels.
+
+### Branch Review and Pillow Security Update (24 October 2026)
+
+We merged source-verification PR #149 and reviewed dependency PRs #134, #140
+and #146 before merging them. Each had eight passing checks; main then passed
+its four post-merge checks. We removed their branches and three older branches
+whose work was already merged, checking squash-merged history before deletion.
+
+The three remaining backend PRs failed the evidence guard because they had no
+new committed GPU comparison, rather than a reported prediction regression.
+We tested the Pillow security update first in a separate Compose project.
+The [runtime notes](runtime_provenance.md#pillow-security-update-on-24-october-2026)
+record its five-frame comparison, package versions and validation results.
+All reference outputs matched; neither the frozen baseline nor its tolerances
+changed. We also passed 11 database integration tests and two live browser
+workflows with the updated frontend. This is maintenance evidence, not a new
+accuracy result.
