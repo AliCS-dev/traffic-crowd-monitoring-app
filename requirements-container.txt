@@ -1,14 +1,14 @@
 # Container runtime only; torch and torchvision are supplied by the pinned base.
 torch==2.14.1
 torchvision==0.29.1
-ultralytics==8.4.178
+ultralytics==8.4.183
 opencv-python==5.0.0.93
 numpy==2.5.4
 Pillow==13.0.0
 PyYAML==6.0.3
 psycopg[binary]==3.3.6
 python-dotenv==1.2.4
-fastapi==0.143.2
+fastapi==0.156.8
 uvicorn==0.54.0
 python-multipart==0.0.32
 
@@ -36,8 +36,8 @@ pydantic-core==2.50.1
 pyparsing==3.3.3
 python-dateutil==2.9.0.post0
 scipy==1.18.1
-starlette==1.8.0
+starlette==1.9.0
 typing-inspection==0.4.4
 typing-extensions==4.16.0
-ultralytics-thop==2.2.2
-ultralytics-platform==0.1.89
+ultralytics-thop==2.2.3
+ultralytics-platform==0.1.90
