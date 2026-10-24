@@ -177,9 +177,10 @@ fingerprint is
 The isolated `traffic-dependency-review` stack used the RTX 5060 and CUDA 13.0.
 All five fixture frames passed against the unchanged September reference:
 counts remained 27, 32, 21, 24 and 30, with no reported differences in boxes,
-confidence values or rendered JPEG hashes. The latest comparison and environment
-records above now describe this Pillow run; the older baseline and restore
-records remain unchanged.
+confidence values or rendered JPEG hashes. The Pillow-only comparison and
+environment are retained in
+[commit d8c259c](https://github.com/AliCS-dev/traffic-crowd-monitoring-app/commit/d8c259ca5f3b2118d8fb9d3eacf493b42f4aacad).
+The older baseline and restore records remain unchanged.
 
 The container dependency check, CUDA smoke test, 11 PostgreSQL integration tests
 and two live desktop/mobile image workflows passed. We ran integration tests in
@@ -188,3 +189,33 @@ lease. The host Python suite also passed 570 tests, with the 11 opt-in database
 tests skipped there. These checks support the dependency update, not improved
 detector accuracy or a passed model quality gate. Historical evaluation results
 are unchanged.
+
+### Combined Runtime Update on 24 October 2026
+
+We combined the PyTorch image change from PR #135 with the matching package
+updates in PR #145. The base image supplies PyTorch 2.14.1 and torchvision
+0.29.1, so installation does not replace them with a different pair. Pillow
+13.0.0 remains in place. We also pinned `opentelemetry-api` 1.45.1, a dependency
+introduced by the updated FastAPI package, rather than leaving it unresolved.
+
+Dependabot refreshed #145 after the Pillow merge. We incorporated that refresh
+and repeated the comparison with Ultralytics 8.4.183, FastAPI 0.156.8 and
+Starlette 1.9.0. The final clean build is commit
+`c9547cfd7e743c02fab1f08d56d8e72c94573b02`, with source fingerprint
+`7a81c85cf48f67314139eab210e91f7ba1a9860d1a26329fd9bb97922816526a`.
+The current `latest.json` and `environment.json` identify this run and its
+complete installed package versions.
+
+All five development frames passed against the original September baseline,
+including the rendered hashes. We did not alter that reference, its tolerances,
+the checkpoint or model settings. Container dependency checks and the CUDA
+smoke check passed. A disposable container using the updated runtime passed
+all 581 Python tests, including the 11 PostgreSQL integration tests, with a
+separate test database. Test-only libraries were installed in that disposable
+container, not in the application image.
+
+The frontend passed 106 unit tests, eight mocked browser tests and two live
+desktop/mobile image workflows against the final backend. Linting, formatting
+and type checks also passed. These checks support merging the dependencies;
+they do not re-evaluate the detector's accuracy. The earlier UAVDT results and
+the failed model quality gate remain unchanged.
