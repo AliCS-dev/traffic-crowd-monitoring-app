@@ -1,0 +1,261 @@
+{
+  "record_type": "reference_feasibility_not_accuracy",
+  "inspection_date": "2026-10-25",
+  "source_url": "https://songinpyo.github.io/SFTrack-Project/static/files/UAVDT_Refined_Annotations_SFTrack.zip",
+  "archive_bytes": 2376655,
+  "archive_sha256": "d03c1cdff26a3e1b285ca048f21eeb61b0c6729f4d678b3a4b8f57d8aad933fe",
+  "readme_sha256": "ace2f45597c2f8c7787efd1552aa4aeff4486a953faa576b3ec5450a9b6e9f68",
+  "source_code_revision": "2a70c13c4c09736fca4f224936bbcf68633ceaf2",
+  "split_inventory": "data/evaluation/annotation_feasibility_v2.json",
+  "split_inventory_sha256": "7867bc129eb464b248d1a0d68d8d104a03049bc826186f699606261e599b7c75",
+  "zip_crc_passed": true,
+  "annotation_files": 20,
+  "annotation_rows": 384887,
+  "source_splits": {
+    "test": 20
+  },
+  "column_values": {
+    "7": {
+      "1": 384887
+    },
+    "8": {
+      "1": 384887
+    },
+    "9": {
+      "-1": 202334,
+      "1.0": 182553
+    }
+  },
+  "column_semantics": "Observed values only; these MOT fields are not the three-class DET category mapping.",
+  "questioned_training_sequences_present": [],
+  "metadata_access": "All supplied test-annotation rows inspected for format and counts; no pixel-level review.",
+  "media_downloaded": false,
+  "predictions_run": false,
+  "human_visual_review_performed": false,
+  "labels_changed": false,
+  "admitted_to_evaluation": false,
+  "redistribution_permission_verified": false,
+  "decision": "Do not substitute this test-only tracking release for the six-class v2 dataset or three-class development labels.",
+  "files": [
+    {
+      "member": "UAVDT_Test_Annotations_SFTrack/annotations/M0203_gt.txt",
+      "sequence": "M0203",
+      "source_split": "test",
+      "bytes": 146916,
+      "sha256": "253fe9bf29d28dc3339de0f6882bb83b9e43c987937ff8865ec6613d879fbaf8",
+      "rows": 5033,
+      "field_counts": {
+        "9": 5033
+      }
+    },
+    {
+      "member": "UAVDT_Test_Annotations_SFTrack/annotations/M0205_gt.txt",
+      "sequence": "M0205",
+      "source_split": "test",
+      "bytes": 146853,
+      "sha256": "e5e8f8f1edb338407ff39fd83941c4776da3f1409e1d32669da1e49816d0247d",
+      "rows": 5219,
+      "field_counts": {
+        "9": 5219
+      }
+    },
+    {
+      "member": "UAVDT_Test_Annotations_SFTrack/annotations/M0208_gt.txt",
+      "sequence": "M0208",
+      "source_split": "test",
+      "bytes": 21707,
+      "sha256": "7392dbc06239ad771cbb013e06e7be04a3f13083010ec9772ac10c2419a01a02",
+      "rows": 784,
+      "field_counts": {
+        "9": 784
+      }
+    },
+    {
+      "member": "UAVDT_Test_Annotations_SFTrack/annotations/M0209_gt.txt",
+      "sequence": "M0209",
+      "source_split": "test",
+      "bytes": 458750,
+      "sha256": "46048c849e162de1d987381f6b68c16f35bb5db41b272ffd61b90c6ec7a929a0",
+      "rows": 15689,
+      "field_counts": {
+        "9": 15689
+      }
+    },
+    {
+      "member": "UAVDT_Test_Annotations_SFTrack/annotations/M0403_gt.txt",
+      "sequence": "M0403",
+      "source_split": "test",
+      "bytes": 864839,
+      "sha256": "ef5f5a26c1f313362204597efee5bb0a7c53647cfc3262379fc2d720a0385669",
+      "rows": 30304,
+      "field_counts": {
+        "9": 30304
+      }
+    },
+    {
+      "member": "UAVDT_Test_Annotations_SFTrack/annotations/M0601_gt.txt",
+      "sequence": "M0601",
+      "source_split": "test",
+      "bytes": 1014948,
+      "sha256": "22ba86f7ebfc9dac7c7279590cbff6689c40f64b80c25f625796a5d15c1802a5",
+      "rows": 19712,
+      "field_counts": {
+        "9": 19712
+      }
+    },
+    {
+      "member": "UAVDT_Test_Annotations_SFTrack/annotations/M0602_gt.txt",
+      "sequence": "M0602",
+      "source_split": "test",
+      "bytes": 516162,
+      "sha256": "06d55d753a7aed9bf33cecb0584c76fb811bc51ffbdcb0976b96f1d2f3c8b66b",
+      "rows": 18142,
+      "field_counts": {
+        "9": 18142
+      }
+    },
+    {
+      "member": "UAVDT_Test_Annotations_SFTrack/annotations/M0606_gt.txt",
+      "sequence": "M0606",
+      "source_split": "test",
+      "bytes": 509572,
+      "sha256": "36174520655ba5e72224a619029ea5b8a7d59723c7bf9fb2fee70f10b8f33e35",
+      "rows": 17505,
+      "field_counts": {
+        "9": 17505
+      }
+    },
+    {
+      "member": "UAVDT_Test_Annotations_SFTrack/annotations/M0701_gt.txt",
+      "sequence": "M0701",
+      "source_split": "test",
+      "bytes": 3830355,
+      "sha256": "136ee47733912d2f0a4c99ccd7183fc5f438eabbdae6400bd8bf45fb2346357e",
+      "rows": 88103,
+      "field_counts": {
+        "9": 88103
+      }
+    },
+    {
+      "member": "UAVDT_Test_Annotations_SFTrack/annotations/M0801_gt.txt",
+      "sequence": "M0801",
+      "source_split": "test",
+      "bytes": 111418,
+      "sha256": "927d9253dc647544b74af505e209906f741869244430889e7d3ee7a0db032ab9",
+      "rows": 3967,
+      "field_counts": {
+        "9": 3967
+      }
+    },
+    {
+      "member": "UAVDT_Test_Annotations_SFTrack/annotations/M0802_gt.txt",
+      "sequence": "M0802",
+      "source_split": "test",
+      "bytes": 1284700,
+      "sha256": "882d20d6aa18d908e5c3a1cd03312e251ea3e5323c435fc810819c161256a45e",
+      "rows": 32636,
+      "field_counts": {
+        "9": 32636
+      }
+    },
+    {
+      "member": "UAVDT_Test_Annotations_SFTrack/annotations/M1001_gt.txt",
+      "sequence": "M1001",
+      "source_split": "test",
+      "bytes": 575609,
+      "sha256": "175a28c69591a92e956b76baf2344551a821edb76e7e9d776887bfbef7dfa633",
+      "rows": 19501,
+      "field_counts": {
+        "9": 19501
+      }
+    },
+    {
+      "member": "UAVDT_Test_Annotations_SFTrack/annotations/M1004_gt.txt",
+      "sequence": "M1004",
+      "source_split": "test",
+      "bytes": 139486,
+      "sha256": "31dd03ae2b34701aab49dd4f8753dde3600032a806937d8790e7218ab25de339",
+      "rows": 4887,
+      "field_counts": {
+        "9": 4887
+      }
+    },
+    {
+      "member": "UAVDT_Test_Annotations_SFTrack/annotations/M1007_gt.txt",
+      "sequence": "M1007",
+      "source_split": "test",
+      "bytes": 734503,
+      "sha256": "df5d7851f99215aa97951f4f29a26e15cfb388951f95f217ef86edea5e2c751b",
+      "rows": 13366,
+      "field_counts": {
+        "9": 13366
+      }
+    },
+    {
+      "member": "UAVDT_Test_Annotations_SFTrack/annotations/M1009_gt.txt",
+      "sequence": "M1009",
+      "source_split": "test",
+      "bytes": 290015,
+      "sha256": "b9e76b0c1fa3b6f4ff3403b2e4eb0bbd23edcbe92dbe5b414753b3441d8f6b75",
+      "rows": 10201,
+      "field_counts": {
+        "9": 10201
+      }
+    },
+    {
+      "member": "UAVDT_Test_Annotations_SFTrack/annotations/M1101_gt.txt",
+      "sequence": "M1101",
+      "source_split": "test",
+      "bytes": 939545,
+      "sha256": "bab814be7f162bcd9e87d249670d081c67c4ce27a1255525b9087bb175271675",
+      "rows": 18078,
+      "field_counts": {
+        "9": 18078
+      }
+    },
+    {
+      "member": "UAVDT_Test_Annotations_SFTrack/annotations/M1301_gt.txt",
+      "sequence": "M1301",
+      "source_split": "test",
+      "bytes": 1094403,
+      "sha256": "7faa64af0e6d8f7e76ed7dcdd71dd428f5c3cf76a41a378d2ecd8b79fcd483fe",
+      "rows": 37676,
+      "field_counts": {
+        "9": 37676
+      }
+    },
+    {
+      "member": "UAVDT_Test_Annotations_SFTrack/annotations/M1302_gt.txt",
+      "sequence": "M1302",
+      "source_split": "test",
+      "bytes": 578710,
+      "sha256": "2a349551cfc71b880cd6aabfe3f82e57792e8b1f6c9e489f18fd346062251d72",
+      "rows": 20140,
+      "field_counts": {
+        "9": 20140
+      }
+    },
+    {
+      "member": "UAVDT_Test_Annotations_SFTrack/annotations/M1303_gt.txt",
+      "sequence": "M1303",
+      "source_split": "test",
+      "bytes": 412561,
+      "sha256": "49affe055f63a966ac9e6538d407bd8eff64bc6be4415b52a2eeb148f6e6faa5",
+      "rows": 10658,
+      "field_counts": {
+        "9": 10658
+      }
+    },
+    {
+      "member": "UAVDT_Test_Annotations_SFTrack/annotations/M1401_gt.txt",
+      "sequence": "M1401",
+      "source_split": "test",
+      "bytes": 379314,
+      "sha256": "eb2b8fe6248503cc825c7e64053259fe74abc71ec4d758d770534e43a235f224",
+      "rows": 13286,
+      "field_counts": {
+        "9": 13286
+      }
+    }
+  ]
+}

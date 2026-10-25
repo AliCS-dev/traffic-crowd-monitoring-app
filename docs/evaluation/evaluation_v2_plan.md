@@ -1,5 +1,12 @@
 # Evaluation V2 Plan
 
+**Current decision, 25 October 2026:** Ali approved prioritizing application
+completion and deferring new model selection. The
+[reference decision](reference_decision_v2.md) records the inspected alternatives
+and the refined UAVDT archive findings. Issues #113, #114 and #115 stay open
+and deferred; the targets and thresholds below remain unfulfilled, not replaced.
+The dated entries below preserve how the original proposal developed.
+
 **Status, 1 October 2026:** Ali confirmed the scenario scope and provisionally
 approved 400 images from at least 40 independent scene groups. Detailed coverage
 floors below are proposals pending source feasibility and review-effort checks.

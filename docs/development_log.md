@@ -969,3 +969,25 @@ tests and eight mocked browser tests. The
 link the measured environment and comparison record. Neither application
 behavior nor historical accuracy results were deliberately changed, and no
 test reference was weakened to accept the updates.
+
+### Issue #113: Reference Decision (25 October 2026)
+
+We finished deleting yesterday's merged dependency branches, then reviewed the
+remaining reference-data options. A bounded download from the SFTrack authors'
+project page supplied a 2.4 MB annotation archive. Its 20 files match UAVDT test
+sequences and contain 384,887 rows; it has no replacement for the questioned
+M0207/M0402 training labels. The authors' experiment configuration uses one
+class. We did not adopt the release as three-class detection ground truth.
+
+The [reference decision](evaluation/reference_decision_v2.md) and compact
+inspection record retain the source links, hashes, format observations and
+access limits. We inspected test annotation rows, not test pixels or model
+predictions. Source annotations stay outside Git. This is not human visual
+approval, a new accuracy result, or a completed independent holdout.
+
+Ali approved prioritizing application completion and deferring new model
+selection. Issues #113, #114 and #115 remain open with their unmet criteria.
+The next implementation is #116; architecture writing can proceed under #81,
+and final system evaluation follows the interface/release freeze under #79.
+Historical scores, labels, thresholds, the model profile and the unsupported
+dense-crowd decision remain unchanged. No new annotation work is assigned.

@@ -10,6 +10,14 @@ and [parent issue #85](https://github.com/AliCS-dev/traffic-crowd-monitoring-app
 This page records the agreed scope and order, rather than duplicating a changing
 completion checklist.
 
+**25 October decision:** Ali approved prioritizing application completion and
+deferring new model selection. The [reference review](docs/evaluation/reference_decision_v2.md)
+records the evidence and conditions for reopening accuracy work. Issues #113,
+#114 and #115 remain open with unmet criteria; the historical failed gate and
+unsupported dense-crowd result remain visible. The next implementation is #116,
+with stable architecture writing under #81 alongside it. #79 follows the final
+interface and release freeze. No additional annotation campaign is assigned.
+
 ## Work Order
 
 | Issue | Intended outcome | Priority |
@@ -23,10 +31,11 @@ completion checklist.
 | [#116](https://github.com/AliCS-dev/traffic-crowd-monitoring-app/issues/116) | Scene-first media inspection with interactive layers | P1 |
 | [#117](https://github.com/AliCS-dev/traffic-crowd-monitoring-app/issues/117) | Linked sampled-video playback and count trends | Optional P2 |
 
-We finish #111 first, then #80 and #112. The data controls in #113 precede
-candidate selection in #114 and #115. Interface work in #116 can follow the
-operational safeguards; it does not require a new frontend framework. #117
-depends on that workspace and is the first extension to defer when time is tight.
+The runtime work in #111, #80 and #112 precedes the remaining application work.
+The data controls in #113 still precede any resumed candidate selection in #114
+and #115. Interface work in #116 does not depend on completing those deferred
+experiments or require a new frontend framework. #117 depends on that workspace
+and is the first extension to defer when time is tight.
 
 Automated coverage continues under #26. After choosing the final model and
 interface scope, we freeze the release for #79 system evaluation. The stable
