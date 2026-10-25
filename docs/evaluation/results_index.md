@@ -5,6 +5,12 @@ important decisions and metrics easy to find when we write the thesis, while
 the larger generated predictions, images, training logs, and timing samples
 remain outside Git.
 
+**Current direction, 25 October:** we are prioritizing application completion
+and deferring new model selection, with Ali's approval. The
+[reference decision](reference_decision_v2.md) explains why the inspected labels
+do not currently supply the proposed v2 reference. This does not change any
+score below or turn an unfinished accuracy requirement into a pass.
+
 Deployment checks are separate from these model metrics. The
 [September 15 runtime report](../runtime_recovery.md) records a changed sample
 output after dependency updates; it does not supersede the frozen quality gate.
@@ -24,8 +30,8 @@ The [v2 source inventory](source_inventory_v2.md) records candidate sources,
 permission gaps, model-overlap risks and estimated review effort. It has not
 established that the provisional coverage targets can be met.
 Ali cannot take on the proposed annotation-review workload. The custom dataset
-campaign is on hold while we assess existing-label alternatives; the six-class
-protocol and historical gate have not been replaced or declared passed.
+campaign remains on hold after the reference review; the six-class protocol
+and historical gate have not been replaced or declared passed.
 
 The [existing-annotation feasibility report](annotation_feasibility_v2.md)
 records measured SDD/UAVDT annotation coverage, mirror provenance and the
@@ -141,6 +147,7 @@ ordinary person detections from being interpreted as a measured crowd of zero.
 | What did the fixed UAVDT development baseline measure? | [UAVDT baseline results](uavdt_daytime_baseline.md) |
 | What explains the UAVDT prediction disagreements? | [Saved-prediction review](uavdt_error_review.md) |
 | Do the questioned inputs match the publisher's release? | [Publisher source check](uavdt_source_audit.md) |
+| Why are new model-selection experiments deferred? | [Reference decision and refined UAVDT inspection](reference_decision_v2.md) |
 | How did we annotate and check the data? | [Annotation guide](annotation_guide.md) |
 | How did the original general model perform? | [Baseline selection](baseline_selection.md) |
 | Which aerial models did we compare? | [Aerial model decision](aerial_model_decision.md) |

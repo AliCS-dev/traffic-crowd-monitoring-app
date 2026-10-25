@@ -1,5 +1,10 @@
 # Evaluation V2 Source Inventory
 
+**25 October decision:** the [reference review](reference_decision_v2.md)
+adds a direct inspection of SFTrack's refined UAVDT annotations. Ali approved
+deferring new model selection and prioritizing application completion. The
+dated research below is retained as evidence, not an active acquisition plan.
+
 **Research date: 4 October 2026.** This is the source-feasibility step of #113,
 not an acquired dataset or a frozen evaluation protocol. We reviewed publisher
 pages, papers, annotation documentation and the pinned baseline model card.

@@ -1,5 +1,12 @@
 # Evaluation V2 Plan
 
+**Current decision, 25 October 2026:** Ali approved prioritizing application
+completion and deferring new model selection. The
+[reference decision](reference_decision_v2.md) records the inspected alternatives
+and the refined UAVDT archive findings. Issues #113, #114 and #115 stay open
+and deferred; the targets and thresholds below remain unfulfilled, not replaced.
+The dated entries below preserve how the original proposal developed.
+
 **Status, 1 October 2026:** Ali confirmed the scenario scope and provisionally
 approved 400 images from at least 40 independent scene groups. Detailed coverage
 floors below are proposals pending source feasibility and review-effort checks.
@@ -249,19 +256,23 @@ estimates and per-group breakdowns; the current code does not produce AP
 confidence intervals. Point estimates drive the gate, while wide intervals and
 the small group count remain explicit limits on interpretation.
 
-## Next Checkpoint
+## Original Checkpoint (1 October)
 
-Today delivers the agreed scenario scope, provisional dataset size and a
-detailed proposal. It does not deliver a dataset or experimental result.
-The next checkpoint is a source inventory and review-effort estimate against
-these targets, then approval of the detailed plan before collection.
+The initial proposal established the agreed scenario scope and provisional
+dataset size, not a dataset or experimental result. Its next checkpoint was
+a source inventory and review-effort estimate before collection. The dated
+updates above record that work and the subsequent decision to defer it.
 Any revision records its reason, approval date and plan commit before v2
 prediction-based experiments; the later freeze records exact plan/data hashes.
 
 Issue #113 stays open for acquisition, review, split validation and a new
 holdout. #114 and #115 retain separate experiment plans. No application code,
 dataset labels, model settings, historical results or frontend features change
-in this step.
+in the original planning step. Following Ali's 25 October decision, these
+accuracy issues remain deferred. The current next implementation is #116,
+with stable architecture writing under #81; this is not a new data-acquisition
+checkpoint. The [reference decision](reference_decision_v2.md) defines the
+conditions for reopening model selection.
 
 ## Method References
 
