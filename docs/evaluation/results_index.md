@@ -30,8 +30,8 @@ The [v2 source inventory](source_inventory_v2.md) records candidate sources,
 permission gaps, model-overlap risks and estimated review effort. It has not
 established that the provisional coverage targets can be met.
 Ali cannot take on the proposed annotation-review workload. The custom dataset
-campaign is on hold while we assess existing-label alternatives; the six-class
-protocol and historical gate have not been replaced or declared passed.
+campaign remains on hold after the reference review; the six-class protocol
+and historical gate have not been replaced or declared passed.
 
 The [existing-annotation feasibility report](annotation_feasibility_v2.md)
 records measured SDD/UAVDT annotation coverage, mirror provenance and the
