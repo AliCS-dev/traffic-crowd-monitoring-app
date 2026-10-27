@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-27T10:08:15.786Z",
+  "captured_at": "2026-10-27T10:13:02.727Z",
   "purpose": "Live image workflow illustration, not an accuracy benchmark",
   "api_mocked": false,
   "viewport": {
@@ -35,10 +35,10 @@
     "no browser page errors"
   ],
   "screenshots": {
-    "workspace.png": "288ce00cf64def05d4bb533b593947546a32ed55932f5ba109f380185fa853c8",
+    "workspace.png": "ef8b71d57e32ab85b7543d8b4fdaf7532a1121dc2d679e0229f7e69ea4e4986a",
     "image-result.png": "2a6a644c75d306c8962334ffff2736a52970ef7b74390907e02853ea914af482",
     "image-result-mobile.png": "689477317765d4aaf8d82e8b3e6b174fdb13ab0571b554cae4e886c3478f9625",
     "model-status.png": "59ea4548d57676bc6d47d0c9366360bffab9f3964c625f9359eeb69cd27af255",
-    "session-history.png": "011776b8c470768a531b4ae0d4b204e6450a0b52eb70a95967feea31f712d321"
+    "session-history.png": "a906eb147c42efefc52e79eca6cd7352d4bb4d79a435d820d00c3c0c6127821a"
   }
 }

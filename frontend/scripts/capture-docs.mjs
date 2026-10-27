@@ -143,9 +143,11 @@ try {
   });
 
   await page.goto("/sessions");
-  await expect(page.locator(`a[href="/analyses/${sessionId}"]`)).toBeVisible();
+  const savedSession = page.locator(`a[href="/analyses/${sessionId}"]`);
+  await savedSession.scrollIntoViewIfNeeded();
+  await expect(savedSession).toBeInViewport();
   await capture("session-history.png");
-  await page.locator(`a[href="/analyses/${sessionId}"]`).click();
+  await savedSession.click();
   await expect(image).toBeVisible();
   await page.setViewportSize({ width: 390, height: 844 });
   expect(
