@@ -28,8 +28,6 @@ import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { ApplicationInfoDialog } from "./ApplicationInfoDialog.tsx";
 import { BackendStatus } from "./BackendStatus.tsx";
 
-const drawerWidth = 232;
-
 const navigation = [
   { label: "Workspace", to: "/workspace", icon: ScanSearch },
   { label: "Sessions", to: "/sessions", icon: History },
@@ -49,6 +47,9 @@ export function AppShell() {
   const theme = useTheme();
   const desktopNavigation = useMediaQuery(theme.breakpoints.up("md"));
   const location = useLocation();
+  const sceneView = /^\/analyses\/[1-9]\d*$/.test(location.pathname);
+  const compact = sceneView && desktopNavigation;
+  const drawerWidth = compact ? 72 : 232;
 
   const navigationContent = (
     <>
@@ -70,6 +71,7 @@ export function AppShell() {
         <Typography
           component="span"
           noWrap
+          hidden={compact}
           sx={{ fontWeight: 750, lineHeight: 1.2 }}
         >
           Traffic Monitor
@@ -79,6 +81,8 @@ export function AppShell() {
       <List aria-label="Primary navigation" sx={{ px: 1.5, py: 2 }}>
         {navigation.map(({ label, to, icon: Icon }) => (
           <ListItemButton
+            aria-label={label}
+            title={compact ? label : undefined}
             component={NavLink}
             key={to}
             onClick={() => setMobileNavigationOpen(false)}
@@ -95,10 +99,13 @@ export function AppShell() {
             }}
             to={to}
           >
-            <ListItemIcon sx={{ minWidth: 38, color: "inherit" }}>
+            <ListItemIcon
+              sx={{ minWidth: compact ? 20 : 38, color: "inherit" }}
+            >
               <Icon aria-hidden size={19} strokeWidth={1.9} />
             </ListItemIcon>
             <ListItemText
+              sx={{ display: compact ? "none" : "block" }}
               primary={label}
               slotProps={{
                 primary: { sx: { fontSize: 14, fontWeight: 650 } },
@@ -219,10 +226,10 @@ export function AppShell() {
       >
         <Box
           sx={{
-            maxWidth: 1500,
+            maxWidth: sceneView ? "none" : 1500,
             mx: "auto",
-            px: { xs: 2, sm: 3, lg: 4 },
-            py: 4,
+            px: { xs: 2, sm: 3, lg: sceneView ? 3 : 4 },
+            py: sceneView ? 2 : 4,
           }}
         >
           <Outlet />

@@ -34,6 +34,8 @@ try {
 
   const screenshots = {};
   async function capture(name, options = {}) {
+    await page.mouse.move(0, 0);
+    await expect(page.getByRole("tooltip")).toHaveCount(0);
     await page.evaluate(() => document.fonts.ready);
     expect(
       await page.evaluate(
@@ -105,15 +107,17 @@ try {
   await page
     .getByLabel("Grid cell", { exact: true })
     .selectOption(String(cell.id));
-  await page
-    .getByRole("region", { name: "Image result", exact: true })
-    .evaluate((element) =>
-      window.scrollTo(
-        0,
-        element.getBoundingClientRect().top + window.scrollY - 75,
-      ),
-    );
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await expect(
+    page.getByRole("group", { name: "Detection overlays" }),
+  ).toBeVisible();
   await capture("image-result.png");
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await capture("image-result-mobile.png", { fullPage: true });
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.getByText("Model and runtime details", { exact: true }).click();
 
   await page
     .getByRole("heading", { name: "Dense-crowd analysis", exact: true })
@@ -159,6 +163,13 @@ try {
 
   const asset = await context.request.get(frame.visual_asset.url);
   expect(asset.status()).toBe(200);
+  const sourceAsset = await context.request.get(frame.source_asset.url);
+  expect(sourceAsset.status()).toBe(200);
+  const entryUrl = await page
+    .locator('script[type="module"]')
+    .getAttribute("src");
+  const entry = await context.request.get(entryUrl);
+  expect(entry.status()).toBe(200);
   const record = {
     captured_at: new Date().toISOString(),
     purpose: "Live image workflow illustration, not an accuracy benchmark",
@@ -174,6 +185,8 @@ try {
       result.model_profile.runtime_provenance?.application_commit,
     backend_source_sha256:
       result.model_profile.runtime_provenance?.source_sha256,
+    source_dirty: result.model_profile.runtime_provenance?.source_dirty,
+    frontend_entry_sha256: sha256(await entry.body()),
     quality_gate_status: result.model_profile.quality_gate_status,
     dense_crowd_status: result.dense_crowd_analysis.status,
     device: result.model_profile.device,
@@ -184,6 +197,7 @@ try {
       column_index: cell.column_index,
     },
     result_asset_sha256: sha256(await asset.body()),
+    source_asset_sha256: sha256(await sourceAsset.body()),
     checks: [
       "image decoded",
       "frame and grid totals match detections",

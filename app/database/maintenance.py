@@ -42,7 +42,9 @@ def media_maintenance_snapshot():
             cursor.execute(
                 "SELECT file_path FROM input_sources "
                 "UNION SELECT output_file_path FROM processed_frames "
-                "WHERE output_file_path IS NOT NULL"
+                "WHERE output_file_path IS NOT NULL "
+                "UNION SELECT source_file_path FROM processed_frames "
+                "WHERE source_file_path IS NOT NULL"
             )
             paths = [row[0] for row in cursor.fetchall()]
         yield paths

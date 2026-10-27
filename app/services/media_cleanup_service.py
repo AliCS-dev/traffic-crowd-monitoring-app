@@ -11,7 +11,9 @@ def collect_expired_media(roots, referenced_paths, *, older_than_days=7, now=Non
         raise ValueError("Retention must be at least one day.")
     cutoff = (time() if now is None else now) - older_than_days * 86400
     # Protect IDs as well as full paths when a database came from a container backup.
-    retained_ids = {Path(path).stem.lstrip(".") for path in referenced_paths}
+    retained_ids = {
+        Path(path).stem.lstrip(".").removesuffix(".source") for path in referenced_paths
+    }
     candidates = []
     for root in roots:
         root = Path(root).absolute()
@@ -20,7 +22,7 @@ def collect_expired_media(roots, referenced_paths, *, older_than_days=7, now=Non
         if not root.exists():
             continue
         for path in sorted(root.iterdir()):
-            stem = path.stem.lstrip(".")
+            stem = path.stem.lstrip(".").removesuffix(".source")
             if (
                 path.is_symlink()
                 or not path.is_file()

@@ -991,3 +991,27 @@ The next implementation is #116; architecture writing can proceed under #81,
 and final system evaluation follows the interface/release freeze under #79.
 Historical scores, labels, thresholds, the model profile and the unsupported
 dense-crowd decision remain unchanged. No new annotation work is assigned.
+
+### Issue #116: Interactive Scene Workspace (26-27 October 2026)
+
+After Ali approved the layout direction, we made the image the main result
+surface and added selectable boxes, grid inspection, pan, zoom and display
+filters. The inspector sits beside the scene on desktop and below it on mobile.
+Detection records, stored counts and experimental alerts remain separate views.
+The failed model gate and unsupported crowd result stay visible.
+
+New API analyses save a clean processed JPEG as well as the existing annotated
+download. Migration 009 adds its nullable path; older sessions keep their
+annotated preview without rerunning inference. Both variants share the existing
+asset checks, and cleanup handles both files. No model or dependency changed.
+
+The [workspace verification report](scene_workspace_verification.md) records
+594 passing Python tests, 115 frontend tests, 14 browser checks and four live
+Compose workflows. The unchanged five-frame GPU regression reported no
+differences. Its small browser interaction budget is not an accuracy or
+whole-system benchmark. We also refreshed the illustrated guide from the real
+application and updated the database ER diagram to match migration 009.
+
+This completes the interface implementation, not the thesis evaluation. The
+remaining accuracy limits are unchanged; final system measurements and thesis
+writing remain separate work under #79 and #81-#84.

@@ -108,6 +108,7 @@ export interface ProcessedFrameResult {
   image_height: number | null;
   output_asset_id: string | null;
   visual_asset: VisualAssetReference | null;
+  source_asset?: VisualAssetReference | null;
   coordinate_space: {
     name: "processed_image_pixels";
     origin: "top_left";

@@ -31,6 +31,7 @@ def save_image_detection_results(
     original_filename=None,
     output_asset_id=None,
     output_file_path=None,
+    source_file_path=None,
 ):
     image_path = Path(image_path)
     object_count_summary_records = object_count_summary_records or []
@@ -68,6 +69,7 @@ def save_image_detection_results(
                 frame_timestamp_seconds=0,
                 output_asset_id=output_asset_id,
                 output_file_path=output_file_path,
+                source_file_path=source_file_path,
             )
             create_detection_results(cursor, processed_frame_id, detection_records)
             create_object_count_summaries(
@@ -157,6 +159,7 @@ def save_video_detection_results(
                     frame_timestamp_seconds=frame_result.timestamp_seconds,
                     output_asset_id=frame_result.output_asset_id,
                     output_file_path=frame_result.output_file_path,
+                    source_file_path=frame_result.source_file_path,
                 )
                 processed_frame_ids.append(processed_frame_id)
 
@@ -349,7 +352,10 @@ def create_processed_frame(
     frame_timestamp_seconds,
     output_asset_id=None,
     output_file_path=None,
+    source_file_path=None,
 ):
+    if source_file_path is not None and output_asset_id is None:
+        raise ValueError("Source images require a stored output asset ID.")
     cursor.execute(
         """
         INSERT INTO processed_frames (
@@ -360,9 +366,10 @@ def create_processed_frame(
             image_width,
             image_height,
             output_asset_id,
-            output_file_path
+            output_file_path,
+            source_file_path
         )
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
         RETURNING id;
         """,
         (
@@ -374,6 +381,7 @@ def create_processed_frame(
             image_height,
             output_asset_id,
             str(output_file_path) if output_file_path is not None else None,
+            str(source_file_path) if source_file_path is not None else None,
         ),
     )
 

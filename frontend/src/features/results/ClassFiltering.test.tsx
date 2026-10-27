@@ -21,18 +21,20 @@ describe("result class filters", () => {
       "51",
     );
     await user.selectOptions(
-      screen.getByRole("combobox", { name: "Table class" }),
+      screen.getByRole("combobox", { name: "Class filter" }),
       "person",
     );
     for (const name of [
       "Whole-image object counts",
       "Selected-cell object counts",
     ]) {
+      await user.click(screen.getByRole("tab", { name: "Stored counts" }));
       const counts = screen.getByRole("table", { name });
       expect(within(counts).getByText("Person")).toBeInTheDocument();
       expect(within(counts).getByText("2")).toBeInTheDocument();
       expect(within(counts).queryByText("Car or van")).not.toBeInTheDocument();
     }
+    await user.click(screen.getByRole("tab", { name: "Detections" }));
     const records = screen.getByRole("table", {
       name: "Whole-frame detection records",
     });
@@ -48,8 +50,9 @@ describe("result class filters", () => {
       screen.getByRole("button", { name: "Row 1, column 2" }),
     ).toHaveAttribute("aria-pressed", "true");
     expect(frame).toEqual(original);
+    await user.click(screen.getByRole("tab", { name: "Stored counts" }));
     await user.selectOptions(
-      screen.getByRole("combobox", { name: "Table class" }),
+      screen.getByRole("combobox", { name: "Class filter" }),
       "",
     );
     expect(
@@ -72,7 +75,7 @@ describe("result class filters", () => {
       "50",
     );
     await user.selectOptions(
-      screen.getByRole("combobox", { name: "Table class" }),
+      screen.getByRole("combobox", { name: "Class filter" }),
       "person",
     );
     expect(
@@ -88,7 +91,7 @@ describe("result class filters", () => {
     expect(
       screen.getByText("No class counts were recorded for this cell."),
     ).toBeInTheDocument();
-    expect(screen.getByRole("combobox", { name: "Table class" })).toHaveValue(
+    expect(screen.getByRole("combobox", { name: "Class filter" })).toHaveValue(
       "person",
     );
   });
@@ -114,7 +117,7 @@ describe("result class filters", () => {
       object_class: "train",
     });
     renderApplication(<FrameResult frame={frame} filename="junction.jpg" />);
-    const select = screen.getByRole("combobox", { name: "Table class" });
+    const select = screen.getByRole("combobox", { name: "Class filter" });
     expect(
       within(select)
         .getAllByRole("option")
@@ -137,6 +140,7 @@ describe("result class filters", () => {
       ).getByText("4"),
     ).toBeInTheDocument();
     await user.selectOptions(select, "bus");
+    await user.click(screen.getByRole("tab", { name: "Stored counts" }));
     expect(
       within(
         screen.getByRole("table", { name: "Whole-image object counts" }),
@@ -158,12 +162,12 @@ describe("result class filters", () => {
     await user.click(screen.getByRole("button", { name: "Go to page 2" }));
     expect(screen.getByText("21-23 of 23 detections")).toBeInTheDocument();
     await user.selectOptions(
-      screen.getByRole("combobox", { name: "Table class" }),
+      screen.getByRole("combobox", { name: "Class filter" }),
       "person",
     );
     expect(screen.getByText("1-2 of 2 detections")).toBeInTheDocument();
     await user.selectOptions(
-      screen.getByRole("combobox", { name: "Table class" }),
+      screen.getByRole("combobox", { name: "Class filter" }),
       "",
     );
     expect(screen.getByText("1-20 of 23 detections")).toBeInTheDocument();
@@ -175,7 +179,7 @@ describe("result class filters", () => {
     frame.visual_asset = null;
     renderApplication(<FrameResult frame={frame} filename="junction.jpg" />);
     await user.selectOptions(
-      screen.getByRole("combobox", { name: "Table class" }),
+      screen.getByRole("combobox", { name: "Class filter" }),
       "person",
     );
     expect(screen.getByText("Result image unavailable")).toBeInTheDocument();
@@ -189,7 +193,7 @@ describe("result class filters", () => {
     frame.grid_cells = [];
     renderApplication(<FrameResult frame={frame} filename="junction.jpg" />);
     expect(
-      screen.getByRole("combobox", { name: "Table class" }),
+      screen.getByRole("combobox", { name: "Class filter" }),
     ).toBeDisabled();
     expect(
       screen.getByText("No detections were stored for this frame."),
@@ -224,11 +228,11 @@ describe("result class filters", () => {
     }
     renderApplication(<RefreshedResult />);
     await user.selectOptions(
-      screen.getByRole("combobox", { name: "Table class" }),
+      screen.getByRole("combobox", { name: "Class filter" }),
       "person",
     );
     await user.click(screen.getByRole("button", { name: "Refresh fixture" }));
-    expect(screen.getByRole("combobox", { name: "Table class" })).toHaveValue(
+    expect(screen.getByRole("combobox", { name: "Class filter" })).toHaveValue(
       "person",
     );
     expect(
@@ -250,15 +254,16 @@ describe("result class filters", () => {
       <VideoResult frames={[first, second]} filename="junction.mp4" />,
     );
     await user.selectOptions(
-      screen.getByRole("combobox", { name: "Table class" }),
+      screen.getByRole("combobox", { name: "Class filter" }),
       "person",
     );
     await user.click(
       screen.getByRole("button", { name: "Next sampled frame" }),
     );
-    expect(screen.getByRole("combobox", { name: "Table class" })).toHaveValue(
+    expect(screen.getByRole("combobox", { name: "Class filter" })).toHaveValue(
       "",
     );
+    await user.click(screen.getByRole("tab", { name: "Stored counts" }));
     expect(
       within(
         screen.getByRole("table", { name: "Whole-frame object counts" }),

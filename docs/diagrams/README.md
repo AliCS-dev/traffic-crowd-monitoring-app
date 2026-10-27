@@ -11,7 +11,7 @@ The SVGs remain readable when enlarged or used as a basis for thesis figures.
 | --- | --- | --- |
 | Running application | [PNG](application_architecture.png), [SVG](application_architecture.svg), [DOT](application_architecture.dot) | Compose services, API routes, processing services and database repositories |
 | Docker build and startup | [PNG](docker_lifecycle.png), [SVG](docker_lifecycle.svg), [DOT](docker_lifecycle.dot) | Dockerfiles, Compose dependency conditions and healthchecks |
-| Database ER diagram | [PNG](../database/database_schema.png), [SVG](../database/database_schema.svg), [DOT](../database/database_schema.dot) | Migrations 001-008, the migration runner and PostgreSQL schema metadata |
+| Database ER diagram | [PNG](../database/database_schema.png), [SVG](../database/database_schema.svg), [DOT](../database/database_schema.dot) | Migrations 001-009, the migration runner and PostgreSQL schema metadata |
 
 ## What the Figures Describe
 
@@ -25,7 +25,7 @@ outside Docker, and the processing components share one backend container.
 Named volumes are storage mounts, not services on the internal network.
 
 The ER diagram uses crow's-foot notation rather than processing arrows. Its
-column names, types and nullability were read from PostgreSQL on 14 October
+column names, types and nullability were checked against PostgreSQL on 26 October
 2026 and compared with the migrations. It includes schema metadata only,
 not user records or credentials. Foreign keys and unique keys describe allowed
 relationships, not the number of rows currently in the database.

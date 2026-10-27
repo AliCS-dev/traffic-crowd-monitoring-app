@@ -40,40 +40,46 @@ function ResultPageContent({ sessionId }: { sessionId: string | undefined }) {
 
   return (
     <>
-      <PageHeader
-        description={numericSessionId === null ? "" : `Analysis ${sessionId}`}
-        title="Analysis results"
-      />
-      <Box
-        component="form"
-        onSubmit={handleLookup}
-        sx={{
-          display: "flex",
-          alignItems: "flex-start",
-          gap: 1.5,
-          mb: 3,
-          maxWidth: 430,
-        }}
-      >
-        <TextField
-          error={lookupError}
-          fullWidth
-          helperText={lookupError ? "Enter a positive session ID." : " "}
-          label="Session ID"
-          onChange={(event) => setLookupValue(event.target.value)}
-          size="small"
-          slotProps={{ htmlInput: { inputMode: "numeric" } }}
-          value={lookupValue}
-        />
-        <Button
-          startIcon={<Search aria-hidden size={18} />}
-          sx={{ minHeight: 40, flexShrink: 0 }}
-          type="submit"
-          variant="contained"
-        >
-          Find
-        </Button>
-      </Box>
+      {(numericSessionId === null || invalidSessionId) && (
+        <>
+          <PageHeader
+            description={
+              numericSessionId === null ? "" : `Analysis ${sessionId}`
+            }
+            title="Analysis results"
+          />
+          <Box
+            component="form"
+            onSubmit={handleLookup}
+            sx={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: 1.5,
+              mb: 3,
+              maxWidth: 430,
+            }}
+          >
+            <TextField
+              error={lookupError}
+              fullWidth
+              helperText={lookupError ? "Enter a positive session ID." : " "}
+              label="Session ID"
+              onChange={(event) => setLookupValue(event.target.value)}
+              size="small"
+              slotProps={{ htmlInput: { inputMode: "numeric" } }}
+              value={lookupValue}
+            />
+            <Button
+              startIcon={<Search aria-hidden size={18} />}
+              sx={{ minHeight: 40, flexShrink: 0 }}
+              type="submit"
+              variant="contained"
+            >
+              Find
+            </Button>
+          </Box>
+        </>
+      )}
       {invalidSessionId ? (
         <StatePanel
           description="The session identifier must be a positive integer."

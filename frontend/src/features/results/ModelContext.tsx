@@ -28,7 +28,7 @@ export function DetectorQuality({
   return (
     <Alert
       severity={profile?.quality_gate_status === "passed" ? "info" : "warning"}
-      sx={{ mb: 3 }}
+      sx={{ mb: 1 }}
     >
       {profile
         ? qualityMessages[profile.quality_gate_status]

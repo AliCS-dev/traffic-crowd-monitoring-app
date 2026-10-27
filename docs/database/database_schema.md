@@ -44,9 +44,9 @@ as new migration files; applied files are immutable.
 
 ![Crow's-foot entity-relationship diagram showing all PostgreSQL tables, columns, data types, keys and optional or one-to-many relationships](database_schema.png)
 
-*Physical entity-relationship diagram after migrations 001-008, checked against
-the local PostgreSQL schema on 14 October 2026. It includes all 11 tables,
-104 columns and 13 foreign-key relationships. Open the full-size version to
+*Physical entity-relationship diagram after migrations 001-009, checked against
+the local PostgreSQL schema on 26 October 2026. It includes all 11 tables,
+105 columns and 13 foreign-key relationships. Open the full-size version to
 read the column details.*
 
 [Open the full-size image](database_schema.png) |
@@ -176,6 +176,11 @@ video records remain valid with both fields null. New image analyses and sampled
 video frames store generated JPEG references. The read schema exposes the UUID,
 controlled asset URL, dimensions, and coordinate-space description, but not the
 server path.
+
+Migration `009` adds nullable `source_file_path` for an unannotated image in the
+same processed coordinate space. It requires an output asset ID and shares that
+UUID's `/source` route. New API analyses store both JPEGs; old rows remain null.
+The media cleanup query protects this path alongside the annotated output.
 
 ### `detection_results`
 

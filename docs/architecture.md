@@ -375,11 +375,13 @@ to the right, and y increasing downwards. The width and height in
 served through `visual_asset.url`. Output writing rejects a rendered image when
 its dimensions do not match this metadata.
 
-Detection boxes are already rendered in the generated JPEG, which is stated in
-`visual_asset.rendered_overlays`. The API still returns each detection box for
-inspection and interaction. Grid cells are returned as metadata and will be
-drawn by the result interface, so they can be shown or hidden without generating
-a second image.
+`visual_asset` retains the annotated JPEG. New API analyses also store a clean
+processed JPEG and expose it as `source_asset` with no rendered overlays.
+The browser draws metadata-driven boxes and grids over that clean image. One
+shared transform moves the image and both layers together during pan and zoom.
+We retain processed pixels, not a claim that the resized JPEG is the original
+upload byte for byte. Older rows have no source asset and keep their annotated
+preview. Viewing a result never reruns inference or silently backfills old files.
 
 The asset route accepts only a stored UUID. It looks up the private path in
 PostgreSQL, resolves symbolic links and relative path components, and serves only
@@ -405,10 +407,11 @@ and failed requests have separate recovery states. The frontend uses the saved
 model profile, not current runtime configuration, to describe a result's
 evaluation status and confidence threshold.
 
-The saved JPEG already contains detection boxes. We display that asset at its
-original aspect ratio, with no duplicate browser overlay. The client accepts
-only the matching public `/api/assets/{asset_id}` reference and resolves it
-against the configured API base URL. A missing image does not hide stored counts.
+The viewer prefers the clean image and draws selectable boxes from detection
+records. When only an annotated JPEG exists, we keep it visibly labelled and
+disable duplicate detection overlays. The client accepts only the matching
+public `/api/assets/{asset_id}` or `/source` variant against the configured API
+base URL. A missing image does not hide stored counts.
 Whole-frame summaries and detection records are displayed independently of
 grid-cell summaries. Dense-crowd decisions remain a separate result with an
 explicit unsupported or unrecorded state.
@@ -433,13 +436,18 @@ Switching frames resets this state. Selected-cell summaries and whole-frame
 summaries share a table component but remain separate datasets. The browser
 neither recounts detections nor combines cell counts with frame counts.
 
-The frame component also owns a table-class filter. Available classes come from
+The frame component owns the class and display-confidence filters. Classes come from
 the union of detections, whole-frame summaries, and grid summaries. Filtering
 selects stored rows by exact class name without changing the API response or
 recalculating counts. Changing the class resets detection pagination but leaves
 the selected cell intact; changing frames resets both. A refresh preserves the
-active class, including a class with no remaining matches. The saved JPEG and
-its rasterised detection boxes remain an explicitly all-class visual asset.
+active class, including a class with no remaining matches. The class filter also
+selects clean-image overlays. Display confidence affects detection rows and
+boxes, not saved summaries, alerts or inference settings. Matching records and
+the stored total remain distinct. The legacy JPEG's rasterised boxes remain
+explicitly all-class. A selection inspector connects detection rows and boxes;
+frame records sit in tabs below the scene. Model and runtime details remain
+available, with the experimental status visible near the viewport.
 
 The same frame response supplies the read-only alert list. We render stored rule
 metadata rather than loading today's configuration or re-evaluating thresholds.

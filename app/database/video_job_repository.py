@@ -179,6 +179,7 @@ def complete_video_analysis_job(
                     result.timestamp_seconds,
                     output_asset_id=result.output_asset_id,
                     output_file_path=result.output_file_path,
+                    source_file_path=result.source_file_path,
                 )
                 create_detection_results(cursor, frame_id, result.detection_records)
                 create_object_count_summaries(

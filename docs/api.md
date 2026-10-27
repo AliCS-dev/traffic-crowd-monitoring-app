@@ -30,6 +30,7 @@ The API provides these routes:
 - `GET /api/analyses/videos/{session_id}` returns video-job progress;
 - `GET /api/analyses/{session_id}` returns one complete stored result;
 - `GET /api/assets/{asset_id}` returns one controlled generated image;
+- `GET /api/assets/{asset_id}/source` returns its unannotated processed image, when recorded;
 - `GET /docs` opens the generated interactive OpenAPI documentation;
 - `GET /openapi.json` returns the machine-readable API contract.
 
@@ -118,8 +119,15 @@ server path. We can download that generated JPEG with:
 curl http://127.0.0.1:8000/api/assets/<asset-id> --output result.jpg
 ```
 
+New image analyses and sampled video frames also include `source_asset`, with
+the same UUID, a `/source` URL and an empty `rendered_overlays` list. Its pixels
+have the same processed dimensions as the stored box and grid coordinates.
+`visual_asset` remains the annotated download. Older frames have a null
+`source_asset`; we do not reconstruct their media or rerun inference during a
+read. Both asset routes use the same stored-path checks and allowed directories.
+
 All visual coordinates use the processed image returned by that URL. The origin
 is the top-left corner, x increases to the right, and y increases downwards. The
-generated JPEG already contains the detection boxes. Detection records and grid
-cells remain in the JSON so the result interface can inspect detections and draw
-the grid without changing the saved image.
+annotated JPEG already contains detection boxes; the source JPEG does not.
+Detection records and grid cells remain in the JSON so the browser can draw
+interactive layers over the clean image without changing either saved file.

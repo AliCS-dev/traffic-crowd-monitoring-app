@@ -43,12 +43,15 @@ class OutputAssetService:
             raise ValueError("At least one output asset directory is required.")
         self._asset_reader = asset_reader
 
-    def resolve(self, asset_id: UUID) -> ResolvedOutputAsset:
+    def resolve(self, asset_id: UUID, *, source: bool = False) -> ResolvedOutputAsset:
         record = self._asset_reader(asset_id)
         if record is None:
             raise OutputAssetNotFoundError("Output asset not found.")
 
-        resolved_path = record.file_path.resolve()
+        path = record.source_file_path if source else record.file_path
+        if path is None:
+            raise OutputAssetUnavailableError("Source image is unavailable.")
+        resolved_path = path.resolve()
         if not any(
             resolved_path.is_relative_to(directory)
             for directory in self._allowed_directories

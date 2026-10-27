@@ -145,8 +145,10 @@ backend is ready; `/api/ready` checks the application through the proxy.
 
 ## Live Browser Check
 
-The dedicated check runs against an already healthy stack, with no API mocks.
-It creates one stored image session for each desktop/mobile test. We use an
+The dedicated suite runs against an already healthy stack, with no API mocks.
+It creates one image and one video session for each desktop/mobile layout.
+The video test uses the tracked roundabout fixture and checks clean media and
+overlay changes across its three sampled frames. We use an
 isolated Compose project for verification rather than a thesis evidence database.
 From `frontend/`, with the Node version in `.nvmrc` and a local image:
 
@@ -161,7 +163,7 @@ STACK_IMAGE=/absolute/path/to/image.jpg npm run test:stack
 we can reuse a session and the image hash printed by a previous run:
 
 ```bash
-STACK_SESSION_ID=1 STACK_EXPECTED_ASSET_SHA256=<recorded-hash> npm run test:stack
+STACK_SESSION_ID=1 STACK_EXPECTED_ASSET_SHA256=<recorded-hash> npm run test:stack -- image-analysis.spec.ts
 ```
 
 The check saves screenshots and a JSON evidence attachment in the ignored
@@ -169,6 +171,8 @@ The check saves screenshots and a JSON evidence attachment in the ignored
 both application images, and checks backend dependencies/imports and Nginx/SPA
 routing, alongside existing unit, database, and mocked browser tests. The real GPU workflow is a local check;
 it is not presented as a GitHub-hosted GPU test or an accuracy benchmark.
+The [October workspace report](scene_workspace_verification.md) records the
+latest image and video checks for the interactive viewer.
 
 ## Verification Record
 

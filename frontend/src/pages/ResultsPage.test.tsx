@@ -54,6 +54,7 @@ describe("ResultsPage", () => {
     expect(
       screen.getByRole("link", { name: "Open result image" }),
     ).toHaveAttribute("rel", "noopener noreferrer");
+    await userEvent.click(screen.getByRole("tab", { name: "Stored counts" }));
     const counts = screen.getByRole("table", {
       name: "Whole-image object counts",
     });
@@ -116,6 +117,7 @@ describe("ResultsPage", () => {
       await screen.findByAltText("Detection result for junction.jpg"),
     );
     expect(screen.getByText("Result image unavailable")).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("tab", { name: "Stored counts" }));
     expect(
       screen.getByRole("table", { name: "Whole-image object counts" }),
     ).toBeInTheDocument();
@@ -175,6 +177,7 @@ describe("ResultsPage", () => {
       name: "Previous sampled frame",
     });
     const next = screen.getByRole("button", { name: "Next sampled frame" });
+    await user.click(screen.getByRole("tab", { name: "Stored counts" }));
     expect(previous).toBeDisabled();
     expect(
       screen.getByAltText("Detection result for junction.mp4, frame 0"),
@@ -195,11 +198,13 @@ describe("ResultsPage", () => {
     expect(
       screen.queryByAltText("Detection result for junction.mp4, frame 0"),
     ).not.toBeInTheDocument();
+    await user.click(screen.getByRole("tab", { name: "Stored counts" }));
     const counts = screen.getByRole("table", {
       name: "Whole-frame object counts",
     });
     expect(within(counts).getByText("Truck")).toBeInTheDocument();
     expect(within(counts).getByText("21")).toBeInTheDocument();
+    await user.click(screen.getByRole("tab", { name: "Detections" }));
     await user.click(screen.getByRole("button", { name: "Go to page 2" }));
     expect(screen.getByText("21-21 of 21 detections")).toBeInTheDocument();
     await user.click(next);
@@ -340,6 +345,7 @@ describe("ResultsPage", () => {
         screen.getByRole("table", { name: "Whole-frame detection records" }),
       ).getByText("120"),
     ).toBeInTheDocument();
+    await user.click(screen.getByRole("tab", { name: "Stored counts" }));
     expect(
       within(
         screen.getByRole("table", { name: "Whole-image object counts" }),
@@ -414,6 +420,6 @@ describe("ResultsPage", () => {
     await user.click(screen.getByRole("link", { name: "Another session" }));
     expect(await screen.findByText("Stored run 43")).toBeInTheDocument();
     expect(screen.queryByText("Stored run 42")).not.toBeInTheDocument();
-    expect(screen.getByLabelText("Session ID")).toHaveValue("43");
+    expect(screen.queryByLabelText("Session ID")).not.toBeInTheDocument();
   });
 });

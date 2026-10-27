@@ -67,6 +67,7 @@ def test_fresh_database_applies_migrations_once(isolated_database_schema):
         6,
         7,
         8,
+        9,
     ]
     assert second_result.applied == ()
     assert [migration.version for migration in second_result.previously_applied] == [
@@ -78,6 +79,7 @@ def test_fresh_database_applies_migrations_once(isolated_database_schema):
         6,
         7,
         8,
+        9,
     ]
 
     with connection_factory() as connection:
@@ -94,6 +96,7 @@ def test_fresh_database_applies_migrations_once(isolated_database_schema):
                 (6, "add_video_analysis_jobs"),
                 (7, "add_threshold_alert_metadata"),
                 (8, "add_runtime_provenance"),
+                (9, "add_source_frame_assets"),
             ]
             cursor.execute("SELECT to_regclass('monitoring_sessions');")
             assert cursor.fetchone() == ("monitoring_sessions",)
@@ -109,6 +112,62 @@ def test_fresh_database_applies_migrations_once(isolated_database_schema):
             assert cursor.fetchone() == ("dense_crowd_analysis_results",)
             cursor.execute("SELECT to_regclass('idx_alerts_rule_lineage_unique');")
             assert cursor.fetchone() == ("idx_alerts_rule_lineage_unique",)
+
+
+def test_source_asset_migration_preserves_legacy_frames_and_requires_output(
+    isolated_database_schema, tmp_path, monkeypatch
+):
+    _schema_name, connection_factory = isolated_database_schema
+    for path in sorted(MIGRATIONS_DIRECTORY.glob("*.sql"))[:8]:
+        shutil.copy(path, tmp_path / path.name)
+    apply_pending_migrations(tmp_path, connection_factory=connection_factory)
+    asset_id = uuid.uuid4()
+    with connection_factory() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                "INSERT INTO monitoring_sessions (session_name, status) "
+                "VALUES ('legacy image', 'completed') RETURNING id;"
+            )
+            session_id = cursor.fetchone()[0]
+            cursor.execute(
+                "INSERT INTO input_sources (session_id, source_type, file_path) "
+                "VALUES (%s, 'image', '/input/legacy.jpg') RETURNING id;",
+                (session_id,),
+            )
+            source_id = cursor.fetchone()[0]
+            cursor.execute(
+                """INSERT INTO processed_frames (
+                    session_id, input_source_id, image_width, image_height,
+                    output_asset_id, output_file_path
+                ) VALUES (%s, %s, 100, 50, %s, '/output/legacy.jpg') RETURNING id;""",
+                (session_id, source_id, asset_id),
+            )
+            frame_id = cursor.fetchone()[0]
+
+    result = apply_pending_migrations(connection_factory=connection_factory)
+    assert [migration.version for migration in result.applied] == [9]
+    monkeypatch.setattr(
+        "app.database.monitoring_query_repository.open_database_connection",
+        connection_factory,
+    )
+    frame = get_monitoring_session(session_id).frames[0]
+    assert frame.id == frame_id
+    assert frame.visual_asset.asset_id == asset_id
+    assert frame.source_asset is None
+    with connection_factory() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                "UPDATE processed_frames SET source_file_path = %s WHERE id = %s;",
+                ("/output/legacy.source.jpg", frame_id),
+            )
+            cursor.execute("SAVEPOINT invalid_source;")
+            with pytest.raises(CheckViolation):
+                cursor.execute(
+                    "UPDATE processed_frames SET output_asset_id = NULL, "
+                    "output_file_path = NULL WHERE id = %s;",
+                    (frame_id,),
+                )
+            cursor.execute("ROLLBACK TO SAVEPOINT invalid_source;")
 
 
 def test_existing_initial_schema_is_adopted_without_data_loss(
@@ -143,6 +202,7 @@ def test_existing_initial_schema_is_adopted_without_data_loss(
         6,
         7,
         8,
+        9,
     ]
     with connection_factory() as connection:
         with connection.cursor() as cursor:
@@ -161,6 +221,7 @@ def test_existing_initial_schema_is_adopted_without_data_loss(
                 (6,),
                 (7,),
                 (8,),
+                (9,),
             ]
 
 
@@ -281,7 +342,7 @@ def test_migration_preserves_historical_profile_without_inventing_runtime(
                 (session_id, "a" * 64),
             )
     result = apply_pending_migrations(connection_factory=connection_factory)
-    assert [migration.version for migration in result.applied] == [8]
+    assert [migration.version for migration in result.applied] == [8, 9]
     monkeypatch.setattr(
         "app.database.monitoring_query_repository.open_database_connection",
         connection_factory,

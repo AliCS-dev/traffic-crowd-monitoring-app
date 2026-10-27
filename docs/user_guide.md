@@ -4,8 +4,8 @@
 
 We use the browser to submit aerial media, inspect the results and return to
 previous analyses. This walkthrough follows a real image run through the local
-application. It shows the current interface, before the planned workspace
-redesign.
+application. The scene-first workspace keeps the media, interactive layers and
+selected-object details together.
 
 The screenshots use an attributed development image from *Traffic images
 captured from UAVs*. The boxes are model predictions, not reference annotations.
@@ -16,7 +16,7 @@ version and capture details.
 
 With the application running, open <http://localhost:8080> and choose the
 workspace. A different `FRONTEND_PORT` changes that address; the documentation
-capture used port 8081. The [Compose guide](compose_stack.md) covers first setup.
+capture used port 8083. The [Compose guide](compose_stack.md) covers first setup.
 
 1. Choose **Image** and select a JPG or PNG file.
 2. Give the session a name so it is easy to recognise later.
@@ -36,15 +36,26 @@ The result page keeps whole-image counts separate from counts for a selected
 cell. Selecting a cell on the image or in **Grid cell** changes the cell table.
 The **Grid overlay** switch hides the grid without changing stored results.
 
-![Roundabout detection result with a selected grid cell, whole-image counts and selected-cell counts](images/user-guide/image-result.png)
+![Roundabout result with interactive boxes, a selected grid cell and its stored counts](images/user-guide/image-result.png)
 
 *We can compare one part of the scene with the complete image. The warning above
 the result remains visible because this detector failed its quality gate.*
 
-**Table class** filters the count tables and detection records. It does not
-remove boxes already drawn into the saved image or change the detector settings.
-The detection table below the image contains the recorded classes and confidence
-scores. Box coordinates are available in the stored API result.
+**Class filter** changes the interactive boxes and matching records. We can
+hide detection or grid layers, zoom, fit the image, and switch to the hand tool
+to pan. Selecting a box or a detection row opens its class, confidence and
+coordinates in the inspector. Selecting a grid cell shows its stored summaries.
+
+**Display confidence** hides lower-scoring records; it does not rerun the model,
+recover detections below the original inference threshold, or recalculate stored
+summaries and alerts. Matching records and the all-class stored total are shown
+separately. The tabs below the scene contain detections, stored counts and
+experimental alerts. Older sessions retain a labelled annotated preview whose
+baked-in boxes cannot be hidden or filtered.
+
+On a narrow screen, the inspector sits below the scene:
+
+![Mobile analysis workspace with the real roundabout result](images/user-guide/image-result-mobile.png)
 
 Further down, the page records the model used and the dense-crowd decision:
 

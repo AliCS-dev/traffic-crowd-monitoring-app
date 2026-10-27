@@ -40,12 +40,14 @@ describe("grid inspection", () => {
     expect(within(counts).getByText("Person")).toBeInTheDocument();
     expect(within(counts).getByText("2")).toBeInTheDocument();
     expect(within(counts).queryByText("Car or van")).not.toBeInTheDocument();
+    await user.click(screen.getByRole("tab", { name: "Stored counts" }));
     const whole = screen.getByRole("table", {
       name: "Whole-image object counts",
     });
     expect(within(whole).getAllByRole("row")).toHaveLength(3);
     expect(within(whole).getByText("1")).toBeInTheDocument();
     expect(within(whole).getByText("2")).toBeInTheDocument();
+    await user.click(screen.getByRole("tab", { name: "Detections" }));
     expect(
       within(
         screen.getByRole("table", { name: "Whole-frame detection records" }),

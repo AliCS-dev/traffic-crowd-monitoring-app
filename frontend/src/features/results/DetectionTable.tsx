@@ -9,6 +9,7 @@ import {
   TableHead,
   TableRow,
   Typography,
+  Button,
 } from "@mui/material";
 import type { DetectionResult } from "../../api/analysisResults.ts";
 import { formatConfidence, formatLabel } from "./resultFormatting.ts";
@@ -18,9 +19,17 @@ const PAGE_SIZE = 20;
 export function DetectionTable({
   detections,
   classFilter = null,
+  selectedId = null,
+  onSelect,
+  onClearSelection,
+  emptyMessage,
 }: {
   detections: DetectionResult[];
   classFilter?: string | null;
+  selectedId?: number | null;
+  onSelect?: (id: number) => void;
+  onClearSelection?: () => void;
+  emptyMessage?: string;
 }) {
   const [page, setPage] = useState(1);
   const visibleDetections =
@@ -30,7 +39,13 @@ export function DetectionTable({
           (detection) => detection.object_class === classFilter,
         );
   const totalPages = Math.ceil(visibleDetections.length / PAGE_SIZE);
-  const currentPage = Math.min(page, Math.max(1, totalPages));
+  const selectedIndex = visibleDetections.findIndex(
+    (item) => item.id === selectedId,
+  );
+  const currentPage =
+    selectedIndex >= 0
+      ? Math.floor(selectedIndex / PAGE_SIZE) + 1
+      : Math.min(page, Math.max(1, totalPages));
   const offset = (currentPage - 1) * PAGE_SIZE;
   return (
     <Box
@@ -75,9 +90,24 @@ export function DetectionTable({
               {visibleDetections
                 .slice(offset, offset + PAGE_SIZE)
                 .map((detection) => (
-                  <TableRow key={detection.id}>
+                  <TableRow
+                    key={detection.id}
+                    selected={selectedId === detection.id}
+                  >
                     <TableCell sx={{ overflowWrap: "anywhere" }}>
-                      {detection.id}
+                      {onSelect ? (
+                        <Button
+                          size="small"
+                          aria-label={`Inspect detection ${detection.id}`}
+                          aria-pressed={selectedId === detection.id}
+                          onClick={() => onSelect(detection.id)}
+                          sx={{ minWidth: 40 }}
+                        >
+                          {detection.id}
+                        </Button>
+                      ) : (
+                        detection.id
+                      )}
                     </TableCell>
                     <TableCell sx={{ overflowWrap: "anywhere" }}>
                       {formatLabel(detection.object_class)}
@@ -100,7 +130,10 @@ export function DetectionTable({
                 aria-label="Detection pages"
                 count={totalPages}
                 page={currentPage}
-                onChange={(_, value) => setPage(value)}
+                onChange={(_, value) => {
+                  setPage(value);
+                  onClearSelection?.();
+                }}
                 size="small"
                 siblingCount={0}
               />
@@ -109,9 +142,10 @@ export function DetectionTable({
         </>
       ) : (
         <Typography color="text.secondary">
-          {detections.length && classFilter !== null
-            ? `No stored detections match ${formatLabel(classFilter)}.`
-            : "No detections were stored for this frame."}
+          {emptyMessage ??
+            (detections.length && classFilter !== null
+              ? `No stored detections match ${formatLabel(classFilter)}.`
+              : "No detections were stored for this frame.")}
         </Typography>
       )}
     </Box>

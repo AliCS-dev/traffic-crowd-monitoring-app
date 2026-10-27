@@ -119,6 +119,7 @@ def test_complete_image_api_workflow_persists_and_reads_result(tmp_path):
             result = client.get(f"/api/analyses/{session_id}")
             visual_asset_url = result.json()["frames"][0]["visual_asset"]["url"]
             visual_asset = client.get(visual_asset_url)
+            source_asset = client.get(result.json()["frames"][0]["source_asset"]["url"])
 
         assert created.status_code == 201
         assert result.status_code == 200
@@ -147,6 +148,14 @@ def test_complete_image_api_workflow_persists_and_reads_result(tmp_path):
             cv2.IMREAD_COLOR,
         )
         assert decoded_asset.shape[:2] == (100, 200)
+        assert frame["source_asset"]["rendered_overlays"] == []
+        assert source_asset.status_code == 200
+        source_pixels = cv2.imdecode(
+            np.frombuffer(source_asset.content, dtype=np.uint8), cv2.IMREAD_COLOR
+        )
+        assert source_pixels.shape == decoded_asset.shape
+        assert np.all(source_pixels == 127)
+        assert np.all(decoded_asset == 200)
         assert len(frame["detections"]) == 1
         assert frame["detections"][0]["object_class"] == "car_or_van"
         assert frame["frame_summaries"][0]["object_count"] == 1
@@ -165,7 +174,7 @@ def test_complete_image_api_workflow_persists_and_reads_result(tmp_path):
             == 1
         )
         assert len(list(settings.image_upload_directory.iterdir())) == 1
-        assert len(list(settings.image_output_directory.iterdir())) == 1
+        assert len(list(settings.image_output_directory.iterdir())) == 2
 
         with open_database_connection() as connection:
             with connection.cursor() as cursor:

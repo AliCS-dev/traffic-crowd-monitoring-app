@@ -72,9 +72,13 @@ Selecting the arrow at the end of a row opens that session's result route.
 ## Reading Stored Results
 
 At `/analyses/<session-id>`, we can inspect a stored image analysis and its
-original filename, processing status, and timestamps. The image already contains
-the saved detection boxes, so the browser preserves its proportions without
-drawing duplicate boxes. An available image can be opened at full resolution.
+original filename, processing status, and timestamps. The main viewport uses a
+clean processed image when available, with interactive detection and grid layers.
+Zoom, fit, fullscreen and hand-tool panning preserve the same coordinate space.
+The inspector shows a selected detection or grid cell; frame records are grouped
+under **Detections**, **Stored counts** and **Experimental alerts**.
+Older results retain an explicitly labelled annotated preview without duplicate
+boxes. An available image can be opened at full resolution.
 Only asset references matching the backend's public asset route become links.
 
 Whole-image counts come from `frame_summaries`; they do not include grid-cell
@@ -83,7 +87,7 @@ pagination for longer lists. Missing summaries, missing images, and missing
 frames have separate states so we do not mistake absent data for zero objects.
 
 We show the detector's recorded quality-gate decision near the image and the
-saved model profile below it. These describe that particular run rather than
+saved model profile under **Model and runtime details**. These describe that run rather than
 the application's current default model. Dense-crowd results remain separate
 from detector-based person counts. An unsupported crowd decision has no numeric
 count, and older sessions without a decision are identified as unrecorded.
@@ -107,9 +111,9 @@ rather than combined into a single timeline.
 ### Inspecting Stored Grids
 
 When a frame includes a stored grid, we display its cell boundaries over the
-saved image. The overlay follows the stored pixel bounds, including fractional
-coordinates, and scales with the uncropped image. A visibility toggle leaves the
-saved image and its detection boxes unchanged.
+image. The overlay follows the stored pixel bounds, including fractional
+coordinates, and shares the image's pan and zoom transform. Layer toggles do not
+change the saved files or counts.
 
 Cell selection works on the image, with keyboard-focusable cell buttons, or
 through the row/column selector. We display rows and columns starting at one;
@@ -130,7 +134,7 @@ people per square metre. Dense-crowd estimates remain a separate result.
 
 ### Filtering Stored Classes
 
-The **Table class** selector offers the classes present in a frame's detections,
+The **Class filter** selector offers the classes present in a frame's detections,
 whole-frame summaries, or cell summaries. We can inspect one class or return to
 **All classes**. Matching uses the stored class name, not a renamed model label.
 
@@ -145,9 +149,13 @@ selected grid cell. Refreshing a frame keeps the selected class even if the
 updated records have no matches. Opening another frame or session resets the
 filter to all classes.
 
-The saved detection JPEG remains unchanged and is labelled as an all-class
-overlay. This is a table filter, not a visual-box filter or an inference setting.
-Grid boundaries, model provenance, and dense-crowd decisions are unaffected.
+On clean media, the class filter also changes detection overlays. **Display
+confidence** filters detection rows and boxes without recalculating stored
+summaries or alerts. It cannot recover detections below the inference threshold.
+The matching-record count is separate from the all-class stored total. Legacy
+annotated previews remain labelled as all-class images: their baked-in boxes
+cannot respond to filtering. Grid boundaries, model provenance and dense-crowd
+decisions are unaffected.
 
 ### Reading Experimental Alerts
 

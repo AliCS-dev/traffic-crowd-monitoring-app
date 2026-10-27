@@ -33,6 +33,8 @@ class VideoFrameDetectionResult:
     alert_records: tuple["ThresholdAlert", ...] = ()
     output_asset_id: UUID | None = None
     output_file_path: Path | None = None
+    source_file_path: Path | None = None
+    source_image: np.ndarray | None = field(default=None, repr=False, compare=False)
     annotated_image: np.ndarray | None = field(
         default=None,
         repr=False,
@@ -78,4 +80,5 @@ def process_sampled_video_frames(
             detection_records=extract_detection_records(first_result, class_mapping),
             object_counts=count_detected_objects(first_result, class_mapping),
             annotated_image=annotated_image,
+            source_image=processed_image,
         )

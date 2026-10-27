@@ -19,7 +19,7 @@ class FakeAssetService:
         self.result = result
         self.calls = []
 
-    def resolve(self, asset_id):
+    def resolve(self, asset_id, *, source=False):
         self.calls.append(asset_id)
         if isinstance(self.result, Exception):
             raise self.result
@@ -70,6 +70,25 @@ def test_asset_endpoint_rejects_invalid_identifier_before_service_call():
     assert response.status_code == 422
     assert response.json()["error"]["code"] == "validation_error"
     assert asset_service.calls == []
+
+
+def test_source_endpoint_uses_only_the_stored_source_reference(tmp_path):
+    path = tmp_path / "clean.jpg"
+    path.write_bytes(b"clean image")
+
+    class SourceService:
+        def resolve(self, asset_id, *, source=False):
+            assert source is True
+            assert asset_id == ASSET_ID
+            return ResolvedOutputAsset(asset_id, path, "image/jpeg")
+
+    with TestClient(create_asset_app(SourceService())) as client:
+        response = client.get(f"/api/assets/{ASSET_ID}/source")
+        invalid = client.get("/api/assets/invalid/source")
+    assert response.status_code == 200
+    assert response.content == b"clean image"
+    assert response.headers["x-content-type-options"] == "nosniff"
+    assert invalid.status_code == 422
 
 
 def test_asset_endpoint_reports_unknown_and_unavailable_assets():

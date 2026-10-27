@@ -203,6 +203,7 @@ def _load_frames(cursor, session_id):
             image_width,
             image_height,
             output_asset_id,
+            source_file_path,
             processed_at
         FROM processed_frames
         WHERE session_id = %s
@@ -403,6 +404,7 @@ def _build_frame(values):
     row = values["row"]
     coordinate_space = None
     visual_asset = None
+    source_asset = None
     if row["image_width"] is not None and row["image_height"] is not None:
         coordinate_space = PixelCoordinateSpace(
             width=row["image_width"],
@@ -415,6 +417,14 @@ def _build_frame(values):
                 width=row["image_width"],
                 height=row["image_height"],
             )
+            if row.get("source_file_path") is not None:
+                source_asset = VisualAssetReference(
+                    asset_id=row["output_asset_id"],
+                    url=f"/api/assets/{row['output_asset_id']}/source",
+                    width=row["image_width"],
+                    height=row["image_height"],
+                    rendered_overlays=(),
+                )
     return ProcessedFrameResult(
         id=row["id"],
         input_source_id=row["input_source_id"],
@@ -424,6 +434,7 @@ def _build_frame(values):
         image_height=row["image_height"],
         output_asset_id=row["output_asset_id"],
         visual_asset=visual_asset,
+        source_asset=source_asset,
         coordinate_space=coordinate_space,
         processed_at=row["processed_at"],
         detections=values["detections"],

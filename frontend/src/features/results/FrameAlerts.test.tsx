@@ -124,8 +124,9 @@ describe("recorded threshold events", () => {
     const frame = alertResultFixture().frames[0];
     frame.visual_asset = null;
     renderApplication(<FrameResult frame={frame} filename="junction.jpg" />);
+    await user.click(screen.getByRole("tab", { name: "Experimental alerts" }));
     await user.selectOptions(
-      screen.getByRole("combobox", { name: "Table class" }),
+      screen.getByRole("combobox", { name: "Class filter" }),
       "car_or_van",
     );
     await user.click(
@@ -134,7 +135,7 @@ describe("recorded threshold events", () => {
     const selector = screen.getByRole("combobox", { name: "Grid cell" });
     expect(selector).toHaveValue("51");
     expect(selector).toHaveFocus();
-    expect(screen.getByRole("combobox", { name: "Table class" })).toHaveValue(
+    expect(screen.getByRole("combobox", { name: "Class filter" })).toHaveValue(
       "car_or_van",
     );
     expect(screen.getAllByRole("article")).toHaveLength(2);
@@ -203,10 +204,12 @@ describe("recorded threshold events", () => {
     renderApplication(
       <VideoResult frames={[first, second]} filename="junction.mp4" />,
     );
+    await user.click(screen.getByRole("tab", { name: "Experimental alerts" }));
     await user.click(screen.getByRole("button", { name: "Go to page 2" }));
     await user.click(
       screen.getByRole("button", { name: "Next sampled frame" }),
     );
+    await user.click(screen.getByRole("tab", { name: "Experimental alerts" }));
     expect(
       screen.getByRole("article", { name: "second-frame-event" }),
     ).toBeInTheDocument();
@@ -216,6 +219,7 @@ describe("recorded threshold events", () => {
     await user.click(
       screen.getByRole("button", { name: "Previous sampled frame" }),
     );
+    await user.click(screen.getByRole("tab", { name: "Experimental alerts" }));
     expect(screen.getByText("1-5 of 6 events")).toBeInTheDocument();
   });
 });

@@ -175,10 +175,10 @@ def test_save_video_results_associates_multiple_frames_and_records(monkeypatch):
     assert ("input_source", (10, "video", "data/input/traffic.mp4", "traffic.mp4")) in (
         cursor.execute_calls
     )
-    assert ("processed_frame", (10, 20, 0, 0.0, 1280, 720, None, None)) in (
+    assert ("processed_frame", (10, 20, 0, 0.0, 1280, 720, None, None, None)) in (
         cursor.execute_calls
     )
-    assert ("processed_frame", (10, 20, 120, 4.0, 1280, 720, None, None)) in (
+    assert ("processed_frame", (10, 20, 120, 4.0, 1280, 720, None, None, None)) in (
         cursor.execute_calls
     )
     assert any(
@@ -260,7 +260,7 @@ def test_save_video_result_records_frame_without_detections(monkeypatch):
     assert stored_result["frame_count"] == 1
     assert stored_result["detection_count"] == 0
     assert stored_result["object_count_summary_count"] == 0
-    assert ("processed_frame", (10, 20, 30, 1.0, 1280, 720, None, None)) in (
+    assert ("processed_frame", (10, 20, 30, 1.0, 1280, 720, None, None, None)) in (
         cursor.execute_calls
     )
     assert cursor.executemany_calls == []
@@ -332,7 +332,7 @@ def test_existing_image_storage_uses_image_source_and_zero_frame(monkeypatch):
     assert ("input_source", (10, "image", "data/input/image.jpg", "image.jpg")) in (
         cursor.execute_calls
     )
-    assert ("processed_frame", (10, 20, 0, 0, 640, 480, None, None)) in (
+    assert ("processed_frame", (10, 20, 0, 0, 640, 480, None, None, None)) in (
         cursor.execute_calls
     )
 
@@ -367,6 +367,7 @@ def test_image_storage_persists_public_and_private_output_references(monkeypatch
             480,
             asset_id,
             "data/output/analyses/result.jpg",
+            None,
         ),
     ) in cursor.execute_calls
     assert (

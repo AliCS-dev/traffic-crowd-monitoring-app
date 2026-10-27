@@ -2,7 +2,7 @@
 
 [User guide](../../user_guide.md) | [Documentation index](../../README.md)
 
-We captured these screenshots on 13 October 2026 from the running application,
+We captured these screenshots on 27 October 2026 from the running application,
 using its real API, PostgreSQL database and GPU detector. No API responses,
 detections or counts were substituted. They illustrate application behaviour,
 not detection accuracy or a new evaluation result.
@@ -12,22 +12,23 @@ not detection accuracy or a new evaluation result.
 | File | What it shows |
 | --- | --- |
 | `workspace.png` | Image selected, session named and a two-row, three-column grid configured |
-| `image-result.png` | Saved detections, the failed-quality warning and separate frame/cell counts |
+| `image-result.png` | Clean scene with interactive boxes, grid selection and the failed-quality warning |
+| `image-result-mobile.png` | The same analysis with the inspector below the scene at 390 pixels wide |
 | `model-status.png` | The unsupported crowd decision and model settings; a browser screenshot of this page section |
 | `session-history.png` | The completed image session available to reopen |
 
 The desktop browser viewport was 1440 by 1000 pixels. The model-status image
-captures only the relevant section. We also checked the result at 390 pixels
-wide; that full-page screenshot stays in ignored `frontend/test-results/`.
+captures only the relevant section. The mobile figure is a full-page capture
+at 390 pixels wide.
 No application elements were hidden or rewritten for the screenshots.
 
-The capture used application code from commit
-`fb10ae5d42d67b85b533c031638c1bbe69fa72ad`, before this documentation change,
-and the `yolo26m-visdrone` model on `cuda:0`. Session 1 belongs to the isolated
-`traffic-docs` database, not the normal development database. It contains
+The capture used the working `issue-116-analysis-workspace` build and the
+`yolo26m-visdrone` model on `cuda:0`. The build records a modified source state,
+not a clean release commit. Session 4 belongs to the isolated
+`traffic-issue116` database, not the normal development database. It contains
 27 predicted objects and six grid cells. Those counts are not reference labels.
 The [capture record](capture.json) includes the input, checkpoint, backend-source,
-result-image and screenshot hashes.
+annotated-image, clean-image, frontend-entry and screenshot hashes.
 
 ## Media Attribution
 
@@ -39,9 +40,9 @@ as [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The repository's
 [fixture record](../../../data/runtime-regression/README.md) documents the
 source and the licence check.
 
-The input file is unchanged. The application resizes it for processing, draws
-predicted boxes and labels, then displays it with an interactive grid. The
-image-result screenshot includes those modifications. We distribute the media
+The input file is unchanged. The application resizes it for processing and the
+browser draws predicted boxes and an interactive grid over the clean pixels.
+The image-result screenshot includes those modifications. We distribute the media
 derivative under CC BY 4.0 with this attribution; no endorsement is implied.
 This is a low, oblique roundabout view, not evidence of performance on high,
 top-down aerial scenes. It was already a development fixture, not a new holdout.
@@ -49,7 +50,7 @@ top-down aerial scenes. It was already a development fixture, not a new holdout.
 ## Repeating the Capture
 
 The [capture script](../../../frontend/scripts/capture-docs.mjs) submits one
-image and overwrites these four screenshots and `capture.json`. Use a separate
+image and overwrites these five screenshots and `capture.json`. Use a separate
 local demonstration database, not a frozen evaluation database. From the
 repository root, after the [Compose prerequisites](../../compose_stack.md#first-start):
 

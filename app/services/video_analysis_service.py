@@ -336,6 +336,8 @@ class VideoAnalysisService:
                     if result.output_file_path is None:
                         raise RuntimeError("Video frame output path was not assigned.")
                     output_paths.append(result.output_file_path)
+                    if result.source_file_path is not None:
+                        output_paths.append(result.source_file_path)
                     results.append(result)
                     self._update_progress(item.session_id, len(results))
             check_frame()
@@ -405,16 +407,27 @@ class VideoAnalysisService:
 
         asset_id = self._asset_id_factory()
         output_path = self._output_directory / f"{asset_id}.jpg"
+        source_path = self._output_directory / f"{asset_id}.source.jpg"
         try:
             self._output_writer(result.annotated_image, output_path)
+            if result.source_image is not None:
+                if result.source_image.shape[:2] != (
+                    result.image_height,
+                    result.image_width,
+                ):
+                    raise RuntimeError("Source frame dimensions do not match metadata.")
+                self._output_writer(result.source_image, source_path)
         except Exception:
             output_path.unlink(missing_ok=True)
+            source_path.unlink(missing_ok=True)
             raise
         return replace(
             result,
             output_asset_id=asset_id,
             output_file_path=output_path,
+            source_file_path=source_path if result.source_image is not None else None,
             annotated_image=None,
+            source_image=None,
         )
 
     def _validate_options(

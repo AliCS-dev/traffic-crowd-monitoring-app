@@ -1,19 +1,21 @@
 {
-  "captured_at": "2026-10-13T12:17:56.577Z",
+  "captured_at": "2026-10-27T10:08:15.786Z",
   "purpose": "Live image workflow illustration, not an accuracy benchmark",
   "api_mocked": false,
   "viewport": {
     "width": 1440,
     "height": 1000
   },
-  "browser": "Chromium 153.0.8010.12",
+  "browser": "Chromium 156.0.8078.4",
   "input": "data/runtime-regression/fixtures/roundabout_6.png",
   "input_sha256": "785414dccf5be9ecd1fbed0793ed32900069adbe8b8fe5953048141da7c45a4e",
-  "session_id": 1,
+  "session_id": 4,
   "model_id": "yolo26m-visdrone",
   "checkpoint_sha256": "e57204b8d77b5b22ea9253cbd5664b707623aeb7c19dbaa9034fe5a60bed6571",
-  "application_commit": "fb10ae5d42d67b85b533c031638c1bbe69fa72ad",
-  "backend_source_sha256": "d2717d1bc63e83de65b30c5547d10802389783566dd8bb7420d1272d0779bb4c",
+  "application_commit": null,
+  "backend_source_sha256": "6038263cfbfe1ee6745b8124bc9d9e31bf4944fc63090021ea5ac578fc72df33",
+  "source_dirty": true,
+  "frontend_entry_sha256": "d762922f69f1e448c23eb10cbbdbdf38030b241eb833e89640bef5a82c8c3493",
   "quality_gate_status": "failed",
   "dense_crowd_status": "unsupported",
   "device": "cuda:0",
@@ -24,6 +26,7 @@
     "column_index": 0
   },
   "result_asset_sha256": "2feb75c522864e0d071216079891e1ef8c83cbb9a5bca78bfa1a2fac4b96aea3",
+  "source_asset_sha256": "8fb98d6d91604c38ec25ba549d28b85f1a319ccf757426541067d500d6120373",
   "checks": [
     "image decoded",
     "frame and grid totals match detections",
@@ -32,9 +35,10 @@
     "no browser page errors"
   ],
   "screenshots": {
-    "workspace.png": "28b789e3f8ebc2e962f9bb6e4121acca50b082e87a80c4df6755c3a2dd16cf68",
-    "image-result.png": "cd0612312b4eaa8de986e385af6ce15689fd92c5f36b6885398eaf73a1f7a20e",
-    "model-status.png": "d8330d612ea8de76474671321afdb3a1b3855f3c77b57301e871d2652ac8666e",
-    "session-history.png": "b61c8665b476b5a696f4013fb57bdc2bc1f27e37fc4ad1882f4ee247cf857b9c"
+    "workspace.png": "288ce00cf64def05d4bb533b593947546a32ed55932f5ba109f380185fa853c8",
+    "image-result.png": "2a6a644c75d306c8962334ffff2736a52970ef7b74390907e02853ea914af482",
+    "image-result-mobile.png": "689477317765d4aaf8d82e8b3e6b174fdb13ab0571b554cae4e886c3478f9625",
+    "model-status.png": "59ea4548d57676bc6d47d0c9366360bffab9f3964c625f9359eeb69cd27af255",
+    "session-history.png": "011776b8c470768a531b4ae0d4b204e6450a0b52eb70a95967feea31f712d321"
   }
 }
