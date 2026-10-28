@@ -87,6 +87,17 @@ Application limits and preliminary resource budgets are recorded separately in
 the [operational safeguards guide](../operational_safeguards.md). Its upload,
 video and memory measurements do not change the model-quality results below.
 
+## Application Evaluation Preparation
+
+The [system evaluation plan](system_evaluation_plan.md), prepared on 28 October,
+identifies the merged application candidate, timing boundaries, repetitions,
+media choices and evidence requirements for #79. No final system measurements
+have been collected under that plan. Separate stage timers, the final workflow
+coverage review and the natural-motion video decision remain prerequisites.
+The [workspace verification](../scene_workspace_verification.md) records the
+completed interface checks; they do not replace final evaluation or change the
+historical model results below.
+
 ## Current Final Result
 
 The selected VisDrone YOLO26m model **failed the final held-out quality gate**.
