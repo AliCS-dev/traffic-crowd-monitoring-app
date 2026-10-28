@@ -18,6 +18,13 @@ unsupported dense-crowd result remain visible. The next implementation is #116,
 with stable architecture writing under #81 alongside it. #79 follows the final
 interface and release freeze. No additional annotation campaign is assigned.
 
+**28 October update:** #116 is merged through PR #155. We are preparing #79 with
+the [system evaluation plan](docs/evaluation/system_evaluation_plan.md), not
+adding optional interface features. The final measurement version is not frozen
+yet: stage timing, the #26 coverage review and the video-input decision remain.
+The [chapter outline](docs/thesis/system_design_outline.md) supports #81 writing
+without presenting an outline as a completed LaTeX chapter.
+
 ## Work Order
 
 | Issue | Intended outcome | Priority |

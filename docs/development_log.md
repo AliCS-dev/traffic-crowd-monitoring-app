@@ -1026,3 +1026,22 @@ the viewport. The one-pixel tolerance and screenshot references are unchanged.
 A deliberately displaced cell verifies that persistent misalignment still fails.
 The 16 browser checks and 20 repeated desktop/mobile resize runs passed locally.
 No application code, model configuration or historical metric changed.
+
+### Issues #79 and #81: Evaluation and Writing Preparation (28 October 2026)
+
+PR #155 passed all eight GitHub checks after the resize-test correction and
+was merged. We also repeated the four live GPU image/video workflows after
+restarting Docker; the stored counts and annotated image hash were unchanged.
+Issue #116 moved to Done, and its merged branch was removed locally and remotely.
+
+On a separate branch we prepared a [system evaluation plan](evaluation/system_evaluation_plan.md)
+and [System Design chapter outline](thesis/system_design_outline.md). The plan
+names the merged application candidate, separates request and stage timing,
+defines repetitions and preserves failures in the evidence. The final runner,
+stage timers, #26 coverage review and natural-motion video decision remain open.
+We have not frozen an instrumented release or collected final system metrics.
+
+The outline connects chapter sections to existing code, diagrams and screenshots,
+with reasons and trade-offs for the main choices. No LaTeX project is present in
+this repository, so we have not edited or compiled the thesis. Issues #79 and #81
+remain open, as do the deferred model-evaluation requirements.
