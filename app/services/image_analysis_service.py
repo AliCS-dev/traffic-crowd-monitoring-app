@@ -26,7 +26,7 @@ from app.services.image_upload_service import (
     ImageUploadTooLargeError,
     validate_image_upload,
 )
-from app.services.output_service import save_detection_output
+from app.services.output_service import save_detection_output, save_image_output
 from app.services.preprocessing_service import preprocess_image_for_detection
 from app.services.workload import (
     AnalysisTimeoutError,
@@ -161,6 +161,7 @@ class ImageAnalysisService:
         asset_id = self._asset_id_factory()
         input_path = self._upload_directory / f"{asset_id}{upload.suffix}"
         output_path = self._output_directory / f"{asset_id}.jpg"
+        source_path = self._output_directory / f"{asset_id}.source.jpg"
         persisted = False
 
         try:
@@ -173,6 +174,7 @@ class ImageAnalysisService:
                 upload.image,
                 scale_factor=self._model_profile.scale_factor,
             )
+            save_image_output(processed_image, source_path)
             results = detect_objects_with_profile(
                 processed_image,
                 self._detector,
@@ -229,6 +231,7 @@ class ImageAnalysisService:
                 original_filename=upload.original_filename,
                 output_asset_id=asset_id,
                 output_file_path=output_path,
+                source_file_path=source_path,
             )
             persisted = True
             return ImageAnalysisResult(
@@ -243,6 +246,7 @@ class ImageAnalysisService:
             if not persisted:
                 input_path.unlink(missing_ok=True)
                 output_path.unlink(missing_ok=True)
+                source_path.unlink(missing_ok=True)
 
 
 def _validate_session_name(session_name: str | None) -> str | None:

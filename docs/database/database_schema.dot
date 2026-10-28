@@ -2,7 +2,7 @@ digraph database_schema {
   graph [rankdir=TB, bgcolor="white", pad=0.35, nodesep=0.55, ranksep=0.8,
     splines=polyline, outputorder=edgesfirst, fontname="DejaVu Sans",
     fontsize=23, labelloc=t,
-    label="Traffic and Crowd Monitoring\nPhysical entity-relationship diagram | migrations 001-008"];
+    label="Traffic and Crowd Monitoring\nPhysical entity-relationship diagram | migrations 001-009"];
   node [shape=plain, fontname="DejaVu Sans", fontsize=10];
   edge [fontname="DejaVu Sans", fontsize=10, color="#52646C",
     fontcolor="#35464E", dir=both, arrowsize=0.85];
@@ -156,6 +156,7 @@ digraph database_schema {
       <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">processed_at</TD><TD ALIGN="LEFT">timestamptz</TD><TD>no</TD></TR>
       <TR><TD ALIGN="LEFT">UQ*</TD><TD ALIGN="LEFT">output_asset_id</TD><TD ALIGN="LEFT">uuid</TD><TD>yes</TD></TR>
       <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">output_file_path</TD><TD ALIGN="LEFT">text</TD><TD>yes</TD></TR>
+      <TR><TD ALIGN="LEFT"> </TD><TD ALIGN="LEFT">source_file_path</TD><TD ALIGN="LEFT">text</TD><TD>yes</TD></TR>
       <TR><TD COLSPAN="4" ALIGN="LEFT" BGCOLOR="#F3F5F6">UQ (input_source_id, frame_number)</TD></TR>
       <TR><TD COLSPAN="4" ALIGN="LEFT" BGCOLOR="#F3F5F6">UQ*: output_asset_id is unique when not null</TD></TR>
     </TABLE>
@@ -221,7 +222,7 @@ digraph database_schema {
       <TR><TD ALIGN="LEFT">PK = primary key; FK = foreign key; UQ = unique. Types are PostgreSQL types.</TD></TR>
       <TR><TD ALIGN="LEFT">Double bar = exactly one; circle + bar = zero or one; circle + crow foot = zero or many.</TD></TR>
       <TR><TD ALIGN="LEFT">Numeric labels give parent : child cardinality, not the number of rows currently stored.</TD></TR>
-      <TR><TD ALIGN="LEFT">All 11 tables, 104 columns and 13 foreign keys are shown. Defaults and CHECK rules remain in SQL.</TD></TR>
+      <TR><TD ALIGN="LEFT">All 11 tables, 105 columns and 13 foreign keys are shown. Defaults and CHECK rules remain in SQL.</TD></TR>
       <TR><TD ALIGN="LEFT">A nullable grid reference supports frame-level records; scope checks still constrain current alerts.</TD></TR>
     </TABLE>
   >];

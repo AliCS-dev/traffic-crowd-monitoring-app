@@ -74,7 +74,7 @@ export function AnalysisResult({ sessionId }: { sessionId: number }) {
       <Stack
         direction="row"
         spacing={1.5}
-        sx={{ alignItems: "flex-start", mb: 3 }}
+        sx={{ alignItems: "flex-start", mb: 1 }}
       >
         <Tooltip title="Back to session history">
           <IconButton
@@ -87,7 +87,7 @@ export function AnalysisResult({ sessionId }: { sessionId: number }) {
         </Tooltip>
         <Box sx={{ flex: 1, minWidth: 0 }}>
           <Typography
-            component="h2"
+            component="h1"
             variant="h2"
             sx={{ overflowWrap: "anywhere" }}
           >
@@ -113,6 +113,17 @@ export function AnalysisResult({ sessionId }: { sessionId: number }) {
         </Tooltip>
       </Stack>
       <ResultMetadata result={result.data} />
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        sx={{ mb: 1, overflowWrap: "anywhere" }}
+      >
+        {result.data.model_profile?.model_id ?? "Model unrecorded"} | Threshold
+        alerts: experimental | Crowd analysis:{" "}
+        {result.data.dense_crowd_analysis?.status === "unsupported"
+          ? "unsupported"
+          : (result.data.dense_crowd_analysis?.status ?? "unrecorded")}
+      </Typography>
       <ResultContent key={result.data.id} result={result.data} />
     </Box>
   );
@@ -120,7 +131,7 @@ export function AnalysisResult({ sessionId }: { sessionId: number }) {
 
 function ResultMetadata({ result }: { result: MonitoringSessionResult }) {
   return (
-    <Box sx={{ mb: 3 }}>
+    <Box sx={{ mb: 1 }}>
       <Stack
         direction="row"
         useFlexGap
@@ -133,20 +144,24 @@ function ResultMetadata({ result }: { result: MonitoringSessionResult }) {
           variant="outlined"
           color={result.status === "failed" ? "error" : "default"}
         />
-        <Typography color="text.secondary" variant="body2">
+        <Typography component="details" color="text.secondary" variant="body2">
+          <Box component="summary" sx={{ cursor: "pointer" }}>
+            Session timing
+          </Box>
           Started{" "}
           <time dateTime={result.started_at}>
             {formatTimestamp(result.started_at)}
           </time>
+          {result.completed_at && (
+            <>
+              {" "}
+              | Completed{" "}
+              <time dateTime={result.completed_at}>
+                {formatTimestamp(result.completed_at)}
+              </time>
+            </>
+          )}
         </Typography>
-        {result.completed_at && (
-          <Typography color="text.secondary" variant="body2">
-            Completed{" "}
-            <time dateTime={result.completed_at}>
-              {formatTimestamp(result.completed_at)}
-            </time>
-          </Typography>
-        )}
       </Stack>
       {result.sources.map((source) => (
         <Typography key={source.id} variant="body2" sx={{ mt: 1 }}>
@@ -220,7 +235,15 @@ function ResultContent({ result }: { result: MonitoringSessionResult }) {
         />
       )}
       <CrowdResult result={result.dense_crowd_analysis} />
-      <ModelProvenance profile={result.model_profile} />
+      <Box component="details">
+        <Box
+          component="summary"
+          sx={{ cursor: "pointer", py: 1, fontWeight: 650 }}
+        >
+          Model and runtime details
+        </Box>
+        <ModelProvenance profile={result.model_profile} />
+      </Box>
       {result.notes && (
         <Box component="section">
           <Typography component="h2" variant="h2" sx={{ mb: 1 }}>

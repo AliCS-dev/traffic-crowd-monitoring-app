@@ -249,6 +249,7 @@ class ProcessedFrameResult(BaseModel):
     image_height: int | None = Field(gt=0)
     output_asset_id: UUID | None
     visual_asset: VisualAssetReference | None = None
+    source_asset: VisualAssetReference | None = None
     coordinate_space: PixelCoordinateSpace | None = None
     processed_at: datetime
     detections: list[DetectionResult]
@@ -262,7 +263,14 @@ class ProcessedFrameResult(BaseModel):
             raise ValueError("Frame width and height must be provided together.")
 
         if self.image_width is None or self.image_height is None:
-            if self.coordinate_space is not None or self.visual_asset is not None:
+            if any(
+                value is not None
+                for value in (
+                    self.coordinate_space,
+                    self.visual_asset,
+                    self.source_asset,
+                )
+            ):
                 raise ValueError("Visual metadata requires frame dimensions.")
             return self
 
@@ -281,6 +289,15 @@ class ProcessedFrameResult(BaseModel):
             or self.visual_asset.height != self.image_height
         ):
             raise ValueError("Visual asset metadata must match the processed frame.")
+
+        if self.source_asset is not None and (
+            self.source_asset.asset_id != self.output_asset_id
+            or self.source_asset.width != self.image_width
+            or self.source_asset.height != self.image_height
+            or self.source_asset.rendered_overlays
+            or self.source_asset.url != f"/api/assets/{self.output_asset_id}/source"
+        ):
+            raise ValueError("Source asset metadata must match the processed frame.")
 
         for detection in self.detections:
             self._validate_bounds(detection.bounds)

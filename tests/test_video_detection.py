@@ -237,6 +237,7 @@ def test_sampled_frames_are_processed_with_metadata_and_counts():
     assert detector.calls[0]["max_detections"] == 300
     assert detector.calls[0]["half_precision"] is False
     assert processed_frames[0].annotated_image.shape == (4, 6, 3)
+    assert processed_frames[0].source_image.shape == (4, 6, 3)
 
 
 def test_empty_sample_sequence_produces_no_results():

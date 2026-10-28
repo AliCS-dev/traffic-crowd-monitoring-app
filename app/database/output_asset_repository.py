@@ -12,6 +12,7 @@ from app.database.connection import open_database_connection
 class OutputAssetRecord:
     asset_id: UUID
     file_path: Path
+    source_file_path: Path | None = None
 
 
 def get_output_asset(
@@ -23,7 +24,7 @@ def get_output_asset(
         with connection.cursor(row_factory=dict_row) as cursor:
             cursor.execute(
                 """
-                SELECT output_asset_id, output_file_path
+                SELECT output_asset_id, output_file_path, source_file_path
                 FROM processed_frames
                 WHERE output_asset_id = %s;
                 """,
@@ -36,4 +37,7 @@ def get_output_asset(
     return OutputAssetRecord(
         asset_id=row["output_asset_id"],
         file_path=Path(row["output_file_path"]),
+        source_file_path=(
+            Path(row["source_file_path"]) if row.get("source_file_path") else None
+        ),
     )

@@ -43,6 +43,31 @@ def test_unknown_asset_identifier_is_reported(tmp_path):
         service.resolve(ASSET_ID)
 
 
+@pytest.mark.parametrize("failure", [None, "outside", "symlink", "missing", "legacy"])
+def test_source_asset_keeps_the_same_path_boundary(tmp_path, failure):
+    root = tmp_path / "outputs"
+    root.mkdir()
+    outside = tmp_path / "private.jpg"
+    outside.write_bytes(b"private")
+    source = root / "source.jpg"
+    if failure == "symlink":
+        source.symlink_to(outside)
+    elif failure != "missing":
+        source.write_bytes(b"source")
+    if failure == "outside":
+        source = outside
+    if failure == "legacy":
+        source = None
+    service = create_service(
+        root, OutputAssetRecord(ASSET_ID, root / "annotated.jpg", source)
+    )
+    if failure:
+        with pytest.raises(OutputAssetUnavailableError):
+            service.resolve(ASSET_ID, source=True)
+    else:
+        assert service.resolve(ASSET_ID, source=True).file_path == source
+
+
 @pytest.mark.parametrize("failure", ["outside", "missing", "unsupported", "symlink"])
 def test_uncontrolled_or_unavailable_file_is_not_exposed(tmp_path, failure):
     output_directory = tmp_path / "outputs"

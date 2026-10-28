@@ -107,8 +107,9 @@ test("image grid stays aligned, keyboard inspection and table filters preserve a
   });
   await expect(page.locator("figure")).toHaveScreenshot("image-grid.png");
   const events = page.getByRole("region", { name: "Experimental alerts" });
+  await page.getByRole("tab", { name: "Experimental alerts" }).click();
   await page
-    .getByRole("combobox", { name: "Table class" })
+    .getByRole("combobox", { name: "Class filter" })
     .selectOption("car_or_van");
   await expect(events.getByRole("article")).toHaveCount(2);
   const inspect = events.getByRole("button", {
@@ -120,9 +121,9 @@ test("image grid stays aligned, keyboard inspection and table filters preserve a
     "51",
   );
   await expect(page.getByRole("combobox", { name: "Grid cell" })).toBeFocused();
-  await expect(page.getByRole("combobox", { name: "Table class" })).toHaveValue(
-    "car_or_van",
-  );
+  await expect(
+    page.getByRole("combobox", { name: "Class filter" }),
+  ).toHaveValue("car_or_van");
   await events.evaluate((element) => {
     (document.activeElement as HTMLElement)?.blur();
     element.scrollIntoView();

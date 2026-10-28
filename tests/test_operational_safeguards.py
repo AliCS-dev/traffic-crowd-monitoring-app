@@ -212,6 +212,18 @@ def test_cleanup_refuses_symlink_root_and_invalid_retention(tmp_path):
         collect_expired_media([root], [], older_than_days=0)
 
 
+def test_cleanup_recognizes_source_companions_and_protects_stored_ids(tmp_path):
+    retained_id, orphan_id = uuid4(), uuid4()
+    kept = tmp_path / f"{retained_id}.source.jpg"
+    orphan = tmp_path / f"{orphan_id}.source.jpg"
+    for path in (kept, orphan):
+        path.write_bytes(b"source")
+        os.utime(path, (1, 1))
+    assert collect_expired_media(
+        [tmp_path], [f"/app/outputs/{retained_id}.jpg"], now=2_000_000
+    ) == [orphan]
+
+
 def test_sampler_checks_unsampled_frames_and_stops_before_next_decode():
     from types import SimpleNamespace
 

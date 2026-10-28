@@ -123,7 +123,10 @@ export class ApiClient {
       /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     if (
       !uuidPattern.test(asset.asset_id) ||
-      asset.url !== `/api/assets/${asset.asset_id}`
+      ![
+        `/api/assets/${asset.asset_id}`,
+        `/api/assets/${asset.asset_id}/source`,
+      ].includes(asset.url)
     ) {
       return null;
     }

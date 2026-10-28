@@ -119,6 +119,10 @@ def test_complete_analysis_uses_profile_grid_and_server_controlled_paths(tmp_pat
     assert "original scene" not in str(persisted[0]["image_path"])
     assert persisted[0]["image_path"].is_file()
     assert persisted[0]["output_file_path"].is_file()
+    source = cv2.imread(str(persisted[0]["source_file_path"]))
+    assert source.shape[:2] == (100, 200)
+    assert np.all(source == 127)
+    assert np.all(cv2.imread(str(persisted[0]["output_file_path"])) == 200)
     assert result.dense_crowd_analysis is CROWD_ANALYSIS_DECISION
 
 

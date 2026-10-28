@@ -95,6 +95,7 @@ def create_service(
             ],
             object_counts={"car_or_van": 1},
             annotated_image=np.zeros((10, 20, 3), dtype=np.uint8),
+            source_image=np.full((10, 20, 3), 127, dtype=np.uint8),
         )
 
     monkeypatch.setattr(service_module, "process_sampled_video_frames", process_frames)
@@ -173,6 +174,9 @@ def test_upload_returns_queued_job_before_detector_runs_and_worker_persists_grid
     assert persisted.output_file_path == tmp_path / "outputs" / f"{ASSET_ID}.jpg"
     assert persisted.output_file_path.is_file()
     assert persisted.annotated_image is None
+    assert persisted.source_image is None
+    assert persisted.source_file_path.is_file()
+    assert persisted.source_file_path.name == f"{ASSET_ID}.source.jpg"
     assert calls["failed"] == []
 
 

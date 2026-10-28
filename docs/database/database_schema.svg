@@ -10,7 +10,7 @@
 <title>database_schema</title>
 <polygon fill="white" stroke="transparent" points="-25.2,25.2 -25.2,-2059.2 1152.7,-2059.2 1152.7,25.2 -25.2,25.2"/>
 <text text-anchor="middle" x="563.75" y="-2011.6" font-family="DejaVu Sans" font-size="23.00">Traffic and Crowd Monitoring</text>
-<text text-anchor="middle" x="563.75" y="-1986.6" font-family="DejaVu Sans" font-size="23.00">Physical entity&#45;relationship diagram | migrations 001&#45;008</text>
+<text text-anchor="middle" x="563.75" y="-1986.6" font-family="DejaVu Sans" font-size="23.00">Physical entity&#45;relationship diagram | migrations 001&#45;009</text>
 <!-- alerts&#45;&gt;legend -->
 <!-- grid_cells&#45;&gt;alerts -->
 <g id="edge9" class="edge">
@@ -37,13 +37,13 @@
 <!-- input_sources&#45;&gt;processed_frames -->
 <g id="edge3" class="edge">
 <title>input_sources&#45;&gt;processed_frames</title>
-<path fill="none" stroke="#52646c" d="M488,-1453.25C488,-1403.39 488,-1340.45 488,-1282.73"/>
+<path fill="none" stroke="#52646c" d="M488,-1453.08C488,-1406.2 488,-1347.79 488,-1293.04"/>
 <polygon fill="#52646c" stroke="#52646c" points="492.25,-1460.99 483.75,-1460.99 483.75,-1459.29 492.25,-1459.29 492.25,-1460.99"/>
 <polyline fill="none" stroke="#52646c" points="488,-1461.84 488,-1457.59 "/>
 <polygon fill="#52646c" stroke="#52646c" points="492.25,-1456.74 483.75,-1456.74 483.75,-1455.04 492.25,-1455.04 492.25,-1456.74"/>
 <polyline fill="none" stroke="#52646c" points="488,-1457.59 488,-1453.34 "/>
-<polygon fill="#52646c" stroke="#52646c" points="488,-1275.89 491.82,-1267.39 488,-1271.64 488,-1267.39 488,-1267.39 488,-1267.39 488,-1271.64 484.18,-1267.39 488,-1275.89 488,-1275.89"/>
-<ellipse fill="none" stroke="#52646c" cx="488" cy="-1279.29" rx="3.4" ry="3.4"/>
+<polygon fill="#52646c" stroke="#52646c" points="488,-1286.2 491.82,-1277.7 488,-1281.95 488,-1277.7 488,-1277.7 488,-1277.7 488,-1281.95 484.18,-1277.7 488,-1286.2 488,-1286.2"/>
+<ellipse fill="none" stroke="#52646c" cx="488" cy="-1289.6" rx="3.4" ry="3.4"/>
 <text text-anchor="middle" x="504.5" y="-1320" font-family="DejaVu Sans" font-size="10.00" fill="#35464e">1 : 0..*</text>
 </g>
 <!-- input_sources&#45;&gt;video_analysis_jobs -->
@@ -138,35 +138,35 @@
 <!-- processed_frames&#45;&gt;detection_results -->
 <g id="edge5" class="edge">
 <title>processed_frames&#45;&gt;detection_results</title>
-<path fill="none" stroke="#52646c" d="M355.3,-964.13C334.76,-940.31 313.74,-915.94 293.78,-892.79"/>
-<polygon fill="#52646c" stroke="#52646c" points="363.72,-967.39 357.28,-972.94 356.17,-971.65 362.61,-966.1 363.72,-967.39"/>
-<polyline fill="none" stroke="#52646c" points="361.06,-970.81 358.28,-967.59 "/>
-<polygon fill="#52646c" stroke="#52646c" points="360.95,-964.17 354.51,-969.72 353.4,-968.43 359.84,-962.88 360.95,-964.17"/>
-<polyline fill="none" stroke="#52646c" points="358.28,-967.59 355.51,-964.37 "/>
-<polygon fill="#52646c" stroke="#52646c" points="289.31,-887.61 286.65,-878.67 286.53,-884.39 283.76,-881.17 283.76,-881.17 283.76,-881.17 286.53,-884.39 280.86,-883.67 289.31,-887.61 289.31,-887.61"/>
-<ellipse fill="none" stroke="#52646c" cx="291.53" cy="-890.18" rx="3.4" ry="3.4"/>
+<path fill="none" stroke="#52646c" d="M346.34,-953.73C328.72,-933.3 310.91,-912.66 293.87,-892.9"/>
+<polygon fill="#52646c" stroke="#52646c" points="354.67,-956.89 348.23,-962.44 347.12,-961.15 353.56,-955.6 354.67,-956.89"/>
+<polyline fill="none" stroke="#52646c" points="352,-960.31 349.23,-957.09 "/>
+<polygon fill="#52646c" stroke="#52646c" points="351.89,-953.67 345.46,-959.22 344.35,-957.93 350.78,-952.38 351.89,-953.67"/>
+<polyline fill="none" stroke="#52646c" points="349.23,-957.09 346.45,-953.87 "/>
+<polygon fill="#52646c" stroke="#52646c" points="289.21,-887.49 286.55,-878.56 286.43,-884.27 283.65,-881.05 283.65,-881.05 283.65,-881.05 286.43,-884.27 280.76,-883.55 289.21,-887.49 289.21,-887.49"/>
+<ellipse fill="none" stroke="#52646c" cx="291.43" cy="-890.06" rx="3.4" ry="3.4"/>
 <text text-anchor="middle" x="334.5" y="-913" font-family="DejaVu Sans" font-size="10.00" fill="#35464e">1 : 0..*</text>
 </g>
 <!-- processed_frames&#45;&gt;grid_cells -->
 <g id="edge4" class="edge">
 <title>processed_frames&#45;&gt;grid_cells</title>
-<path fill="none" stroke="#52646c" d="M488,-962.01C488,-940.14 488,-917.86 488,-896.52"/>
-<polygon fill="#52646c" stroke="#52646c" points="492.25,-969.96 483.75,-969.96 483.75,-968.26 492.25,-968.26 492.25,-969.96"/>
-<polyline fill="none" stroke="#52646c" points="488,-970.81 488,-966.56 "/>
-<polygon fill="#52646c" stroke="#52646c" points="492.25,-965.71 483.75,-965.71 483.75,-964.01 492.25,-964.01 492.25,-965.71"/>
-<polyline fill="none" stroke="#52646c" points="488,-966.56 488,-962.31 "/>
-<polygon fill="#52646c" stroke="#52646c" points="488,-889.67 491.82,-881.17 488,-885.42 488,-881.17 488,-881.17 488,-881.17 488,-885.42 484.18,-881.17 488,-889.67 488,-889.67"/>
-<ellipse fill="none" stroke="#52646c" cx="488" cy="-893.07" rx="3.4" ry="3.4"/>
+<path fill="none" stroke="#52646c" d="M488,-951.54C488,-933.1 488,-914.52 488,-896.6"/>
+<polygon fill="#52646c" stroke="#52646c" points="492.25,-959.46 483.75,-959.46 483.75,-957.76 492.25,-957.76 492.25,-959.46"/>
+<polyline fill="none" stroke="#52646c" points="488,-960.31 488,-956.06 "/>
+<polygon fill="#52646c" stroke="#52646c" points="492.25,-955.21 483.75,-955.21 483.75,-953.51 492.25,-953.51 492.25,-955.21"/>
+<polyline fill="none" stroke="#52646c" points="488,-956.06 488,-951.81 "/>
+<polygon fill="#52646c" stroke="#52646c" points="488,-889.55 491.82,-881.05 488,-885.3 488,-881.05 488,-881.05 488,-881.05 488,-885.3 484.18,-881.05 488,-889.55 488,-889.55"/>
+<ellipse fill="none" stroke="#52646c" cx="488" cy="-892.95" rx="3.4" ry="3.4"/>
 <text text-anchor="middle" x="504.5" y="-913" font-family="DejaVu Sans" font-size="10.00" fill="#35464e">1 : 0..*</text>
 </g>
 <!-- processed_frames&#45;&gt;object_count_summaries -->
 <g id="edge6" class="edge">
 <title>processed_frames&#45;&gt;object_count_summaries</title>
-<path fill="none" stroke="#52646c" d="M588.31,-963.63C617.65,-918.48 642,-881 642,-881 642,-881 645.53,-633.35 647.58,-489.81"/>
-<polygon fill="#52646c" stroke="#52646c" points="587.59,-972.54 580.46,-967.91 581.39,-966.48 588.51,-971.11 587.59,-972.54"/>
-<polyline fill="none" stroke="#52646c" points="583.56,-970.94 585.88,-967.37 "/>
-<polygon fill="#52646c" stroke="#52646c" points="589.9,-968.98 582.77,-964.35 583.7,-962.92 590.83,-967.55 589.9,-968.98"/>
-<polyline fill="none" stroke="#52646c" points="585.88,-967.37 588.19,-963.81 "/>
+<path fill="none" stroke="#52646c" d="M595.43,-952.67C621.49,-912.57 642,-881 642,-881 642,-881 645.53,-633.35 647.58,-489.81"/>
+<polygon fill="#52646c" stroke="#52646c" points="594.53,-961.85 587.41,-957.22 588.33,-955.79 595.46,-960.42 594.53,-961.85"/>
+<polyline fill="none" stroke="#52646c" points="590.51,-960.25 592.82,-956.68 "/>
+<polygon fill="#52646c" stroke="#52646c" points="596.85,-958.29 589.72,-953.65 590.65,-952.23 597.77,-956.86 596.85,-958.29"/>
+<polyline fill="none" stroke="#52646c" points="592.82,-956.68 595.14,-953.12 "/>
 <polygon fill="#52646c" stroke="#52646c" points="647.68,-482.63 651.63,-474.18 647.74,-478.38 647.8,-474.13 647.8,-474.13 647.8,-474.13 647.74,-478.38 643.98,-474.07 647.68,-482.63 647.68,-482.63"/>
 <ellipse fill="none" stroke="#52646c" cx="647.63" cy="-486.03" rx="3.4" ry="3.4"/>
 <text text-anchor="middle" x="661.5" y="-762" font-family="DejaVu Sans" font-size="10.00" fill="#35464e">1 : 0..*</text>
@@ -571,57 +571,61 @@
 <!-- processed_frames -->
 <g id="node9" class="node">
 <title>processed_frames</title>
-<polygon fill="#dcefea" stroke="transparent" points="342,-1245 342,-1266 635,-1266 635,-1245 342,-1245"/>
-<text text-anchor="start" x="436.5" y="-1254" font-family="DejaVu Sans" font-weight="bold" font-size="10.00">processed_frames</text>
-<text text-anchor="start" x="347" y="-1233" font-family="DejaVu Sans" font-weight="bold" font-size="10.00">Key</text>
-<text text-anchor="start" x="379" y="-1233" font-family="DejaVu Sans" font-weight="bold" font-size="10.00">Column</text>
-<text text-anchor="start" x="522" y="-1233" font-family="DejaVu Sans" font-weight="bold" font-size="10.00">Type</text>
-<text text-anchor="start" x="601" y="-1233" font-family="DejaVu Sans" font-weight="bold" font-size="10.00">Null?</text>
-<text text-anchor="start" x="347" y="-1211" font-family="DejaVu Sans" font-size="10.00">PK</text>
-<text text-anchor="start" x="379" y="-1211" font-family="DejaVu Sans" font-size="10.00">id</text>
-<text text-anchor="start" x="522" y="-1211" font-family="DejaVu Sans" font-size="10.00">bigint</text>
-<text text-anchor="start" x="609" y="-1211" font-family="DejaVu Sans" font-size="10.00">no</text>
-<text text-anchor="start" x="347" y="-1190" font-family="DejaVu Sans" font-size="10.00">FK</text>
-<text text-anchor="start" x="379" y="-1190" font-family="DejaVu Sans" font-size="10.00">session_id</text>
-<text text-anchor="start" x="522" y="-1190" font-family="DejaVu Sans" font-size="10.00">bigint</text>
-<text text-anchor="start" x="609" y="-1190" font-family="DejaVu Sans" font-size="10.00">no</text>
-<text text-anchor="start" x="347" y="-1169" font-family="DejaVu Sans" font-size="10.00">FK</text>
-<text text-anchor="start" x="379" y="-1169" font-family="DejaVu Sans" font-size="10.00">input_source_id</text>
-<text text-anchor="start" x="522" y="-1169" font-family="DejaVu Sans" font-size="10.00">bigint</text>
-<text text-anchor="start" x="609" y="-1169" font-family="DejaVu Sans" font-size="10.00">no</text>
-<text text-anchor="start" x="347" y="-1148" font-family="DejaVu Sans" font-size="10.00"> </text>
-<text text-anchor="start" x="379" y="-1148" font-family="DejaVu Sans" font-size="10.00">frame_number</text>
-<text text-anchor="start" x="522" y="-1148" font-family="DejaVu Sans" font-size="10.00">integer</text>
-<text text-anchor="start" x="609" y="-1148" font-family="DejaVu Sans" font-size="10.00">no</text>
-<text text-anchor="start" x="347" y="-1127" font-family="DejaVu Sans" font-size="10.00"> </text>
-<text text-anchor="start" x="379" y="-1127" font-family="DejaVu Sans" font-size="10.00">frame_timestamp_seconds</text>
-<text text-anchor="start" x="522" y="-1127" font-family="DejaVu Sans" font-size="10.00">numeric(12,3)</text>
-<text text-anchor="start" x="606.5" y="-1127" font-family="DejaVu Sans" font-size="10.00">yes</text>
-<text text-anchor="start" x="347" y="-1106" font-family="DejaVu Sans" font-size="10.00"> </text>
-<text text-anchor="start" x="379" y="-1106" font-family="DejaVu Sans" font-size="10.00">image_width</text>
-<text text-anchor="start" x="522" y="-1106" font-family="DejaVu Sans" font-size="10.00">integer</text>
-<text text-anchor="start" x="606.5" y="-1106" font-family="DejaVu Sans" font-size="10.00">yes</text>
-<text text-anchor="start" x="347" y="-1085" font-family="DejaVu Sans" font-size="10.00"> </text>
-<text text-anchor="start" x="379" y="-1085" font-family="DejaVu Sans" font-size="10.00">image_height</text>
-<text text-anchor="start" x="522" y="-1085" font-family="DejaVu Sans" font-size="10.00">integer</text>
-<text text-anchor="start" x="606.5" y="-1085" font-family="DejaVu Sans" font-size="10.00">yes</text>
-<text text-anchor="start" x="347" y="-1064" font-family="DejaVu Sans" font-size="10.00"> </text>
-<text text-anchor="start" x="379" y="-1064" font-family="DejaVu Sans" font-size="10.00">processed_at</text>
-<text text-anchor="start" x="522" y="-1064" font-family="DejaVu Sans" font-size="10.00">timestamptz</text>
-<text text-anchor="start" x="609" y="-1064" font-family="DejaVu Sans" font-size="10.00">no</text>
-<text text-anchor="start" x="347" y="-1043" font-family="DejaVu Sans" font-size="10.00">UQ*</text>
-<text text-anchor="start" x="379" y="-1043" font-family="DejaVu Sans" font-size="10.00">output_asset_id</text>
-<text text-anchor="start" x="522" y="-1043" font-family="DejaVu Sans" font-size="10.00">uuid</text>
-<text text-anchor="start" x="606.5" y="-1043" font-family="DejaVu Sans" font-size="10.00">yes</text>
-<text text-anchor="start" x="347" y="-1022" font-family="DejaVu Sans" font-size="10.00"> </text>
-<text text-anchor="start" x="379" y="-1022" font-family="DejaVu Sans" font-size="10.00">output_file_path</text>
-<text text-anchor="start" x="522" y="-1022" font-family="DejaVu Sans" font-size="10.00">text</text>
-<text text-anchor="start" x="606.5" y="-1022" font-family="DejaVu Sans" font-size="10.00">yes</text>
-<polygon fill="#f3f5f6" stroke="transparent" points="342,-993 342,-1014 635,-1014 635,-993 342,-993"/>
-<text text-anchor="start" x="347" y="-1001" font-family="DejaVu Sans" font-size="10.00">UQ (input_source_id, frame_number)</text>
-<polygon fill="#f3f5f6" stroke="transparent" points="342,-972 342,-993 635,-993 635,-972 342,-972"/>
-<text text-anchor="start" x="347" y="-980" font-family="DejaVu Sans" font-size="10.00">UQ*: output_asset_id is unique when not null</text>
-<polygon fill="none" stroke="#62737c" points="340.5,-971 340.5,-1267 635.5,-1267 635.5,-971 340.5,-971"/>
+<polygon fill="#dcefea" stroke="transparent" points="342,-1255 342,-1276 635,-1276 635,-1255 342,-1255"/>
+<text text-anchor="start" x="436.5" y="-1264" font-family="DejaVu Sans" font-weight="bold" font-size="10.00">processed_frames</text>
+<text text-anchor="start" x="347" y="-1243" font-family="DejaVu Sans" font-weight="bold" font-size="10.00">Key</text>
+<text text-anchor="start" x="379" y="-1243" font-family="DejaVu Sans" font-weight="bold" font-size="10.00">Column</text>
+<text text-anchor="start" x="522" y="-1243" font-family="DejaVu Sans" font-weight="bold" font-size="10.00">Type</text>
+<text text-anchor="start" x="601" y="-1243" font-family="DejaVu Sans" font-weight="bold" font-size="10.00">Null?</text>
+<text text-anchor="start" x="347" y="-1221" font-family="DejaVu Sans" font-size="10.00">PK</text>
+<text text-anchor="start" x="379" y="-1221" font-family="DejaVu Sans" font-size="10.00">id</text>
+<text text-anchor="start" x="522" y="-1221" font-family="DejaVu Sans" font-size="10.00">bigint</text>
+<text text-anchor="start" x="609" y="-1221" font-family="DejaVu Sans" font-size="10.00">no</text>
+<text text-anchor="start" x="347" y="-1200" font-family="DejaVu Sans" font-size="10.00">FK</text>
+<text text-anchor="start" x="379" y="-1200" font-family="DejaVu Sans" font-size="10.00">session_id</text>
+<text text-anchor="start" x="522" y="-1200" font-family="DejaVu Sans" font-size="10.00">bigint</text>
+<text text-anchor="start" x="609" y="-1200" font-family="DejaVu Sans" font-size="10.00">no</text>
+<text text-anchor="start" x="347" y="-1179" font-family="DejaVu Sans" font-size="10.00">FK</text>
+<text text-anchor="start" x="379" y="-1179" font-family="DejaVu Sans" font-size="10.00">input_source_id</text>
+<text text-anchor="start" x="522" y="-1179" font-family="DejaVu Sans" font-size="10.00">bigint</text>
+<text text-anchor="start" x="609" y="-1179" font-family="DejaVu Sans" font-size="10.00">no</text>
+<text text-anchor="start" x="347" y="-1158" font-family="DejaVu Sans" font-size="10.00"> </text>
+<text text-anchor="start" x="379" y="-1158" font-family="DejaVu Sans" font-size="10.00">frame_number</text>
+<text text-anchor="start" x="522" y="-1158" font-family="DejaVu Sans" font-size="10.00">integer</text>
+<text text-anchor="start" x="609" y="-1158" font-family="DejaVu Sans" font-size="10.00">no</text>
+<text text-anchor="start" x="347" y="-1137" font-family="DejaVu Sans" font-size="10.00"> </text>
+<text text-anchor="start" x="379" y="-1137" font-family="DejaVu Sans" font-size="10.00">frame_timestamp_seconds</text>
+<text text-anchor="start" x="522" y="-1137" font-family="DejaVu Sans" font-size="10.00">numeric(12,3)</text>
+<text text-anchor="start" x="606.5" y="-1137" font-family="DejaVu Sans" font-size="10.00">yes</text>
+<text text-anchor="start" x="347" y="-1116" font-family="DejaVu Sans" font-size="10.00"> </text>
+<text text-anchor="start" x="379" y="-1116" font-family="DejaVu Sans" font-size="10.00">image_width</text>
+<text text-anchor="start" x="522" y="-1116" font-family="DejaVu Sans" font-size="10.00">integer</text>
+<text text-anchor="start" x="606.5" y="-1116" font-family="DejaVu Sans" font-size="10.00">yes</text>
+<text text-anchor="start" x="347" y="-1095" font-family="DejaVu Sans" font-size="10.00"> </text>
+<text text-anchor="start" x="379" y="-1095" font-family="DejaVu Sans" font-size="10.00">image_height</text>
+<text text-anchor="start" x="522" y="-1095" font-family="DejaVu Sans" font-size="10.00">integer</text>
+<text text-anchor="start" x="606.5" y="-1095" font-family="DejaVu Sans" font-size="10.00">yes</text>
+<text text-anchor="start" x="347" y="-1074" font-family="DejaVu Sans" font-size="10.00"> </text>
+<text text-anchor="start" x="379" y="-1074" font-family="DejaVu Sans" font-size="10.00">processed_at</text>
+<text text-anchor="start" x="522" y="-1074" font-family="DejaVu Sans" font-size="10.00">timestamptz</text>
+<text text-anchor="start" x="609" y="-1074" font-family="DejaVu Sans" font-size="10.00">no</text>
+<text text-anchor="start" x="347" y="-1053" font-family="DejaVu Sans" font-size="10.00">UQ*</text>
+<text text-anchor="start" x="379" y="-1053" font-family="DejaVu Sans" font-size="10.00">output_asset_id</text>
+<text text-anchor="start" x="522" y="-1053" font-family="DejaVu Sans" font-size="10.00">uuid</text>
+<text text-anchor="start" x="606.5" y="-1053" font-family="DejaVu Sans" font-size="10.00">yes</text>
+<text text-anchor="start" x="347" y="-1032" font-family="DejaVu Sans" font-size="10.00"> </text>
+<text text-anchor="start" x="379" y="-1032" font-family="DejaVu Sans" font-size="10.00">output_file_path</text>
+<text text-anchor="start" x="522" y="-1032" font-family="DejaVu Sans" font-size="10.00">text</text>
+<text text-anchor="start" x="606.5" y="-1032" font-family="DejaVu Sans" font-size="10.00">yes</text>
+<text text-anchor="start" x="347" y="-1011" font-family="DejaVu Sans" font-size="10.00"> </text>
+<text text-anchor="start" x="379" y="-1011" font-family="DejaVu Sans" font-size="10.00">source_file_path</text>
+<text text-anchor="start" x="522" y="-1011" font-family="DejaVu Sans" font-size="10.00">text</text>
+<text text-anchor="start" x="606.5" y="-1011" font-family="DejaVu Sans" font-size="10.00">yes</text>
+<polygon fill="#f3f5f6" stroke="transparent" points="342,-982 342,-1003 635,-1003 635,-982 342,-982"/>
+<text text-anchor="start" x="347" y="-990" font-family="DejaVu Sans" font-size="10.00">UQ (input_source_id, frame_number)</text>
+<polygon fill="#f3f5f6" stroke="transparent" points="342,-961 342,-982 635,-982 635,-961 342,-961"/>
+<text text-anchor="start" x="347" y="-969" font-family="DejaVu Sans" font-size="10.00">UQ*: output_asset_id is unique when not null</text>
+<polygon fill="none" stroke="#62737c" points="340.5,-960.5 340.5,-1277.5 635.5,-1277.5 635.5,-960.5 340.5,-960.5"/>
 </g>
 <!-- schema_migrations -->
 <g id="node10" class="node">
@@ -725,7 +729,7 @@
 <text text-anchor="start" x="253" y="-102" font-family="DejaVu Sans" font-size="10.00">PK = primary key; FK = foreign key; UQ = unique. Types are PostgreSQL types.</text>
 <text text-anchor="start" x="253" y="-79" font-family="DejaVu Sans" font-size="10.00">Double bar = exactly one; circle + bar = zero or one; circle + crow foot = zero or many.</text>
 <text text-anchor="start" x="253" y="-56" font-family="DejaVu Sans" font-size="10.00">Numeric labels give parent : child cardinality, not the number of rows currently stored.</text>
-<text text-anchor="start" x="253" y="-33" font-family="DejaVu Sans" font-size="10.00">All 11 tables, 104 columns and 13 foreign keys are shown. Defaults and CHECK rules remain in SQL.</text>
+<text text-anchor="start" x="253" y="-33" font-family="DejaVu Sans" font-size="10.00">All 11 tables, 105 columns and 13 foreign keys are shown. Defaults and CHECK rules remain in SQL.</text>
 <text text-anchor="start" x="253" y="-10" font-family="DejaVu Sans" font-size="10.00">A nullable grid reference supports frame&#45;level records; scope checks still constrain current alerts.</text>
 </g>
 </g>

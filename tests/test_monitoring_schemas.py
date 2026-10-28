@@ -63,6 +63,31 @@ def test_overlay_bounds_must_remain_inside_served_media():
         ProcessedFrameResult.model_validate(values)
 
 
+@pytest.mark.parametrize(
+    "field,value",
+    [
+        ("width", 201),
+        ("rendered_overlays", ["detections"]),
+        ("url", "/private/source.jpg"),
+        ("asset_id", UUID(int=1)),
+    ],
+)
+def test_source_asset_rejects_mismatched_or_annotated_metadata(field, value):
+    values = frame_values()
+    values["source_asset"] = {
+        **values["visual_asset"],
+        "url": f"/api/assets/{ASSET_ID}/source",
+        "rendered_overlays": [],
+    }
+    values["source_asset"][field] = value
+    with pytest.raises(ValidationError, match="Source asset metadata"):
+        ProcessedFrameResult.model_validate(values)
+
+
+def test_legacy_frame_has_no_invented_source_asset():
+    assert ProcessedFrameResult.model_validate(frame_values()).source_asset is None
+
+
 def alert_values(**overrides):
     values = {
         "id": 4,

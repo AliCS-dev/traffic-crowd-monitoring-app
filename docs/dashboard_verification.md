@@ -4,6 +4,11 @@ We checked the dashboard for issue #76 on 9 September 2026. This record covers
 application behaviour, not detection accuracy. The model evaluation results
 remain in the [evaluation index](evaluation/results_index.md).
 
+The later [scene workspace verification](scene_workspace_verification.md)
+records the October redesign. In particular, new analyses now support clean
+images and interactive filtered boxes; the legacy-image limits below describe
+the September interface.
+
 ## Automated Checks
 
 The local Python suite passed all 358 tests, including nine PostgreSQL integration

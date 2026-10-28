@@ -26,6 +26,7 @@ answer more specific questions.
 | Checks, branches and dependency updates | [Development workflow](development_workflow.md) |
 | Model and dependency details recorded with results | [Runtime provenance](runtime_provenance.md) |
 | Screenshot sources and capture procedure | [Screenshot record](images/user-guide/README.md) |
+| Interactive scene checks and live workflow results | [Scene workspace verification](scene_workspace_verification.md) |
 
 ## Writing the Thesis
 

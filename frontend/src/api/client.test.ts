@@ -50,10 +50,25 @@ describe("ApiClient", () => {
     "javascript:alert(1)",
     "/api/assets/../private",
     "/api/assets/not-the-stored-id",
+    "/api/assets/not-the-stored-id/source",
   ])("rejects an unexpected output asset URL: %s", (url) => {
     const asset = analysisResultFixture().frames[0].visual_asset!;
     const client = new ApiClient("http://localhost:8000");
     expect(client.resolveOutputAssetUrl({ ...asset, url })).toBeNull();
+  });
+
+  it("accepts only the matching source variant of a stored asset", () => {
+    const asset = analysisResultFixture().frames[0].visual_asset!;
+    const client = new ApiClient("");
+    expect(
+      client.resolveOutputAssetUrl({ ...asset, url: `${asset.url}/source` }),
+    ).toBe(`${asset.url}/source`);
+    expect(
+      client.resolveOutputAssetUrl({
+        ...asset,
+        url: `${asset.url}/source?path=private`,
+      }),
+    ).toBeNull();
   });
 
   it("reads the typed health endpoint", async () => {

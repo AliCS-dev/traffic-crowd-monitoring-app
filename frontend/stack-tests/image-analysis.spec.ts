@@ -69,6 +69,7 @@ test("real image workflow through the Compose frontend", async ({
   expect(
     result.model_profile?.runtime_provenance?.dependencies.ultralytics,
   ).toBeTruthy();
+  await page.getByText("Model and runtime details", { exact: true }).click();
   await page.getByText("Runtime environment", { exact: true }).click();
   await expect(
     page.getByText("Backend source SHA-256", { exact: true }),
@@ -98,6 +99,11 @@ test("real image workflow through the Compose frontend", async ({
     ),
   ).toBe(true);
   const asset = await request.get(frame.visual_asset!.url);
+  expect(frame.source_asset?.rendered_overlays).toEqual([]);
+  expect((await request.get(frame.source_asset!.url)).status()).toBe(200);
+  await expect(
+    page.getByRole("group", { name: "Detection overlays" }),
+  ).toBeVisible();
   expect(asset.status()).toBe(200);
   expect(asset.headers()["content-type"]).toContain("image/jpeg");
   const assetSha256 = createHash("sha256")

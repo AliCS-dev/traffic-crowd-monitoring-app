@@ -30,8 +30,27 @@ def create_asset_router() -> APIRouter:
         asset_id: UUID,
         asset_service: Annotated[Any, Depends(get_output_asset_service)],
     ) -> FileResponse:
+        return serve_asset(asset_service, asset_id)
+
+    @router.get(
+        "/{asset_id}/source",
+        response_class=FileResponse,
+        responses={404: {"model": ErrorResponse}},
+        summary="Read the unannotated processed image for a stored result",
+    )
+    def read_source_asset(
+        asset_id: UUID,
+        asset_service: Annotated[Any, Depends(get_output_asset_service)],
+    ) -> FileResponse:
+        return serve_asset(asset_service, asset_id, source=True)
+
+    def serve_asset(asset_service, asset_id, *, source=False):
         try:
-            asset = asset_service.resolve(asset_id)
+            asset = (
+                asset_service.resolve(asset_id, source=True)
+                if source
+                else asset_service.resolve(asset_id)
+            )
         except OutputAssetNotFoundError as error:
             raise ApiError(404, "asset_not_found", str(error)) from error
         except OutputAssetUnavailableError as error:
