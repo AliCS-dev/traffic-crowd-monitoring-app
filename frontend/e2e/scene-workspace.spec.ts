@@ -50,39 +50,80 @@ async function openScene(page: Page, count = 3) {
   return frame;
 }
 
-async function checkAlignment(page: Page) {
-  const image = (await page
-    .getByRole("img", { name: "Detection result for junction.jpg" })
-    .boundingBox())!;
-  const cell = (await page
-    .getByRole("button", { name: "Row 1, column 2", exact: true })
-    .boundingBox())!;
-  expect(Math.abs(image.width / image.height - 590 / 332)).toBeLessThan(0.01);
-  expect(Math.abs(cell.x - image.x - image.width / 2)).toBeLessThan(1);
-  expect(Math.abs(cell.width - image.width / 2)).toBeLessThan(1);
+async function checkAlignment(page: Page, timeout = 5000) {
   const detection = gridResultFixture().frames[0].detections[0];
-  const box = (await page
-    .getByRole("button", { name: new RegExp(`^Detection ${detection.id}:`) })
-    .boundingBox())!;
-  expect(
-    Math.abs(box.x - image.x - (image.width * detection.bounds.x_min) / 1280),
-  ).toBeLessThan(1);
-  expect(
-    Math.abs(box.y - image.y - (image.height * detection.bounds.y_min) / 720),
-  ).toBeLessThan(1);
-  expect(
-    Math.abs(
-      box.width -
-        (image.width * (detection.bounds.x_max - detection.bounds.x_min)) /
-          1280,
-    ),
-  ).toBeLessThan(1);
-  expect(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth <= innerWidth,
-    ),
-  ).toBe(true);
+  await expect(async () => {
+    // Read one layout snapshot; separate browser calls can straddle a resize.
+    const { image, cell, box, fittedWidth, expectedWidth, overflow } =
+      await page.locator("[data-scene-stage]").evaluate((stage, id) => {
+        const image = stage.querySelector("img")!.getBoundingClientRect();
+        const cell = stage
+          .querySelector('[aria-label="Row 1, column 2"]')!
+          .getBoundingClientRect();
+        const box = stage
+          .querySelector(`[aria-label^="Detection ${id}:"]`)!
+          .getBoundingClientRect();
+        const viewport = stage.parentElement!.getBoundingClientRect();
+        return {
+          image: image.toJSON(),
+          cell: cell.toJSON(),
+          box: box.toJSON(),
+          fittedWidth: parseFloat(getComputedStyle(stage).width),
+          expectedWidth:
+            Math.min(viewport.width / 590, viewport.height / 332) * 590,
+          overflow: document.documentElement.scrollWidth > innerWidth,
+        };
+      }, detection.id);
+    expect(Math.abs(fittedWidth - expectedWidth)).toBeLessThan(1);
+    expect(image.width).toBeGreaterThan(0);
+    expect(image.height).toBeGreaterThan(0);
+    expect(Math.abs(image.width / image.height - 590 / 332)).toBeLessThan(0.01);
+    expect(Math.abs(cell.x - image.x - image.width / 2)).toBeLessThan(1);
+    expect(Math.abs(cell.y - image.y)).toBeLessThan(1);
+    expect(Math.abs(cell.width - image.width / 2)).toBeLessThan(1);
+    expect(Math.abs(cell.height - image.height / 2)).toBeLessThan(1);
+    expect(
+      Math.abs(box.x - image.x - (image.width * detection.bounds.x_min) / 1280),
+    ).toBeLessThan(1);
+    expect(
+      Math.abs(box.y - image.y - (image.height * detection.bounds.y_min) / 720),
+    ).toBeLessThan(1);
+    expect(
+      Math.abs(
+        box.width -
+          (image.width * (detection.bounds.x_max - detection.bounds.x_min)) /
+            1280,
+      ),
+    ).toBeLessThan(1);
+    expect(
+      Math.abs(
+        box.height -
+          (image.height * (detection.bounds.y_max - detection.bounds.y_min)) /
+            720,
+      ),
+    ).toBeLessThan(1);
+    expect(overflow).toBe(false);
+  }).toPass({ timeout, intervals: [50, 100, 250] });
 }
+
+test("alignment check rejects a persistently displaced grid cell", async ({
+  page,
+}) => {
+  await openScene(page);
+  await checkAlignment(page);
+  const cell = page.getByRole("button", {
+    name: "Row 1, column 2",
+    exact: true,
+  });
+  await cell.evaluate((element) => {
+    element.style.transform = "translateX(10px)";
+  });
+  await expect(checkAlignment(page, 300)).rejects.toThrow("toBeLessThan");
+  await cell.evaluate((element) => {
+    element.style.removeProperty("transform");
+  });
+  await checkAlignment(page);
+});
 
 test("scene selection, zoom, pan, resize and display filters stay aligned", async ({
   page,

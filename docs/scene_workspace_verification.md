@@ -114,3 +114,22 @@ closed by this interface work. Browser automation covers Chromium, not every
 browser or assistive technology. Touch checks use emulation, not a physical
 device, and contrast/focus inspection is not an accessibility certification.
 Final whole-application evaluation remains under #79 after the release freeze.
+
+## Resize Check Follow-Up: 28 October
+
+One of the two GitHub workflows later failed the desktop and mobile resize
+checks. The test read the image and cell rectangles in separate browser calls
+while `ResizeObserver` updated the fitted stage. That allowed a comparison of
+geometry from different layout states; the mobile difference of 52.5 pixels
+matches half of the 70-pixel viewport change at 1.5-times zoom.
+
+We now read image, cell and detection geometry together in one synchronous
+browser evaluation, and wait for the stage to fit the resized viewport. The
+one-pixel alignment tolerance and screenshot baselines are unchanged. We also
+check vertical alignment and box height, and deliberately displace a cell by
+10 pixels to verify that a persistent error still fails. The full browser suite
+now contains 16 checks. This changes test synchronization, not application code
+or the recorded performance measurements above.
+
+Local verification passed all 16 checks without baseline updates, plus ten
+consecutive repeats of the resize scenario on each viewport (20 runs total).

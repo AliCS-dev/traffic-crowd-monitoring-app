@@ -1015,3 +1015,14 @@ application and updated the database ER diagram to match migration 009.
 This completes the interface implementation, not the thesis evaluation. The
 remaining accuracy limits are unchanged; final system measurements and thesis
 writing remain separate work under #79 and #81-#84.
+
+### Issue #116: Resize Test Synchronization (28 October 2026)
+
+The final push workflow failed two resize checks, although the same tests passed
+in the pull-request workflow. We found that separate image and grid geometry
+reads could span a responsive layout update. The test now measures the layers
+in one browser evaluation and checks that the fitted stage has caught up with
+the viewport. The one-pixel tolerance and screenshot references are unchanged.
+A deliberately displaced cell verifies that persistent misalignment still fails.
+The 16 browser checks and 20 repeated desktop/mobile resize runs passed locally.
+No application code, model configuration or historical metric changed.
