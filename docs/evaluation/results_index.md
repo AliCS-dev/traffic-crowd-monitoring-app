@@ -92,8 +92,10 @@ video and memory measurements do not change the model-quality results below.
 The [system evaluation plan](system_evaluation_plan.md), prepared on 28 October,
 identifies the merged application candidate, timing boundaries, repetitions,
 media choices and evidence requirements for #79. No final system measurements
-have been collected under that plan. Separate stage timers, the final workflow
-coverage review and the natural-motion video decision remain prerequisites.
+have been collected under that plan. The [measurement guide](system_measurements.md)
+links the warm runner, its stage boundaries and the 29 October development
+verification record. Stage timing is implemented; the final workflow coverage
+review, remaining measurement paths, media decision and release freeze are open.
 The [workspace verification](../scene_workspace_verification.md) records the
 completed interface checks; they do not replace final evaluation or change the
 historical model results below.

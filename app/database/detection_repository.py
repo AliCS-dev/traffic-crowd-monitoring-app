@@ -9,6 +9,7 @@ from app.database.connection import open_database_connection
 from app.model_profile import RuntimeModelProfile
 from app.runtime_provenance import capture_runtime_provenance
 from app.services.detection_service import build_object_count_summary_records
+from app.stage_timing import measure_stage
 
 if TYPE_CHECKING:
     from app.services.alert_service import ThresholdAlert
@@ -16,6 +17,7 @@ if TYPE_CHECKING:
     from app.services.video_detection_service import VideoFrameDetectionResult
 
 
+@measure_stage("image_persistence")
 def save_image_detection_results(
     image_path,
     image_width,
