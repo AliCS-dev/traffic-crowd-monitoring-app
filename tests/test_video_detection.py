@@ -128,6 +128,7 @@ def test_object_detector_loads_model_once_and_reuses_it(monkeypatch):
 
 def test_object_detector_forwards_explicit_evaluation_options(monkeypatch):
     calls = []
+    monkeypatch.setattr(detection_service.torch.cuda, "synchronize", lambda _: None)
 
     class FakeModel:
         def __call__(self, image, **options):

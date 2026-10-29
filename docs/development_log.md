@@ -1045,3 +1045,26 @@ The outline connects chapter sections to existing code, diagrams and screenshots
 with reasons and trade-offs for the main choices. No LaTeX project is present in
 this repository, so we have not edited or compiled the thesis. Issues #79 and #81
 remain open, as do the deferred model-evaluation requirements.
+
+### Issue #79: Warm Workflow Measurements (29 October 2026)
+
+We added request-correlated inference, result-persistence and video queue timings
+to the existing JSON logs. The inference timer accounts for CUDA completion,
+and persistence includes commit. No schema, response contract, model profile or
+dependency changed.
+
+The [measurement guide](evaluation/system_measurements.md) describes the new
+runner and links its raw verification observations. We preserve warm-ups,
+failures, missing readings and provenance errors, and report unavailable stage
+values as null rather than zero. The runner writes JSON, CSV and artifact hashes.
+
+All 630 Python tests passed, including 12 PostgreSQL integration checks. Two
+nine-request GPU tooling runs completed with correlated stages and resource
+samples, and the unchanged five-frame detector regression passed with no
+differences. The final tooling run overlapped local tests; it is not an isolated
+final performance experiment. The two runs remain separate local artifacts.
+
+Issue #79 remains open. Cold-process, browser and recovery measurements, the
+workflow coverage review, the remaining media decisions and the clean release
+freeze still precede final collection. We have not changed the existing LaTeX
+project or claimed that the model's accuracy limitations are resolved.
