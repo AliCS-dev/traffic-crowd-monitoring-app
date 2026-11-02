@@ -4,21 +4,67 @@
 
 ## The Running Application
 
-We separate the browser interface, Python processing and database storage, but
-they still form one local application. This diagram shows the full Compose
-deployment and the main calls inside the backend. The boxes inside that backend
-are Python components, not additional containers.
+We describe the application at two levels: the applications and stores that
+work together, then the components inside the backend. This follows the
+[C4 model's container view](https://c4model.com/diagrams/container) and
+[component view](https://c4model.com/diagrams/component). A C4 container means
+an application or data store; it does not necessarily mean a Docker container.
 
-![Application architecture with browser, Nginx, FastAPI processing services, PostgreSQL, migration task, named volumes and optional NVIDIA access](diagrams/application_architecture.png)
+### Container View with Deployment Details
+
+This view shows the browser client, web server, API and database. We also include
+the requested Docker boundaries, named volumes and optional GPU access, so the
+title explicitly identifies these deployment details. It is not a pure logical
+C4 container diagram or a startup sequence.
+
+![Container view with deployment details: browser client, Nginx, FastAPI, PostgreSQL, named volumes and optional host GPU](diagrams/application_architecture.png)
+
+*Figure 1. Main applications, persistent storage and optional GPU access in the
+local web application. Arrows identify the caller or storage-access initiator;
+response paths are not drawn separately.*
 
 [Full-size SVG](diagrams/application_architecture.svg) |
-[Editable source](diagrams/application_architecture.dot)
+[PDF for LaTeX](diagrams/application_architecture.pdf) |
+[Mermaid source](diagrams/application_architecture.mmd)
 
 The browser receives the compiled React application from Nginx and sends its
 uploads and API requests back to the same origin. Nginx forwards `/api/` to
 `backend:8000`; it does not run inference or query PostgreSQL. The backend
 talks to `postgres:5432` using Psycopg. Those names are Docker service names,
-not addresses the browser needs to resolve.
+not addresses the browser needs to resolve. Solid arrows represent network
+requests, dashed arrows represent filesystem access, and the thick arrow
+represents CUDA device access, not another network service.
+
+Named volumes are storage resources managed by Docker, not external software
+systems. The React client belongs to the software system but runs outside the
+Docker deployment. The GPU is a host resource outside the application. Read-only
+model weights, build tools and the one-off migration task are omitted from this
+overview; their mounts and startup behavior are described below. The diagram
+does not suggest that a GPU is required for CPU mode.
+
+## Backend Component View
+
+We zoom into the Application API container to show its main responsibilities.
+These are logical components and component groups within one Python process,
+not separate microservices or operating-system processes.
+
+![Backend component view: API routes call image and video analysis, shared detection services, and database repositories; inference uses an optional host GPU](diagrams/backend_components.png)
+
+*Figure 2. Backend component groups and their calls. The video worker shares
+the API process; persistence stays in the repositories rather than the detector.*
+
+[Full-size SVG](diagrams/backend_components.svg) |
+[PDF for LaTeX](diagrams/backend_components.pdf) |
+[Mermaid source](diagrams/backend_components.mmd)
+
+The router layer represents endpoint responsibilities, including asset routes.
+Calls pass through the existing application-service dependencies and asset
+service where appropriate; the diagram does not imply SQL inside route handlers.
+Image and video orchestration share preprocessing and detection utilities.
+Detection returns frame results, including boxes and class information, to its
+caller. The caller handles counts, optional grids, experimental alerts and output
+files before asking repositories to persist the results. We omit these helper
+functions from the figure to keep it readable at presentation size.
 
 Image analysis completes within its request. Video analysis commits a queued
 job before returning HTTP `202`, then uses an in-process worker to sample and
@@ -31,6 +77,13 @@ capability with a session. The crowd record currently says unsupported; the
 diagram does not imply that a crowd model is running. Both image and video
 results may include grids and experimental threshold events. Those counts are
 per frame and image region, not unique tracked objects or ground-area density.
+
+The [diagram notes](diagrams/README.md) map each group to its implementation and
+give the rendering commands and thesis figure examples. Titles, element types,
+technology labels, one-way relationships and legends follow the
+[C4 notation guidance](https://c4model.com/diagrams/notation).
+
+## Storage
 
 | Storage | Mount in the container | What we keep there |
 | --- | --- | --- |

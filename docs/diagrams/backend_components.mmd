@@ -1,0 +1,46 @@
+---
+title: Traffic and Crowd Monitoring - Backend Component View
+---
+flowchart TB
+    nginx["Web Server [Container]<br/>Nginx / reverse proxy"]
+
+    subgraph backend["Application API Container - one FastAPI / Uvicorn process"]
+        direction TB
+        router["API Router Layer [Components]<br/>FastAPI routers<br/>Uploads / results / history / assets"]
+        image["Image Analysis [Component]<br/>Python / OpenCV<br/>Validate and process JPEG/PNG"]
+        video["Video Analysis [Component]<br/>Python / ThreadPoolExecutor<br/>Worker and frame orchestration"]
+        detection["Shared Detection [Components]<br/>OpenCV / YOLO / PyTorch<br/>Preprocess; return bounding boxes"]
+        repository["Database Repositories [Components]<br/>Python / Psycopg<br/>Transactional reads and writes"]
+
+        router -->|"Analyse image"| image
+        router -->|"Submit / read progress"| video
+        router -->|"Query results / assets"| repository
+        image -->|"Detect image"| detection
+        video -->|"Detect sampled frames"| detection
+        image -->|"Persist results"| repository
+        video -->|"Persist jobs / results"| repository
+    end
+
+    postgres[("Database [Container]<br/>PostgreSQL 16")]
+    gpu["NVIDIA GPU - optional<br/>[Host resource]"]
+    nginx -->|"HTTP: /api/ requests"| router
+    repository -->|"SQL over TCP"| postgres
+    detection ==>|"CUDA device access"| gpu
+
+    key["KEY<br/>Amber: proxy; blue: routing<br/>Teal: processing; grey: data; rose: hardware<br/>Internal solid arrow: Python call<br/>External solid arrow: network request<br/>Thick arrow: hardware access<br/>Enclosed blocks: components, not processes"]
+    postgres ~~~ key
+    gpu ~~~ key
+
+    classDef proxyLayer fill:#FFF3CD,stroke:#946200,color:#513B00
+    classDef apiLayer fill:#E3F2FD,stroke:#1565C0,color:#16324F
+    classDef processingLayer fill:#E0F2F1,stroke:#00796B,color:#004D40
+    classDef dataLayer fill:#F1F3F5,stroke:#59636E,color:#263238
+    classDef hostLayer fill:#FCE4EC,stroke:#AD1457,color:#650D34
+    classDef legend fill:#FFFFFF,stroke:#9AA0A6,color:#37474F,font-size:14px
+    class nginx proxyLayer
+    class router apiLayer
+    class image,video,detection processingLayer
+    class repository,postgres dataLayer
+    class gpu hostLayer
+    class key legend
+    style backend fill:#FAFCFC,stroke:#00796B,stroke-width:2px

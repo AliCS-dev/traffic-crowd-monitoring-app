@@ -19,7 +19,9 @@ answer more specific questions.
 
 | Topic | Reference |
 | --- | --- |
-| Containers, processing flows and design decisions | [Application architecture](architecture.md#the-running-application) |
+| Main applications, stores and deployment annotations | [Container view](architecture.md#the-running-application) |
+| API routes, image/video processing and repositories | [Backend component view](architecture.md#backend-component-view) |
+| Editable diagrams and PDF figures for LaTeX | [Diagram sources and exports](diagrams/README.md) |
 | Image builds, storage and service startup order | [Docker lifecycle diagram](architecture.md#how-docker-builds-and-starts-the-app) |
 | Tables, keys, column types and relationships | [Database ER diagram](database/database_schema.md#how-the-tables-are-connected) |
 | Backend container and GPU setup | [Backend container](backend_container.md) |
