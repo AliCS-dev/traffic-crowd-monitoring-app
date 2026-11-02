@@ -1,0 +1,44 @@
+---
+title: Traffic and Crowd Monitoring - Container View with Deployment Details
+---
+flowchart TB
+    client["Browser Client [Container]<br/>React / TypeScript / Material UI<br/>Upload and inspect media"]
+    subgraph deployment["Docker Compose Deployment"]
+        direction TB
+        nginx["Web Server [Container]<br/>Nginx<br/>Static files; /api/ proxy"]
+        backend["Application API [Container]<br/>FastAPI / Uvicorn<br/>Process media; serve results"]
+        postgres[("Database [Container]<br/>PostgreSQL 16<br/>Analysis records and jobs")]
+    end
+
+    subgraph storage["Persistent Storage - Docker Named Volumes"]
+        direction TB
+        uploads[("uploads<br/>[Data volume]<br/>Submitted images and videos")]
+        outputs[("outputs<br/>[Data volume]<br/>Clean and annotated result images")]
+        pgdata[("postgres_data<br/>[Data volume]<br/>PostgreSQL database files")]
+    end
+    gpu["NVIDIA GPU - optional<br/>[Host resource]<br/>Accelerated inference"]
+    client -->|"Load / submit / query<br/>HTTP"| nginx
+    nginx -->|"Forward /api/<br/>HTTP"| backend
+    backend -->|"Read / write<br/>SQL over TCP"| postgres
+    backend -.->|"Read / write files"| uploads
+    backend -.->|"Read / write files"| outputs
+    postgres -.->|"Store database files"| pgdata
+    backend ==>|"CUDA device access"| gpu
+
+    key["KEY<br/>Blue: client; amber: proxy; teal: API<br/>Grey: data; rose: hardware<br/>Solid arrow: network request<br/>Dashed arrow: storage access<br/>Thick arrow: hardware access<br/>Rectangles: applications/resources<br/>Cylinders: stores; groups: boundaries"]
+    gpu ~~~ key
+
+    classDef clientLayer fill:#E3F2FD,stroke:#1565C0,color:#16324F
+    classDef proxyLayer fill:#FFF3CD,stroke:#946200,color:#513B00
+    classDef backendLayer fill:#E0F2F1,stroke:#00796B,color:#004D40
+    classDef dataLayer fill:#F1F3F5,stroke:#59636E,color:#263238
+    classDef hostLayer fill:#FCE4EC,stroke:#AD1457,color:#650D34
+    classDef legend fill:#FFFFFF,stroke:#9AA0A6,color:#37474F,font-size:14px
+    class client clientLayer
+    class nginx proxyLayer
+    class backend backendLayer
+    class postgres,uploads,outputs,pgdata dataLayer
+    class gpu hostLayer
+    class key legend
+    style deployment fill:#FAFCFC,stroke:#90A4AE,stroke-dasharray:6 4
+    style storage fill:#FFFFFF,stroke:#90A4AE,stroke-dasharray:6 4

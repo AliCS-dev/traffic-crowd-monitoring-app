@@ -59,8 +59,11 @@ The final bibliography entries and university citation style still need checking
 
 ## Figures We Already Have
 
-The [architecture diagrams](../architecture.md) explain components and container
-startup; the [database diagram](../database/database_schema.md) shows tables and
+The [container and backend component views](../architecture.md#the-running-application)
+separate the overview from backend responsibilities. [PDF exports and example
+captions](../diagrams/README.md#thesis-and-defence) are available for LaTeX.
+Container startup remains a separate lifecycle figure; the
+[database diagram](../database/database_schema.md) shows tables and
 relationships. The [user guide](../user_guide.md) provides real desktop and mobile
 screenshots with a [capture and attribution record](../images/user-guide/README.md).
 A sequence figure for image submission and background video processing can be

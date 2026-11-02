@@ -1,0 +1,24 @@
+{
+  "theme": "base",
+  "look": "classic",
+  "layout": "elk",
+  "markdownAutoWrap": false,
+  "themeVariables": {
+    "fontFamily": "Arial, sans-serif",
+    "fontSize": "18px",
+    "lineColor": "#455A64",
+    "textColor": "#263238",
+    "edgeLabelBackground": "#FFFFFF",
+    "clusterBkg": "#FFFFFF",
+    "clusterBorder": "#90A4AE"
+  },
+  "flowchart": {
+    "htmlLabels": false,
+    "useMaxWidth": false,
+    "curve": "linear",
+    "nodeSpacing": 40,
+    "rankSpacing": 55,
+    "padding": 16,
+    "wrappingWidth": 260
+  }
+}
