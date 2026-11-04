@@ -9,11 +9,13 @@ has not passed our accuracy requirements, and dense-crowd counting is currently
 unsupported.** A completed analysis means processing finished, not that every
 object was correctly detected.
 
-![Full application architecture showing the browser, Docker containers, image and video processing, PostgreSQL, persistent media volumes and optional GPU](docs/diagrams/application_architecture.png)
+![Container view with deployment details: browser client, Nginx, FastAPI, PostgreSQL, named volumes and optional host GPU](docs/diagrams/application_architecture.png)
 
-*The current local application, including its Docker boundaries and storage.
+*Container view with deployment details. The browser runs outside Docker;
+storage and GPU links are distinguished from network requests.
 [Open the full-size diagram](docs/diagrams/application_architecture.svg),
-read the [architecture guide](docs/architecture.md#the-running-application),
+read the [architecture guide](docs/architecture.md#the-running-application)
+and [backend component view](docs/architecture.md#backend-component-view),
 or see the [application screenshots](docs/user_guide.md).*
 
 ## What We Can Do

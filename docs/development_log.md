@@ -1068,3 +1068,21 @@ Issue #79 remains open. Cold-process, browser and recovery measurements, the
 workflow coverage review, the remaining media decisions and the clean release
 freeze still precede final collection. We have not changed the existing LaTeX
 project or claimed that the model's accuracy limitations are resolved.
+
+### Architecture Figures for Documentation and Thesis (2 November 2026)
+
+We replaced the combined architecture figure with a container view and a
+separate backend component view. The overview includes Docker deployment details,
+named volumes and optional GPU access; the backend figure groups responsibilities
+inside the existing API process. Neither figure introduces new services.
+
+The [diagram guide](diagrams/README.md) includes editable Mermaid sources,
+rendering commands and PNG, SVG and PDF exports. We updated the documentation
+index, architecture explanation and thesis outline to use these figures. The
+Docker lifecycle and database ER figures remain unchanged.
+
+All six exports rendered successfully. We inspected the PNG and PDF figures,
+checked the SVG structure and local documentation links, and confirmed that each
+PDF contains one page with selectable text. These are documentation checks, not
+new application tests or performance measurements. The separate LaTeX project
+has not been edited or compiled.
