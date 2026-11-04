@@ -340,7 +340,10 @@ def test_command_persists_partial_run_and_does_not_retry(
         script.main(["--backend-container", "test", "--output-directory", str(output)])
 
 
-@pytest.mark.parametrize("problem", [None, "missing_logs", "mismatch", "resources"])
+@pytest.mark.parametrize(
+    "problem",
+    [None, "missing_logs", "mismatch", "resources", "null_result", "scenario_change"],
+)
 def test_command_success_requires_correlated_evidence(
     tmp_path, scenario, monkeypatch, problem
 ):
@@ -350,7 +353,15 @@ def test_command_success_requires_correlated_evidence(
     monkeypatch.setattr(
         script, "measure_request", partial(measure_request, root=tmp_path)
     )
-    monkeypatch.setattr(script, "load_scenarios", lambda _: [scenario])
+    scenario_reads = []
+
+    def read_scenarios(_):
+        scenario_reads.append(True)
+        if problem == "scenario_change" and len(scenario_reads) > 1:
+            return [scenario.model_copy(update={"sha256": "b" * 64})]
+        return [scenario]
+
+    monkeypatch.setattr(script, "load_scenarios", read_scenarios)
     monkeypatch.setattr(script, "backend_identity", lambda _: identity)
     monkeypatch.setattr(script, "source_identity", lambda _: {})
     monkeypatch.setattr(script, "sha256", lambda _: "hash")
@@ -388,6 +399,8 @@ def test_command_success_requires_correlated_evidence(
                 headers={"x-request-id": request_id},
             )
         if request.url.path.startswith("/api/analyses/"):
+            if problem == "null_result":
+                return httpx.Response(200, content=b"null")
             return httpx.Response(
                 200,
                 json={
@@ -433,7 +446,7 @@ def test_command_success_requires_correlated_evidence(
     report = json.loads((output / "report.json").read_text())
     assert code == (0 if problem is None else 1)
     assert report["status"] == ("recorded" if problem is None else "incomplete")
-    if problem != "mismatch":
+    if problem not in {"mismatch", "null_result"}:
         assert len(submissions) == 3
         assert report["summary"]["I1"]["attempted"] == 2
         assert report["batches"][0]["completed_sampled_frames"] == 2

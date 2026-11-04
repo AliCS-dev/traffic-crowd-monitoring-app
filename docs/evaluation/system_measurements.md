@@ -90,7 +90,10 @@ as failures; the planned repetitions and actual attempts are both recorded.
 
 We check input hashes and the running backend's source hash before requests,
 match saved-session provenance to the selected container, compare model settings,
-and check container identity again afterwards. Missing or duplicate stage records
+and check container identity again afterwards. A completed request still requires
+saved-result provenance; an empty result cannot bypass that check. The final
+scenario definitions must also match those loaded before the run.
+Missing or duplicate stage records
 are unavailable, not zero. Reports are checkpointed after each returned request;
 an abrupt process kill can leave an `in_progress` file without final logs or hashes.
 After an interruption, we check that the old job has finished before another run.
@@ -119,6 +122,18 @@ failures, thread correlation, polling deadlines, partial reports, source/profile
 mismatches, missing logs, resource errors and percentile calculation. Controlled
 detectors and mocked HTTP responses test correctness, not real inference speed.
 All 630 Python tests passed, including the 12 PostgreSQL integration checks.
+
+## Review on 4 November
+
+We brought the branch up to date with the architecture documentation and corrected
+two evidence checks: a null saved-result response now fails provenance validation,
+and changed scenario definitions make the report incomplete. Regression tests
+reproduced both problems before the fixes and passed afterwards.
+
+The local suite passed 620 tests, with 12 database integration tests skipped
+because Docker was unavailable in WSL. The 38 focused timing and runner tests,
+lint and formatting checks passed. This review did not repeat the live GPU
+measurements or replace the dated development evidence above.
 
 ## What Remains
 

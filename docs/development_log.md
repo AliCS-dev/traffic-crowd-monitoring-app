@@ -1086,3 +1086,16 @@ checked the SVG structure and local documentation links, and confirmed that each
 PDF contains one page with selectable text. These are documentation checks, not
 new application tests or performance measurements. The separate LaTeX project
 has not been edited or compiled.
+
+### Issue #79: Measurement Tooling Review (4 November 2026)
+
+We reviewed PR #157 against the updated main branch and retained both the
+measurement and architecture entries when resolving the development-log conflict.
+The review found two cases where evidence could be accepted incorrectly: a null
+saved-result response and scenario definitions changed during a run. Both now
+leave the measurement report incomplete, with regression tests for each case.
+
+The local Python suite passed 620 tests; 12 PostgreSQL integration tests were
+skipped because Docker was unavailable. The 38 focused tests, lint and formatting
+checks passed. Application timing boundaries, model settings and dependencies
+are unchanged. This review is not final measurement collection; #79 remains open.

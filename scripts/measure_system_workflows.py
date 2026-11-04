@@ -154,7 +154,7 @@ def main(argv=None):
                         poll_interval=args.poll_interval,
                     )
                     report["requests"].append(row)
-                    if result is not None:
+                    if row["status"] == "completed" and not row.get("evidence_error"):
                         try:
                             profile, runtime = check_result_identity(
                                 result,
@@ -175,7 +175,8 @@ def main(argv=None):
                         )
             if backend_identity(args.backend_container) != identity:
                 raise ValueError("Backend restarted or changed during measurement.")
-            load_scenarios(args.scenarios)
+            if load_scenarios(args.scenarios) != scenarios:
+                raise ValueError("Scenario definitions changed during measurement.")
     except (Exception, KeyboardInterrupt) as error:
         # Store types, not exception text that may contain server paths or secrets.
         report["errors"].append(type(error).__name__)
