@@ -25,6 +25,12 @@ yet: stage timing, the #26 coverage review and the video-input decision remain.
 The [chapter outline](docs/thesis/system_design_outline.md) supports #81 writing
 without presenting an outline as a completed LaTeX chapter.
 
+**29 October update:** the [warm measurement runner](docs/evaluation/system_measurements.md)
+and correlated stage timers are implemented and verified. We can retain request
+failures, inference/persistence timings and sampled resource use. This is not the
+final #79 evaluation: the coverage review, remaining timing paths, media decision
+and clean release freeze still precede final collection.
+
 ## Work Order
 
 | Issue | Intended outcome | Priority |

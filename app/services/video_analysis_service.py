@@ -43,6 +43,7 @@ from app.services.workload import (
     WorkloadAdmission,
     WorkloadLimits,
 )
+from app.stage_timing import record_stage
 
 LOGGER = logging.getLogger(__name__)
 MAX_SESSION_NAME_LENGTH = 150
@@ -277,6 +278,12 @@ class VideoAnalysisService:
                     )
 
         try:
+            record_stage(
+                "video_queue",
+                started - item.submitted_at,
+                status="completed",
+                session_id=item.session_id,
+            )
             if started - item.submitted_at > self._limits.max_queue_seconds:
                 failure_code = "video_queue_timeout"
                 raise AnalysisTimeoutError("Video queue deadline exceeded.")

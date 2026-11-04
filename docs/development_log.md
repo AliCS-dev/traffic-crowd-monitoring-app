@@ -1046,6 +1046,29 @@ with reasons and trade-offs for the main choices. No LaTeX project is present in
 this repository, so we have not edited or compiled the thesis. Issues #79 and #81
 remain open, as do the deferred model-evaluation requirements.
 
+### Issue #79: Warm Workflow Measurements (29 October 2026)
+
+We added request-correlated inference, result-persistence and video queue timings
+to the existing JSON logs. The inference timer accounts for CUDA completion,
+and persistence includes commit. No schema, response contract, model profile or
+dependency changed.
+
+The [measurement guide](evaluation/system_measurements.md) describes the new
+runner and links its raw verification observations. We preserve warm-ups,
+failures, missing readings and provenance errors, and report unavailable stage
+values as null rather than zero. The runner writes JSON, CSV and artifact hashes.
+
+All 630 Python tests passed, including 12 PostgreSQL integration checks. Two
+nine-request GPU tooling runs completed with correlated stages and resource
+samples, and the unchanged five-frame detector regression passed with no
+differences. The final tooling run overlapped local tests; it is not an isolated
+final performance experiment. The two runs remain separate local artifacts.
+
+Issue #79 remains open. Cold-process, browser and recovery measurements, the
+workflow coverage review, the remaining media decisions and the clean release
+freeze still precede final collection. We have not changed the existing LaTeX
+project or claimed that the model's accuracy limitations are resolved.
+
 ### Architecture Figures for Documentation and Thesis (2 November 2026)
 
 We replaced the combined architecture figure with a container view and a
@@ -1063,3 +1086,16 @@ checked the SVG structure and local documentation links, and confirmed that each
 PDF contains one page with selectable text. These are documentation checks, not
 new application tests or performance measurements. The separate LaTeX project
 has not been edited or compiled.
+
+### Issue #79: Measurement Tooling Review (4 November 2026)
+
+We reviewed PR #157 against the updated main branch and retained both the
+measurement and architecture entries when resolving the development-log conflict.
+The review found two cases where evidence could be accepted incorrectly: a null
+saved-result response and scenario definitions changed during a run. Both now
+leave the measurement report incomplete, with regression tests for each case.
+
+The local Python suite passed 620 tests; 12 PostgreSQL integration tests were
+skipped because Docker was unavailable. The 38 focused tests, lint and formatting
+checks passed. Application timing boundaries, model settings and dependencies
+are unchanged. This review is not final measurement collection; #79 remains open.

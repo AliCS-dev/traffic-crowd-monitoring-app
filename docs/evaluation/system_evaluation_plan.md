@@ -4,6 +4,10 @@
 
 **Prepared 28 October 2026. Status: preparation, not a completed evaluation.**
 
+On 29 October we added and verified [warm workflow measurements](system_measurements.md)
+and structured stage timers. The complete protocol below still needs the
+remaining coverage, media, restart/browser measurements and release freeze.
+
 Issue #79 measures the application as a system. We are not selecting another
 detector, reopening the historical held-out test, or turning successful requests
 into evidence of detection accuracy. Issues #113-#115 remain deferred.
@@ -14,8 +18,8 @@ The application candidate is commit `a229688b8858289ea740efe6433e72cef71bb88b`, 
 The interactive workspace and its corrected browser checks are included.
 This identifies the starting version, not the final measured release.
 
-Before final measurements, we need the #26 workflow coverage review, a tested
-measurement runner, separate stage timers, and the media decision below.
+Before final measurements, we need the #26 workflow coverage review, the remaining
+measurement runner paths, and the media decision below.
 Any required instrumentation changes produce a new candidate. We then record
 one clean commit and immutable container image IDs before running the scenarios.
 A later code, dependency, model or configuration change requires a new labelled
@@ -76,19 +80,19 @@ silently substitute a clip or start another annotation campaign.
 
 | Measure | Boundary and interpretation | Current support |
 | --- | --- | --- |
-| API image completion | Client monotonic time before multipart POST to complete response body | Existing smoke runner provides an initial version |
-| API video completion | Before multipart POST to first observed completed job status | Existing smoke runner; includes polling delay |
-| Inference service time | Detector call after acquiring its shared lock to completed results, with CUDA completion accounted for | Separate timer still needed |
-| Persistence time | Entry to result-persistence operation through successful transaction commit | Separate timer still needed |
-| Video queue wait | Accepted job to worker start | Explicit correlation/timing still needed |
+| API image completion | Client monotonic time before multipart POST to complete response body | Warm runner implemented and verified |
+| API video completion | Before multipart POST to first observed completed job status | Warm runner; includes polling delay |
+| Inference service time | Detector call after acquiring its shared lock to completed results, with CUDA completion accounted for | Request-correlated stage log |
+| Persistence time | Entry to result-persistence operation through successful transaction commit | Request-correlated stage log; video progress writes excluded |
+| Video queue wait | Submission to executor after job creation commits, to worker entry | Request-correlated stage log |
 | Browser result readiness | Submit action to decoded clean image and visible overlays | Browser runner needs an explicit timing record |
-| Throughput | Successful images or sampled frames divided by wall time in a declared sequential batch | Runner extension needed; not source-video FPS |
-| Resources | Timestamped backend cgroup memory and whole-device GPU memory samples | Existing sampler; samples can miss peaks |
+| Throughput | Successful images or sampled frames divided by wall time in a declared sequential batch | Warm batch recorded, including evidence reads; not source-video FPS |
+| Resources | Timestamped backend cgroup memory and whole-device GPU memory samples | Runner records reading times/errors; samples can miss peaks |
 | Startup/recovery | Container start/restart to API readiness, followed by reopening a saved session | Automated timing and result record still needed |
 
-The current JSON logs contain whole-request and workflow durations, not the
-separate inference and persistence values. We must not infer those stages by
-subtracting unrelated timings or describe a total request as pure inference.
+The JSON logs now contain separate inference, persistence and queue records as
+well as the existing whole-request and workflow durations. We do not infer those
+stages by subtraction or describe a total request as pure inference.
 No new database table, distributed tracing system or external monitoring service
 is required for these measurements; structured timing records are sufficient.
 
@@ -147,12 +151,14 @@ unless the stored record is actually verified after recovery.
 
 The existing commands in the [workspace report](../scene_workspace_verification.md)
 and [operations guide](../operational_safeguards.md) reproduce regression and
-smoke checks, not this full protocol. There is no final runner command yet.
+smoke checks, not this full protocol. The [measurement guide](system_measurements.md)
+now provides the warm runner command and its development verification record.
 
-The next implementation is a small measurement runner and structured stage
-timers, with tests for timing boundaries, failed runs and provenance mismatch.
-Before running it, we resolve V2, complete the #26 matrix and commit the freeze
-record. This plan alone does not close #26 or #79.
+The warm runner and stage timers have tests for timing boundaries, failed runs
+and provenance mismatch. Remaining work includes cold-process/browser/recovery
+measurements. Before final collection, we resolve V2, complete the #26 matrix
+and commit the freeze record. Neither this plan nor the tooling check closes
+#26 or #79.
 
 We will retain raw JSON/CSV records, the input and runtime manifest, the exact
 command, run ID and output hashes. The final report will link compact tracked

@@ -2,6 +2,7 @@ from pathlib import Path
 from threading import Lock
 from typing import Any
 
+import torch
 from ultralytics import YOLO
 
 from app.config import BASE_DIR
@@ -9,6 +10,7 @@ from app.model_profile import (
     RuntimeModelProfile,
     verify_runtime_checkpoint,
 )
+from app.stage_timing import measure_stage
 
 
 class ObjectDetector:
@@ -52,7 +54,15 @@ class ObjectDetector:
         if verbose is not None:
             options["verbose"] = verbose
         with self._inference_lock:
-            return self._model(image, **options)
+            # Exclude lock wait and earlier GPU work; include completed results.
+            cuda_device = device if str(device).startswith("cuda") else None
+            if cuda_device is not None:
+                torch.cuda.synchronize(cuda_device)
+            with measure_stage("inference"):
+                results = self._model(image, **options)
+                if cuda_device is not None:
+                    torch.cuda.synchronize(cuda_device)
+                return results
 
 
 def detect_objects(

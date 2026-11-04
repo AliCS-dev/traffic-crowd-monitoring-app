@@ -25,6 +25,8 @@ class StructuredFormatter(logging.Formatter):
             "sampled_frames",
             "limits",
             "device",
+            "stage",
+            "stage_status",
         ):
             if hasattr(record, name):
                 payload[name] = getattr(record, name)

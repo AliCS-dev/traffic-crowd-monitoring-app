@@ -23,6 +23,7 @@ from app.model_profile import RuntimeModelProfile
 from app.schemas.monitoring import VideoAnalysisJobResult
 from app.services.detection_service import build_object_count_summary_records
 from app.services.video_detection_service import VideoFrameDetectionResult
+from app.stage_timing import measure_stage
 
 
 class VideoJobStateError(RuntimeError):
@@ -138,6 +139,7 @@ def update_video_job_progress(
                 raise VideoJobStateError("Video job progress cannot be updated.")
 
 
+@measure_stage("video_persistence")
 def complete_video_analysis_job(
     session_id: int,
     frame_results: Sequence[VideoFrameDetectionResult],
