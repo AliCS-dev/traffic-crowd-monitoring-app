@@ -1099,3 +1099,26 @@ The local Python suite passed 620 tests; 12 PostgreSQL integration tests were
 skipped because Docker was unavailable. The 38 focused tests, lint and formatting
 checks passed. Application timing boundaries, model settings and dependencies
 are unchanged. This review is not final measurement collection; #79 remains open.
+
+### Issue #26: Workflow Coverage and Merge Checks (4 November 2026)
+
+We mapped critical workflows to existing tests in the [testing guide](testing.md).
+The gaps were browser submission/progress paths, a full Compose check in CI,
+real mid-write rollback tests and enforced merge checks. We added those without
+changing application code, model settings, dependencies or screenshot baselines.
+
+The Compose overlay mounts a test-only deterministic detector while using real
+Nginx, FastAPI, decoding, migrations and PostgreSQL. Two cycles checked image and
+video results, media hashes and startup recovery of abandoned jobs. This fixture
+is explicitly labelled and never becomes the production detector.
+
+Two full Python runs each passed 634 tests, including 14 PostgreSQL integration
+checks. Two frontend runs each passed 115 tests. The desktop/mobile browser suite
+passed all 48 checks across two repetitions without retries. Four real GPU
+browser workflows and the unchanged five-frame GPU regression also passed.
+These are correctness checks, not final system measurements or new accuracy data.
+
+With Ali's approval, we made all four CI jobs required for `main`, enabled
+up-to-date-branch checks and included administrators. The configuration was read
+back through GitHub's API. The testing guide records commands, coverage and
+remaining limitations; final evaluation and thesis writing remain separate.

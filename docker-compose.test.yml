@@ -1,0 +1,16 @@
+# Test-only overlay. Never add it to the demonstration or evaluation stack.
+services:
+  backend:
+    command: ["python", "/qa/serve.py"]
+    environment:
+      CONTROLLED_COMPOSE_TEST: "1"
+      PYTHONPATH: /app
+    volumes:
+      - ./tests/compose:/qa:ro
+      - ./data/runtime-regression/fixtures:/fixtures:ro
+    healthcheck:
+      interval: 5s
+      start_period: 10s
+      retries: 12
+  frontend:
+    image: ${TEST_FRONTEND_IMAGE:-traffic-monitoring-frontend:local}

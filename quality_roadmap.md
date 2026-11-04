@@ -33,6 +33,13 @@ and clean release freeze still precede final collection.
 
 ## Work Order
 
+**4 November update:** the warm runner is merged through PR #157. The
+[#26 coverage review](docs/testing.md) adds browser submission tests, real
+transaction rollback checks and controlled Compose startup/recovery in CI.
+Required checks are enforced on `main`, including for administrators. The next
+#79 work is the remaining measurement paths, media decisions and version freeze,
+not another model-selection experiment.
+
 | Issue | Intended outcome | Priority |
 | --- | --- | --- |
 | [#111](https://github.com/AliCS-dev/traffic-crowd-monitoring-app/issues/111) | Buildable containers and restored local service | P0 |

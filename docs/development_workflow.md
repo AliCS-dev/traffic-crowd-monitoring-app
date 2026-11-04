@@ -81,6 +81,10 @@ accurate.
 
 ## How We Test the Work
 
+The [workflow coverage matrix](testing.md) connects critical paths to their tests
+and records the disposable database, Compose and local GPU commands. It also
+distinguishes mocked browser tests from checks against the running application.
+
 We match the amount of testing to the change. A small conversion function usually
 needs focused unit tests. Database writes, file output, and complete workflows
 need integration tests when they become part of the implemented behavior.
@@ -107,6 +111,7 @@ npm run format:check
 npm run typecheck
 npm test
 npm run build
+npm run test:browser
 ```
 
 The unit tests cover route behavior, accessible controls, environment parsing,
@@ -196,6 +201,8 @@ screenshot when that makes the result easier to review.
 We keep pull requests small enough to understand in one sitting and merge them
 after the relevant checks pass. GitHub Actions repeats the standard checks, but
 we still review the behavior and the code ourselves.
+The four CI job names are required checks on `main`, including for administrators,
+and the PR branch must be up to date before merging.
 
 ## Dependency Updates
 

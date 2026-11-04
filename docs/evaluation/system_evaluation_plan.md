@@ -8,6 +8,10 @@ On 29 October we added and verified [warm workflow measurements](system_measurem
 and structured stage timers. The complete protocol below still needs the
 remaining coverage, media, restart/browser measurements and release freeze.
 
+The 4 November [workflow coverage review](../testing.md) maps implemented paths
+to tests and records the repeated software checks. It includes controlled
+Compose recovery, not the timed real-runtime recovery experiment below.
+
 Issue #79 measures the application as a system. We are not selecting another
 detector, reopening the historical held-out test, or turning successful requests
 into evidence of detection accuracy. Issues #113-#115 remain deferred.
@@ -18,8 +22,8 @@ The application candidate is commit `a229688b8858289ea740efe6433e72cef71bb88b`, 
 The interactive workspace and its corrected browser checks are included.
 This identifies the starting version, not the final measured release.
 
-Before final measurements, we need the #26 workflow coverage review, the remaining
-measurement runner paths, and the media decision below.
+Before final measurements, we need the remaining measurement runner paths and
+the media decision below, with the #26 software gate passing on the candidate.
 Any required instrumentation changes produce a new candidate. We then record
 one clean commit and immutable container image IDs before running the scenarios.
 A later code, dependency, model or configuration change requires a new labelled
@@ -156,7 +160,7 @@ now provides the warm runner command and its development verification record.
 
 The warm runner and stage timers have tests for timing boundaries, failed runs
 and provenance mismatch. Remaining work includes cold-process/browser/recovery
-measurements. Before final collection, we resolve V2, complete the #26 matrix
+measurements. Before final collection, we resolve V2, rerun the #26 software gate
 and commit the freeze record. Neither this plan nor the tooling check closes
 #26 or #79.
 
