@@ -8,6 +8,10 @@ inference, result-saving and video queue timings. We checked it on 29 October
 The model, its failed quality gate and the unsupported dense-crowd result have
 not changed.
 
+The [backend restart guide](system_restarts.md) covers the separate runner added
+on 7 November for cold-process requests and saved-result recovery. This page
+continues to describe warm API measurements; the two are not pooled.
+
 ## What We Measure
 
 | Record | Boundary |
@@ -138,9 +142,9 @@ measurements or replace the dated development evidence above.
 ## What Remains
 
 The [#26 workflow coverage review](../testing.md) is now recorded separately.
-Before final collection, we still need the natural-motion video decision,
-I3 preparation, backend-restart and recovery
-measurements, browser readiness timing, and the complete hardware/configuration
-freeze. The runner currently handles the warm API portion, not that whole
-protocol. We do not reopen the held-out accuracy test or assign new annotation
-work as part of this step.
+The [restart runner](system_restarts.md) now covers graceful backend restarts,
+first requests and saved-result integrity. Before final collection, we still
+need the natural-motion video decision, I3 preparation, browser readiness,
+full-stack startup and failure/recovery measurements, the final run order and
+the complete hardware/configuration freeze. We do not reopen the held-out
+accuracy test or assign new annotation work as part of this step.

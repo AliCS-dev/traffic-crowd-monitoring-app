@@ -42,6 +42,7 @@ jobs:
         run: |
           docker compose -f docker-compose.app.yml config --quiet
           docker compose -f docker-compose.app.yml -f docker-compose.gpu.yml config --quiet
+          docker compose -f docker-compose.app.yml -f docker-compose.gpu.yml -f docker-compose.measurement.yml config --quiet
       - name: Build frontend container
         run: docker build -t traffic-monitoring-frontend:ci frontend
       - name: Check frontend container health and SPA routing

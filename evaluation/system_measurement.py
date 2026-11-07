@@ -327,13 +327,13 @@ def statistics_record(values):
     }
 
 
-def summarize(rows):
+def summarize(rows, *, phase="measured"):
     summaries = {}
     for scenario_id in dict.fromkeys(row["scenario_id"] for row in rows):
         measured = [
             row
             for row in rows
-            if row["scenario_id"] == scenario_id and row["phase"] == "measured"
+            if row["scenario_id"] == scenario_id and row["phase"] == phase
         ]
         successes = [row for row in measured if row["status"] == "completed"]
         summaries[scenario_id] = {

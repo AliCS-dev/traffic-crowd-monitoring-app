@@ -1,0 +1,4439 @@
+{
+  "verification_date": "2026-11-07",
+  "purpose": "Development verification, not final system performance or accuracy",
+  "limitations": [
+    "Dirty runner tree and reused source-matching backend image; no release freeze",
+    "Two trials per scenario, one scene group, artificial video timeline",
+    "No unrelated local tests ran during the corrected run; exclusive host/GPU use was not established",
+    "Measures graceful backend restart, not full Compose startup, database outage or forced crash",
+    "Resource sampling covers cold requests, not the restart window"
+  ],
+  "initial_attempt": {
+    "status": "incomplete",
+    "started_at": "2026-11-07T10:01:07.681055+00:00",
+    "finished_at": "2026-11-07T10:01:25.476624+00:00",
+    "errors": [
+      "ValueError"
+    ],
+    "requests": 1,
+    "trials": 0,
+    "explanation": "Saved source-asset route /source was missing from the runner allowlist; stopped before restarting",
+    "artifacts": {
+      "report.json": "0b1b0e6a5ad8e56e13c30e6d4ccc729bda6eff8f23298eb67dc9e4851d4ccb97",
+      "restarts.csv": "b5688f782eae8e5751c5adfed6838142d7c22ab989f99a54e08cffd9675ae0b2"
+    }
+  },
+  "corrected_artifacts": {
+    "report.json": "fc489f4f60df9a6ccfadc016b986d1d17ec8a2f5519f937c2d2e633e9d3c88ae",
+    "restarts.csv": "113eb1ded73e681aab4ad9a233575230d6921dd4b2c029bcac1b496b1562a177"
+  },
+  "gpu_regression": {
+    "baseline_sha256": "48febaa74e3b86350d074b348da37f9140e00c7e5aae5118921c93861f236423",
+    "differences": [],
+    "frames": {
+      "roundabout_29.png:0": {
+        "detections": [
+          {
+            "box": [
+              384.45,
+              1018.78,
+              611.21,
+              1176.8
+            ],
+            "class": "car_or_van",
+            "confidence": 0.90702
+          },
+          {
+            "box": [
+              1938.19,
+              1124.48,
+              2145.2,
+              1304.61
+            ],
+            "class": "car_or_van",
+            "confidence": 0.89761
+          },
+          {
+            "box": [
+              2063.15,
+              901.18,
+              2192.2,
+              1012.44
+            ],
+            "class": "car_or_van",
+            "confidence": 0.89294
+          },
+          {
+            "box": [
+              1961.63,
+              842.26,
+              2078.87,
+              920.64
+            ],
+            "class": "car_or_van",
+            "confidence": 0.87315
+          },
+          {
+            "box": [
+              185.61,
+              881.63,
+              345.65,
+              959.73
+            ],
+            "class": "car_or_van",
+            "confidence": 0.86929
+          },
+          {
+            "box": [
+              770.26,
+              848.29,
+              930.65,
+              944.1
+            ],
+            "class": "car_or_van",
+            "confidence": 0.82773
+          },
+          {
+            "box": [
+              1884.63,
+              679.5,
+              1927.03,
+              706.69
+            ],
+            "class": "car_or_van",
+            "confidence": 0.82254
+          },
+          {
+            "box": [
+              1944.23,
+              963.3,
+              1996.68,
+              1079.67
+            ],
+            "class": "person",
+            "confidence": 0.82244
+          },
+          {
+            "box": [
+              540.35,
+              799.3,
+              661.25,
+              854.87
+            ],
+            "class": "car_or_van",
+            "confidence": 0.81404
+          },
+          {
+            "box": [
+              1859.88,
+              717.44,
+              1911.65,
+              749.94
+            ],
+            "class": "car_or_van",
+            "confidence": 0.81158
+          },
+          {
+            "box": [
+              242.95,
+              840.02,
+              392.19,
+              930.39
+            ],
+            "class": "car_or_van",
+            "confidence": 0.80525
+          },
+          {
+            "box": [
+              103.03,
+              853.09,
+              225.24,
+              924.53
+            ],
+            "class": "car_or_van",
+            "confidence": 0.72866
+          },
+          {
+            "box": [
+              391.43,
+              809.15,
+              499.02,
+              870.85
+            ],
+            "class": "car_or_van",
+            "confidence": 0.69397
+          },
+          {
+            "box": [
+              354.93,
+              800.46,
+              462.84,
+              850.68
+            ],
+            "class": "car_or_van",
+            "confidence": 0.68803
+          },
+          {
+            "box": [
+              615.05,
+              884.64,
+              682.21,
+              946.2
+            ],
+            "class": "motorcycle",
+            "confidence": 0.67594
+          },
+          {
+            "box": [
+              133.46,
+              803.8,
+              203.77,
+              849.83
+            ],
+            "class": "car_or_van",
+            "confidence": 0.64923
+          },
+          {
+            "box": [
+              1945.08,
+              735.49,
+              2035.64,
+              776.45
+            ],
+            "class": "car_or_van",
+            "confidence": 0.61331
+          },
+          {
+            "box": [
+              65.21,
+              867.98,
+              182.88,
+              938.95
+            ],
+            "class": "car_or_van",
+            "confidence": 0.60733
+          },
+          {
+            "box": [
+              1942.21,
+              1002.7,
+              2006.79,
+              1090.84
+            ],
+            "class": "bicycle",
+            "confidence": 0.54461
+          },
+          {
+            "box": [
+              2226.76,
+              801.97,
+              2557.71,
+              1063.94
+            ],
+            "class": "truck",
+            "confidence": 0.52631
+          },
+          {
+            "box": [
+              195.3,
+              802.15,
+              253.45,
+              850.2
+            ],
+            "class": "car_or_van",
+            "confidence": 0.46612
+          },
+          {
+            "box": [
+              646.37,
+              871.19,
+              681.73,
+              932.25
+            ],
+            "class": "person",
+            "confidence": 0.45152
+          },
+          {
+            "box": [
+              2222.01,
+              805.12,
+              2504.08,
+              911.94
+            ],
+            "class": "car_or_van",
+            "confidence": 0.42083
+          },
+          {
+            "box": [
+              1973.19,
+              700.03,
+              2032.43,
+              737.74
+            ],
+            "class": "car_or_van",
+            "confidence": 0.39679
+          },
+          {
+            "box": [
+              629.02,
+              880.2,
+              662.06,
+              934.09
+            ],
+            "class": "person",
+            "confidence": 0.36731
+          },
+          {
+            "box": [
+              1731.41,
+              692.55,
+              1745.55,
+              722.21
+            ],
+            "class": "person",
+            "confidence": 0.3615
+          },
+          {
+            "box": [
+              303.58,
+              801.14,
+              383.88,
+              847.17
+            ],
+            "class": "car_or_van",
+            "confidence": 0.35332
+          },
+          {
+            "box": [
+              2317.31,
+              739.27,
+              2427.96,
+              783.69
+            ],
+            "class": "car_or_van",
+            "confidence": 0.32985
+          },
+          {
+            "box": [
+              619.56,
+              886.43,
+              656.5,
+              942.25
+            ],
+            "class": "person",
+            "confidence": 0.32669
+          },
+          {
+            "box": [
+              319.06,
+              799.88,
+              442.87,
+              849.34
+            ],
+            "class": "car_or_van",
+            "confidence": 0.27822
+          },
+          {
+            "box": [
+              236.32,
+              802.31,
+              312.38,
+              847.27
+            ],
+            "class": "car_or_van",
+            "confidence": 0.27575
+          },
+          {
+            "box": [
+              89.5,
+              802.82,
+              157.7,
+              844.03
+            ],
+            "class": "car_or_van",
+            "confidence": 0.25899
+          }
+        ],
+        "dimensions": [
+          2560,
+          1440
+        ],
+        "output_sha256": "acfac11efd8b8f400452ef4961cdcac7e0fddcca2de0f8e30d3ed377b01d6530",
+        "timestamp": 0
+      },
+      "roundabout_6.png:0": {
+        "detections": [
+          {
+            "box": [
+              1918.08,
+              995.06,
+              2141.01,
+              1139.07
+            ],
+            "class": "car_or_van",
+            "confidence": 0.90501
+          },
+          {
+            "box": [
+              370.49,
+              962.56,
+              559.63,
+              1072.3
+            ],
+            "class": "car_or_van",
+            "confidence": 0.89636
+          },
+          {
+            "box": [
+              152.34,
+              913.92,
+              314.33,
+              991.84
+            ],
+            "class": "car_or_van",
+            "confidence": 0.88159
+          },
+          {
+            "box": [
+              1799.41,
+              1321.95,
+              2053.97,
+              1440
+            ],
+            "class": "car_or_van",
+            "confidence": 0.8727
+          },
+          {
+            "box": [
+              2051.25,
+              930.35,
+              2177.04,
+              1030.99
+            ],
+            "class": "car_or_van",
+            "confidence": 0.87021
+          },
+          {
+            "box": [
+              696.18,
+              845.99,
+              858.09,
+              906.54
+            ],
+            "class": "car_or_van",
+            "confidence": 0.84766
+          },
+          {
+            "box": [
+              1767.83,
+              767.76,
+              1824.19,
+              807.36
+            ],
+            "class": "car_or_van",
+            "confidence": 0.82677
+          },
+          {
+            "box": [
+              512.97,
+              830.86,
+              632.14,
+              886.81
+            ],
+            "class": "car_or_van",
+            "confidence": 0.81337
+          },
+          {
+            "box": [
+              207.84,
+              871.7,
+              358.64,
+              962.09
+            ],
+            "class": "car_or_van",
+            "confidence": 0.79401
+          },
+          {
+            "box": [
+              1001.43,
+              849.16,
+              1063.39,
+              897.51
+            ],
+            "class": "motorcycle",
+            "confidence": 0.76752
+          },
+          {
+            "box": [
+              2286.68,
+              768.4,
+              2394.06,
+              812.97
+            ],
+            "class": "car_or_van",
+            "confidence": 0.71466
+          },
+          {
+            "box": [
+              59.47,
+              886.15,
+              191.66,
+              962.93
+            ],
+            "class": "car_or_van",
+            "confidence": 0.69959
+          },
+          {
+            "box": [
+              274.95,
+              831.52,
+              428.06,
+              884.75
+            ],
+            "class": "car_or_van",
+            "confidence": 0.69292
+          },
+          {
+            "box": [
+              97.76,
+              834.49,
+              178.15,
+              882.62
+            ],
+            "class": "car_or_van",
+            "confidence": 0.60486
+          },
+          {
+            "box": [
+              1073.75,
+              836.1,
+              1228.26,
+              909.04
+            ],
+            "class": "car_or_van",
+            "confidence": 0.58271
+          },
+          {
+            "box": [
+              1295.96,
+              1107.44,
+              1432.72,
+              1202.01
+            ],
+            "class": "bicycle",
+            "confidence": 0.54729
+          },
+          {
+            "box": [
+              1939.46,
+              694.87,
+              1987.11,
+              718.41
+            ],
+            "class": "car_or_van",
+            "confidence": 0.53238
+          },
+          {
+            "box": [
+              1020.46,
+              839.45,
+              1050.79,
+              886.84
+            ],
+            "class": "person",
+            "confidence": 0.4973
+          },
+          {
+            "box": [
+              1031.72,
+              837.88,
+              1058.42,
+              886.63
+            ],
+            "class": "person",
+            "confidence": 0.48728
+          },
+          {
+            "box": [
+              161.71,
+              833.77,
+              218.23,
+              882.42
+            ],
+            "class": "car_or_van",
+            "confidence": 0.43152
+          },
+          {
+            "box": [
+              1877.11,
+              738.91,
+              1923.52,
+              783.33
+            ],
+            "class": "car_or_van",
+            "confidence": 0.37498
+          },
+          {
+            "box": [
+              1913.15,
+              764.85,
+              2005.86,
+              804.35
+            ],
+            "class": "car_or_van",
+            "confidence": 0.37184
+          },
+          {
+            "box": [
+              2191.74,
+              834.91,
+              2499.93,
+              943.58
+            ],
+            "class": "car_or_van",
+            "confidence": 0.30931
+          },
+          {
+            "box": [
+              1296.34,
+              1108.94,
+              1432.23,
+              1201.68
+            ],
+            "class": "motorcycle",
+            "confidence": 0.30168
+          },
+          {
+            "box": [
+              197.8,
+              834.3,
+              276.92,
+              880.58
+            ],
+            "class": "car_or_van",
+            "confidence": 0.29313
+          },
+          {
+            "box": [
+              29.09,
+              886.89,
+              177.75,
+              971.74
+            ],
+            "class": "car_or_van",
+            "confidence": 0.29267
+          },
+          {
+            "box": [
+              250.1,
+              692.44,
+              264.93,
+              724.64
+            ],
+            "class": "person",
+            "confidence": 0.26071
+          }
+        ],
+        "dimensions": [
+          2560,
+          1440
+        ],
+        "output_sha256": "2feb75c522864e0d071216079891e1ef8c83cbb9a5bca78bfa1a2fac4b96aea3",
+        "timestamp": 0
+      },
+      "roundabout_sequence.avi:0": {
+        "detections": [
+          {
+            "box": [
+              1919.03,
+              992.81,
+              2140.27,
+              1138.29
+            ],
+            "class": "car_or_van",
+            "confidence": 0.90989
+          },
+          {
+            "box": [
+              370.03,
+              962.32,
+              559.94,
+              1071.79
+            ],
+            "class": "car_or_van",
+            "confidence": 0.89705
+          },
+          {
+            "box": [
+              1801.61,
+              1322.28,
+              2055.38,
+              1440
+            ],
+            "class": "car_or_van",
+            "confidence": 0.87489
+          },
+          {
+            "box": [
+              150.84,
+              912.19,
+              315.77,
+              991.81
+            ],
+            "class": "car_or_van",
+            "confidence": 0.86345
+          },
+          {
+            "box": [
+              2048.93,
+              929.35,
+              2177.56,
+              1030.06
+            ],
+            "class": "car_or_van",
+            "confidence": 0.85543
+          },
+          {
+            "box": [
+              694.92,
+              846.25,
+              857.31,
+              906.44
+            ],
+            "class": "car_or_van",
+            "confidence": 0.82049
+          },
+          {
+            "box": [
+              509.48,
+              829.83,
+              630.92,
+              887
+            ],
+            "class": "car_or_van",
+            "confidence": 0.80472
+          },
+          {
+            "box": [
+              1767.22,
+              766.14,
+              1824.15,
+              807.97
+            ],
+            "class": "car_or_van",
+            "confidence": 0.77328
+          },
+          {
+            "box": [
+              206.41,
+              872.74,
+              359.81,
+              965.49
+            ],
+            "class": "car_or_van",
+            "confidence": 0.71275
+          },
+          {
+            "box": [
+              1001.92,
+              848.31,
+              1063.37,
+              897.22
+            ],
+            "class": "motorcycle",
+            "confidence": 0.66997
+          },
+          {
+            "box": [
+              84.29,
+              888.02,
+              192.5,
+              958.36
+            ],
+            "class": "car_or_van",
+            "confidence": 0.66558
+          },
+          {
+            "box": [
+              1296.68,
+              1093.44,
+              1434.95,
+              1203.22
+            ],
+            "class": "bicycle",
+            "confidence": 0.63833
+          },
+          {
+            "box": [
+              98.51,
+              833.37,
+              172.96,
+              881.78
+            ],
+            "class": "car_or_van",
+            "confidence": 0.59428
+          },
+          {
+            "box": [
+              288.59,
+              832.03,
+              440.81,
+              883.78
+            ],
+            "class": "car_or_van",
+            "confidence": 0.55006
+          },
+          {
+            "box": [
+              1073.07,
+              825.32,
+              1236.11,
+              909.22
+            ],
+            "class": "car_or_van",
+            "confidence": 0.52339
+          },
+          {
+            "box": [
+              162.14,
+              833.77,
+              220.55,
+              882.87
+            ],
+            "class": "car_or_van",
+            "confidence": 0.48592
+          },
+          {
+            "box": [
+              1020.85,
+              834.18,
+              1053.09,
+              886.73
+            ],
+            "class": "person",
+            "confidence": 0.46787
+          },
+          {
+            "box": [
+              1026.91,
+              832.95,
+              1057.5,
+              885.97
+            ],
+            "class": "person",
+            "confidence": 0.43417
+          },
+          {
+            "box": [
+              1939.68,
+              694.99,
+              1985.53,
+              718.94
+            ],
+            "class": "car_or_van",
+            "confidence": 0.39732
+          },
+          {
+            "box": [
+              2190.95,
+              832.39,
+              2487.66,
+              941.31
+            ],
+            "class": "car_or_van",
+            "confidence": 0.35463
+          },
+          {
+            "box": [
+              1295.2,
+              1094.82,
+              1435.11,
+              1202.99
+            ],
+            "class": "motorcycle",
+            "confidence": 0.26525
+          }
+        ],
+        "dimensions": [
+          2560,
+          1440
+        ],
+        "output_sha256": "53b32688d5fb594210bc0fd2443b24b6620d421a3751244a59947dda5c041711",
+        "timestamp": 0
+      },
+      "roundabout_sequence.avi:10": {
+        "detections": [
+          {
+            "box": [
+              1866.44,
+              1214.86,
+              2102.81,
+              1433.64
+            ],
+            "class": "car_or_van",
+            "confidence": 0.90707
+          },
+          {
+            "box": [
+              330.58,
+              989.24,
+              482.99,
+              1119.31
+            ],
+            "class": "car_or_van",
+            "confidence": 0.90439
+          },
+          {
+            "box": [
+              918.52,
+              842.68,
+              1073.45,
+              922.32
+            ],
+            "class": "car_or_van",
+            "confidence": 0.89545
+          },
+          {
+            "box": [
+              2023.78,
+              946.57,
+              2174.88,
+              1068.52
+            ],
+            "class": "car_or_van",
+            "confidence": 0.88997
+          },
+          {
+            "box": [
+              169.47,
+              895.95,
+              332.78,
+              974.65
+            ],
+            "class": "car_or_van",
+            "confidence": 0.87299
+          },
+          {
+            "box": [
+              2016.07,
+              885.65,
+              2134.67,
+              967.35
+            ],
+            "class": "car_or_van",
+            "confidence": 0.86177
+          },
+          {
+            "box": [
+              526.55,
+              828.91,
+              689.75,
+              889.97
+            ],
+            "class": "car_or_van",
+            "confidence": 0.83485
+          },
+          {
+            "box": [
+              1698.17,
+              1068.09,
+              1810.73,
+              1154.28
+            ],
+            "class": "bicycle",
+            "confidence": 0.83002
+          },
+          {
+            "box": [
+              224.72,
+              856.05,
+              378.11,
+              947.06
+            ],
+            "class": "car_or_van",
+            "confidence": 0.82821
+          },
+          {
+            "box": [
+              1813.22,
+              742.6,
+              1865.51,
+              776.51
+            ],
+            "class": "car_or_van",
+            "confidence": 0.8137
+          },
+          {
+            "box": [
+              81.54,
+              865.86,
+              209.84,
+              940.98
+            ],
+            "class": "car_or_van",
+            "confidence": 0.72892
+          },
+          {
+            "box": [
+              1914.35,
+              686.08,
+              1952.96,
+              710.69
+            ],
+            "class": "car_or_van",
+            "confidence": 0.72867
+          },
+          {
+            "box": [
+              281.62,
+              814.87,
+              430.63,
+              867.21
+            ],
+            "class": "car_or_van",
+            "confidence": 0.65507
+          },
+          {
+            "box": [
+              52.39,
+              884.15,
+              169.62,
+              956.1
+            ],
+            "class": "car_or_van",
+            "confidence": 0.62038
+          },
+          {
+            "box": [
+              2229.86,
+              817.76,
+              2554.96,
+              1076.52
+            ],
+            "class": "truck",
+            "confidence": 0.53388
+          },
+          {
+            "box": [
+              526.63,
+              814.48,
+              666.06,
+              860.63
+            ],
+            "class": "car_or_van",
+            "confidence": 0.47323
+          },
+          {
+            "box": [
+              832.22,
+              850.15,
+              858.06,
+              891.04
+            ],
+            "class": "person",
+            "confidence": 0.43074
+          },
+          {
+            "box": [
+              392.42,
+              818.51,
+              482.12,
+              866.96
+            ],
+            "class": "car_or_van",
+            "confidence": 0.40657
+          },
+          {
+            "box": [
+              120.24,
+              817.05,
+              221.4,
+              865.25
+            ],
+            "class": "car_or_van",
+            "confidence": 0.35791
+          },
+          {
+            "box": [
+              802.87,
+              860.71,
+              871.53,
+              913.61
+            ],
+            "class": "motorcycle",
+            "confidence": 0.35387
+          },
+          {
+            "box": [
+              1720.92,
+              1013.83,
+              1793.38,
+              1136.77
+            ],
+            "class": "person",
+            "confidence": 0.34289
+          },
+          {
+            "box": [
+              1723.35,
+              704.96,
+              1734.78,
+              734.15
+            ],
+            "class": "person",
+            "confidence": 0.34273
+          },
+          {
+            "box": [
+              1928.06,
+              748.76,
+              2026.18,
+              790.09
+            ],
+            "class": "car_or_van",
+            "confidence": 0.31681
+          },
+          {
+            "box": [
+              1720.07,
+              1013.39,
+              1793.03,
+              1135.11
+            ],
+            "class": "person",
+            "confidence": 0.26705
+          }
+        ],
+        "dimensions": [
+          2560,
+          1440
+        ],
+        "output_sha256": "ff1decc7cadce8a568834515dc5b53e1d0d52673fee4d1ff04dbd28c339fac2e",
+        "timestamp": 1
+      },
+      "roundabout_sequence.avi:20": {
+        "detections": [
+          {
+            "box": [
+              384.68,
+              1019.51,
+              610.93,
+              1176.85
+            ],
+            "class": "car_or_van",
+            "confidence": 0.90721
+          },
+          {
+            "box": [
+              1938,
+              1123.4,
+              2146.19,
+              1305.03
+            ],
+            "class": "car_or_van",
+            "confidence": 0.8973
+          },
+          {
+            "box": [
+              2062.99,
+              901.12,
+              2192.41,
+              1012.22
+            ],
+            "class": "car_or_van",
+            "confidence": 0.89306
+          },
+          {
+            "box": [
+              187.69,
+              881.9,
+              347.33,
+              959.58
+            ],
+            "class": "car_or_van",
+            "confidence": 0.87649
+          },
+          {
+            "box": [
+              1961.75,
+              842.18,
+              2078.86,
+              920.15
+            ],
+            "class": "car_or_van",
+            "confidence": 0.87294
+          },
+          {
+            "box": [
+              1884.67,
+              679.49,
+              1927.02,
+              706.86
+            ],
+            "class": "car_or_van",
+            "confidence": 0.81165
+          },
+          {
+            "box": [
+              541.4,
+              799.36,
+              661.15,
+              854.63
+            ],
+            "class": "car_or_van",
+            "confidence": 0.81055
+          },
+          {
+            "box": [
+              770.32,
+              848.28,
+              929.43,
+              944.12
+            ],
+            "class": "car_or_van",
+            "confidence": 0.80804
+          },
+          {
+            "box": [
+              1859.62,
+              717.18,
+              1911.54,
+              749.89
+            ],
+            "class": "car_or_van",
+            "confidence": 0.80277
+          },
+          {
+            "box": [
+              1944.27,
+              963.17,
+              1996.09,
+              1082.51
+            ],
+            "class": "person",
+            "confidence": 0.80062
+          },
+          {
+            "box": [
+              241.37,
+              840.67,
+              393.56,
+              930.21
+            ],
+            "class": "car_or_van",
+            "confidence": 0.76451
+          },
+          {
+            "box": [
+              614.75,
+              880.33,
+              683.66,
+              946.1
+            ],
+            "class": "motorcycle",
+            "confidence": 0.73165
+          },
+          {
+            "box": [
+              100.96,
+              852.46,
+              225.09,
+              926.73
+            ],
+            "class": "car_or_van",
+            "confidence": 0.72947
+          },
+          {
+            "box": [
+              133.71,
+              802.79,
+              204.82,
+              850.44
+            ],
+            "class": "car_or_van",
+            "confidence": 0.69314
+          },
+          {
+            "box": [
+              391.29,
+              808.59,
+              498.69,
+              871.07
+            ],
+            "class": "car_or_van",
+            "confidence": 0.68924
+          },
+          {
+            "box": [
+              1944.92,
+              735.36,
+              2033.59,
+              776.17
+            ],
+            "class": "car_or_van",
+            "confidence": 0.63235
+          },
+          {
+            "box": [
+              353.25,
+              800.36,
+              462.74,
+              850.72
+            ],
+            "class": "car_or_van",
+            "confidence": 0.6289
+          },
+          {
+            "box": [
+              2281.07,
+              804.65,
+              2557.69,
+              1071.4
+            ],
+            "class": "truck",
+            "confidence": 0.57531
+          },
+          {
+            "box": [
+              64.74,
+              862.98,
+              185.89,
+              940.48
+            ],
+            "class": "car_or_van",
+            "confidence": 0.56343
+          },
+          {
+            "box": [
+              1943.17,
+              1002.47,
+              2007.06,
+              1092.64
+            ],
+            "class": "bicycle",
+            "confidence": 0.52272
+          },
+          {
+            "box": [
+              1731.35,
+              693.04,
+              1744.33,
+              723.22
+            ],
+            "class": "person",
+            "confidence": 0.4539
+          },
+          {
+            "box": [
+              194.34,
+              801.38,
+              264.12,
+              850.41
+            ],
+            "class": "car_or_van",
+            "confidence": 0.45147
+          },
+          {
+            "box": [
+              2221.78,
+              804.64,
+              2483.78,
+              911.52
+            ],
+            "class": "car_or_van",
+            "confidence": 0.42341
+          },
+          {
+            "box": [
+              626.46,
+              881.64,
+              662.09,
+              936.5
+            ],
+            "class": "person",
+            "confidence": 0.41004
+          },
+          {
+            "box": [
+              645.32,
+              871.26,
+              680.04,
+              931.35
+            ],
+            "class": "person",
+            "confidence": 0.38542
+          },
+          {
+            "box": [
+              1972.25,
+              700.45,
+              2029.22,
+              738.36
+            ],
+            "class": "car_or_van",
+            "confidence": 0.38302
+          },
+          {
+            "box": [
+              620.29,
+              885.9,
+              656.82,
+              940.99
+            ],
+            "class": "person",
+            "confidence": 0.37579
+          },
+          {
+            "box": [
+              307.69,
+              801.54,
+              384.86,
+              847.99
+            ],
+            "class": "car_or_van",
+            "confidence": 0.34127
+          },
+          {
+            "box": [
+              320.76,
+              799.81,
+              446.29,
+              850.33
+            ],
+            "class": "car_or_van",
+            "confidence": 0.26118
+          },
+          {
+            "box": [
+              243.23,
+              838.17,
+              351.73,
+              891.48
+            ],
+            "class": "car_or_van",
+            "confidence": 0.25019
+          }
+        ],
+        "dimensions": [
+          2560,
+          1440
+        ],
+        "output_sha256": "b13a81a5f1a683410ba60b2ecacf13d6edec955f461bb028251504cf9967dd1d",
+        "timestamp": 2
+      }
+    },
+    "manifest_sha256": "b9507dd760331e82387bd20881b3955c6ffaed2b8f316042b46650d33e03b3c9",
+    "model": {
+      "checkpoint_path": "models/candidates/yolo26m-visdrone/best.pt",
+      "checkpoint_sha256": "e57204b8d77b5b22ea9253cbd5664b707623aeb7c19dbaa9034fe5a60bed6571",
+      "class_mapping": {
+        "bicycle": "bicycle",
+        "bus": "bus",
+        "car": "car_or_van",
+        "motor": "motorcycle",
+        "pedestrian": "person",
+        "people": "person",
+        "truck": "truck",
+        "van": "car_or_van"
+      },
+      "confidence": 0.25,
+      "device": "cuda:0",
+      "evaluation_reference": "configs/evaluation/final_model_selection.json",
+      "image_size": 1280,
+      "max_detections": 300,
+      "model_id": "yolo26m-visdrone",
+      "numeric_precision": "float32",
+      "profile_id": "yolo26m-visdrone-experimental-v1",
+      "quality_gate_status": "failed",
+      "scale_factor": 2
+    },
+    "purpose": "development regression, not accuracy",
+    "recorded_at": "2026-11-07T10:03:08.144148+00:00",
+    "runtime": {
+      "application_commit": null,
+      "captured_at": "2026-11-07T10:02:32.819345Z",
+      "container_id": "836ede7c0570",
+      "cuda_version": "13.0",
+      "cudnn_version": 92400,
+      "dependencies": {
+        "annotated-doc": "0.0.5",
+        "annotated-types": "0.8.0",
+        "anyio": "4.15.1",
+        "asttokens": "3.0.2",
+        "build": "1.6.1",
+        "certifi": "2026.7.22",
+        "charset-normalizer": "3.5.2",
+        "click": "8.3.3",
+        "cloudpickle": "3.1.2",
+        "cmake": "4.4.3",
+        "contourpy": "1.4.0",
+        "cuda-bindings": "13.3.1",
+        "cuda-pathfinder": "1.6.0",
+        "cuda-toolkit": "13.0.3.0",
+        "cycler": "0.12.1",
+        "dnspython": "2.8.0",
+        "executing": "2.2.1",
+        "expecttest": "0.3.0",
+        "fastapi": "0.156.8",
+        "filelock": "4.0.7",
+        "fonttools": "4.67.0",
+        "fsspec": "2026.9.0",
+        "h11": "0.16.0",
+        "httpcore": "1.0.9",
+        "httpx": "0.28.1",
+        "hypothesis": "6.168.3",
+        "idna": "3.20",
+        "importlib-metadata": "9.0.1",
+        "ipython": "9.17.1",
+        "ipython-pygments-lexers": "1.1.1",
+        "jedi": "0.20.0",
+        "jinja2": "3.1.6",
+        "kiwisolver": "1.5.1",
+        "lintrunner": "0.13.1",
+        "markupsafe": "3.0.3",
+        "matplotlib": "3.11.2",
+        "matplotlib-inline": "0.2.2",
+        "mpmath": "1.3.0",
+        "networkx": "3.7",
+        "ninja": "1.13.2",
+        "numpy": "2.5.4",
+        "nvidia-cublas": "13.1.1.3",
+        "nvidia-cuda-cupti": "13.0.85",
+        "nvidia-cuda-nvrtc": "13.0.88",
+        "nvidia-cuda-runtime": "13.0.96",
+        "nvidia-cudnn-cu13": "9.24.0.43",
+        "nvidia-cufft": "12.0.0.61",
+        "nvidia-cufile": "1.15.1.6",
+        "nvidia-curand": "10.4.0.35",
+        "nvidia-cusolver": "12.0.4.66",
+        "nvidia-cusparse": "12.6.3.3",
+        "nvidia-cusparselt-cu13": "0.8.1",
+        "nvidia-ml-py": "13.615.71",
+        "nvidia-nccl-cu13": "2.30.7",
+        "nvidia-nvjitlink": "13.3.33",
+        "nvidia-nvshmem-cu13": "3.4.5",
+        "nvidia-nvtx": "13.0.85",
+        "opencv-python": "5.0.0.93",
+        "opentelemetry-api": "1.45.1",
+        "optree": "0.20.0",
+        "packaging": "26.3",
+        "parso": "0.8.7",
+        "pathspec": "1.1.1",
+        "pexpect": "4.9.0",
+        "pillow": "13.0.0",
+        "pip": "24.0",
+        "polars": "2.0.0",
+        "polars-runtime-32": "2.0.0",
+        "prompt-toolkit": "3.0.53",
+        "psutil": "7.2.2",
+        "psycopg": "3.3.6",
+        "psycopg-binary": "3.3.6",
+        "ptyprocess": "0.7.0",
+        "pure-eval": "0.2.4",
+        "pydantic": "2.14.1",
+        "pydantic-core": "2.50.1",
+        "pygments": "2.21.0",
+        "pyparsing": "3.3.3",
+        "pyproject-hooks": "1.3.3",
+        "python-dateutil": "2.9.0.post0",
+        "python-dotenv": "1.2.4",
+        "python-etcd": "0.4.5",
+        "python-multipart": "0.0.32",
+        "pyyaml": "6.0.3",
+        "requests": "2.34.2",
+        "scikit-build-core": "1.1.0",
+        "scipy": "1.18.1",
+        "setuptools": "81.0.0",
+        "six": "1.17.0",
+        "sortedcontainers": "2.4.0",
+        "spin": "0.18",
+        "stack-data": "0.6.3",
+        "starlette": "1.9.0",
+        "sympy": "1.14.0",
+        "torch": "2.14.1+cu130",
+        "torchaudio": "2.11.0+cu130",
+        "torchelastic": "0.2.2",
+        "torchvision": "0.29.1+cu130",
+        "traitlets": "5.16.1",
+        "triton": "3.8.0",
+        "typing-extensions": "4.16.0",
+        "typing-inspection": "0.4.4",
+        "ultralytics": "8.4.183",
+        "ultralytics-platform": "0.1.90",
+        "ultralytics-thop": "2.2.3",
+        "urllib3": "2.8.0",
+        "uv": "0.12.21",
+        "uvicorn": "0.54.0",
+        "wcwidth": "0.9.1",
+        "wheel": "0.48.0",
+        "zipp": "4.1.0"
+      },
+      "device": "cuda:0",
+      "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+      "platform": "Linux 6.6.87.2-microsoft-standard-WSL2 x86_64",
+      "python_version": "3.12.3",
+      "schema_version": 1,
+      "source_dirty": null,
+      "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+    },
+    "schema_version": 1,
+    "sessions": [
+      11,
+      12,
+      13
+    ],
+    "status": "pass"
+  },
+  "report": {
+    "schema_version": 1,
+    "run_id": "a008674f-e81c-42f8-9013-42f1d40a89a1",
+    "started_at": "2026-11-07T10:01:47.676456+00:00",
+    "purpose": "Restart tooling verification; not final evaluation or accuracy",
+    "status": "recorded",
+    "runner": {
+      "application_commit": "4f0e16db5657648510d182f6b432e1cb4a7e4b01",
+      "source_dirty": true,
+      "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+    },
+    "tool_sha256": {
+      "runner": "cf4989a03ca9f1c74657754acf7a1a69f2df024f06b5ba1cf6dc5515bf2851f5",
+      "requests": "00fea329ac8f2a2d8c8d7e11fe37a245f83cf077b9208c00831e3c8dca2f0660",
+      "restarts": "c4f5d3f8366b9c2dc9b4fbc1075c18505222b4a4938d3e3256c0ef5f52987092",
+      "scenarios": "22d896f0c4db2bff64a6426ee3bbbad4081bfd7ad0c361039ac7389a864d4191"
+    },
+    "settings": {
+      "base_url": "http://127.0.0.1:8086",
+      "backend_container": "traffic-issue79-restarts-backend-1",
+      "allow_backend_restart": true,
+      "gpu_id": "0",
+      "scenarios": "/home/ali/Bsc_Thesis/traffic-crowd-monitoring-app/configs/evaluation/system_workflows.json",
+      "repetitions": 2,
+      "timeout": 360,
+      "restart_timeout": 180,
+      "poll_interval": 0.25,
+      "sample_interval": 1,
+      "output_directory": "data/output/system-measurements/restart-verification-2026-11-07-v2"
+    },
+    "scenarios": [
+      {
+        "scenario_id": "I1",
+        "kind": "image",
+        "path": "data/runtime-regression/fixtures/roundabout_6.png",
+        "sha256": "785414dccf5be9ecd1fbed0793ed32900069adbe8b8fe5953048141da7c45a4e",
+        "grid_rows": 2,
+        "grid_columns": 3,
+        "sampling_interval_seconds": 1
+      },
+      {
+        "scenario_id": "I2",
+        "kind": "image",
+        "path": "data/runtime-regression/fixtures/roundabout_29.png",
+        "sha256": "1c63462c1511db556411844f0eb2e4d0392b0f0f54484146492735dd662c669a",
+        "grid_rows": null,
+        "grid_columns": null,
+        "sampling_interval_seconds": 1
+      },
+      {
+        "scenario_id": "V1",
+        "kind": "video",
+        "path": "data/runtime-regression/fixtures/roundabout_sequence.avi",
+        "sha256": "d62fdd09d6963629f1c9a51258fab4ff8b90dff5efdae10f7d31bffe5e6ddc67",
+        "grid_rows": 2,
+        "grid_columns": 3,
+        "sampling_interval_seconds": 1
+      }
+    ],
+    "requests": [
+      {
+        "scenario_id": "I1",
+        "kind": "image",
+        "phase": "recovery_seed",
+        "repetition": 0,
+        "started_at": "2026-11-07T10:01:47.984294+00:00",
+        "status": "completed",
+        "request_id": "b879ccb3-10d4-4115-969a-467572cea319",
+        "session_id": 2,
+        "api_seconds": 0.32306326699995225,
+        "failure_code": null,
+        "http_status": 201,
+        "sampled_frames": 1,
+        "finished_at": "2026-11-07T10:01:48.318658+00:00",
+        "runtime_provenance": {
+          "schema_version": 1,
+          "captured_at": "2026-11-07T10:00:29.538104Z",
+          "application_commit": null,
+          "source_dirty": null,
+          "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725",
+          "python_version": "3.12.3",
+          "platform": "Linux 6.6.87.2-microsoft-standard-WSL2 x86_64",
+          "dependencies": {
+            "uv": "0.12.21",
+            "h11": "0.16.0",
+            "pip": "24.0",
+            "six": "1.17.0",
+            "idna": "3.20",
+            "jedi": "0.20.0",
+            "spin": "0.18",
+            "zipp": "4.1.0",
+            "anyio": "4.15.1",
+            "build": "1.6.1",
+            "click": "8.3.3",
+            "cmake": "4.4.3",
+            "httpx": "0.28.1",
+            "ninja": "1.13.2",
+            "numpy": "2.5.4",
+            "parso": "0.8.7",
+            "scipy": "1.18.1",
+            "sympy": "1.14.0",
+            "torch": "2.14.1+cu130",
+            "wheel": "0.48.0",
+            "cycler": "0.12.1",
+            "fsspec": "2026.9.0",
+            "jinja2": "3.1.6",
+            "mpmath": "1.3.0",
+            "optree": "0.20.0",
+            "pillow": "13.0.0",
+            "polars": "2.0.0",
+            "psutil": "7.2.2",
+            "pyyaml": "6.0.3",
+            "triton": "3.8.0",
+            "certifi": "2026.7.22",
+            "fastapi": "0.156.8",
+            "ipython": "9.17.1",
+            "pexpect": "4.9.0",
+            "psycopg": "3.3.6",
+            "urllib3": "2.8.0",
+            "uvicorn": "0.54.0",
+            "wcwidth": "0.9.1",
+            "filelock": "4.0.7",
+            "httpcore": "1.0.9",
+            "networkx": "3.7",
+            "pathspec": "1.1.1",
+            "pydantic": "2.14.1",
+            "pygments": "2.21.0",
+            "requests": "2.34.2",
+            "asttokens": "3.0.2",
+            "contourpy": "1.4.0",
+            "dnspython": "2.8.0",
+            "executing": "2.2.1",
+            "fonttools": "4.67.0",
+            "packaging": "26.3",
+            "pure-eval": "0.2.4",
+            "pyparsing": "3.3.3",
+            "starlette": "1.9.0",
+            "traitlets": "5.16.1",
+            "expecttest": "0.3.0",
+            "hypothesis": "6.168.3",
+            "kiwisolver": "1.5.1",
+            "lintrunner": "0.13.1",
+            "markupsafe": "3.0.3",
+            "matplotlib": "3.11.2",
+            "ptyprocess": "0.7.0",
+            "setuptools": "81.0.0",
+            "stack-data": "0.6.3",
+            "torchaudio": "2.11.0+cu130",
+            "cloudpickle": "3.1.2",
+            "nvidia-nvtx": "13.0.85",
+            "python-etcd": "0.4.5",
+            "torchvision": "0.29.1+cu130",
+            "ultralytics": "8.4.183",
+            "cuda-toolkit": "13.0.3.0",
+            "nvidia-cufft": "12.0.0.61",
+            "nvidia-ml-py": "13.615.71",
+            "torchelastic": "0.2.2",
+            "annotated-doc": "0.0.5",
+            "cuda-bindings": "13.3.1",
+            "nvidia-cublas": "13.1.1.3",
+            "nvidia-cufile": "1.15.1.6",
+            "nvidia-curand": "10.4.0.35",
+            "opencv-python": "5.0.0.93",
+            "pydantic-core": "2.50.1",
+            "python-dotenv": "1.2.4",
+            "prompt-toolkit": "3.0.53",
+            "psycopg-binary": "3.3.6",
+            "annotated-types": "0.8.0",
+            "cuda-pathfinder": "1.6.0",
+            "nvidia-cusolver": "12.0.4.66",
+            "nvidia-cusparse": "12.6.3.3",
+            "pyproject-hooks": "1.3.3",
+            "python-dateutil": "2.9.0.post0",
+            "nvidia-nccl-cu13": "2.30.7",
+            "nvidia-nvjitlink": "13.3.33",
+            "python-multipart": "0.0.32",
+            "sortedcontainers": "2.4.0",
+            "ultralytics-thop": "2.2.3",
+            "matplotlib-inline": "0.2.2",
+            "nvidia-cuda-cupti": "13.0.85",
+            "nvidia-cuda-nvrtc": "13.0.88",
+            "nvidia-cudnn-cu13": "9.24.0.43",
+            "opentelemetry-api": "1.45.1",
+            "polars-runtime-32": "2.0.0",
+            "scikit-build-core": "1.1.0",
+            "typing-extensions": "4.16.0",
+            "typing-inspection": "0.4.4",
+            "charset-normalizer": "3.5.2",
+            "importlib-metadata": "9.0.1",
+            "nvidia-cuda-runtime": "13.0.96",
+            "nvidia-nvshmem-cu13": "3.4.5",
+            "ultralytics-platform": "0.1.90",
+            "nvidia-cusparselt-cu13": "0.8.1",
+            "ipython-pygments-lexers": "1.1.1"
+          },
+          "device": "cuda:0",
+          "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+          "cuda_version": "13.0",
+          "cudnn_version": 92400,
+          "container_id": "836ede7c0570"
+        },
+        "stages": [
+          {
+            "timestamp": "2026-11-07T10:01:48.272522+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "b879ccb3-10d4-4115-969a-467572cea319",
+            "duration_seconds": 0.25010901499990723,
+            "stage": "inference",
+            "stage_status": "completed"
+          },
+          {
+            "timestamp": "2026-11-07T10:01:48.305986+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "b879ccb3-10d4-4115-969a-467572cea319",
+            "duration_seconds": 0.012279858000056265,
+            "stage": "image_persistence",
+            "stage_status": "completed"
+          }
+        ],
+        "stage_seconds": {
+          "inference": 0.25010901499990723,
+          "image_persistence": 0.012279858000056265
+        },
+        "stage_evidence_complete": true
+      },
+      {
+        "scenario_id": "I1",
+        "kind": "image",
+        "phase": "cold_process",
+        "repetition": 1,
+        "started_at": "2026-11-07T10:01:52.171978+00:00",
+        "status": "completed",
+        "request_id": "97184042-ebdb-466b-bba0-22d0a371fe59",
+        "session_id": 3,
+        "api_seconds": 10.266490548999855,
+        "failure_code": null,
+        "http_status": 201,
+        "sampled_frames": 1,
+        "finished_at": "2026-11-07T10:02:02.453238+00:00",
+        "runtime_provenance": {
+          "schema_version": 1,
+          "captured_at": "2026-11-07T10:01:51.836975Z",
+          "application_commit": null,
+          "source_dirty": null,
+          "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725",
+          "python_version": "3.12.3",
+          "platform": "Linux 6.6.87.2-microsoft-standard-WSL2 x86_64",
+          "dependencies": {
+            "uv": "0.12.21",
+            "h11": "0.16.0",
+            "pip": "24.0",
+            "six": "1.17.0",
+            "idna": "3.20",
+            "jedi": "0.20.0",
+            "spin": "0.18",
+            "zipp": "4.1.0",
+            "anyio": "4.15.1",
+            "build": "1.6.1",
+            "click": "8.3.3",
+            "cmake": "4.4.3",
+            "httpx": "0.28.1",
+            "ninja": "1.13.2",
+            "numpy": "2.5.4",
+            "parso": "0.8.7",
+            "scipy": "1.18.1",
+            "sympy": "1.14.0",
+            "torch": "2.14.1+cu130",
+            "wheel": "0.48.0",
+            "cycler": "0.12.1",
+            "fsspec": "2026.9.0",
+            "jinja2": "3.1.6",
+            "mpmath": "1.3.0",
+            "optree": "0.20.0",
+            "pillow": "13.0.0",
+            "polars": "2.0.0",
+            "psutil": "7.2.2",
+            "pyyaml": "6.0.3",
+            "triton": "3.8.0",
+            "certifi": "2026.7.22",
+            "fastapi": "0.156.8",
+            "ipython": "9.17.1",
+            "pexpect": "4.9.0",
+            "psycopg": "3.3.6",
+            "urllib3": "2.8.0",
+            "uvicorn": "0.54.0",
+            "wcwidth": "0.9.1",
+            "filelock": "4.0.7",
+            "httpcore": "1.0.9",
+            "networkx": "3.7",
+            "pathspec": "1.1.1",
+            "pydantic": "2.14.1",
+            "pygments": "2.21.0",
+            "requests": "2.34.2",
+            "asttokens": "3.0.2",
+            "contourpy": "1.4.0",
+            "dnspython": "2.8.0",
+            "executing": "2.2.1",
+            "fonttools": "4.67.0",
+            "packaging": "26.3",
+            "pure-eval": "0.2.4",
+            "pyparsing": "3.3.3",
+            "starlette": "1.9.0",
+            "traitlets": "5.16.1",
+            "expecttest": "0.3.0",
+            "hypothesis": "6.168.3",
+            "kiwisolver": "1.5.1",
+            "lintrunner": "0.13.1",
+            "markupsafe": "3.0.3",
+            "matplotlib": "3.11.2",
+            "ptyprocess": "0.7.0",
+            "setuptools": "81.0.0",
+            "stack-data": "0.6.3",
+            "torchaudio": "2.11.0+cu130",
+            "cloudpickle": "3.1.2",
+            "nvidia-nvtx": "13.0.85",
+            "python-etcd": "0.4.5",
+            "torchvision": "0.29.1+cu130",
+            "ultralytics": "8.4.183",
+            "cuda-toolkit": "13.0.3.0",
+            "nvidia-cufft": "12.0.0.61",
+            "nvidia-ml-py": "13.615.71",
+            "torchelastic": "0.2.2",
+            "annotated-doc": "0.0.5",
+            "cuda-bindings": "13.3.1",
+            "nvidia-cublas": "13.1.1.3",
+            "nvidia-cufile": "1.15.1.6",
+            "nvidia-curand": "10.4.0.35",
+            "opencv-python": "5.0.0.93",
+            "pydantic-core": "2.50.1",
+            "python-dotenv": "1.2.4",
+            "prompt-toolkit": "3.0.53",
+            "psycopg-binary": "3.3.6",
+            "annotated-types": "0.8.0",
+            "cuda-pathfinder": "1.6.0",
+            "nvidia-cusolver": "12.0.4.66",
+            "nvidia-cusparse": "12.6.3.3",
+            "pyproject-hooks": "1.3.3",
+            "python-dateutil": "2.9.0.post0",
+            "nvidia-nccl-cu13": "2.30.7",
+            "nvidia-nvjitlink": "13.3.33",
+            "python-multipart": "0.0.32",
+            "sortedcontainers": "2.4.0",
+            "ultralytics-thop": "2.2.3",
+            "matplotlib-inline": "0.2.2",
+            "nvidia-cuda-cupti": "13.0.85",
+            "nvidia-cuda-nvrtc": "13.0.88",
+            "nvidia-cudnn-cu13": "9.24.0.43",
+            "opentelemetry-api": "1.45.1",
+            "polars-runtime-32": "2.0.0",
+            "scikit-build-core": "1.1.0",
+            "typing-extensions": "4.16.0",
+            "typing-inspection": "0.4.4",
+            "charset-normalizer": "3.5.2",
+            "importlib-metadata": "9.0.1",
+            "nvidia-cuda-runtime": "13.0.96",
+            "nvidia-nvshmem-cu13": "3.4.5",
+            "ultralytics-platform": "0.1.90",
+            "nvidia-cusparselt-cu13": "0.8.1",
+            "ipython-pygments-lexers": "1.1.1"
+          },
+          "device": "cuda:0",
+          "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+          "cuda_version": "13.0",
+          "cudnn_version": 92400,
+          "container_id": "836ede7c0570"
+        },
+        "stages": [
+          {
+            "timestamp": "2026-11-07T10:02:02.370942+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "97184042-ebdb-466b-bba0-22d0a371fe59",
+            "duration_seconds": 9.911330335000002,
+            "stage": "inference",
+            "stage_status": "completed"
+          },
+          {
+            "timestamp": "2026-11-07T10:02:02.436683+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "97184042-ebdb-466b-bba0-22d0a371fe59",
+            "duration_seconds": 0.01697581700000228,
+            "stage": "image_persistence",
+            "stage_status": "completed"
+          }
+        ],
+        "stage_seconds": {
+          "inference": 9.911330335000002,
+          "image_persistence": 0.01697581700000228
+        },
+        "stage_evidence_complete": true
+      },
+      {
+        "scenario_id": "I1",
+        "kind": "image",
+        "phase": "cold_process",
+        "repetition": 2,
+        "started_at": "2026-11-07T10:02:06.545210+00:00",
+        "status": "completed",
+        "request_id": "768bfb99-716d-4293-9970-027bbe6188e1",
+        "session_id": 4,
+        "api_seconds": 2.7961450530001457,
+        "failure_code": null,
+        "http_status": 201,
+        "sampled_frames": 1,
+        "finished_at": "2026-11-07T10:02:09.355582+00:00",
+        "runtime_provenance": {
+          "schema_version": 1,
+          "captured_at": "2026-11-07T10:02:06.047148Z",
+          "application_commit": null,
+          "source_dirty": null,
+          "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725",
+          "python_version": "3.12.3",
+          "platform": "Linux 6.6.87.2-microsoft-standard-WSL2 x86_64",
+          "dependencies": {
+            "uv": "0.12.21",
+            "h11": "0.16.0",
+            "pip": "24.0",
+            "six": "1.17.0",
+            "idna": "3.20",
+            "jedi": "0.20.0",
+            "spin": "0.18",
+            "zipp": "4.1.0",
+            "anyio": "4.15.1",
+            "build": "1.6.1",
+            "click": "8.3.3",
+            "cmake": "4.4.3",
+            "httpx": "0.28.1",
+            "ninja": "1.13.2",
+            "numpy": "2.5.4",
+            "parso": "0.8.7",
+            "scipy": "1.18.1",
+            "sympy": "1.14.0",
+            "torch": "2.14.1+cu130",
+            "wheel": "0.48.0",
+            "cycler": "0.12.1",
+            "fsspec": "2026.9.0",
+            "jinja2": "3.1.6",
+            "mpmath": "1.3.0",
+            "optree": "0.20.0",
+            "pillow": "13.0.0",
+            "polars": "2.0.0",
+            "psutil": "7.2.2",
+            "pyyaml": "6.0.3",
+            "triton": "3.8.0",
+            "certifi": "2026.7.22",
+            "fastapi": "0.156.8",
+            "ipython": "9.17.1",
+            "pexpect": "4.9.0",
+            "psycopg": "3.3.6",
+            "urllib3": "2.8.0",
+            "uvicorn": "0.54.0",
+            "wcwidth": "0.9.1",
+            "filelock": "4.0.7",
+            "httpcore": "1.0.9",
+            "networkx": "3.7",
+            "pathspec": "1.1.1",
+            "pydantic": "2.14.1",
+            "pygments": "2.21.0",
+            "requests": "2.34.2",
+            "asttokens": "3.0.2",
+            "contourpy": "1.4.0",
+            "dnspython": "2.8.0",
+            "executing": "2.2.1",
+            "fonttools": "4.67.0",
+            "packaging": "26.3",
+            "pure-eval": "0.2.4",
+            "pyparsing": "3.3.3",
+            "starlette": "1.9.0",
+            "traitlets": "5.16.1",
+            "expecttest": "0.3.0",
+            "hypothesis": "6.168.3",
+            "kiwisolver": "1.5.1",
+            "lintrunner": "0.13.1",
+            "markupsafe": "3.0.3",
+            "matplotlib": "3.11.2",
+            "ptyprocess": "0.7.0",
+            "setuptools": "81.0.0",
+            "stack-data": "0.6.3",
+            "torchaudio": "2.11.0+cu130",
+            "cloudpickle": "3.1.2",
+            "nvidia-nvtx": "13.0.85",
+            "python-etcd": "0.4.5",
+            "torchvision": "0.29.1+cu130",
+            "ultralytics": "8.4.183",
+            "cuda-toolkit": "13.0.3.0",
+            "nvidia-cufft": "12.0.0.61",
+            "nvidia-ml-py": "13.615.71",
+            "torchelastic": "0.2.2",
+            "annotated-doc": "0.0.5",
+            "cuda-bindings": "13.3.1",
+            "nvidia-cublas": "13.1.1.3",
+            "nvidia-cufile": "1.15.1.6",
+            "nvidia-curand": "10.4.0.35",
+            "opencv-python": "5.0.0.93",
+            "pydantic-core": "2.50.1",
+            "python-dotenv": "1.2.4",
+            "prompt-toolkit": "3.0.53",
+            "psycopg-binary": "3.3.6",
+            "annotated-types": "0.8.0",
+            "cuda-pathfinder": "1.6.0",
+            "nvidia-cusolver": "12.0.4.66",
+            "nvidia-cusparse": "12.6.3.3",
+            "pyproject-hooks": "1.3.3",
+            "python-dateutil": "2.9.0.post0",
+            "nvidia-nccl-cu13": "2.30.7",
+            "nvidia-nvjitlink": "13.3.33",
+            "python-multipart": "0.0.32",
+            "sortedcontainers": "2.4.0",
+            "ultralytics-thop": "2.2.3",
+            "matplotlib-inline": "0.2.2",
+            "nvidia-cuda-cupti": "13.0.85",
+            "nvidia-cuda-nvrtc": "13.0.88",
+            "nvidia-cudnn-cu13": "9.24.0.43",
+            "opentelemetry-api": "1.45.1",
+            "polars-runtime-32": "2.0.0",
+            "scikit-build-core": "1.1.0",
+            "typing-extensions": "4.16.0",
+            "typing-inspection": "0.4.4",
+            "charset-normalizer": "3.5.2",
+            "importlib-metadata": "9.0.1",
+            "nvidia-cuda-runtime": "13.0.96",
+            "nvidia-nvshmem-cu13": "3.4.5",
+            "ultralytics-platform": "0.1.90",
+            "nvidia-cusparselt-cu13": "0.8.1",
+            "ipython-pygments-lexers": "1.1.1"
+          },
+          "device": "cuda:0",
+          "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+          "cuda_version": "13.0",
+          "cudnn_version": 92400,
+          "container_id": "836ede7c0570"
+        },
+        "stages": [
+          {
+            "timestamp": "2026-11-07T10:02:09.270437+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "768bfb99-716d-4293-9970-027bbe6188e1",
+            "duration_seconds": 2.449439029999894,
+            "stage": "inference",
+            "stage_status": "completed"
+          },
+          {
+            "timestamp": "2026-11-07T10:02:09.340385+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "768bfb99-716d-4293-9970-027bbe6188e1",
+            "duration_seconds": 0.01646484199977749,
+            "stage": "image_persistence",
+            "stage_status": "completed"
+          }
+        ],
+        "stage_seconds": {
+          "inference": 2.449439029999894,
+          "image_persistence": 0.01646484199977749
+        },
+        "stage_evidence_complete": true
+      },
+      {
+        "scenario_id": "I2",
+        "kind": "image",
+        "phase": "recovery_seed",
+        "repetition": 0,
+        "started_at": "2026-11-07T10:02:09.610314+00:00",
+        "status": "completed",
+        "request_id": "ba2e8638-5c43-452e-9881-f3f30aeb383c",
+        "session_id": 5,
+        "api_seconds": 0.12280645200007712,
+        "failure_code": null,
+        "http_status": 201,
+        "sampled_frames": 1,
+        "finished_at": "2026-11-07T10:02:09.747660+00:00",
+        "runtime_provenance": {
+          "schema_version": 1,
+          "captured_at": "2026-11-07T10:02:06.047148Z",
+          "application_commit": null,
+          "source_dirty": null,
+          "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725",
+          "python_version": "3.12.3",
+          "platform": "Linux 6.6.87.2-microsoft-standard-WSL2 x86_64",
+          "dependencies": {
+            "uv": "0.12.21",
+            "h11": "0.16.0",
+            "pip": "24.0",
+            "six": "1.17.0",
+            "idna": "3.20",
+            "jedi": "0.20.0",
+            "spin": "0.18",
+            "zipp": "4.1.0",
+            "anyio": "4.15.1",
+            "build": "1.6.1",
+            "click": "8.3.3",
+            "cmake": "4.4.3",
+            "httpx": "0.28.1",
+            "ninja": "1.13.2",
+            "numpy": "2.5.4",
+            "parso": "0.8.7",
+            "scipy": "1.18.1",
+            "sympy": "1.14.0",
+            "torch": "2.14.1+cu130",
+            "wheel": "0.48.0",
+            "cycler": "0.12.1",
+            "fsspec": "2026.9.0",
+            "jinja2": "3.1.6",
+            "mpmath": "1.3.0",
+            "optree": "0.20.0",
+            "pillow": "13.0.0",
+            "polars": "2.0.0",
+            "psutil": "7.2.2",
+            "pyyaml": "6.0.3",
+            "triton": "3.8.0",
+            "certifi": "2026.7.22",
+            "fastapi": "0.156.8",
+            "ipython": "9.17.1",
+            "pexpect": "4.9.0",
+            "psycopg": "3.3.6",
+            "urllib3": "2.8.0",
+            "uvicorn": "0.54.0",
+            "wcwidth": "0.9.1",
+            "filelock": "4.0.7",
+            "httpcore": "1.0.9",
+            "networkx": "3.7",
+            "pathspec": "1.1.1",
+            "pydantic": "2.14.1",
+            "pygments": "2.21.0",
+            "requests": "2.34.2",
+            "asttokens": "3.0.2",
+            "contourpy": "1.4.0",
+            "dnspython": "2.8.0",
+            "executing": "2.2.1",
+            "fonttools": "4.67.0",
+            "packaging": "26.3",
+            "pure-eval": "0.2.4",
+            "pyparsing": "3.3.3",
+            "starlette": "1.9.0",
+            "traitlets": "5.16.1",
+            "expecttest": "0.3.0",
+            "hypothesis": "6.168.3",
+            "kiwisolver": "1.5.1",
+            "lintrunner": "0.13.1",
+            "markupsafe": "3.0.3",
+            "matplotlib": "3.11.2",
+            "ptyprocess": "0.7.0",
+            "setuptools": "81.0.0",
+            "stack-data": "0.6.3",
+            "torchaudio": "2.11.0+cu130",
+            "cloudpickle": "3.1.2",
+            "nvidia-nvtx": "13.0.85",
+            "python-etcd": "0.4.5",
+            "torchvision": "0.29.1+cu130",
+            "ultralytics": "8.4.183",
+            "cuda-toolkit": "13.0.3.0",
+            "nvidia-cufft": "12.0.0.61",
+            "nvidia-ml-py": "13.615.71",
+            "torchelastic": "0.2.2",
+            "annotated-doc": "0.0.5",
+            "cuda-bindings": "13.3.1",
+            "nvidia-cublas": "13.1.1.3",
+            "nvidia-cufile": "1.15.1.6",
+            "nvidia-curand": "10.4.0.35",
+            "opencv-python": "5.0.0.93",
+            "pydantic-core": "2.50.1",
+            "python-dotenv": "1.2.4",
+            "prompt-toolkit": "3.0.53",
+            "psycopg-binary": "3.3.6",
+            "annotated-types": "0.8.0",
+            "cuda-pathfinder": "1.6.0",
+            "nvidia-cusolver": "12.0.4.66",
+            "nvidia-cusparse": "12.6.3.3",
+            "pyproject-hooks": "1.3.3",
+            "python-dateutil": "2.9.0.post0",
+            "nvidia-nccl-cu13": "2.30.7",
+            "nvidia-nvjitlink": "13.3.33",
+            "python-multipart": "0.0.32",
+            "sortedcontainers": "2.4.0",
+            "ultralytics-thop": "2.2.3",
+            "matplotlib-inline": "0.2.2",
+            "nvidia-cuda-cupti": "13.0.85",
+            "nvidia-cuda-nvrtc": "13.0.88",
+            "nvidia-cudnn-cu13": "9.24.0.43",
+            "opentelemetry-api": "1.45.1",
+            "polars-runtime-32": "2.0.0",
+            "scikit-build-core": "1.1.0",
+            "typing-extensions": "4.16.0",
+            "typing-inspection": "0.4.4",
+            "charset-normalizer": "3.5.2",
+            "importlib-metadata": "9.0.1",
+            "nvidia-cuda-runtime": "13.0.96",
+            "nvidia-nvshmem-cu13": "3.4.5",
+            "ultralytics-platform": "0.1.90",
+            "nvidia-cusparselt-cu13": "0.8.1",
+            "ipython-pygments-lexers": "1.1.1"
+          },
+          "device": "cuda:0",
+          "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+          "cuda_version": "13.0",
+          "cudnn_version": 92400,
+          "container_id": "836ede7c0570"
+        },
+        "stages": [
+          {
+            "timestamp": "2026-11-07T10:02:09.687032+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "ba2e8638-5c43-452e-9881-f3f30aeb383c",
+            "duration_seconds": 0.03958385700002509,
+            "stage": "inference",
+            "stage_status": "completed"
+          },
+          {
+            "timestamp": "2026-11-07T10:02:09.731344+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "ba2e8638-5c43-452e-9881-f3f30aeb383c",
+            "duration_seconds": 0.014022504999957164,
+            "stage": "image_persistence",
+            "stage_status": "completed"
+          }
+        ],
+        "stage_seconds": {
+          "inference": 0.03958385700002509,
+          "image_persistence": 0.014022504999957164
+        },
+        "stage_evidence_complete": true
+      },
+      {
+        "scenario_id": "I2",
+        "kind": "image",
+        "phase": "cold_process",
+        "repetition": 1,
+        "started_at": "2026-11-07T10:02:13.557238+00:00",
+        "status": "completed",
+        "request_id": "9035ae25-ea29-4f6a-89eb-fee77afba637",
+        "session_id": 6,
+        "api_seconds": 2.9761917710000034,
+        "failure_code": null,
+        "http_status": 201,
+        "sampled_frames": 1,
+        "finished_at": "2026-11-07T10:02:14.251591+00:00",
+        "runtime_provenance": {
+          "schema_version": 1,
+          "captured_at": "2026-11-07T10:02:13.022996Z",
+          "application_commit": null,
+          "source_dirty": null,
+          "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725",
+          "python_version": "3.12.3",
+          "platform": "Linux 6.6.87.2-microsoft-standard-WSL2 x86_64",
+          "dependencies": {
+            "uv": "0.12.21",
+            "h11": "0.16.0",
+            "pip": "24.0",
+            "six": "1.17.0",
+            "idna": "3.20",
+            "jedi": "0.20.0",
+            "spin": "0.18",
+            "zipp": "4.1.0",
+            "anyio": "4.15.1",
+            "build": "1.6.1",
+            "click": "8.3.3",
+            "cmake": "4.4.3",
+            "httpx": "0.28.1",
+            "ninja": "1.13.2",
+            "numpy": "2.5.4",
+            "parso": "0.8.7",
+            "scipy": "1.18.1",
+            "sympy": "1.14.0",
+            "torch": "2.14.1+cu130",
+            "wheel": "0.48.0",
+            "cycler": "0.12.1",
+            "fsspec": "2026.9.0",
+            "jinja2": "3.1.6",
+            "mpmath": "1.3.0",
+            "optree": "0.20.0",
+            "pillow": "13.0.0",
+            "polars": "2.0.0",
+            "psutil": "7.2.2",
+            "pyyaml": "6.0.3",
+            "triton": "3.8.0",
+            "certifi": "2026.7.22",
+            "fastapi": "0.156.8",
+            "ipython": "9.17.1",
+            "pexpect": "4.9.0",
+            "psycopg": "3.3.6",
+            "urllib3": "2.8.0",
+            "uvicorn": "0.54.0",
+            "wcwidth": "0.9.1",
+            "filelock": "4.0.7",
+            "httpcore": "1.0.9",
+            "networkx": "3.7",
+            "pathspec": "1.1.1",
+            "pydantic": "2.14.1",
+            "pygments": "2.21.0",
+            "requests": "2.34.2",
+            "asttokens": "3.0.2",
+            "contourpy": "1.4.0",
+            "dnspython": "2.8.0",
+            "executing": "2.2.1",
+            "fonttools": "4.67.0",
+            "packaging": "26.3",
+            "pure-eval": "0.2.4",
+            "pyparsing": "3.3.3",
+            "starlette": "1.9.0",
+            "traitlets": "5.16.1",
+            "expecttest": "0.3.0",
+            "hypothesis": "6.168.3",
+            "kiwisolver": "1.5.1",
+            "lintrunner": "0.13.1",
+            "markupsafe": "3.0.3",
+            "matplotlib": "3.11.2",
+            "ptyprocess": "0.7.0",
+            "setuptools": "81.0.0",
+            "stack-data": "0.6.3",
+            "torchaudio": "2.11.0+cu130",
+            "cloudpickle": "3.1.2",
+            "nvidia-nvtx": "13.0.85",
+            "python-etcd": "0.4.5",
+            "torchvision": "0.29.1+cu130",
+            "ultralytics": "8.4.183",
+            "cuda-toolkit": "13.0.3.0",
+            "nvidia-cufft": "12.0.0.61",
+            "nvidia-ml-py": "13.615.71",
+            "torchelastic": "0.2.2",
+            "annotated-doc": "0.0.5",
+            "cuda-bindings": "13.3.1",
+            "nvidia-cublas": "13.1.1.3",
+            "nvidia-cufile": "1.15.1.6",
+            "nvidia-curand": "10.4.0.35",
+            "opencv-python": "5.0.0.93",
+            "pydantic-core": "2.50.1",
+            "python-dotenv": "1.2.4",
+            "prompt-toolkit": "3.0.53",
+            "psycopg-binary": "3.3.6",
+            "annotated-types": "0.8.0",
+            "cuda-pathfinder": "1.6.0",
+            "nvidia-cusolver": "12.0.4.66",
+            "nvidia-cusparse": "12.6.3.3",
+            "pyproject-hooks": "1.3.3",
+            "python-dateutil": "2.9.0.post0",
+            "nvidia-nccl-cu13": "2.30.7",
+            "nvidia-nvjitlink": "13.3.33",
+            "python-multipart": "0.0.32",
+            "sortedcontainers": "2.4.0",
+            "ultralytics-thop": "2.2.3",
+            "matplotlib-inline": "0.2.2",
+            "nvidia-cuda-cupti": "13.0.85",
+            "nvidia-cuda-nvrtc": "13.0.88",
+            "nvidia-cudnn-cu13": "9.24.0.43",
+            "opentelemetry-api": "1.45.1",
+            "polars-runtime-32": "2.0.0",
+            "scikit-build-core": "1.1.0",
+            "typing-extensions": "4.16.0",
+            "typing-inspection": "0.4.4",
+            "charset-normalizer": "3.5.2",
+            "importlib-metadata": "9.0.1",
+            "nvidia-cuda-runtime": "13.0.96",
+            "nvidia-nvshmem-cu13": "3.4.5",
+            "ultralytics-platform": "0.1.90",
+            "nvidia-cusparselt-cu13": "0.8.1",
+            "ipython-pygments-lexers": "1.1.1"
+          },
+          "device": "cuda:0",
+          "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+          "cuda_version": "13.0",
+          "cudnn_version": 92400,
+          "container_id": "836ede7c0570"
+        },
+        "stages": [
+          {
+            "timestamp": "2026-11-07T10:02:14.170977+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "9035ae25-ea29-4f6a-89eb-fee77afba637",
+            "duration_seconds": 2.6344270359998063,
+            "stage": "inference",
+            "stage_status": "completed"
+          },
+          {
+            "timestamp": "2026-11-07T10:02:14.235689+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "9035ae25-ea29-4f6a-89eb-fee77afba637",
+            "duration_seconds": 0.014942414999950415,
+            "stage": "image_persistence",
+            "stage_status": "completed"
+          }
+        ],
+        "stage_seconds": {
+          "inference": 2.6344270359998063,
+          "image_persistence": 0.014942414999950415
+        },
+        "stage_evidence_complete": true
+      },
+      {
+        "scenario_id": "I2",
+        "kind": "image",
+        "phase": "cold_process",
+        "repetition": 2,
+        "started_at": "2026-11-07T10:02:18.253925+00:00",
+        "status": "completed",
+        "request_id": "d5cb0db4-d210-4fee-a38c-39d711c25330",
+        "session_id": 7,
+        "api_seconds": 2.826440765000143,
+        "failure_code": null,
+        "http_status": 201,
+        "sampled_frames": 1,
+        "finished_at": "2026-11-07T10:02:21.099682+00:00",
+        "runtime_provenance": {
+          "schema_version": 1,
+          "captured_at": "2026-11-07T10:02:17.707945Z",
+          "application_commit": null,
+          "source_dirty": null,
+          "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725",
+          "python_version": "3.12.3",
+          "platform": "Linux 6.6.87.2-microsoft-standard-WSL2 x86_64",
+          "dependencies": {
+            "uv": "0.12.21",
+            "h11": "0.16.0",
+            "pip": "24.0",
+            "six": "1.17.0",
+            "idna": "3.20",
+            "jedi": "0.20.0",
+            "spin": "0.18",
+            "zipp": "4.1.0",
+            "anyio": "4.15.1",
+            "build": "1.6.1",
+            "click": "8.3.3",
+            "cmake": "4.4.3",
+            "httpx": "0.28.1",
+            "ninja": "1.13.2",
+            "numpy": "2.5.4",
+            "parso": "0.8.7",
+            "scipy": "1.18.1",
+            "sympy": "1.14.0",
+            "torch": "2.14.1+cu130",
+            "wheel": "0.48.0",
+            "cycler": "0.12.1",
+            "fsspec": "2026.9.0",
+            "jinja2": "3.1.6",
+            "mpmath": "1.3.0",
+            "optree": "0.20.0",
+            "pillow": "13.0.0",
+            "polars": "2.0.0",
+            "psutil": "7.2.2",
+            "pyyaml": "6.0.3",
+            "triton": "3.8.0",
+            "certifi": "2026.7.22",
+            "fastapi": "0.156.8",
+            "ipython": "9.17.1",
+            "pexpect": "4.9.0",
+            "psycopg": "3.3.6",
+            "urllib3": "2.8.0",
+            "uvicorn": "0.54.0",
+            "wcwidth": "0.9.1",
+            "filelock": "4.0.7",
+            "httpcore": "1.0.9",
+            "networkx": "3.7",
+            "pathspec": "1.1.1",
+            "pydantic": "2.14.1",
+            "pygments": "2.21.0",
+            "requests": "2.34.2",
+            "asttokens": "3.0.2",
+            "contourpy": "1.4.0",
+            "dnspython": "2.8.0",
+            "executing": "2.2.1",
+            "fonttools": "4.67.0",
+            "packaging": "26.3",
+            "pure-eval": "0.2.4",
+            "pyparsing": "3.3.3",
+            "starlette": "1.9.0",
+            "traitlets": "5.16.1",
+            "expecttest": "0.3.0",
+            "hypothesis": "6.168.3",
+            "kiwisolver": "1.5.1",
+            "lintrunner": "0.13.1",
+            "markupsafe": "3.0.3",
+            "matplotlib": "3.11.2",
+            "ptyprocess": "0.7.0",
+            "setuptools": "81.0.0",
+            "stack-data": "0.6.3",
+            "torchaudio": "2.11.0+cu130",
+            "cloudpickle": "3.1.2",
+            "nvidia-nvtx": "13.0.85",
+            "python-etcd": "0.4.5",
+            "torchvision": "0.29.1+cu130",
+            "ultralytics": "8.4.183",
+            "cuda-toolkit": "13.0.3.0",
+            "nvidia-cufft": "12.0.0.61",
+            "nvidia-ml-py": "13.615.71",
+            "torchelastic": "0.2.2",
+            "annotated-doc": "0.0.5",
+            "cuda-bindings": "13.3.1",
+            "nvidia-cublas": "13.1.1.3",
+            "nvidia-cufile": "1.15.1.6",
+            "nvidia-curand": "10.4.0.35",
+            "opencv-python": "5.0.0.93",
+            "pydantic-core": "2.50.1",
+            "python-dotenv": "1.2.4",
+            "prompt-toolkit": "3.0.53",
+            "psycopg-binary": "3.3.6",
+            "annotated-types": "0.8.0",
+            "cuda-pathfinder": "1.6.0",
+            "nvidia-cusolver": "12.0.4.66",
+            "nvidia-cusparse": "12.6.3.3",
+            "pyproject-hooks": "1.3.3",
+            "python-dateutil": "2.9.0.post0",
+            "nvidia-nccl-cu13": "2.30.7",
+            "nvidia-nvjitlink": "13.3.33",
+            "python-multipart": "0.0.32",
+            "sortedcontainers": "2.4.0",
+            "ultralytics-thop": "2.2.3",
+            "matplotlib-inline": "0.2.2",
+            "nvidia-cuda-cupti": "13.0.85",
+            "nvidia-cuda-nvrtc": "13.0.88",
+            "nvidia-cudnn-cu13": "9.24.0.43",
+            "opentelemetry-api": "1.45.1",
+            "polars-runtime-32": "2.0.0",
+            "scikit-build-core": "1.1.0",
+            "typing-extensions": "4.16.0",
+            "typing-inspection": "0.4.4",
+            "charset-normalizer": "3.5.2",
+            "importlib-metadata": "9.0.1",
+            "nvidia-cuda-runtime": "13.0.96",
+            "nvidia-nvshmem-cu13": "3.4.5",
+            "ultralytics-platform": "0.1.90",
+            "nvidia-cusparselt-cu13": "0.8.1",
+            "ipython-pygments-lexers": "1.1.1"
+          },
+          "device": "cuda:0",
+          "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+          "cuda_version": "13.0",
+          "cudnn_version": 92400,
+          "container_id": "836ede7c0570"
+        },
+        "stages": [
+          {
+            "timestamp": "2026-11-07T10:02:21.007271+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "d5cb0db4-d210-4fee-a38c-39d711c25330",
+            "duration_seconds": 2.4878022649998,
+            "stage": "inference",
+            "stage_status": "completed"
+          },
+          {
+            "timestamp": "2026-11-07T10:02:21.079118+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "d5cb0db4-d210-4fee-a38c-39d711c25330",
+            "duration_seconds": 0.01502476700011357,
+            "stage": "image_persistence",
+            "stage_status": "completed"
+          }
+        ],
+        "stage_seconds": {
+          "inference": 2.4878022649998,
+          "image_persistence": 0.01502476700011357
+        },
+        "stage_evidence_complete": true
+      },
+      {
+        "scenario_id": "V1",
+        "kind": "video",
+        "phase": "recovery_seed",
+        "repetition": 0,
+        "started_at": "2026-11-07T10:02:21.408807+00:00",
+        "status": "completed",
+        "request_id": "f33a7007-050d-4fd8-875f-5e800e26112e",
+        "session_id": 8,
+        "api_seconds": 0.576120680999793,
+        "failure_code": null,
+        "http_status": 202,
+        "sampled_frames": 3,
+        "finished_at": "2026-11-07T10:02:21.998430+00:00",
+        "runtime_provenance": {
+          "schema_version": 1,
+          "captured_at": "2026-11-07T10:02:17.707945Z",
+          "application_commit": null,
+          "source_dirty": null,
+          "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725",
+          "python_version": "3.12.3",
+          "platform": "Linux 6.6.87.2-microsoft-standard-WSL2 x86_64",
+          "dependencies": {
+            "uv": "0.12.21",
+            "h11": "0.16.0",
+            "pip": "24.0",
+            "six": "1.17.0",
+            "idna": "3.20",
+            "jedi": "0.20.0",
+            "spin": "0.18",
+            "zipp": "4.1.0",
+            "anyio": "4.15.1",
+            "build": "1.6.1",
+            "click": "8.3.3",
+            "cmake": "4.4.3",
+            "httpx": "0.28.1",
+            "ninja": "1.13.2",
+            "numpy": "2.5.4",
+            "parso": "0.8.7",
+            "scipy": "1.18.1",
+            "sympy": "1.14.0",
+            "torch": "2.14.1+cu130",
+            "wheel": "0.48.0",
+            "cycler": "0.12.1",
+            "fsspec": "2026.9.0",
+            "jinja2": "3.1.6",
+            "mpmath": "1.3.0",
+            "optree": "0.20.0",
+            "pillow": "13.0.0",
+            "polars": "2.0.0",
+            "psutil": "7.2.2",
+            "pyyaml": "6.0.3",
+            "triton": "3.8.0",
+            "certifi": "2026.7.22",
+            "fastapi": "0.156.8",
+            "ipython": "9.17.1",
+            "pexpect": "4.9.0",
+            "psycopg": "3.3.6",
+            "urllib3": "2.8.0",
+            "uvicorn": "0.54.0",
+            "wcwidth": "0.9.1",
+            "filelock": "4.0.7",
+            "httpcore": "1.0.9",
+            "networkx": "3.7",
+            "pathspec": "1.1.1",
+            "pydantic": "2.14.1",
+            "pygments": "2.21.0",
+            "requests": "2.34.2",
+            "asttokens": "3.0.2",
+            "contourpy": "1.4.0",
+            "dnspython": "2.8.0",
+            "executing": "2.2.1",
+            "fonttools": "4.67.0",
+            "packaging": "26.3",
+            "pure-eval": "0.2.4",
+            "pyparsing": "3.3.3",
+            "starlette": "1.9.0",
+            "traitlets": "5.16.1",
+            "expecttest": "0.3.0",
+            "hypothesis": "6.168.3",
+            "kiwisolver": "1.5.1",
+            "lintrunner": "0.13.1",
+            "markupsafe": "3.0.3",
+            "matplotlib": "3.11.2",
+            "ptyprocess": "0.7.0",
+            "setuptools": "81.0.0",
+            "stack-data": "0.6.3",
+            "torchaudio": "2.11.0+cu130",
+            "cloudpickle": "3.1.2",
+            "nvidia-nvtx": "13.0.85",
+            "python-etcd": "0.4.5",
+            "torchvision": "0.29.1+cu130",
+            "ultralytics": "8.4.183",
+            "cuda-toolkit": "13.0.3.0",
+            "nvidia-cufft": "12.0.0.61",
+            "nvidia-ml-py": "13.615.71",
+            "torchelastic": "0.2.2",
+            "annotated-doc": "0.0.5",
+            "cuda-bindings": "13.3.1",
+            "nvidia-cublas": "13.1.1.3",
+            "nvidia-cufile": "1.15.1.6",
+            "nvidia-curand": "10.4.0.35",
+            "opencv-python": "5.0.0.93",
+            "pydantic-core": "2.50.1",
+            "python-dotenv": "1.2.4",
+            "prompt-toolkit": "3.0.53",
+            "psycopg-binary": "3.3.6",
+            "annotated-types": "0.8.0",
+            "cuda-pathfinder": "1.6.0",
+            "nvidia-cusolver": "12.0.4.66",
+            "nvidia-cusparse": "12.6.3.3",
+            "pyproject-hooks": "1.3.3",
+            "python-dateutil": "2.9.0.post0",
+            "nvidia-nccl-cu13": "2.30.7",
+            "nvidia-nvjitlink": "13.3.33",
+            "python-multipart": "0.0.32",
+            "sortedcontainers": "2.4.0",
+            "ultralytics-thop": "2.2.3",
+            "matplotlib-inline": "0.2.2",
+            "nvidia-cuda-cupti": "13.0.85",
+            "nvidia-cuda-nvrtc": "13.0.88",
+            "nvidia-cudnn-cu13": "9.24.0.43",
+            "opentelemetry-api": "1.45.1",
+            "polars-runtime-32": "2.0.0",
+            "scikit-build-core": "1.1.0",
+            "typing-extensions": "4.16.0",
+            "typing-inspection": "0.4.4",
+            "charset-normalizer": "3.5.2",
+            "importlib-metadata": "9.0.1",
+            "nvidia-cuda-runtime": "13.0.96",
+            "nvidia-nvshmem-cu13": "3.4.5",
+            "ultralytics-platform": "0.1.90",
+            "nvidia-cusparselt-cu13": "0.8.1",
+            "ipython-pygments-lexers": "1.1.1"
+          },
+          "device": "cuda:0",
+          "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+          "cuda_version": "13.0",
+          "cudnn_version": 92400,
+          "container_id": "836ede7c0570"
+        },
+        "stages": [
+          {
+            "timestamp": "2026-11-07T10:02:21.455819+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "f33a7007-050d-4fd8-875f-5e800e26112e",
+            "session_id": 8,
+            "duration_seconds": 0.00023720700005469553,
+            "stage": "video_queue",
+            "stage_status": "completed"
+          },
+          {
+            "timestamp": "2026-11-07T10:02:21.519953+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "f33a7007-050d-4fd8-875f-5e800e26112e",
+            "duration_seconds": 0.04453751400001238,
+            "stage": "inference",
+            "stage_status": "completed"
+          },
+          {
+            "timestamp": "2026-11-07T10:02:21.658782+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "f33a7007-050d-4fd8-875f-5e800e26112e",
+            "duration_seconds": 0.036212469000020064,
+            "stage": "inference",
+            "stage_status": "completed"
+          },
+          {
+            "timestamp": "2026-11-07T10:02:21.764432+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "f33a7007-050d-4fd8-875f-5e800e26112e",
+            "duration_seconds": 0.03297333099999378,
+            "stage": "inference",
+            "stage_status": "completed"
+          },
+          {
+            "timestamp": "2026-11-07T10:02:21.845259+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "f33a7007-050d-4fd8-875f-5e800e26112e",
+            "duration_seconds": 0.01680976800003009,
+            "stage": "video_persistence",
+            "stage_status": "completed"
+          }
+        ],
+        "stage_seconds": {
+          "inference": 0.11372331400002622,
+          "video_persistence": 0.01680976800003009,
+          "video_queue": 0.00023720700005469553
+        },
+        "stage_evidence_complete": true
+      },
+      {
+        "scenario_id": "V1",
+        "kind": "video",
+        "phase": "cold_process",
+        "repetition": 1,
+        "started_at": "2026-11-07T10:02:25.888576+00:00",
+        "status": "completed",
+        "request_id": "274dd712-f0b4-47b2-b449-f5967b5622e0",
+        "session_id": 9,
+        "api_seconds": 3.3299668080001084,
+        "failure_code": null,
+        "http_status": 202,
+        "sampled_frames": 3,
+        "finished_at": "2026-11-07T10:02:29.234896+00:00",
+        "runtime_provenance": {
+          "schema_version": 1,
+          "captured_at": "2026-11-07T10:02:25.423351Z",
+          "application_commit": null,
+          "source_dirty": null,
+          "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725",
+          "python_version": "3.12.3",
+          "platform": "Linux 6.6.87.2-microsoft-standard-WSL2 x86_64",
+          "dependencies": {
+            "uv": "0.12.21",
+            "h11": "0.16.0",
+            "pip": "24.0",
+            "six": "1.17.0",
+            "idna": "3.20",
+            "jedi": "0.20.0",
+            "spin": "0.18",
+            "zipp": "4.1.0",
+            "anyio": "4.15.1",
+            "build": "1.6.1",
+            "click": "8.3.3",
+            "cmake": "4.4.3",
+            "httpx": "0.28.1",
+            "ninja": "1.13.2",
+            "numpy": "2.5.4",
+            "parso": "0.8.7",
+            "scipy": "1.18.1",
+            "sympy": "1.14.0",
+            "torch": "2.14.1+cu130",
+            "wheel": "0.48.0",
+            "cycler": "0.12.1",
+            "fsspec": "2026.9.0",
+            "jinja2": "3.1.6",
+            "mpmath": "1.3.0",
+            "optree": "0.20.0",
+            "pillow": "13.0.0",
+            "polars": "2.0.0",
+            "psutil": "7.2.2",
+            "pyyaml": "6.0.3",
+            "triton": "3.8.0",
+            "certifi": "2026.7.22",
+            "fastapi": "0.156.8",
+            "ipython": "9.17.1",
+            "pexpect": "4.9.0",
+            "psycopg": "3.3.6",
+            "urllib3": "2.8.0",
+            "uvicorn": "0.54.0",
+            "wcwidth": "0.9.1",
+            "filelock": "4.0.7",
+            "httpcore": "1.0.9",
+            "networkx": "3.7",
+            "pathspec": "1.1.1",
+            "pydantic": "2.14.1",
+            "pygments": "2.21.0",
+            "requests": "2.34.2",
+            "asttokens": "3.0.2",
+            "contourpy": "1.4.0",
+            "dnspython": "2.8.0",
+            "executing": "2.2.1",
+            "fonttools": "4.67.0",
+            "packaging": "26.3",
+            "pure-eval": "0.2.4",
+            "pyparsing": "3.3.3",
+            "starlette": "1.9.0",
+            "traitlets": "5.16.1",
+            "expecttest": "0.3.0",
+            "hypothesis": "6.168.3",
+            "kiwisolver": "1.5.1",
+            "lintrunner": "0.13.1",
+            "markupsafe": "3.0.3",
+            "matplotlib": "3.11.2",
+            "ptyprocess": "0.7.0",
+            "setuptools": "81.0.0",
+            "stack-data": "0.6.3",
+            "torchaudio": "2.11.0+cu130",
+            "cloudpickle": "3.1.2",
+            "nvidia-nvtx": "13.0.85",
+            "python-etcd": "0.4.5",
+            "torchvision": "0.29.1+cu130",
+            "ultralytics": "8.4.183",
+            "cuda-toolkit": "13.0.3.0",
+            "nvidia-cufft": "12.0.0.61",
+            "nvidia-ml-py": "13.615.71",
+            "torchelastic": "0.2.2",
+            "annotated-doc": "0.0.5",
+            "cuda-bindings": "13.3.1",
+            "nvidia-cublas": "13.1.1.3",
+            "nvidia-cufile": "1.15.1.6",
+            "nvidia-curand": "10.4.0.35",
+            "opencv-python": "5.0.0.93",
+            "pydantic-core": "2.50.1",
+            "python-dotenv": "1.2.4",
+            "prompt-toolkit": "3.0.53",
+            "psycopg-binary": "3.3.6",
+            "annotated-types": "0.8.0",
+            "cuda-pathfinder": "1.6.0",
+            "nvidia-cusolver": "12.0.4.66",
+            "nvidia-cusparse": "12.6.3.3",
+            "pyproject-hooks": "1.3.3",
+            "python-dateutil": "2.9.0.post0",
+            "nvidia-nccl-cu13": "2.30.7",
+            "nvidia-nvjitlink": "13.3.33",
+            "python-multipart": "0.0.32",
+            "sortedcontainers": "2.4.0",
+            "ultralytics-thop": "2.2.3",
+            "matplotlib-inline": "0.2.2",
+            "nvidia-cuda-cupti": "13.0.85",
+            "nvidia-cuda-nvrtc": "13.0.88",
+            "nvidia-cudnn-cu13": "9.24.0.43",
+            "opentelemetry-api": "1.45.1",
+            "polars-runtime-32": "2.0.0",
+            "scikit-build-core": "1.1.0",
+            "typing-extensions": "4.16.0",
+            "typing-inspection": "0.4.4",
+            "charset-normalizer": "3.5.2",
+            "importlib-metadata": "9.0.1",
+            "nvidia-cuda-runtime": "13.0.96",
+            "nvidia-nvshmem-cu13": "3.4.5",
+            "ultralytics-platform": "0.1.90",
+            "nvidia-cusparselt-cu13": "0.8.1",
+            "ipython-pygments-lexers": "1.1.1"
+          },
+          "device": "cuda:0",
+          "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+          "cuda_version": "13.0",
+          "cudnn_version": 92400,
+          "container_id": "836ede7c0570"
+        },
+        "stages": [
+          {
+            "timestamp": "2026-11-07T10:02:25.933126+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "274dd712-f0b4-47b2-b449-f5967b5622e0",
+            "session_id": 9,
+            "duration_seconds": 0.00027027100009036076,
+            "stage": "video_queue",
+            "stage_status": "completed"
+          },
+          {
+            "timestamp": "2026-11-07T10:02:28.794808+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "274dd712-f0b4-47b2-b449-f5967b5622e0",
+            "duration_seconds": 2.574268064999842,
+            "stage": "inference",
+            "stage_status": "completed"
+          },
+          {
+            "timestamp": "2026-11-07T10:02:28.945460+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "274dd712-f0b4-47b2-b449-f5967b5622e0",
+            "duration_seconds": 0.04373052599999028,
+            "stage": "inference",
+            "stage_status": "completed"
+          },
+          {
+            "timestamp": "2026-11-07T10:02:29.081866+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "274dd712-f0b4-47b2-b449-f5967b5622e0",
+            "duration_seconds": 0.04058420699993803,
+            "stage": "inference",
+            "stage_status": "completed"
+          },
+          {
+            "timestamp": "2026-11-07T10:02:29.181723+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "274dd712-f0b4-47b2-b449-f5967b5622e0",
+            "duration_seconds": 0.024625345000004017,
+            "stage": "video_persistence",
+            "stage_status": "completed"
+          }
+        ],
+        "stage_seconds": {
+          "inference": 2.6585827979997703,
+          "video_persistence": 0.024625345000004017,
+          "video_queue": 0.00027027100009036076
+        },
+        "stage_evidence_complete": true
+      },
+      {
+        "scenario_id": "V1",
+        "kind": "video",
+        "phase": "cold_process",
+        "repetition": 2,
+        "started_at": "2026-11-07T10:02:33.375894+00:00",
+        "status": "completed",
+        "request_id": "8c7e754c-d141-48ce-9fef-5f83da9b5672",
+        "session_id": 10,
+        "api_seconds": 2.8543816750000133,
+        "failure_code": null,
+        "http_status": 202,
+        "sampled_frames": 3,
+        "finished_at": "2026-11-07T10:02:36.244242+00:00",
+        "runtime_provenance": {
+          "schema_version": 1,
+          "captured_at": "2026-11-07T10:02:32.819345Z",
+          "application_commit": null,
+          "source_dirty": null,
+          "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725",
+          "python_version": "3.12.3",
+          "platform": "Linux 6.6.87.2-microsoft-standard-WSL2 x86_64",
+          "dependencies": {
+            "uv": "0.12.21",
+            "h11": "0.16.0",
+            "pip": "24.0",
+            "six": "1.17.0",
+            "idna": "3.20",
+            "jedi": "0.20.0",
+            "spin": "0.18",
+            "zipp": "4.1.0",
+            "anyio": "4.15.1",
+            "build": "1.6.1",
+            "click": "8.3.3",
+            "cmake": "4.4.3",
+            "httpx": "0.28.1",
+            "ninja": "1.13.2",
+            "numpy": "2.5.4",
+            "parso": "0.8.7",
+            "scipy": "1.18.1",
+            "sympy": "1.14.0",
+            "torch": "2.14.1+cu130",
+            "wheel": "0.48.0",
+            "cycler": "0.12.1",
+            "fsspec": "2026.9.0",
+            "jinja2": "3.1.6",
+            "mpmath": "1.3.0",
+            "optree": "0.20.0",
+            "pillow": "13.0.0",
+            "polars": "2.0.0",
+            "psutil": "7.2.2",
+            "pyyaml": "6.0.3",
+            "triton": "3.8.0",
+            "certifi": "2026.7.22",
+            "fastapi": "0.156.8",
+            "ipython": "9.17.1",
+            "pexpect": "4.9.0",
+            "psycopg": "3.3.6",
+            "urllib3": "2.8.0",
+            "uvicorn": "0.54.0",
+            "wcwidth": "0.9.1",
+            "filelock": "4.0.7",
+            "httpcore": "1.0.9",
+            "networkx": "3.7",
+            "pathspec": "1.1.1",
+            "pydantic": "2.14.1",
+            "pygments": "2.21.0",
+            "requests": "2.34.2",
+            "asttokens": "3.0.2",
+            "contourpy": "1.4.0",
+            "dnspython": "2.8.0",
+            "executing": "2.2.1",
+            "fonttools": "4.67.0",
+            "packaging": "26.3",
+            "pure-eval": "0.2.4",
+            "pyparsing": "3.3.3",
+            "starlette": "1.9.0",
+            "traitlets": "5.16.1",
+            "expecttest": "0.3.0",
+            "hypothesis": "6.168.3",
+            "kiwisolver": "1.5.1",
+            "lintrunner": "0.13.1",
+            "markupsafe": "3.0.3",
+            "matplotlib": "3.11.2",
+            "ptyprocess": "0.7.0",
+            "setuptools": "81.0.0",
+            "stack-data": "0.6.3",
+            "torchaudio": "2.11.0+cu130",
+            "cloudpickle": "3.1.2",
+            "nvidia-nvtx": "13.0.85",
+            "python-etcd": "0.4.5",
+            "torchvision": "0.29.1+cu130",
+            "ultralytics": "8.4.183",
+            "cuda-toolkit": "13.0.3.0",
+            "nvidia-cufft": "12.0.0.61",
+            "nvidia-ml-py": "13.615.71",
+            "torchelastic": "0.2.2",
+            "annotated-doc": "0.0.5",
+            "cuda-bindings": "13.3.1",
+            "nvidia-cublas": "13.1.1.3",
+            "nvidia-cufile": "1.15.1.6",
+            "nvidia-curand": "10.4.0.35",
+            "opencv-python": "5.0.0.93",
+            "pydantic-core": "2.50.1",
+            "python-dotenv": "1.2.4",
+            "prompt-toolkit": "3.0.53",
+            "psycopg-binary": "3.3.6",
+            "annotated-types": "0.8.0",
+            "cuda-pathfinder": "1.6.0",
+            "nvidia-cusolver": "12.0.4.66",
+            "nvidia-cusparse": "12.6.3.3",
+            "pyproject-hooks": "1.3.3",
+            "python-dateutil": "2.9.0.post0",
+            "nvidia-nccl-cu13": "2.30.7",
+            "nvidia-nvjitlink": "13.3.33",
+            "python-multipart": "0.0.32",
+            "sortedcontainers": "2.4.0",
+            "ultralytics-thop": "2.2.3",
+            "matplotlib-inline": "0.2.2",
+            "nvidia-cuda-cupti": "13.0.85",
+            "nvidia-cuda-nvrtc": "13.0.88",
+            "nvidia-cudnn-cu13": "9.24.0.43",
+            "opentelemetry-api": "1.45.1",
+            "polars-runtime-32": "2.0.0",
+            "scikit-build-core": "1.1.0",
+            "typing-extensions": "4.16.0",
+            "typing-inspection": "0.4.4",
+            "charset-normalizer": "3.5.2",
+            "importlib-metadata": "9.0.1",
+            "nvidia-cuda-runtime": "13.0.96",
+            "nvidia-nvshmem-cu13": "3.4.5",
+            "ultralytics-platform": "0.1.90",
+            "nvidia-cusparselt-cu13": "0.8.1",
+            "ipython-pygments-lexers": "1.1.1"
+          },
+          "device": "cuda:0",
+          "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+          "cuda_version": "13.0",
+          "cudnn_version": 92400,
+          "container_id": "836ede7c0570"
+        },
+        "stages": [
+          {
+            "timestamp": "2026-11-07T10:02:33.418646+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "8c7e754c-d141-48ce-9fef-5f83da9b5672",
+            "session_id": 10,
+            "duration_seconds": 0.0002858059999653051,
+            "stage": "video_queue",
+            "stage_status": "completed"
+          },
+          {
+            "timestamp": "2026-11-07T10:02:35.894404+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "8c7e754c-d141-48ce-9fef-5f83da9b5672",
+            "duration_seconds": 2.2248648560000674,
+            "stage": "inference",
+            "stage_status": "completed"
+          },
+          {
+            "timestamp": "2026-11-07T10:02:36.030434+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "8c7e754c-d141-48ce-9fef-5f83da9b5672",
+            "duration_seconds": 0.0373199680000198,
+            "stage": "inference",
+            "stage_status": "completed"
+          },
+          {
+            "timestamp": "2026-11-07T10:02:36.141271+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "8c7e754c-d141-48ce-9fef-5f83da9b5672",
+            "duration_seconds": 0.038521292000041285,
+            "stage": "inference",
+            "stage_status": "completed"
+          },
+          {
+            "timestamp": "2026-11-07T10:02:36.220147+00:00",
+            "level": "INFO",
+            "logger": "app.stage_timing",
+            "event": "stage_timing",
+            "request_id": "8c7e754c-d141-48ce-9fef-5f83da9b5672",
+            "duration_seconds": 0.016215942999906474,
+            "stage": "video_persistence",
+            "stage_status": "completed"
+          }
+        ],
+        "stage_seconds": {
+          "inference": 2.3007061160001285,
+          "video_persistence": 0.016215942999906474,
+          "video_queue": 0.0002858059999653051
+        },
+        "stage_evidence_complete": true
+      }
+    ],
+    "baselines": [
+      {
+        "session_id": 2,
+        "frames": 1,
+        "result_sha256": "7add4b7fc34cc48f4463c648f3cbb14f8855dfdd0d8de4c0564afb5b74bca512",
+        "assets": {
+          "/api/assets/14f94292-aaab-4e52-8b63-cc38ee1b091b/source": "8fb98d6d91604c38ec25ba549d28b85f1a319ccf757426541067d500d6120373",
+          "/api/assets/14f94292-aaab-4e52-8b63-cc38ee1b091b": "2feb75c522864e0d071216079891e1ef8c83cbb9a5bca78bfa1a2fac4b96aea3"
+        }
+      },
+      {
+        "session_id": 5,
+        "frames": 1,
+        "result_sha256": "b4b194ab5073f2bd699b4f80240e0a38ae7e64181ca72024e469e5a8094c47d1",
+        "assets": {
+          "/api/assets/42b5fd4d-fec4-4cb9-9695-07d5f9a532e4/source": "1bcc4c8595aedf2e82c858b9877e7aca9c0d7bdfc4da4ae77fb76e0598e62b4b",
+          "/api/assets/42b5fd4d-fec4-4cb9-9695-07d5f9a532e4": "acfac11efd8b8f400452ef4961cdcac7e0fddcca2de0f8e30d3ed377b01d6530"
+        }
+      },
+      {
+        "session_id": 8,
+        "frames": 3,
+        "result_sha256": "8459d3ffd46d04513954f5b6455592c66498d95c783fe5b433cc29ab2aaba82f",
+        "assets": {
+          "/api/assets/b9a2fc64-0351-4631-aeaa-38027dafe8dc/source": "b7d94c8066c2ef87d7bc98b04aacab16b9be7db64259ba90a0251db964a25e02",
+          "/api/assets/b9a2fc64-0351-4631-aeaa-38027dafe8dc": "53b32688d5fb594210bc0fd2443b24b6620d421a3751244a59947dda5c041711",
+          "/api/assets/b646c8ee-c558-4b31-bbed-07ea862bd256/source": "282934fc43ff3d10a874344814c3646c13d6d3775ca1e56749ec30a4354bd148",
+          "/api/assets/b646c8ee-c558-4b31-bbed-07ea862bd256": "ff1decc7cadce8a568834515dc5b53e1d0d52673fee4d1ff04dbd28c339fac2e",
+          "/api/assets/08e68da5-936a-4ba5-87f7-f427e51bee72/source": "00fd05a6ce8fc1017e2a324b2f99fb63149e9e87fc138f55a1c0d9d800606b38",
+          "/api/assets/08e68da5-936a-4ba5-87f7-f427e51bee72": "b13a81a5f1a683410ba60b2ecacf13d6edec955f461bb028251504cf9967dd1d"
+        }
+      }
+    ],
+    "trials": [
+      {
+        "scenario_id": "I1",
+        "repetition": 1,
+        "status": "completed",
+        "restart": {
+          "status": "completed",
+          "started_at": "2026-11-07T10:01:48.356722+00:00",
+          "backend_before": {
+            "id": "836ede7c0570e473ec91a28ed3e6204859023876aecc008b753dafcd38495742",
+            "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+            "started_at": "2026-11-07T10:00:26.219980308Z",
+            "running": true,
+            "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+          },
+          "ready_seconds": 3.3979652709999755,
+          "command_seconds": 1.8260258269999667,
+          "polls": [
+            {
+              "started_at": "2026-11-07T10:01:50.412665+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 1.8274269620001178,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:01:50.667640+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 2.0825119720000203,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:01:50.919714+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 2.3380629210000734,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:01:51.178714+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 2.593293281000115,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:01:51.432566+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 2.847177350000038,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:01:51.683876+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 3.0987056080000457,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:01:51.938161+00:00",
+              "http_status": 200,
+              "elapsed_seconds": 3.3979652709999755,
+              "ready": true
+            }
+          ],
+          "command_started_at": "2026-11-07T10:01:48.586636+00:00",
+          "backend_after": {
+            "id": "836ede7c0570e473ec91a28ed3e6204859023876aecc008b753dafcd38495742",
+            "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+            "started_at": "2026-11-07T10:01:49.999158989Z",
+            "running": true,
+            "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+          },
+          "elapsed_seconds": 3.5844622629999776,
+          "finished_at": "2026-11-07T10:01:52.171099+00:00"
+        },
+        "request_id": "97184042-ebdb-466b-bba0-22d0a371fe59",
+        "cold_api_seconds": 10.266490548999855,
+        "resource_samples": [
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:01:52.171916+00:00",
+            "value": 380.90625,
+            "finished_at": "2026-11-07T10:01:52.265977+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:01:52.265994+00:00",
+            "value": 398,
+            "finished_at": "2026-11-07T10:01:52.326881+00:00"
+          },
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:01:53.173742+00:00",
+            "value": 714.2578125,
+            "finished_at": "2026-11-07T10:01:53.261331+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:01:53.261349+00:00",
+            "value": 622,
+            "finished_at": "2026-11-07T10:01:53.309564+00:00"
+          },
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:01:54.175006+00:00",
+            "value": 1225.234375,
+            "finished_at": "2026-11-07T10:01:54.267638+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:01:54.267655+00:00",
+            "value": 1126,
+            "finished_at": "2026-11-07T10:01:54.323097+00:00"
+          },
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:01:55.176207+00:00",
+            "value": 1331.20703125,
+            "finished_at": "2026-11-07T10:01:55.291433+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:01:55.291458+00:00",
+            "value": 1126,
+            "finished_at": "2026-11-07T10:01:55.334079+00:00"
+          },
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:01:56.176317+00:00",
+            "value": 1339.953125,
+            "finished_at": "2026-11-07T10:01:56.262457+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:01:56.262472+00:00",
+            "value": 1126,
+            "finished_at": "2026-11-07T10:01:56.302697+00:00"
+          },
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:01:57.176896+00:00",
+            "value": 1454.46875,
+            "finished_at": "2026-11-07T10:01:57.282213+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:01:57.282231+00:00",
+            "value": 1126,
+            "finished_at": "2026-11-07T10:01:57.322460+00:00"
+          },
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:01:58.188605+00:00",
+            "value": 1469.921875,
+            "finished_at": "2026-11-07T10:01:58.286621+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:01:58.286639+00:00",
+            "value": 1126,
+            "finished_at": "2026-11-07T10:01:58.329998+00:00"
+          },
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:01:59.193267+00:00",
+            "value": 1478.09375,
+            "finished_at": "2026-11-07T10:01:59.287500+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:01:59.287518+00:00",
+            "value": 1126,
+            "finished_at": "2026-11-07T10:01:59.330860+00:00"
+          },
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:02:00.204170+00:00",
+            "value": 1483.5390625,
+            "finished_at": "2026-11-07T10:02:00.297241+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:02:00.297258+00:00",
+            "value": 1126,
+            "finished_at": "2026-11-07T10:02:00.335662+00:00"
+          },
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:02:01.204697+00:00",
+            "value": 1537.64453125,
+            "finished_at": "2026-11-07T10:02:01.313233+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:02:01.313251+00:00",
+            "value": 1126,
+            "finished_at": "2026-11-07T10:02:01.352431+00:00"
+          },
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:02:02.205909+00:00",
+            "value": 1655.51171875,
+            "finished_at": "2026-11-07T10:02:02.299035+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:02:02.299051+00:00",
+            "value": 1126,
+            "finished_at": "2026-11-07T10:02:02.341786+00:00"
+          }
+        ],
+        "recovery": {
+          "status": "completed",
+          "started_at": "2026-11-07T10:02:02.453626+00:00",
+          "seconds": 0.035476018000053955,
+          "actual": {
+            "session_id": 2,
+            "frames": 1,
+            "result_sha256": "7add4b7fc34cc48f4463c648f3cbb14f8855dfdd0d8de4c0564afb5b74bca512",
+            "assets": {
+              "/api/assets/14f94292-aaab-4e52-8b63-cc38ee1b091b/source": "8fb98d6d91604c38ec25ba549d28b85f1a319ccf757426541067d500d6120373",
+              "/api/assets/14f94292-aaab-4e52-8b63-cc38ee1b091b": "2feb75c522864e0d071216079891e1ef8c83cbb9a5bca78bfa1a2fac4b96aea3"
+            }
+          },
+          "elapsed_seconds": 0.03547729100000652,
+          "finished_at": "2026-11-07T10:02:02.489132+00:00"
+        }
+      },
+      {
+        "scenario_id": "I1",
+        "repetition": 2,
+        "status": "completed",
+        "restart": {
+          "status": "completed",
+          "started_at": "2026-11-07T10:02:02.727552+00:00",
+          "backend_before": {
+            "id": "836ede7c0570e473ec91a28ed3e6204859023876aecc008b753dafcd38495742",
+            "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+            "started_at": "2026-11-07T10:01:49.999158989Z",
+            "running": true,
+            "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+          },
+          "ready_seconds": 3.398248873999819,
+          "command_seconds": 1.56992672399997,
+          "polls": [
+            {
+              "started_at": "2026-11-07T10:02:04.542843+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 1.5716410059999362,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:04.798703+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 1.8271000659999572,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:05.050498+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 2.084214290999853,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:05.310696+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 2.339320927000017,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:05.562373+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 2.5908688019999317,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:05.814800+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 2.84330420099991,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:06.070155+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 3.09852864100003,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:06.324687+00:00",
+              "http_status": 200,
+              "elapsed_seconds": 3.398248873999819,
+              "ready": true
+            }
+          ],
+          "command_started_at": "2026-11-07T10:02:02.972916+00:00",
+          "backend_after": {
+            "id": "836ede7c0570e473ec91a28ed3e6204859023876aecc008b753dafcd38495742",
+            "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+            "started_at": "2026-11-07T10:02:04.072788109Z",
+            "running": true,
+            "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+          },
+          "elapsed_seconds": 3.571429868999985,
+          "finished_at": "2026-11-07T10:02:06.544345+00:00"
+        },
+        "request_id": "768bfb99-716d-4293-9970-027bbe6188e1",
+        "cold_api_seconds": 2.7961450530001457,
+        "resource_samples": [
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:02:06.545151+00:00",
+            "value": 378.8671875,
+            "finished_at": "2026-11-07T10:02:06.631859+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:02:06.631875+00:00",
+            "value": 398,
+            "finished_at": "2026-11-07T10:02:06.684489+00:00"
+          },
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:02:07.554055+00:00",
+            "value": 713.7578125,
+            "finished_at": "2026-11-07T10:02:07.661039+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:02:07.661059+00:00",
+            "value": 622,
+            "finished_at": "2026-11-07T10:02:07.706681+00:00"
+          },
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:02:08.561492+00:00",
+            "value": 1099.234375,
+            "finished_at": "2026-11-07T10:02:08.661732+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:02:08.661751+00:00",
+            "value": 1124,
+            "finished_at": "2026-11-07T10:02:08.720461+00:00"
+          }
+        ],
+        "recovery": {
+          "status": "completed",
+          "started_at": "2026-11-07T10:02:09.355795+00:00",
+          "seconds": 0.03991447399994286,
+          "actual": {
+            "session_id": 2,
+            "frames": 1,
+            "result_sha256": "7add4b7fc34cc48f4463c648f3cbb14f8855dfdd0d8de4c0564afb5b74bca512",
+            "assets": {
+              "/api/assets/14f94292-aaab-4e52-8b63-cc38ee1b091b/source": "8fb98d6d91604c38ec25ba549d28b85f1a319ccf757426541067d500d6120373",
+              "/api/assets/14f94292-aaab-4e52-8b63-cc38ee1b091b": "2feb75c522864e0d071216079891e1ef8c83cbb9a5bca78bfa1a2fac4b96aea3"
+            }
+          },
+          "elapsed_seconds": 0.03991686099993785,
+          "finished_at": "2026-11-07T10:02:09.395728+00:00"
+        }
+      },
+      {
+        "scenario_id": "I2",
+        "repetition": 1,
+        "status": "completed",
+        "restart": {
+          "status": "completed",
+          "started_at": "2026-11-07T10:02:09.798490+00:00",
+          "backend_before": {
+            "id": "836ede7c0570e473ec91a28ed3e6204859023876aecc008b753dafcd38495742",
+            "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+            "started_at": "2026-11-07T10:02:04.072788109Z",
+            "running": true,
+            "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+          },
+          "ready_seconds": 3.315465351999819,
+          "command_seconds": 1.4701814319998903,
+          "polls": [
+            {
+              "started_at": "2026-11-07T10:02:11.536328+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 1.4718840079999609,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:11.790582+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 1.7257898209998075,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:12.042392+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 1.98669685699997,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:12.306422+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 2.2416956659999414,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:12.558699+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 2.4940837079998346,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:12.810753+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 2.7458732200000213,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:13.076930+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 3.012215571999832,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:13.331983+00:00",
+              "http_status": 200,
+              "elapsed_seconds": 3.315465351999819,
+              "ready": true
+            }
+          ],
+          "command_started_at": "2026-11-07T10:02:10.066144+00:00",
+          "backend_after": {
+            "id": "836ede7c0570e473ec91a28ed3e6204859023876aecc008b753dafcd38495742",
+            "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+            "started_at": "2026-11-07T10:02:11.128180151Z",
+            "running": true,
+            "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+          },
+          "elapsed_seconds": 3.4892963709999094,
+          "finished_at": "2026-11-07T10:02:13.555441+00:00"
+        },
+        "request_id": "9035ae25-ea29-4f6a-89eb-fee77afba637",
+        "cold_api_seconds": 2.9761917710000034,
+        "resource_samples": [
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:02:13.556708+00:00",
+            "value": 381.77734375,
+            "finished_at": "2026-11-07T10:02:13.640762+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:02:13.640783+00:00",
+            "value": 398,
+            "finished_at": "2026-11-07T10:02:13.686817+00:00"
+          },
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:02:12.264669+00:00",
+            "value": 710.63671875,
+            "finished_at": "2026-11-07T10:02:12.418814+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:02:12.418833+00:00",
+            "value": 622,
+            "finished_at": "2026-11-07T10:02:12.468264+00:00"
+          },
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:02:13.264781+00:00",
+            "value": 940.875,
+            "finished_at": "2026-11-07T10:02:13.372260+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:02:13.372285+00:00",
+            "value": 770,
+            "finished_at": "2026-11-07T10:02:13.424149+00:00"
+          }
+        ],
+        "recovery": {
+          "status": "completed",
+          "started_at": "2026-11-07T10:02:14.251742+00:00",
+          "seconds": 0.040365995999991355,
+          "actual": {
+            "session_id": 5,
+            "frames": 1,
+            "result_sha256": "b4b194ab5073f2bd699b4f80240e0a38ae7e64181ca72024e469e5a8094c47d1",
+            "assets": {
+              "/api/assets/42b5fd4d-fec4-4cb9-9695-07d5f9a532e4/source": "1bcc4c8595aedf2e82c858b9877e7aca9c0d7bdfc4da4ae77fb76e0598e62b4b",
+              "/api/assets/42b5fd4d-fec4-4cb9-9695-07d5f9a532e4": "acfac11efd8b8f400452ef4961cdcac7e0fddcca2de0f8e30d3ed377b01d6530"
+            }
+          },
+          "elapsed_seconds": 0.04036762300006558,
+          "finished_at": "2026-11-07T10:02:14.292120+00:00"
+        }
+      },
+      {
+        "scenario_id": "I2",
+        "repetition": 2,
+        "status": "completed",
+        "restart": {
+          "status": "completed",
+          "started_at": "2026-11-07T10:02:14.479155+00:00",
+          "backend_before": {
+            "id": "836ede7c0570e473ec91a28ed3e6204859023876aecc008b753dafcd38495742",
+            "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+            "started_at": "2026-11-07T10:02:11.128180151Z",
+            "running": true,
+            "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+          },
+          "ready_seconds": 3.387692444000095,
+          "command_seconds": 1.5769486389999656,
+          "polls": [
+            {
+              "started_at": "2026-11-07T10:02:16.257363+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 1.5783618880000176,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:16.512871+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 1.8337227930001063,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:16.764752+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 2.086281040000131,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:17.016805+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 2.337806870000122,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:17.269017+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 2.589735960000098,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:17.521297+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 2.8420881839999765,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:17.772841+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 3.093633700000055,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:18.024755+00:00",
+              "http_status": 200,
+              "elapsed_seconds": 3.387692444000095,
+              "ready": true
+            }
+          ],
+          "command_started_at": "2026-11-07T10:02:14.680412+00:00",
+          "backend_after": {
+            "id": "836ede7c0570e473ec91a28ed3e6204859023876aecc008b753dafcd38495742",
+            "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+            "started_at": "2026-11-07T10:02:15.742105616Z",
+            "running": true,
+            "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+          },
+          "elapsed_seconds": 3.572062389999928,
+          "finished_at": "2026-11-07T10:02:18.252475+00:00"
+        },
+        "request_id": "d5cb0db4-d210-4fee-a38c-39d711c25330",
+        "cold_api_seconds": 2.826440765000143,
+        "resource_samples": [
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:02:18.253835+00:00",
+            "value": 386.46875,
+            "finished_at": "2026-11-07T10:02:18.352879+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:02:18.352903+00:00",
+            "value": 398,
+            "finished_at": "2026-11-07T10:02:18.399979+00:00"
+          },
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:02:19.255268+00:00",
+            "value": 714.34375,
+            "finished_at": "2026-11-07T10:02:19.365317+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:02:19.365344+00:00",
+            "value": 622,
+            "finished_at": "2026-11-07T10:02:19.408726+00:00"
+          },
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:02:20.255722+00:00",
+            "value": 1095.1640625,
+            "finished_at": "2026-11-07T10:02:20.362172+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:02:20.362188+00:00",
+            "value": 1124,
+            "finished_at": "2026-11-07T10:02:20.433485+00:00"
+          }
+        ],
+        "recovery": {
+          "status": "completed",
+          "started_at": "2026-11-07T10:02:21.099951+00:00",
+          "seconds": 0.049245130000144854,
+          "actual": {
+            "session_id": 5,
+            "frames": 1,
+            "result_sha256": "b4b194ab5073f2bd699b4f80240e0a38ae7e64181ca72024e469e5a8094c47d1",
+            "assets": {
+              "/api/assets/42b5fd4d-fec4-4cb9-9695-07d5f9a532e4/source": "1bcc4c8595aedf2e82c858b9877e7aca9c0d7bdfc4da4ae77fb76e0598e62b4b",
+              "/api/assets/42b5fd4d-fec4-4cb9-9695-07d5f9a532e4": "acfac11efd8b8f400452ef4961cdcac7e0fddcca2de0f8e30d3ed377b01d6530"
+            }
+          },
+          "elapsed_seconds": 0.049247014999991734,
+          "finished_at": "2026-11-07T10:02:21.149217+00:00"
+        }
+      },
+      {
+        "scenario_id": "V1",
+        "repetition": 1,
+        "status": "completed",
+        "restart": {
+          "status": "completed",
+          "started_at": "2026-11-07T10:02:22.080879+00:00",
+          "backend_before": {
+            "id": "836ede7c0570e473ec91a28ed3e6204859023876aecc008b753dafcd38495742",
+            "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+            "started_at": "2026-11-07T10:02:15.742105616Z",
+            "running": true,
+            "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+          },
+          "ready_seconds": 3.3997703479999473,
+          "command_seconds": 1.5691394059999766,
+          "polls": [
+            {
+              "started_at": "2026-11-07T10:02:23.858640+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 1.570471464999855,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:24.113180+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 1.8249389889999748,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:24.364755+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 2.0839409759998944,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:24.627380+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 2.3393019229999936,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:24.879366+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 2.5913071249999575,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:25.134263+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 2.8459951199999978,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:25.386101+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 3.097853817999976,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:25.638634+00:00",
+              "http_status": 200,
+              "elapsed_seconds": 3.3997703479999473,
+              "ready": true
+            }
+          ],
+          "command_started_at": "2026-11-07T10:02:22.289497+00:00",
+          "backend_after": {
+            "id": "836ede7c0570e473ec91a28ed3e6204859023876aecc008b753dafcd38495742",
+            "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+            "started_at": "2026-11-07T10:02:23.380133545Z",
+            "running": true,
+            "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+          },
+          "elapsed_seconds": 3.5972117050000634,
+          "finished_at": "2026-11-07T10:02:25.886710+00:00"
+        },
+        "request_id": "274dd712-f0b4-47b2-b449-f5967b5622e0",
+        "cold_api_seconds": 3.3299668080001084,
+        "resource_samples": [
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:02:25.888521+00:00",
+            "value": 350.86328125,
+            "finished_at": "2026-11-07T10:02:25.997459+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:02:25.997475+00:00",
+            "value": 398,
+            "finished_at": "2026-11-07T10:02:26.047267+00:00"
+          },
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:02:26.888830+00:00",
+            "value": 712.859375,
+            "finished_at": "2026-11-07T10:02:26.997527+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:02:26.997546+00:00",
+            "value": 622,
+            "finished_at": "2026-11-07T10:02:27.044685+00:00"
+          },
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:02:27.898019+00:00",
+            "value": 1012.4296875,
+            "finished_at": "2026-11-07T10:02:27.989302+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:02:27.989321+00:00",
+            "value": 770,
+            "finished_at": "2026-11-07T10:02:28.047180+00:00"
+          },
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:02:28.898268+00:00",
+            "value": 1530.35546875,
+            "finished_at": "2026-11-07T10:02:29.019060+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:02:29.019078+00:00",
+            "value": 1126,
+            "finished_at": "2026-11-07T10:02:29.063049+00:00"
+          }
+        ],
+        "recovery": {
+          "status": "completed",
+          "started_at": "2026-11-07T10:02:29.235102+00:00",
+          "seconds": 0.08717350899996745,
+          "actual": {
+            "session_id": 8,
+            "frames": 3,
+            "result_sha256": "8459d3ffd46d04513954f5b6455592c66498d95c783fe5b433cc29ab2aaba82f",
+            "assets": {
+              "/api/assets/b9a2fc64-0351-4631-aeaa-38027dafe8dc/source": "b7d94c8066c2ef87d7bc98b04aacab16b9be7db64259ba90a0251db964a25e02",
+              "/api/assets/b9a2fc64-0351-4631-aeaa-38027dafe8dc": "53b32688d5fb594210bc0fd2443b24b6620d421a3751244a59947dda5c041711",
+              "/api/assets/b646c8ee-c558-4b31-bbed-07ea862bd256/source": "282934fc43ff3d10a874344814c3646c13d6d3775ca1e56749ec30a4354bd148",
+              "/api/assets/b646c8ee-c558-4b31-bbed-07ea862bd256": "ff1decc7cadce8a568834515dc5b53e1d0d52673fee4d1ff04dbd28c339fac2e",
+              "/api/assets/08e68da5-936a-4ba5-87f7-f427e51bee72/source": "00fd05a6ce8fc1017e2a324b2f99fb63149e9e87fc138f55a1c0d9d800606b38",
+              "/api/assets/08e68da5-936a-4ba5-87f7-f427e51bee72": "b13a81a5f1a683410ba60b2ecacf13d6edec955f461bb028251504cf9967dd1d"
+            }
+          },
+          "elapsed_seconds": 0.08717513400006283,
+          "finished_at": "2026-11-07T10:02:29.322287+00:00"
+        }
+      },
+      {
+        "scenario_id": "V1",
+        "repetition": 2,
+        "status": "completed",
+        "restart": {
+          "status": "completed",
+          "started_at": "2026-11-07T10:02:29.515420+00:00",
+          "backend_before": {
+            "id": "836ede7c0570e473ec91a28ed3e6204859023876aecc008b753dafcd38495742",
+            "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+            "started_at": "2026-11-07T10:02:23.380133545Z",
+            "running": true,
+            "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+          },
+          "ready_seconds": 3.443003815999873,
+          "command_seconds": 1.6183478559999003,
+          "polls": [
+            {
+              "started_at": "2026-11-07T10:02:31.328775+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 1.6202409739998984,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:31.584728+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 1.8761245109999436,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:31.836746+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 2.131484569999884,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:32.092596+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 2.3835579789999883,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:32.345123+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 2.6359972269999616,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:32.598878+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 2.8903170799999316,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:32.851218+00:00",
+              "http_status": 502,
+              "elapsed_seconds": 3.1421088899999177,
+              "ready": false
+            },
+            {
+              "started_at": "2026-11-07T10:02:33.104685+00:00",
+              "http_status": 200,
+              "elapsed_seconds": 3.443003815999873,
+              "ready": true
+            }
+          ],
+          "command_started_at": "2026-11-07T10:02:29.710394+00:00",
+          "backend_after": {
+            "id": "836ede7c0570e473ec91a28ed3e6204859023876aecc008b753dafcd38495742",
+            "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+            "started_at": "2026-11-07T10:02:30.777356738Z",
+            "running": true,
+            "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+          },
+          "elapsed_seconds": 3.6634852390000106,
+          "finished_at": "2026-11-07T10:02:33.373882+00:00"
+        },
+        "request_id": "8c7e754c-d141-48ce-9fef-5f83da9b5672",
+        "cold_api_seconds": 2.8543816750000133,
+        "resource_samples": [
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:02:33.375830+00:00",
+            "value": 349.38671875,
+            "finished_at": "2026-11-07T10:02:33.480598+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:02:33.480616+00:00",
+            "value": 398,
+            "finished_at": "2026-11-07T10:02:33.527406+00:00"
+          },
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:02:34.376374+00:00",
+            "value": 721.20703125,
+            "finished_at": "2026-11-07T10:02:34.473006+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:02:34.473023+00:00",
+            "value": 622,
+            "finished_at": "2026-11-07T10:02:34.520440+00:00"
+          },
+          {
+            "resource": "backend_cgroup_mib",
+            "started_at": "2026-11-07T10:02:35.380536+00:00",
+            "value": 1226.66796875,
+            "finished_at": "2026-11-07T10:02:35.498333+00:00"
+          },
+          {
+            "resource": "whole_gpu_device_mib",
+            "started_at": "2026-11-07T10:02:35.498351+00:00",
+            "value": 1126,
+            "finished_at": "2026-11-07T10:02:35.556780+00:00"
+          }
+        ],
+        "recovery": {
+          "status": "completed",
+          "started_at": "2026-11-07T10:02:36.244369+00:00",
+          "seconds": 0.07412150300001485,
+          "actual": {
+            "session_id": 8,
+            "frames": 3,
+            "result_sha256": "8459d3ffd46d04513954f5b6455592c66498d95c783fe5b433cc29ab2aaba82f",
+            "assets": {
+              "/api/assets/b9a2fc64-0351-4631-aeaa-38027dafe8dc/source": "b7d94c8066c2ef87d7bc98b04aacab16b9be7db64259ba90a0251db964a25e02",
+              "/api/assets/b9a2fc64-0351-4631-aeaa-38027dafe8dc": "53b32688d5fb594210bc0fd2443b24b6620d421a3751244a59947dda5c041711",
+              "/api/assets/b646c8ee-c558-4b31-bbed-07ea862bd256/source": "282934fc43ff3d10a874344814c3646c13d6d3775ca1e56749ec30a4354bd148",
+              "/api/assets/b646c8ee-c558-4b31-bbed-07ea862bd256": "ff1decc7cadce8a568834515dc5b53e1d0d52673fee4d1ff04dbd28c339fac2e",
+              "/api/assets/08e68da5-936a-4ba5-87f7-f427e51bee72/source": "00fd05a6ce8fc1017e2a324b2f99fb63149e9e87fc138f55a1c0d9d800606b38",
+              "/api/assets/08e68da5-936a-4ba5-87f7-f427e51bee72": "b13a81a5f1a683410ba60b2ecacf13d6edec955f461bb028251504cf9967dd1d"
+            }
+          },
+          "elapsed_seconds": 0.07412331900013669,
+          "finished_at": "2026-11-07T10:02:36.318500+00:00"
+        }
+      }
+    ],
+    "errors": [],
+    "backend": {
+      "id": "836ede7c0570e473ec91a28ed3e6204859023876aecc008b753dafcd38495742",
+      "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+      "started_at": "2026-11-07T10:00:26.219980308Z",
+      "running": true,
+      "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+    },
+    "compose_project": "traffic-issue79-restarts",
+    "model_profile": {
+      "profile_id": "yolo26m-visdrone-experimental-v1",
+      "model_id": "yolo26m-visdrone",
+      "quality_gate_status": "failed",
+      "evaluation_reference": "configs/evaluation/final_model_selection.json",
+      "checkpoint_path": "models/candidates/yolo26m-visdrone/best.pt",
+      "checkpoint_sha256": "e57204b8d77b5b22ea9253cbd5664b707623aeb7c19dbaa9034fe5a60bed6571",
+      "class_mapping": {
+        "bus": "bus",
+        "car": "car_or_van",
+        "van": "car_or_van",
+        "motor": "motorcycle",
+        "truck": "truck",
+        "people": "person",
+        "bicycle": "bicycle",
+        "pedestrian": "person"
+      },
+      "confidence": 0.25,
+      "image_size": 1280,
+      "scale_factor": 2,
+      "max_detections": 300,
+      "numeric_precision": "float32",
+      "device": "cuda:0"
+    },
+    "cold_summary": {
+      "I1": {
+        "attempted": 2,
+        "completed": 2,
+        "failed": 0,
+        "complete_evidence": 2,
+        "api_seconds": {
+          "n": 2,
+          "median": 6.531317801,
+          "min": 2.7961450530001457,
+          "max": 10.266490548999855,
+          "p95": 10.266490548999855
+        },
+        "stage_seconds": {
+          "inference": {
+            "n": 2,
+            "median": 6.180384682499948,
+            "min": 2.449439029999894,
+            "max": 9.911330335000002,
+            "p95": 9.911330335000002
+          },
+          "image_persistence": {
+            "n": 2,
+            "median": 0.016720329499889885,
+            "min": 0.01646484199977749,
+            "max": 0.01697581700000228,
+            "p95": 0.01697581700000228
+          },
+          "video_persistence": {
+            "n": 0,
+            "median": null,
+            "min": null,
+            "max": null,
+            "p95": null
+          },
+          "video_queue": {
+            "n": 0,
+            "median": null,
+            "min": null,
+            "max": null,
+            "p95": null
+          }
+        }
+      },
+      "I2": {
+        "attempted": 2,
+        "completed": 2,
+        "failed": 0,
+        "complete_evidence": 2,
+        "api_seconds": {
+          "n": 2,
+          "median": 2.9013162680000733,
+          "min": 2.826440765000143,
+          "max": 2.9761917710000034,
+          "p95": 2.9761917710000034
+        },
+        "stage_seconds": {
+          "inference": {
+            "n": 2,
+            "median": 2.5611146504998032,
+            "min": 2.4878022649998,
+            "max": 2.6344270359998063,
+            "p95": 2.6344270359998063
+          },
+          "image_persistence": {
+            "n": 2,
+            "median": 0.014983591000031993,
+            "min": 0.014942414999950415,
+            "max": 0.01502476700011357,
+            "p95": 0.01502476700011357
+          },
+          "video_persistence": {
+            "n": 0,
+            "median": null,
+            "min": null,
+            "max": null,
+            "p95": null
+          },
+          "video_queue": {
+            "n": 0,
+            "median": null,
+            "min": null,
+            "max": null,
+            "p95": null
+          }
+        }
+      },
+      "V1": {
+        "attempted": 2,
+        "completed": 2,
+        "failed": 0,
+        "complete_evidence": 2,
+        "api_seconds": {
+          "n": 2,
+          "median": 3.092174241500061,
+          "min": 2.8543816750000133,
+          "max": 3.3299668080001084,
+          "p95": 3.3299668080001084
+        },
+        "stage_seconds": {
+          "inference": {
+            "n": 2,
+            "median": 2.4796444569999494,
+            "min": 2.3007061160001285,
+            "max": 2.6585827979997703,
+            "p95": 2.6585827979997703
+          },
+          "image_persistence": {
+            "n": 0,
+            "median": null,
+            "min": null,
+            "max": null,
+            "p95": null
+          },
+          "video_persistence": {
+            "n": 2,
+            "median": 0.020420643999955246,
+            "min": 0.016215942999906474,
+            "max": 0.024625345000004017,
+            "p95": 0.024625345000004017
+          },
+          "video_queue": {
+            "n": 2,
+            "median": 0.0002780385000278329,
+            "min": 0.00027027100009036076,
+            "max": 0.0002858059999653051,
+            "p95": 0.0002858059999653051
+          }
+        }
+      }
+    },
+    "restart_summary": {
+      "I1": {
+        "attempted": 2,
+        "completed": 2,
+        "failed": 0,
+        "restart_ready_seconds": {
+          "n": 2,
+          "median": 3.398107072499897,
+          "min": 3.3979652709999755,
+          "max": 3.398248873999819,
+          "p95": 3.398248873999819
+        },
+        "saved_recovery_seconds": {
+          "n": 2,
+          "median": 0.037695245999998406,
+          "min": 0.035476018000053955,
+          "max": 0.03991447399994286,
+          "p95": 0.03991447399994286
+        }
+      },
+      "I2": {
+        "attempted": 2,
+        "completed": 2,
+        "failed": 0,
+        "restart_ready_seconds": {
+          "n": 2,
+          "median": 3.351578897999957,
+          "min": 3.315465351999819,
+          "max": 3.387692444000095,
+          "p95": 3.387692444000095
+        },
+        "saved_recovery_seconds": {
+          "n": 2,
+          "median": 0.044805563000068105,
+          "min": 0.040365995999991355,
+          "max": 0.049245130000144854,
+          "p95": 0.049245130000144854
+        }
+      },
+      "V1": {
+        "attempted": 2,
+        "completed": 2,
+        "failed": 0,
+        "restart_ready_seconds": {
+          "n": 2,
+          "median": 3.42138708199991,
+          "min": 3.3997703479999473,
+          "max": 3.443003815999873,
+          "p95": 3.443003815999873
+        },
+        "saved_recovery_seconds": {
+          "n": 2,
+          "median": 0.08064750599999115,
+          "min": 0.07412150300001485,
+          "max": 0.08717350899996745,
+          "p95": 0.08717350899996745
+        }
+      }
+    },
+    "finished_at": "2026-11-07T10:02:36.561271+00:00"
+  }
+}

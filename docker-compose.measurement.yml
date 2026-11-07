@@ -1,0 +1,7 @@
+# Use only with a separate, disposable measurement project.
+services:
+  backend:
+    labels:
+      org.traffic-monitoring.measurement: disposable
+  frontend:
+    image: ${MEASUREMENT_FRONTEND_IMAGE:-traffic-monitoring-frontend:local}

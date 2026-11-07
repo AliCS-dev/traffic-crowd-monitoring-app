@@ -12,6 +12,11 @@ The 4 November [workflow coverage review](../testing.md) maps implemented paths
 to tests and records the repeated software checks. It includes controlled
 Compose recovery, not the timed real-runtime recovery experiment below.
 
+On 7 November, #26 was merged through PR #161. The separate
+[restart runner](system_restarts.md) now records graceful backend restart timing,
+cold-process requests and saved-result integrity, verified on the real GPU stack.
+This is development evidence, not the release freeze or final collection.
+
 Issue #79 measures the application as a system. We are not selecting another
 detector, reopening the historical held-out test, or turning successful requests
 into evidence of detection accuracy. Issues #113-#115 remain deferred.
@@ -92,7 +97,7 @@ silently substitute a clip or start another annotation campaign.
 | Browser result readiness | Submit action to decoded clean image and visible overlays | Browser runner needs an explicit timing record |
 | Throughput | Successful images or sampled frames divided by wall time in a declared sequential batch | Warm batch recorded, including evidence reads; not source-video FPS |
 | Resources | Timestamped backend cgroup memory and whole-device GPU memory samples | Runner records reading times/errors; samples can miss peaks |
-| Startup/recovery | Container start/restart to API readiness, followed by reopening a saved session | Automated timing and result record still needed |
+| Startup/recovery | Container start/restart to API readiness, followed by reopening a saved session | Graceful backend restart and saved-result timing implemented; full-stack startup and failure experiments remain |
 
 The JSON logs now contain separate inference, persistence and queue records as
 well as the existing whole-request and workflow durations. We do not infer those
@@ -159,10 +164,12 @@ smoke checks, not this full protocol. The [measurement guide](system_measurement
 now provides the warm runner command and its development verification record.
 
 The warm runner and stage timers have tests for timing boundaries, failed runs
-and provenance mismatch. Remaining work includes cold-process/browser/recovery
-measurements. Before final collection, we resolve V2, rerun the #26 software gate
-and commit the freeze record. Neither this plan nor the tooling check closes
-#26 or #79.
+and provenance mismatch. The separate restart runner now covers cold-process
+requests and saved-result recovery. Browser timing, full-stack startup and
+failure experiments remain. Before final collection, we resolve V2, fix the
+exact combined run order, rerun the #26 software gate and commit the freeze
+record. The tools do not yet execute the entire protocol as one command.
+Issue #26 is closed; these development checks do not close #79.
 
 We will retain raw JSON/CSV records, the input and runtime manifest, the exact
 command, run ID and output hashes. The final report will link compact tracked
