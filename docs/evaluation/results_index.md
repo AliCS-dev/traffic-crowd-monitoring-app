@@ -104,6 +104,13 @@ The [workspace verification](../scene_workspace_verification.md) records the
 completed interface checks; they do not replace final evaluation or change the
 historical model results below.
 
+The [7 November restart verification](system_restarts.md) adds graceful backend
+restart, first-request and saved-result timing. Its
+[machine-readable record](../../data/evaluation/system_restart_verification.json)
+includes six completed trials, the separate initial incomplete attempt and
+artifact hashes. The small development timing table is not a final performance
+result and must not be combined with the warm verification run.
+
 ## Current Final Result
 
 The selected VisDrone YOLO26m model **failed the final held-out quality gate**.

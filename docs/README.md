@@ -44,6 +44,7 @@ accuracy.
 | Chapter IV section plan and code references | [Writing outline](thesis/system_design_outline.md) |
 | Final application measurements and remaining prerequisites | [System evaluation plan](evaluation/system_evaluation_plan.md) |
 | Warm request timings, raw records and verification | [Measuring application workflows](evaluation/system_measurements.md) |
+| Backend restarts, first requests and saved-result recovery | [Restart measurements](evaluation/system_restarts.md) |
 | Materials and Methods | [Evaluation protocol](evaluation/evaluation_protocol.md) and [dataset card](evaluation/dataset_card.md) |
 | Results and Discussion | [Results index](evaluation/results_index.md), including unsuccessful experiments and limitations |
 | Reproduction commands | [Running evaluations](evaluation/running_evaluations.md) and [Docker Compose](compose_stack.md) |

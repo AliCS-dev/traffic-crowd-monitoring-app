@@ -1136,3 +1136,24 @@ The [testing guide](testing.md#ci-follow-up-7-november-2026) records the failure
 and distinguishes reproducible workflow tests from native file-chooser
 compatibility, which remains a release check under #84. We retained the earlier
 GPU evidence and removed only the disposable issue-26 GPU stack and its volumes.
+
+### Issue #79: Restart and Saved-Result Measurements (7 November 2026)
+
+We added an opt-in runner for graceful backend restarts, first requests after
+readiness and saved-result recovery. It uses a labelled disposable Compose
+project, verifies the same backend image/source across restarts, and retains
+failed attempts rather than retrying them. Existing warm-run behavior is unchanged.
+
+The first live attempt exposed an incorrect asset-route allowlist in the runner.
+We retained its incomplete report, corrected the `/source` route and test
+fixture, then ran six successful trials across two images and the artificial
+video. All saved result/media hashes matched; nine requests had complete stage
+evidence and 54 resource readings were available. The five-frame GPU regression
+also passed without baseline changes.
+
+The local Python suite passed 650 tests, with 14 PostgreSQL integration tests
+skipped locally. The [restart guide](evaluation/system_restarts.md) links exact
+commands, raw observations and a clearly labelled development timing table.
+The runner tree was dirty and no final release was frozen. Browser timing, the
+remaining startup/failure experiments, media decisions and final collection
+remain under #79; the model-quality limitations are unchanged.
