@@ -156,6 +156,30 @@ than the retained application selection. We corrected the test setup/assertion
 and verified resubmission sends the same file. We did not change the application,
 increase timeouts, enable retries or update screenshots to obtain a pass.
 
+### CI Follow-up (7 November 2026)
+
+The first push and pull-request runs both failed the four new video browser
+checks. Their traces showed a file-type validation error before any video
+submission, not a processing timeout. The local browser reported
+`video/x-msvideo` for the AVI fixture, whereas the CI file-path upload did not
+satisfy the same exact MIME check.
+
+We now provide the fixture bytes with explicit `video/x-msvideo` metadata,
+matching the existing live-stack tests, and assert that metadata in the upload.
+A separate desktop/mobile test supplies mismatched metadata and verifies that
+the form rejects it without submitting a video. Application validation is
+unchanged. This isolates the controlled workflow tests from native file-type
+inference; it does not establish upload compatibility across operating systems.
+The release checks in #84 still need to exercise the native file chooser on the
+demonstration machine. Alternate or empty MIME types can currently reject an
+otherwise valid video and require a separate compatibility decision.
+
+On 7 November, all 26 browser checks passed twice (52 passes, no retries).
+The 115 frontend unit tests, lint, formatting, TypeScript checks and production
+build also passed. We did not rerun the GPU suite for this test-only correction;
+the GPU results above remain dated 4 November. GitHub checks must pass on the
+updated commit before merging.
+
 Issue #79 still owns final latency/resource measurements, timed restart/outage
 experiments, input decisions and the release freeze. Controlled tests and a few
 repeated runs are useful regression evidence, not proof that every failure is

@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import {
   analysisResultFixture,
@@ -117,9 +118,10 @@ for (const outcome of ["completed", "failed"] as const) {
     let polls = 0;
     let allowCompletion = false;
     await page.route("**/api/analyses/videos", async (route) => {
-      expect(route.request().postDataBuffer()!.toString()).toContain(
-        'filename="roundabout_sequence.avi"',
-      );
+      expect(route.request().method()).toBe("POST");
+      const body = route.request().postDataBuffer()!.toString();
+      expect(body).toContain('filename="roundabout_sequence.avi"');
+      expect(body).toContain("Content-Type: video/x-msvideo");
       await route.fulfill({
         status: 202,
         json: { session_id: 42, status: "queued", sampled_frames_total: 3 },
@@ -145,9 +147,12 @@ for (const outcome of ["completed", "failed"] as const) {
     );
     await page.goto("/workspace");
     await page.getByRole("button", { name: "Video", exact: true }).click();
-    await page
-      .getByLabel("Choose video file")
-      .setInputFiles(`${fixtures}/roundabout_sequence.avi`);
+    // Native file-path MIME inference differs between Linux runners.
+    await page.getByLabel("Choose video file").setInputFiles({
+      name: "roundabout_sequence.avi",
+      mimeType: "video/x-msvideo",
+      buffer: await readFile(`${fixtures}/roundabout_sequence.avi`),
+    });
     await page.getByRole("button", { name: "Start analysis" }).click();
     await expect(
       page.getByText("Processing video", { exact: true }),
@@ -176,6 +181,35 @@ for (const outcome of ["completed", "failed"] as const) {
     expect(polls).toBeGreaterThanOrEqual(2);
   });
 }
+
+test("video with mismatched MIME metadata is rejected before submission", async ({
+  page,
+}) => {
+  const submissions: string[] = [];
+  page.on("request", (request) => {
+    if (
+      request.method() === "POST" &&
+      request.url().endsWith("/api/analyses/videos")
+    ) {
+      submissions.push(request.url());
+    }
+  });
+  await page.goto("/workspace");
+  await page.getByRole("button", { name: "Video", exact: true }).click();
+  await page.getByLabel("Choose video file").setInputFiles({
+    name: "roundabout_sequence.avi",
+    mimeType: "image/png",
+    buffer: await readFile(`${fixtures}/roundabout_sequence.avi`),
+  });
+  await page.getByRole("button", { name: "Start analysis" }).click();
+  await expect(
+    page.getByText(
+      "The selected file type does not match a supported video format.",
+    ),
+  ).toBeVisible();
+  await expect(page).toHaveURL(/\/workspace$/);
+  expect(submissions).toEqual([]);
+});
 
 test("rejected image keeps the selected file and does not open a result", async ({
   page,

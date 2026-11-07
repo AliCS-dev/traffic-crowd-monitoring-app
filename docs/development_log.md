@@ -1122,3 +1122,17 @@ With Ali's approval, we made all four CI jobs required for `main`, enabled
 up-to-date-branch checks and included administrators. The configuration was read
 back through GitHub's API. The testing guide records commands, coverage and
 remaining limitations; final evaluation and thesis writing remain separate.
+
+### Issue #26: Browser Fixture Correction (7 November 2026)
+
+GitHub's first browser runs rejected the AVI fixture at the form's MIME check,
+before video processing started. We made the supported fixture's MIME metadata
+explicit and added a browser test for mismatched metadata. The application,
+dependencies, screenshot baselines, retry settings and timeouts are unchanged.
+
+All 26 desktop/mobile checks passed twice locally, and all 115 frontend unit
+tests passed. Lint, formatting, types and the production build passed too.
+The [testing guide](testing.md#ci-follow-up-7-november-2026) records the failure
+and distinguishes reproducible workflow tests from native file-chooser
+compatibility, which remains a release check under #84. We retained the earlier
+GPU evidence and removed only the disposable issue-26 GPU stack and its volumes.
