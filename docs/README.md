@@ -26,6 +26,7 @@ answer more specific questions.
 | Tables, keys, column types and relationships | [Database ER diagram](database/database_schema.md#how-the-tables-are-connected) |
 | Backend container and GPU setup | [Backend container](backend_container.md) |
 | Checks, branches and dependency updates | [Development workflow](development_workflow.md) |
+| Workflow coverage, test commands and required CI checks | [Application testing](testing.md) |
 | Model and dependency details recorded with results | [Runtime provenance](runtime_provenance.md) |
 | Screenshot sources and capture procedure | [Screenshot record](images/user-guide/README.md) |
 | Interactive scene checks and live workflow results | [Scene workspace verification](scene_workspace_verification.md) |

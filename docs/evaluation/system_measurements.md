@@ -137,8 +137,9 @@ measurements or replace the dated development evidence above.
 
 ## What Remains
 
-Before final collection, we still need the #26 workflow coverage review, the
-natural-motion video decision, I3 preparation, backend-restart and recovery
+The [#26 workflow coverage review](../testing.md) is now recorded separately.
+Before final collection, we still need the natural-motion video decision,
+I3 preparation, backend-restart and recovery
 measurements, browser readiness timing, and the complete hardware/configuration
 freeze. The runner currently handles the warm API portion, not that whole
 protocol. We do not reopen the held-out accuracy test or assign new annotation

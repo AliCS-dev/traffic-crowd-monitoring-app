@@ -18,6 +18,13 @@ jobs:
     name: Container build and runtime checks
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      POSTGRES_PASSWORD: ci_configuration_only
+      BACKEND_IMAGE: traffic-monitoring-backend:ci
+      TEST_FRONTEND_IMAGE: traffic-monitoring-frontend:ci
+      FRONTEND_PORT: "8086"
+      COMPOSE_PROJECT_NAME: traffic-ci-${{ github.run_id }}
+      COMPOSE_FILE: docker-compose.app.yml:docker-compose.test.yml
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -46,6 +53,20 @@ jobs:
       - name: Show failed container startup logs
         if: failure()
         run: docker logs frontend-check
+
+      - name: Check complete Compose workflows with controlled detection
+        run: |
+          docker compose --env-file /dev/null up -d --no-build --wait --wait-timeout 180
+          docker compose exec -T backend python /qa/check_workflows.py
+          docker compose restart backend
+          docker compose --env-file /dev/null up -d --no-build --wait --wait-timeout 180
+          docker compose exec -T backend python /qa/check_workflows.py --verify-saved
+      - name: Show failed Compose checks
+        if: failure()
+        run: docker compose logs --no-color --tail 100
+      - name: Remove disposable Compose test data
+        if: always()
+        run: docker compose down --volumes --remove-orphans
 
   frontend-quality:
     name: Frontend quality checks

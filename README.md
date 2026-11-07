@@ -88,6 +88,31 @@ readiness before starting Nginx. The
 shows that order. Our [database ER diagram](docs/database/database_schema.md#how-the-tables-are-connected)
 shows the tables, keys and relationships behind the stored results.
 
+## Testing
+
+From the repository root, with the development dependencies installed:
+
+```bash
+.venv/bin/python -m pytest
+.venv/bin/ruff check .
+.venv/bin/ruff format --check .
+.venv/bin/python -m compileall -q app scripts evaluation
+cd frontend
+npm ci
+npm run lint
+npm run format:check
+npm run typecheck
+npm test
+npm run build
+npx playwright install --with-deps chromium
+npm run test:browser
+```
+
+The [testing guide](docs/testing.md) maps workflows to tests and gives the exact
+disposable PostgreSQL, Compose and local GPU commands. Database tests are skipped
+unless explicitly enabled. CI checks are required before merging to `main`;
+software checks do not establish model accuracy.
+
 ## Documentation
 
 | What you need | Where to start |
