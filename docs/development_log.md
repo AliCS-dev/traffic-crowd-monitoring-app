@@ -1157,3 +1157,24 @@ commands, raw observations and a clearly labelled development timing table.
 The runner tree was dirty and no final release was frozen. Browser timing, the
 remaining startup/failure experiments, media decisions and final collection
 remain under #79; the model-quality limitations are unchanged.
+
+### Issue #79: Browser Result-Readiness Measurements (9 November 2026)
+
+We added browser timing from the submit click to a decoded image and stable
+overlay layout, then checked the displayed geometry against saved results.
+The runner uses the existing Playwright setup, disposable Compose stack and
+fixed fixtures. It retains warm-ups and failures, verifies served frontend
+hashes and backend provenance, and never retries failed submissions.
+
+All 18 live GPU attempts completed: six warm-ups and twelve measured attempts
+across two viewport sizes. The separate five-frame GPU regression passed.
+All 115 frontend unit tests and four evidence-rule tests passed, and 36 browser
+checks passed twice without retries. Lint, formatting, types and build passed.
+No application component, dependency, model setting or baseline changed.
+
+The [browser report](evaluation/browser_readiness.md) links raw observations,
+artifact hashes and screenshots. These two-sample development timings are not
+final performance results or proof of physical screen paint. The video scene
+was not wholly inside the viewport at the timer boundary; screenshots scroll
+afterwards. Full-stack startup/failure checks, media decisions and the final
+freeze remain under #79, with the detector's failed quality gate unchanged.

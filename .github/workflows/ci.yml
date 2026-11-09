@@ -102,6 +102,9 @@ jobs:
       - name: Run unit tests
         run: npm test
 
+      - name: Check browser measurement evidence rules
+        run: npm run test:measurements
+
       - name: Build production frontend
         run: npm run build
 

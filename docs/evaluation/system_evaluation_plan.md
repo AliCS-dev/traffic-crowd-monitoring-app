@@ -6,7 +6,7 @@
 
 On 29 October we added and verified [warm workflow measurements](system_measurements.md)
 and structured stage timers. The complete protocol below still needs the
-remaining coverage, media, restart/browser measurements and release freeze.
+remaining coverage, media, measurement paths and release freeze.
 
 The 4 November [workflow coverage review](../testing.md) maps implemented paths
 to tests and records the repeated software checks. It includes controlled
@@ -16,6 +16,10 @@ On 7 November, #26 was merged through PR #161. The separate
 [restart runner](system_restarts.md) now records graceful backend restart timing,
 cold-process requests and saved-result integrity, verified on the real GPU stack.
 This is development evidence, not the release freeze or final collection.
+
+On 9 November, the [browser runner](browser_readiness.md) added submission-to-scene
+timing, checked against saved image/video results and served frontend hashes.
+Its two-sample verification remains separate from final performance collection.
 
 Issue #79 measures the application as a system. We are not selecting another
 detector, reopening the historical held-out test, or turning successful requests
@@ -94,7 +98,7 @@ silently substitute a clip or start another annotation campaign.
 | Inference service time | Detector call after acquiring its shared lock to completed results, with CUDA completion accounted for | Request-correlated stage log |
 | Persistence time | Entry to result-persistence operation through successful transaction commit | Request-correlated stage log; video progress writes excluded |
 | Video queue wait | Submission to executor after job creation commits, to worker entry | Request-correlated stage log |
-| Browser result readiness | Submit action to decoded clean image and visible overlays | Browser runner needs an explicit timing record |
+| Browser result readiness | Captured submit click to decoded image and stable overlay layout; not physical paint or guaranteed viewport visibility | Browser runner implemented and verified; first sampled frame for video |
 | Throughput | Successful images or sampled frames divided by wall time in a declared sequential batch | Warm batch recorded, including evidence reads; not source-video FPS |
 | Resources | Timestamped backend cgroup memory and whole-device GPU memory samples | Runner records reading times/errors; samples can miss peaks |
 | Startup/recovery | Container start/restart to API readiness, followed by reopening a saved session | Graceful backend restart and saved-result timing implemented; full-stack startup and failure experiments remain |
@@ -123,7 +127,9 @@ We retain every raw observation and report sample count, median, minimum,
 maximum and a clearly defined empirical p95 (nearest-rank, rank ceil(0.95*n)).
 With only ten warm observations that p95 is the maximum; we state that small
 sample limitation rather than presenting it as a precise population estimate.
-The runner will poll video status every 250 ms and record that interval.
+The API runner will poll video status every 250 ms and record that interval.
+The browser runner instead retains the application's one-second polling interval;
+its timings include that delay and are reported separately from API timings.
 Resource samples are timestamped at a target interval of one second, with
 missing readings and actual gaps retained.
 
@@ -165,8 +171,10 @@ now provides the warm runner command and its development verification record.
 
 The warm runner and stage timers have tests for timing boundaries, failed runs
 and provenance mismatch. The separate restart runner now covers cold-process
-requests and saved-result recovery. Browser timing, full-stack startup and
-failure experiments remain. Before final collection, we resolve V2, fix the
+requests and saved-result recovery. The browser runner now records decoded-scene
+readiness in fresh contexts, with one warm-up per scenario and viewport.
+Full-stack startup and failure experiments remain. Before final collection,
+we prepare I3, resolve V2, fix the
 exact combined run order, rerun the #26 software gate and commit the freeze
 record. The tools do not yet execute the entire protocol as one command.
 Issue #26 is closed; these development checks do not close #79.

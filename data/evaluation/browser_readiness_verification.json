@@ -1,0 +1,1872 @@
+{
+  "schema_version": 1,
+  "purpose": "Development verification only; not final thesis performance or detection accuracy",
+  "status": "recorded",
+  "started_at": "2026-11-09T10:25:33.352Z",
+  "settings": {
+    "origin": "http://127.0.0.1:8086",
+    "repetitions": 2,
+    "warmups_per_scenario_viewport": 1,
+    "timeout_ms": 360000,
+    "viewports": {
+      "desktop": {
+        "width": 1440,
+        "height": 1000
+      },
+      "mobile": {
+        "width": 320,
+        "height": 900
+      }
+    },
+    "browser_context": "fresh per attempt; workspace loaded before timer",
+    "video_poll_ms": 1000,
+    "p95": "nearest rank ceil(0.95*n)",
+    "tracing": false
+  },
+  "errors": [],
+  "node_version": "v26.12.1",
+  "setup": {
+    "runner": {
+      "application_commit": "ec33d8220b99956712d24ced7644831311e1ba42",
+      "source_dirty": true,
+      "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+    },
+    "backend": {
+      "id": "4480f4026b473de884201c2aed4bd3d7e382154574ec12de9445dae94eac286b",
+      "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+      "started_at": "2026-11-09T10:22:41.288942402Z",
+      "running": true,
+      "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+    },
+    "scenarios": [
+      {
+        "scenario_id": "I1",
+        "kind": "image",
+        "path": "data/runtime-regression/fixtures/roundabout_6.png",
+        "sha256": "785414dccf5be9ecd1fbed0793ed32900069adbe8b8fe5953048141da7c45a4e",
+        "grid_rows": 2,
+        "grid_columns": 3,
+        "sampling_interval_seconds": 1
+      },
+      {
+        "scenario_id": "I2",
+        "kind": "image",
+        "path": "data/runtime-regression/fixtures/roundabout_29.png",
+        "sha256": "1c63462c1511db556411844f0eb2e4d0392b0f0f54484146492735dd662c669a",
+        "grid_rows": null,
+        "grid_columns": null,
+        "sampling_interval_seconds": 1
+      },
+      {
+        "scenario_id": "V1",
+        "kind": "video",
+        "path": "data/runtime-regression/fixtures/roundabout_sequence.avi",
+        "sha256": "d62fdd09d6963629f1c9a51258fab4ff8b90dff5efdae10f7d31bffe5e6ddc67",
+        "grid_rows": 2,
+        "grid_columns": 3,
+        "sampling_interval_seconds": 1
+      }
+    ]
+  },
+  "backend_container": {
+    "id": "4480f4026b473de884201c2aed4bd3d7e382154574ec12de9445dae94eac286b",
+    "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+    "started_at": "2026-11-09T10:22:41.288942402Z",
+    "running": true,
+    "service": "backend",
+    "project": "traffic-issue79-browser",
+    "measurement": "disposable",
+    "ports": null
+  },
+  "frontend_container": {
+    "id": "fcfd67f3d3d1d755eb9c7451fc27b91569c6727cd58aac893df65c7cb0614123",
+    "image": "sha256:a1add30e48b9881f6448e1a7654713920fba4a6d260f797dda7e4084f0cd4c94",
+    "started_at": "2026-11-09T10:22:47.444239045Z",
+    "running": true,
+    "service": "frontend",
+    "project": "traffic-issue79-browser",
+    "measurement": null,
+    "ports": [
+      {
+        "HostIp": "127.0.0.1",
+        "HostPort": "8086"
+      }
+    ]
+  },
+  "frontend_source": {
+    "api/analysisResults.ts": "68bb56e502afc95ac32c64e5e7388aafed237de6db7f603a73787527ba9f7fc2",
+    "api/client.test.ts": "4b13f22e97a4c068f824ec3c4d1f3daf6b66e0886e2b0bec5fd8d28b105e956b",
+    "api/client.ts": "0decdadf482c7f946a3a79eaa563bf6a20dc999b2ea17e0925eb1cab0074e50f",
+    "api/types.ts": "bbdc41a428d5a21cb5a2525b054d8197469e17d9866cb1a88b02e2688286146e",
+    "App.test.tsx": "9bb6f327bda0906f34efff9c02850c7b3177a76a604e5c52b24a8f921665532e",
+    "App.tsx": "be153660a1b746a683e799c15ed134a525fbecc90125f7b1ae522eab1bddb134",
+    "components/ApplicationInfoDialog.tsx": "32ef961d80c910b8dc5767980c856e95f87b43d6b97932858835e6ba1fec5767",
+    "components/AppShell.tsx": "86cc80250921ad0e8f58abd403136a3c9400308ac7a1c9705ad8c1193167829d",
+    "components/BackendStatus.test.tsx": "2ab56bad93e29c5530a04c55659f736ba9c631d525053f633d3d5ef098738c10",
+    "components/BackendStatus.tsx": "2e0614e1302c296e46bf112b5cdbd5c25c376e4be1284259dbede042779fe823",
+    "components/PageHeader.tsx": "abac74ba81c1f381efc1fe05e35591bf74f5e1e23becc54f358745c6f02b4986",
+    "components/ServiceReadinessPanel.tsx": "bb9e610ef44bbd9aa69753604e4ebd3dc282bf170b25cf87bda8912bf2ccfd7e",
+    "components/StatePanel.tsx": "082cef963c5a02c508d9f402d4c4cc55a28d2a45385d9fc6b9ebe4e9a48d23d0",
+    "components/StatusLabel.tsx": "352aa836ba759f7427e0594b26d0a2243093398387b5f76d9b2b945dcf31ebd1",
+    "config.test.ts": "9b22fc6a350cdb2432017bc3a3ea1bbe5c8dfae8d221cbe160e279cdc856dd73",
+    "config.ts": "904bb40f7fbaa252793fb182a87670dd54fa2a99a641093fc1e22523bc04e5f7",
+    "features/analysis/analysisForm.test.ts": "99c894d08c089903b34c645b74c0da21c14cfa8ec1ad94d51e3fddcee6aaf9ed",
+    "features/analysis/analysisForm.ts": "e1bd951a72f54a6ec2253a84ac44e2dca3397fbc48dc6f6c566aeed1c03e81f5",
+    "features/analysis/AnalysisStatusPanel.test.tsx": "004305e55083f06593985fdc52f3cc146a8dca4f2c1aafcdf1ca4f382aa0883d",
+    "features/analysis/AnalysisStatusPanel.tsx": "2b392c592a6927be8039c46e3094c762837ab702a713c89237a439d54fdf2476",
+    "features/analysis/AnalysisSubmissionForm.tsx": "b201778094fc98769d20a2bb48b6d052366b0e0277e4dc876fdfca44f50e5ec2",
+    "features/analysis/AnalysisWorkspace.tsx": "e0eb5346860efdacafc175b05b0ad236808631126efcfdf6c74575f8b66b97e6",
+    "features/analysis/MediaFilePicker.tsx": "61fc6e3cddfa8795f2f7365df1c88d8d2338d8606f630fda09847715efc5da36",
+    "features/analysis/useAnalysisWorkflow.ts": "859febd79e6ad632aefbee931b4e37c1bbc1ef9b074fd5377047b457eeb053ea",
+    "features/results/AnalysisResult.tsx": "acfba916f18bc0f19bdebfe1317fd613bc2bf47f022a3793b0f5667284a9a176",
+    "features/results/ClassFiltering.test.tsx": "ade3779d0334373390a00eb6cdd5fec342ce81977410a2b6d6c8a3bdeebff0fe",
+    "features/results/DetectionOverlay.tsx": "30e2b479b24ffe7a290557ef9baa20585ee3ed89459e536f541ec35890708b7c",
+    "features/results/DetectionTable.tsx": "076a8abac3e21aa7d2c39c88605c8f58a90735e448412235afbfd791c1b3ae8b",
+    "features/results/FrameAlerts.test.tsx": "d05c46ea14fa2300de1d005a4866ecb45b5e96ade4f7a47eda783a9837f86930",
+    "features/results/FrameAlerts.tsx": "bee709fadb0233030e6fc7a46ec4e76f5f6aea4c3fef54181b390fea0b55cb89",
+    "features/results/FrameCounts.tsx": "494ae2caac46ee8c603be09607a4e9822e464df478e20a6ff5720a5ad1f9b334",
+    "features/results/frameNavigation.test.ts": "8c7740ba56346595131d226261741a6183226fd5ba734162fae05980963dbbc3",
+    "features/results/frameNavigation.ts": "034478f74f4a06c87be87c54e6c08f093eba119860f050aa040ecc3509f45b6d",
+    "features/results/FrameResult.test.tsx": "9a09d00aed77519c26bdf9c26dacad74c33af2e4f98254b0a199b45c97bde013",
+    "features/results/FrameResult.tsx": "7751570a6b446a26714100f1bff99c970159d1ec4b7199eadd08c7929cd5059e",
+    "features/results/GridCellCounts.tsx": "79a6f0959f748b066dc65a0fa8a6cfab2e4a716620d92bd9170db005054908c5",
+    "features/results/gridGeometry.ts": "62a46608c8c62ce3e6659413608dd1c0bde62d2e2df0a05208d7f63a52fa5310",
+    "features/results/GridOverlay.tsx": "756122acb0dca89a7e3fa39cd77d0fdfdcb611a97fbf04744bdb7d763f8b01b6",
+    "features/results/ModelContext.tsx": "ec6b9141dba06ce46ba97a942b646c21c91098cc7cf32864ff25f03031d8d5b3",
+    "features/results/ObjectCountsTable.tsx": "06ce74f6c6eba180db812ff37a28e2f99e5e843002b7a4df9acae637eb90a0c3",
+    "features/results/resultFormatting.ts": "3948772b7159abfd263ff279d0813bc7bae77cfb292feefac23c325c0cecfe77",
+    "features/results/ResultImage.tsx": "62da1d467c5904cf696d5bd9eccbd7f56153f7bcc938c1a28a86b333a014f215",
+    "features/results/SceneInspection.test.tsx": "e506a28e3a3268b8bbcb8c041d346c1efc20f65f4adb02eb88db4c361fa4a201",
+    "features/results/VideoResult.tsx": "15b5b7d8718fc7581c2ef1f34d1881f2d4b99cf525760d35881b8074b1ecfc79",
+    "features/results/viewportGeometry.test.ts": "0f226d4e9db65e7cb2e586d4bcb546aeffdfe3b8828ec396dade512c4a587b91",
+    "features/results/viewportGeometry.ts": "5d2dd28640c140925f94516cf3f3352d3ce64a10b52bb2678a0a0ebc11133558",
+    "features/sessions/SessionHistory.tsx": "9167659a949f91b768027f8e18215b615a496863ebcd052d80f33d20a186d355",
+    "index.css": "60120ffcfd0ea6e760e60f7350948070e9319e624b1e765890724cd9085ebdd9",
+    "main.tsx": "d41e6ff5f40ed39f8a5c8b498ec92f3ebee5b8b03ca4126061803358e6e62f7e",
+    "pages/NotFoundPage.tsx": "d80c18fa738cbd8c063a3389d1131df3cc1aa3b560951ac2767dc2ade05cc86f",
+    "pages/ResultsPage.test.tsx": "a3b0a4339032976b89ab55123d434a9d5d0a5cee77a9e156262c6a0529c464f7",
+    "pages/ResultsPage.tsx": "1fe559a56c4473b4ee537bc714ee7a7b88a1d2835bc3b7be13e5c59b43b65157",
+    "pages/SessionsPage.test.tsx": "efccecfe42d17d718ea3394ed76a1cabaf7de6a336ea81f6ae01d2b029b9182f",
+    "pages/SessionsPage.tsx": "c70f1ae79d7524c138dac6e3b1539ade07c9822e30616ef26a07569dc69d3474",
+    "pages/WorkspacePage.tsx": "ceda170df431014a4e23f97490f547b8451a89223a518c562924f8b591bbadfd",
+    "test/alertResultFixture.ts": "d8b389786700b1a90ada4f932420c9c7b251132c2ee60378b8584aaede4cbaf4",
+    "test/analysisResultFixture.ts": "1bec7e2c49973b61e4794256b948830ed2109fbe247361efe7fdc113493f32b4",
+    "test/render.tsx": "5d6af774b18c280e6ba45d70be7cdfa7adeeb3cbe9cff38713b731593f847758",
+    "test/setup.ts": "951e7dc008c66bfab547b2459322ba7867e121eb3782259d528d673195e7dfa1",
+    "theme.ts": "8f39636b1c16f3d745abea571598215b5951cbe4be4640e3180893cc63d9286b",
+    "package.json": "a96e413c9ce2a0efc16874e65117a2d502dd26edb0d74ba576cc18eced7c389c",
+    "package-lock.json": "ac678460b40093478085a18b16b35d9c95914415c7197afb0bf569407be284e1",
+    "vite.config.ts": "12e5cd6226f63c95b879cb888aa4df3f668c6eb714c7c93b0a3d44256be719b8",
+    "index.html": "c31bac51a56fce677abc2b5ea4d9b7e582a7c7913550f5d10306024c444e5a51",
+    "Dockerfile": "1408ac1959767cab4d28761dbc1af7df7d0ee3277881bfc059066528359557d7",
+    "nginx.conf": "15d1638427f7cc90a257ad02e7172dfe8cbb2330d14973da6d2728e1441460d7"
+  },
+  "tools": {
+    "browserReadiness.ts": "710047a9d684fcdebab43bce3aa7fb40bac8bffb179e61a805dde13d3b62f095",
+    "evidence.test.ts": "1dec3ec21c8b4c9a53f20446efd6afdc3d6dddf871cf8b56e4a6fa450bfe56c5",
+    "evidence.ts": "96ec1a16b2185a274041c1a0fb7ffe01d2372e2569f31315146a9d1be719c36d",
+    "runBrowserMeasurements.ts": "4b76d0e0457fec8b335a77a4482a8b223d7bce1183fd4d796d3e95df6fdca0e4",
+    "scenario_file": "22d896f0c4db2bff64a6426ee3bbbad4081bfd7ad0c361039ac7389a864d4191"
+  },
+  "production_files": {
+    "assets/arrow-left-B_RS5HQq.js": "abd5660df5f51ceb18ff01d62cb8496ff4ef8f96b593e2738bfed87ada7e774e",
+    "assets/client-Dqs1GykM.js": "fb5f0c06d80154c001787b794c0a47df4099071d024219a812fb49af631a1b64",
+    "assets/file-play-CGPdfLPU.js": "d41e15c7a668250d98a840404e31179f84b2800364482e702548ed6a400ba033",
+    "assets/index-DOtfSyKO.js": "d762922f69f1e448c23eb10cbbdbdf38030b241eb833e89640bef5a82c8c3493",
+    "assets/index-DzzpNkdo.css": "5da7365ea8ba742ff3de0300f51dae66e5a8bea7689c4536640c9be4afac1eff",
+    "assets/NotFoundPage-COuTx91u.js": "47b85358ba8de4b65d0069d301af280d98d1a9929203f6e4a79a26a291949373",
+    "assets/PageHeader-C0wfuyQu.js": "4dcfa8fa16d7856f611123063ffb320a5499c168115579d4d38a69dc6e1a31e5",
+    "assets/Pagination-BiPU-fkS.js": "c2ef6659087d8d9e13128c381f5fa626ebfad99784408a998d7a37d26f150381",
+    "assets/ResultsPage-DSzrs62N.js": "511415c1f4f915a47bad518282dc5fbda6d809f1884119058a0e21bdd2851805",
+    "assets/rolldown-runtime-CbXtAM7H.js": "bbf7c5086ae414dc3f33777e3eebf16ea8631325b8bb4690d25091c03567f31a",
+    "assets/SessionsPage-C-dzLHtu.js": "58c44a1895be7b590f10ecdc4c43e72083cb8f42d720d5bc324a56a45793fd86",
+    "assets/StatePanel-DsoCnj66.js": "7fb95f818d6ee3381565c6a6f9608e4db63a163735aaef1f97177adc54a93236",
+    "assets/ToggleButtonGroup-Ti81Cxk2.js": "474466816cc333c2b4bc20c90442e1b3ae1d736cb9c1a75918d529a193e96d3d",
+    "assets/WorkspacePage-C-ynSSv0.js": "7f3b940003b4430efa7a439038646afeb0d8b1c456c94941b9edf0d91cc8cc61",
+    "index.html": "8dafc9cf15e0078ce2adeca78fcd8edc5487e24142afcb284a0a8886716c99cc"
+  },
+  "browser_version": "156.0.8078.4",
+  "summary": {
+    "I1/desktop": {
+      "attempted": 2,
+      "completed": 2,
+      "failed": 0,
+      "seconds": {
+        "n": 2,
+        "min": 0.2931000000000931,
+        "max": 0.29369999999995344,
+        "median": 0.2934000000000233,
+        "p95": 0.29369999999995344
+      }
+    },
+    "I2/desktop": {
+      "attempted": 2,
+      "completed": 2,
+      "failed": 0,
+      "seconds": {
+        "n": 2,
+        "min": 0.27610000000009316,
+        "max": 0.27679999999981375,
+        "median": 0.27644999999995346,
+        "p95": 0.27679999999981375
+      }
+    },
+    "V1/desktop": {
+      "attempted": 2,
+      "completed": 2,
+      "failed": 0,
+      "seconds": {
+        "n": 2,
+        "min": 1.1945,
+        "max": 1.1945,
+        "median": 1.1945,
+        "p95": 1.1945
+      }
+    },
+    "I1/mobile": {
+      "attempted": 2,
+      "completed": 2,
+      "failed": 0,
+      "seconds": {
+        "n": 2,
+        "min": 0.26060000000009315,
+        "max": 0.2616999999999534,
+        "median": 0.2611500000000233,
+        "p95": 0.2616999999999534
+      }
+    },
+    "I2/mobile": {
+      "attempted": 2,
+      "completed": 2,
+      "failed": 0,
+      "seconds": {
+        "n": 2,
+        "min": 0.2595,
+        "max": 0.2608999999999069,
+        "median": 0.26019999999995347,
+        "p95": 0.2608999999999069
+      }
+    },
+    "V1/mobile": {
+      "attempted": 2,
+      "completed": 2,
+      "failed": 0,
+      "seconds": {
+        "n": 2,
+        "min": 1.1933000000000467,
+        "max": 1.1943999999999069,
+        "median": 1.1938499999999768,
+        "p95": 1.1943999999999069
+      }
+    }
+  },
+  "finished_at": "2026-11-09T10:26:22.963Z",
+  "limitations": [
+    "Two measured attempts per scenario and viewport, with one excluded warm-up each.",
+    "Reused source-matching runtime images; runner working tree dirty; no release freeze.",
+    "Narrow viewport uses the same workstation, not mobile hardware.",
+    "Readiness is decoded, stable scene layout, not physical paint or full viewport visibility.",
+    "Post-timer screenshots scroll to the scene; they do not show viewport position at timer stop.",
+    "Explicit MIME fixture payload does not verify native file chooser compatibility.",
+    "One traffic scene group and an artificial video timeline; no natural-motion or broad scene claim.",
+    "No concurrent local test suite during collection; exclusive host/GPU use not established."
+  ],
+  "model_profile": {
+    "profile_id": "yolo26m-visdrone-experimental-v1",
+    "model_id": "yolo26m-visdrone",
+    "quality_gate_status": "failed",
+    "evaluation_reference": "configs/evaluation/final_model_selection.json",
+    "checkpoint_path": "models/candidates/yolo26m-visdrone/best.pt",
+    "checkpoint_sha256": "e57204b8d77b5b22ea9253cbd5664b707623aeb7c19dbaa9034fe5a60bed6571",
+    "class_mapping": {
+      "bus": "bus",
+      "car": "car_or_van",
+      "van": "car_or_van",
+      "motor": "motorcycle",
+      "truck": "truck",
+      "people": "person",
+      "bicycle": "bicycle",
+      "pedestrian": "person"
+    },
+    "confidence": 0.25,
+    "image_size": 1280,
+    "scale_factor": 2,
+    "max_detections": 300,
+    "numeric_precision": "float32",
+    "device": "cuda:0",
+    "created_at": "2026-11-09T10:25:53.050568Z",
+    "runtime_provenance": {
+      "schema_version": 1,
+      "captured_at": "2026-11-09T10:22:45.043628Z",
+      "application_commit": null,
+      "source_dirty": null,
+      "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725",
+      "python_version": "3.12.3",
+      "platform": "Linux 6.6.87.2-microsoft-standard-WSL2 x86_64",
+      "dependencies": {
+        "uv": "0.12.21",
+        "h11": "0.16.0",
+        "pip": "24.0",
+        "six": "1.17.0",
+        "idna": "3.20",
+        "jedi": "0.20.0",
+        "spin": "0.18",
+        "zipp": "4.1.0",
+        "anyio": "4.15.1",
+        "build": "1.6.1",
+        "click": "8.3.3",
+        "cmake": "4.4.3",
+        "httpx": "0.28.1",
+        "ninja": "1.13.2",
+        "numpy": "2.5.4",
+        "parso": "0.8.7",
+        "scipy": "1.18.1",
+        "sympy": "1.14.0",
+        "torch": "2.14.1+cu130",
+        "wheel": "0.48.0",
+        "cycler": "0.12.1",
+        "fsspec": "2026.9.0",
+        "jinja2": "3.1.6",
+        "mpmath": "1.3.0",
+        "optree": "0.20.0",
+        "pillow": "13.0.0",
+        "polars": "2.0.0",
+        "psutil": "7.2.2",
+        "pyyaml": "6.0.3",
+        "triton": "3.8.0",
+        "certifi": "2026.7.22",
+        "fastapi": "0.156.8",
+        "ipython": "9.17.1",
+        "pexpect": "4.9.0",
+        "psycopg": "3.3.6",
+        "urllib3": "2.8.0",
+        "uvicorn": "0.54.0",
+        "wcwidth": "0.9.1",
+        "filelock": "4.0.7",
+        "httpcore": "1.0.9",
+        "networkx": "3.7",
+        "pathspec": "1.1.1",
+        "pydantic": "2.14.1",
+        "pygments": "2.21.0",
+        "requests": "2.34.2",
+        "asttokens": "3.0.2",
+        "contourpy": "1.4.0",
+        "dnspython": "2.8.0",
+        "executing": "2.2.1",
+        "fonttools": "4.67.0",
+        "packaging": "26.3",
+        "pure-eval": "0.2.4",
+        "pyparsing": "3.3.3",
+        "starlette": "1.9.0",
+        "traitlets": "5.16.1",
+        "expecttest": "0.3.0",
+        "hypothesis": "6.168.3",
+        "kiwisolver": "1.5.1",
+        "lintrunner": "0.13.1",
+        "markupsafe": "3.0.3",
+        "matplotlib": "3.11.2",
+        "ptyprocess": "0.7.0",
+        "setuptools": "81.0.0",
+        "stack-data": "0.6.3",
+        "torchaudio": "2.11.0+cu130",
+        "cloudpickle": "3.1.2",
+        "nvidia-nvtx": "13.0.85",
+        "python-etcd": "0.4.5",
+        "torchvision": "0.29.1+cu130",
+        "ultralytics": "8.4.183",
+        "cuda-toolkit": "13.0.3.0",
+        "nvidia-cufft": "12.0.0.61",
+        "nvidia-ml-py": "13.615.71",
+        "torchelastic": "0.2.2",
+        "annotated-doc": "0.0.5",
+        "cuda-bindings": "13.3.1",
+        "nvidia-cublas": "13.1.1.3",
+        "nvidia-cufile": "1.15.1.6",
+        "nvidia-curand": "10.4.0.35",
+        "opencv-python": "5.0.0.93",
+        "pydantic-core": "2.50.1",
+        "python-dotenv": "1.2.4",
+        "prompt-toolkit": "3.0.53",
+        "psycopg-binary": "3.3.6",
+        "annotated-types": "0.8.0",
+        "cuda-pathfinder": "1.6.0",
+        "nvidia-cusolver": "12.0.4.66",
+        "nvidia-cusparse": "12.6.3.3",
+        "pyproject-hooks": "1.3.3",
+        "python-dateutil": "2.9.0.post0",
+        "nvidia-nccl-cu13": "2.30.7",
+        "nvidia-nvjitlink": "13.3.33",
+        "python-multipart": "0.0.32",
+        "sortedcontainers": "2.4.0",
+        "ultralytics-thop": "2.2.3",
+        "matplotlib-inline": "0.2.2",
+        "nvidia-cuda-cupti": "13.0.85",
+        "nvidia-cuda-nvrtc": "13.0.88",
+        "nvidia-cudnn-cu13": "9.24.0.43",
+        "opentelemetry-api": "1.45.1",
+        "polars-runtime-32": "2.0.0",
+        "scikit-build-core": "1.1.0",
+        "typing-extensions": "4.16.0",
+        "typing-inspection": "0.4.4",
+        "charset-normalizer": "3.5.2",
+        "importlib-metadata": "9.0.1",
+        "nvidia-cuda-runtime": "13.0.96",
+        "nvidia-nvshmem-cu13": "3.4.5",
+        "ultralytics-platform": "0.1.90",
+        "nvidia-cusparselt-cu13": "0.8.1",
+        "ipython-pygments-lexers": "1.1.1"
+      },
+      "device": "cuda:0",
+      "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+      "cuda_version": "13.0",
+      "cudnn_version": 92400,
+      "container_id": "4480f4026b47"
+    }
+  },
+  "attempts": [
+    {
+      "scenario_id": "I1",
+      "viewport": "desktop",
+      "phase": "warmup",
+      "repetition": 0,
+      "started_at": "2026-11-09T10:25:35.054Z",
+      "status": "completed",
+      "failure_code": null,
+      "network": [
+        {
+          "path": "/api/analyses/images",
+          "status": 201,
+          "request_id": "112996b9-3702-441f-b639-072e0879624b"
+        },
+        {
+          "path": "/api/analyses/1",
+          "status": 200,
+          "request_id": "cb48ac83-08b2-4155-acc9-c9283abdbd85"
+        },
+        {
+          "path": "/api/assets/1c809689-5495-4641-9d57-77fc6eaa1790/source",
+          "status": 200,
+          "request_id": "3508b627-9ffd-444f-8451-4cd8bf0d994e"
+        },
+        {
+          "path": "/api/analyses/1",
+          "status": 200,
+          "request_id": "64b59398-9cf8-480e-aed8-dfd6065cf5d7"
+        }
+      ],
+      "page_errors": [],
+      "browser_seconds": 19.425100000000093,
+      "screenshot": "I1-desktop-0.png",
+      "served_files": {
+        "index.html": "8dafc9cf15e0078ce2adeca78fcd8edc5487e24142afcb284a0a8886716c99cc",
+        "assets/index-DzzpNkdo.css": "5da7365ea8ba742ff3de0300f51dae66e5a8bea7689c4536640c9be4afac1eff",
+        "assets/rolldown-runtime-CbXtAM7H.js": "bbf7c5086ae414dc3f33777e3eebf16ea8631325b8bb4690d25091c03567f31a",
+        "assets/client-Dqs1GykM.js": "fb5f0c06d80154c001787b794c0a47df4099071d024219a812fb49af631a1b64",
+        "assets/StatePanel-DsoCnj66.js": "7fb95f818d6ee3381565c6a6f9608e4db63a163735aaef1f97177adc54a93236",
+        "assets/index-DOtfSyKO.js": "d762922f69f1e448c23eb10cbbdbdf38030b241eb833e89640bef5a82c8c3493",
+        "assets/PageHeader-C0wfuyQu.js": "4dcfa8fa16d7856f611123063ffb320a5499c168115579d4d38a69dc6e1a31e5",
+        "assets/WorkspacePage-C-ynSSv0.js": "7f3b940003b4430efa7a439038646afeb0d8b1c456c94941b9edf0d91cc8cc61",
+        "assets/file-play-CGPdfLPU.js": "d41e15c7a668250d98a840404e31179f84b2800364482e702548ed6a400ba033",
+        "assets/ToggleButtonGroup-Ti81Cxk2.js": "474466816cc333c2b4bc20c90442e1b3ae1d736cb9c1a75918d529a193e96d3d",
+        "assets/Pagination-BiPU-fkS.js": "c2ef6659087d8d9e13128c381f5fa626ebfad99784408a998d7a37d26f150381",
+        "assets/arrow-left-B_RS5HQq.js": "abd5660df5f51ceb18ff01d62cb8496ff4ef8f96b593e2738bfed87ada7e774e",
+        "assets/ResultsPage-DSzrs62N.js": "511415c1f4f915a47bad518282dc5fbda6d809f1884119058a0e21bdd2851805"
+      },
+      "artifact_errors": [],
+      "session_id": 1,
+      "frame_count": 1,
+      "saved_result_sha256": "1e8739ee53f637a752536ae21bf189058790a95e96a6af5c98a8b5019d2d4a75",
+      "probe": {
+        "started": 1120.5,
+        "decoded": 20530.800000000047,
+        "ready": 20545.600000000093,
+        "ended": 20545.699999999953,
+        "failure": null,
+        "scene": {
+          "url": "http://127.0.0.1:8086/api/assets/1c809689-5495-4641-9d57-77fc6eaa1790/source",
+          "image": {
+            "x": 163.5625,
+            "y": 410.359375,
+            "width": 888.875,
+            "height": 500
+          },
+          "naturalWidth": 2560,
+          "naturalHeight": 1440,
+          "inViewport": true,
+          "detection_count": 27,
+          "grid_cell_count": 6
+        }
+      }
+    },
+    {
+      "scenario_id": "I1",
+      "viewport": "desktop",
+      "phase": "measured",
+      "repetition": 1,
+      "started_at": "2026-11-09T10:25:53.471Z",
+      "status": "completed",
+      "failure_code": null,
+      "network": [
+        {
+          "path": "/api/analyses/images",
+          "status": 201,
+          "request_id": "2d9bc94e-63c5-4729-abbf-c037229e9847"
+        },
+        {
+          "path": "/api/analyses/2",
+          "status": 200,
+          "request_id": "9b2d4f20-82f7-407c-9380-e3edd2089b36"
+        },
+        {
+          "path": "/api/assets/c9f82470-941b-4668-a258-bc42a1f99c85/source",
+          "status": 200,
+          "request_id": "cbe5bfe2-9437-4317-92d0-f138118c0b09"
+        },
+        {
+          "path": "/api/analyses/2",
+          "status": 200,
+          "request_id": "da615c82-8a11-43b1-bcf7-fe1a5b8a4b54"
+        }
+      ],
+      "page_errors": [],
+      "browser_seconds": 0.29369999999995344,
+      "screenshot": "I1-desktop-1.png",
+      "served_files": {
+        "index.html": "8dafc9cf15e0078ce2adeca78fcd8edc5487e24142afcb284a0a8886716c99cc",
+        "assets/index-DzzpNkdo.css": "5da7365ea8ba742ff3de0300f51dae66e5a8bea7689c4536640c9be4afac1eff",
+        "assets/rolldown-runtime-CbXtAM7H.js": "bbf7c5086ae414dc3f33777e3eebf16ea8631325b8bb4690d25091c03567f31a",
+        "assets/client-Dqs1GykM.js": "fb5f0c06d80154c001787b794c0a47df4099071d024219a812fb49af631a1b64",
+        "assets/index-DOtfSyKO.js": "d762922f69f1e448c23eb10cbbdbdf38030b241eb833e89640bef5a82c8c3493",
+        "assets/StatePanel-DsoCnj66.js": "7fb95f818d6ee3381565c6a6f9608e4db63a163735aaef1f97177adc54a93236",
+        "assets/WorkspacePage-C-ynSSv0.js": "7f3b940003b4430efa7a439038646afeb0d8b1c456c94941b9edf0d91cc8cc61",
+        "assets/PageHeader-C0wfuyQu.js": "4dcfa8fa16d7856f611123063ffb320a5499c168115579d4d38a69dc6e1a31e5",
+        "assets/file-play-CGPdfLPU.js": "d41e15c7a668250d98a840404e31179f84b2800364482e702548ed6a400ba033",
+        "assets/ToggleButtonGroup-Ti81Cxk2.js": "474466816cc333c2b4bc20c90442e1b3ae1d736cb9c1a75918d529a193e96d3d",
+        "assets/arrow-left-B_RS5HQq.js": "abd5660df5f51ceb18ff01d62cb8496ff4ef8f96b593e2738bfed87ada7e774e",
+        "assets/Pagination-BiPU-fkS.js": "c2ef6659087d8d9e13128c381f5fa626ebfad99784408a998d7a37d26f150381",
+        "assets/ResultsPage-DSzrs62N.js": "511415c1f4f915a47bad518282dc5fbda6d809f1884119058a0e21bdd2851805"
+      },
+      "artifact_errors": [],
+      "session_id": 2,
+      "frame_count": 1,
+      "saved_result_sha256": "2c61e99b9e8dd09f8f2b39da43bdb6e56f50eece9c6b430585ec6733b669dac7",
+      "probe": {
+        "started": 1117,
+        "decoded": 1398.1999999999534,
+        "ready": 1410.6999999999534,
+        "ended": 1410.6999999999534,
+        "failure": null,
+        "scene": {
+          "url": "http://127.0.0.1:8086/api/assets/c9f82470-941b-4668-a258-bc42a1f99c85/source",
+          "image": {
+            "x": 163.5625,
+            "y": 410.359375,
+            "width": 888.875,
+            "height": 500
+          },
+          "naturalWidth": 2560,
+          "naturalHeight": 1440,
+          "inViewport": true,
+          "detection_count": 27,
+          "grid_cell_count": 6
+        }
+      }
+    },
+    {
+      "scenario_id": "I1",
+      "viewport": "desktop",
+      "phase": "measured",
+      "repetition": 2,
+      "started_at": "2026-11-09T10:25:55.099Z",
+      "status": "completed",
+      "failure_code": null,
+      "network": [
+        {
+          "path": "/api/analyses/images",
+          "status": 201,
+          "request_id": "ab13b82d-f7ac-485a-9f94-305da8b13b6d"
+        },
+        {
+          "path": "/api/analyses/3",
+          "status": 200,
+          "request_id": "bd886278-09d6-443f-b28e-a781e76faeb5"
+        },
+        {
+          "path": "/api/assets/36c55b5a-4652-4873-b10e-6a4546adc8ef/source",
+          "status": 200,
+          "request_id": "1ad26ba9-8718-4133-bff2-319d20e9f7fa"
+        },
+        {
+          "path": "/api/analyses/3",
+          "status": 200,
+          "request_id": "da8fd585-1e48-424f-a537-839666a85271"
+        }
+      ],
+      "page_errors": [],
+      "browser_seconds": 0.2931000000000931,
+      "screenshot": "I1-desktop-2.png",
+      "served_files": {
+        "index.html": "8dafc9cf15e0078ce2adeca78fcd8edc5487e24142afcb284a0a8886716c99cc",
+        "assets/index-DzzpNkdo.css": "5da7365ea8ba742ff3de0300f51dae66e5a8bea7689c4536640c9be4afac1eff",
+        "assets/rolldown-runtime-CbXtAM7H.js": "bbf7c5086ae414dc3f33777e3eebf16ea8631325b8bb4690d25091c03567f31a",
+        "assets/client-Dqs1GykM.js": "fb5f0c06d80154c001787b794c0a47df4099071d024219a812fb49af631a1b64",
+        "assets/StatePanel-DsoCnj66.js": "7fb95f818d6ee3381565c6a6f9608e4db63a163735aaef1f97177adc54a93236",
+        "assets/index-DOtfSyKO.js": "d762922f69f1e448c23eb10cbbdbdf38030b241eb833e89640bef5a82c8c3493",
+        "assets/WorkspacePage-C-ynSSv0.js": "7f3b940003b4430efa7a439038646afeb0d8b1c456c94941b9edf0d91cc8cc61",
+        "assets/PageHeader-C0wfuyQu.js": "4dcfa8fa16d7856f611123063ffb320a5499c168115579d4d38a69dc6e1a31e5",
+        "assets/file-play-CGPdfLPU.js": "d41e15c7a668250d98a840404e31179f84b2800364482e702548ed6a400ba033",
+        "assets/ToggleButtonGroup-Ti81Cxk2.js": "474466816cc333c2b4bc20c90442e1b3ae1d736cb9c1a75918d529a193e96d3d",
+        "assets/arrow-left-B_RS5HQq.js": "abd5660df5f51ceb18ff01d62cb8496ff4ef8f96b593e2738bfed87ada7e774e",
+        "assets/Pagination-BiPU-fkS.js": "c2ef6659087d8d9e13128c381f5fa626ebfad99784408a998d7a37d26f150381",
+        "assets/ResultsPage-DSzrs62N.js": "511415c1f4f915a47bad518282dc5fbda6d809f1884119058a0e21bdd2851805"
+      },
+      "artifact_errors": [],
+      "session_id": 3,
+      "frame_count": 1,
+      "saved_result_sha256": "ccfc78165269787441ce1e9b03d084558e59ccfd87396634ffe74b4b38a46571",
+      "probe": {
+        "started": 1137.8999999999069,
+        "decoded": 1415.3000000000466,
+        "ready": 1431,
+        "ended": 1431.0999999998603,
+        "failure": null,
+        "scene": {
+          "url": "http://127.0.0.1:8086/api/assets/36c55b5a-4652-4873-b10e-6a4546adc8ef/source",
+          "image": {
+            "x": 163.5625,
+            "y": 410.359375,
+            "width": 888.875,
+            "height": 500
+          },
+          "naturalWidth": 2560,
+          "naturalHeight": 1440,
+          "inViewport": true,
+          "detection_count": 27,
+          "grid_cell_count": 6
+        }
+      }
+    },
+    {
+      "scenario_id": "I2",
+      "viewport": "desktop",
+      "phase": "warmup",
+      "repetition": 0,
+      "started_at": "2026-11-09T10:25:56.767Z",
+      "status": "completed",
+      "failure_code": null,
+      "network": [
+        {
+          "path": "/api/analyses/images",
+          "status": 201,
+          "request_id": "561ba219-7082-4bf9-b94e-246ba0d56bfa"
+        },
+        {
+          "path": "/api/analyses/4",
+          "status": 200,
+          "request_id": "e943918c-e795-42db-b122-846b00fb28f2"
+        },
+        {
+          "path": "/api/assets/5d0caa7f-de03-4ea6-89c5-69c7b421ff1f/source",
+          "status": 200,
+          "request_id": "69080d8c-b935-4f74-b4be-7b934689dbe5"
+        },
+        {
+          "path": "/api/analyses/4",
+          "status": 200,
+          "request_id": "4199e172-a925-4061-a1a3-72d99490e7c8"
+        }
+      ],
+      "page_errors": [],
+      "browser_seconds": 0.2756999999999534,
+      "screenshot": "I2-desktop-0.png",
+      "served_files": {
+        "index.html": "8dafc9cf15e0078ce2adeca78fcd8edc5487e24142afcb284a0a8886716c99cc",
+        "assets/index-DzzpNkdo.css": "5da7365ea8ba742ff3de0300f51dae66e5a8bea7689c4536640c9be4afac1eff",
+        "assets/rolldown-runtime-CbXtAM7H.js": "bbf7c5086ae414dc3f33777e3eebf16ea8631325b8bb4690d25091c03567f31a",
+        "assets/client-Dqs1GykM.js": "fb5f0c06d80154c001787b794c0a47df4099071d024219a812fb49af631a1b64",
+        "assets/StatePanel-DsoCnj66.js": "7fb95f818d6ee3381565c6a6f9608e4db63a163735aaef1f97177adc54a93236",
+        "assets/index-DOtfSyKO.js": "d762922f69f1e448c23eb10cbbdbdf38030b241eb833e89640bef5a82c8c3493",
+        "assets/WorkspacePage-C-ynSSv0.js": "7f3b940003b4430efa7a439038646afeb0d8b1c456c94941b9edf0d91cc8cc61",
+        "assets/PageHeader-C0wfuyQu.js": "4dcfa8fa16d7856f611123063ffb320a5499c168115579d4d38a69dc6e1a31e5",
+        "assets/file-play-CGPdfLPU.js": "d41e15c7a668250d98a840404e31179f84b2800364482e702548ed6a400ba033",
+        "assets/ToggleButtonGroup-Ti81Cxk2.js": "474466816cc333c2b4bc20c90442e1b3ae1d736cb9c1a75918d529a193e96d3d",
+        "assets/arrow-left-B_RS5HQq.js": "abd5660df5f51ceb18ff01d62cb8496ff4ef8f96b593e2738bfed87ada7e774e",
+        "assets/Pagination-BiPU-fkS.js": "c2ef6659087d8d9e13128c381f5fa626ebfad99784408a998d7a37d26f150381",
+        "assets/ResultsPage-DSzrs62N.js": "511415c1f4f915a47bad518282dc5fbda6d809f1884119058a0e21bdd2851805"
+      },
+      "artifact_errors": [],
+      "session_id": 4,
+      "frame_count": 1,
+      "saved_result_sha256": "f5695e9c1ec50f3f7b28623e5390b2afeeee86dae5421a88e1c5f35dbb3a05bb",
+      "probe": {
+        "started": 571.1000000000931,
+        "decoded": 839.1000000000931,
+        "ready": 846.8000000000466,
+        "ended": 846.8000000000466,
+        "failure": null,
+        "scene": {
+          "url": "http://127.0.0.1:8086/api/assets/5d0caa7f-de03-4ea6-89c5-69c7b421ff1f/source",
+          "image": {
+            "x": 163.5625,
+            "y": 410.359375,
+            "width": 888.875,
+            "height": 500
+          },
+          "naturalWidth": 2560,
+          "naturalHeight": 1440,
+          "inViewport": true,
+          "detection_count": 32,
+          "grid_cell_count": 0
+        }
+      }
+    },
+    {
+      "scenario_id": "I2",
+      "viewport": "desktop",
+      "phase": "measured",
+      "repetition": 1,
+      "started_at": "2026-11-09T10:25:57.837Z",
+      "status": "completed",
+      "failure_code": null,
+      "network": [
+        {
+          "path": "/api/analyses/images",
+          "status": 201,
+          "request_id": "3edb904b-2463-4f14-b1ee-536e75ee5f15"
+        },
+        {
+          "path": "/api/analyses/5",
+          "status": 200,
+          "request_id": "944ee127-7b0b-465c-adc3-654785098415"
+        },
+        {
+          "path": "/api/assets/44ab1a0a-3fb6-4e5b-939d-48d21b85c4b3/source",
+          "status": 200,
+          "request_id": "398c00de-88ba-4ab1-bb7c-4ad52966c803"
+        },
+        {
+          "path": "/api/analyses/5",
+          "status": 200,
+          "request_id": "baca2ad6-35fa-4ac4-9156-864ae869b105"
+        }
+      ],
+      "page_errors": [],
+      "browser_seconds": 0.27679999999981375,
+      "screenshot": "I2-desktop-1.png",
+      "served_files": {
+        "index.html": "8dafc9cf15e0078ce2adeca78fcd8edc5487e24142afcb284a0a8886716c99cc",
+        "assets/index-DzzpNkdo.css": "5da7365ea8ba742ff3de0300f51dae66e5a8bea7689c4536640c9be4afac1eff",
+        "assets/rolldown-runtime-CbXtAM7H.js": "bbf7c5086ae414dc3f33777e3eebf16ea8631325b8bb4690d25091c03567f31a",
+        "assets/client-Dqs1GykM.js": "fb5f0c06d80154c001787b794c0a47df4099071d024219a812fb49af631a1b64",
+        "assets/index-DOtfSyKO.js": "d762922f69f1e448c23eb10cbbdbdf38030b241eb833e89640bef5a82c8c3493",
+        "assets/StatePanel-DsoCnj66.js": "7fb95f818d6ee3381565c6a6f9608e4db63a163735aaef1f97177adc54a93236",
+        "assets/WorkspacePage-C-ynSSv0.js": "7f3b940003b4430efa7a439038646afeb0d8b1c456c94941b9edf0d91cc8cc61",
+        "assets/file-play-CGPdfLPU.js": "d41e15c7a668250d98a840404e31179f84b2800364482e702548ed6a400ba033",
+        "assets/PageHeader-C0wfuyQu.js": "4dcfa8fa16d7856f611123063ffb320a5499c168115579d4d38a69dc6e1a31e5",
+        "assets/ToggleButtonGroup-Ti81Cxk2.js": "474466816cc333c2b4bc20c90442e1b3ae1d736cb9c1a75918d529a193e96d3d",
+        "assets/Pagination-BiPU-fkS.js": "c2ef6659087d8d9e13128c381f5fa626ebfad99784408a998d7a37d26f150381",
+        "assets/arrow-left-B_RS5HQq.js": "abd5660df5f51ceb18ff01d62cb8496ff4ef8f96b593e2738bfed87ada7e774e",
+        "assets/ResultsPage-DSzrs62N.js": "511415c1f4f915a47bad518282dc5fbda6d809f1884119058a0e21bdd2851805"
+      },
+      "artifact_errors": [],
+      "session_id": 5,
+      "frame_count": 1,
+      "saved_result_sha256": "0ab7e25335e406d165e84d5043a1b343845501684af3a8e9f4d469a2d272c6b6",
+      "probe": {
+        "started": 1048.9000000001397,
+        "decoded": 1313,
+        "ready": 1325.6999999999534,
+        "ended": 1325.6999999999534,
+        "failure": null,
+        "scene": {
+          "url": "http://127.0.0.1:8086/api/assets/44ab1a0a-3fb6-4e5b-939d-48d21b85c4b3/source",
+          "image": {
+            "x": 163.5625,
+            "y": 410.359375,
+            "width": 888.875,
+            "height": 500
+          },
+          "naturalWidth": 2560,
+          "naturalHeight": 1440,
+          "inViewport": true,
+          "detection_count": 32,
+          "grid_cell_count": 0
+        }
+      }
+    },
+    {
+      "scenario_id": "I2",
+      "viewport": "desktop",
+      "phase": "measured",
+      "repetition": 2,
+      "started_at": "2026-11-09T10:25:59.386Z",
+      "status": "completed",
+      "failure_code": null,
+      "network": [
+        {
+          "path": "/api/analyses/images",
+          "status": 201,
+          "request_id": "d9146356-e7c7-49dc-8546-92cf6bd2d92c"
+        },
+        {
+          "path": "/api/analyses/6",
+          "status": 200,
+          "request_id": "170788e2-2f1d-4993-8762-a57cb47cbd96"
+        },
+        {
+          "path": "/api/assets/b4c4f6a7-cecf-43e2-b5eb-749a3c4314cd/source",
+          "status": 200,
+          "request_id": "cadda8d5-dad9-4660-9686-7974c02e7ec1"
+        },
+        {
+          "path": "/api/analyses/6",
+          "status": 200,
+          "request_id": "2d337002-7303-4ece-b792-ca94d9248c1a"
+        }
+      ],
+      "page_errors": [],
+      "browser_seconds": 0.27610000000009316,
+      "screenshot": "I2-desktop-2.png",
+      "served_files": {
+        "index.html": "8dafc9cf15e0078ce2adeca78fcd8edc5487e24142afcb284a0a8886716c99cc",
+        "assets/index-DzzpNkdo.css": "5da7365ea8ba742ff3de0300f51dae66e5a8bea7689c4536640c9be4afac1eff",
+        "assets/rolldown-runtime-CbXtAM7H.js": "bbf7c5086ae414dc3f33777e3eebf16ea8631325b8bb4690d25091c03567f31a",
+        "assets/client-Dqs1GykM.js": "fb5f0c06d80154c001787b794c0a47df4099071d024219a812fb49af631a1b64",
+        "assets/StatePanel-DsoCnj66.js": "7fb95f818d6ee3381565c6a6f9608e4db63a163735aaef1f97177adc54a93236",
+        "assets/index-DOtfSyKO.js": "d762922f69f1e448c23eb10cbbdbdf38030b241eb833e89640bef5a82c8c3493",
+        "assets/WorkspacePage-C-ynSSv0.js": "7f3b940003b4430efa7a439038646afeb0d8b1c456c94941b9edf0d91cc8cc61",
+        "assets/PageHeader-C0wfuyQu.js": "4dcfa8fa16d7856f611123063ffb320a5499c168115579d4d38a69dc6e1a31e5",
+        "assets/file-play-CGPdfLPU.js": "d41e15c7a668250d98a840404e31179f84b2800364482e702548ed6a400ba033",
+        "assets/ToggleButtonGroup-Ti81Cxk2.js": "474466816cc333c2b4bc20c90442e1b3ae1d736cb9c1a75918d529a193e96d3d",
+        "assets/arrow-left-B_RS5HQq.js": "abd5660df5f51ceb18ff01d62cb8496ff4ef8f96b593e2738bfed87ada7e774e",
+        "assets/Pagination-BiPU-fkS.js": "c2ef6659087d8d9e13128c381f5fa626ebfad99784408a998d7a37d26f150381",
+        "assets/ResultsPage-DSzrs62N.js": "511415c1f4f915a47bad518282dc5fbda6d809f1884119058a0e21bdd2851805"
+      },
+      "artifact_errors": [],
+      "session_id": 6,
+      "frame_count": 1,
+      "saved_result_sha256": "8fc5ea43e80469e5cd5d8dde3a9731de557623bc5c493b87faa1b8e8c48055f5",
+      "probe": {
+        "started": 567.6999999999534,
+        "decoded": 828.8999999999069,
+        "ready": 843.8000000000466,
+        "ended": 843.8999999999069,
+        "failure": null,
+        "scene": {
+          "url": "http://127.0.0.1:8086/api/assets/b4c4f6a7-cecf-43e2-b5eb-749a3c4314cd/source",
+          "image": {
+            "x": 163.5625,
+            "y": 410.359375,
+            "width": 888.875,
+            "height": 500
+          },
+          "naturalWidth": 2560,
+          "naturalHeight": 1440,
+          "inViewport": true,
+          "detection_count": 32,
+          "grid_cell_count": 0
+        }
+      }
+    },
+    {
+      "scenario_id": "V1",
+      "viewport": "desktop",
+      "phase": "warmup",
+      "repetition": 0,
+      "started_at": "2026-11-09T10:26:00.449Z",
+      "status": "completed",
+      "failure_code": null,
+      "network": [
+        {
+          "path": "/api/analyses/videos",
+          "status": 202,
+          "request_id": "921c8a34-81e4-4401-95d0-c94b79c7c6b4"
+        },
+        {
+          "path": "/api/analyses/videos/7",
+          "status": 200,
+          "request_id": "61a79e87-4ea6-4bf0-a436-3b1f704e0241"
+        },
+        {
+          "path": "/api/analyses/videos/7",
+          "status": 200,
+          "request_id": "ca6abbc2-02db-4ea2-8a65-af552273fa65"
+        },
+        {
+          "path": "/api/analyses/7",
+          "status": 200,
+          "request_id": "97192fab-93ed-4d21-b07d-c53c02acae97"
+        },
+        {
+          "path": "/api/assets/aa1b767a-4347-43d2-a3fa-abb4bb25b134/source",
+          "status": 200,
+          "request_id": "a08380b0-6818-4a7e-a2e6-fd3445ce3311"
+        },
+        {
+          "path": "/api/analyses/7",
+          "status": 200,
+          "request_id": "3fac79a9-8b2b-4408-8b8b-97429a120970"
+        }
+      ],
+      "page_errors": [],
+      "browser_seconds": 1.2273999999999068,
+      "screenshot": "V1-desktop-0.png",
+      "served_files": {
+        "index.html": "8dafc9cf15e0078ce2adeca78fcd8edc5487e24142afcb284a0a8886716c99cc",
+        "assets/index-DzzpNkdo.css": "5da7365ea8ba742ff3de0300f51dae66e5a8bea7689c4536640c9be4afac1eff",
+        "assets/rolldown-runtime-CbXtAM7H.js": "bbf7c5086ae414dc3f33777e3eebf16ea8631325b8bb4690d25091c03567f31a",
+        "assets/client-Dqs1GykM.js": "fb5f0c06d80154c001787b794c0a47df4099071d024219a812fb49af631a1b64",
+        "assets/StatePanel-DsoCnj66.js": "7fb95f818d6ee3381565c6a6f9608e4db63a163735aaef1f97177adc54a93236",
+        "assets/index-DOtfSyKO.js": "d762922f69f1e448c23eb10cbbdbdf38030b241eb833e89640bef5a82c8c3493",
+        "assets/WorkspacePage-C-ynSSv0.js": "7f3b940003b4430efa7a439038646afeb0d8b1c456c94941b9edf0d91cc8cc61",
+        "assets/file-play-CGPdfLPU.js": "d41e15c7a668250d98a840404e31179f84b2800364482e702548ed6a400ba033",
+        "assets/PageHeader-C0wfuyQu.js": "4dcfa8fa16d7856f611123063ffb320a5499c168115579d4d38a69dc6e1a31e5",
+        "assets/ToggleButtonGroup-Ti81Cxk2.js": "474466816cc333c2b4bc20c90442e1b3ae1d736cb9c1a75918d529a193e96d3d",
+        "assets/arrow-left-B_RS5HQq.js": "abd5660df5f51ceb18ff01d62cb8496ff4ef8f96b593e2738bfed87ada7e774e",
+        "assets/Pagination-BiPU-fkS.js": "c2ef6659087d8d9e13128c381f5fa626ebfad99784408a998d7a37d26f150381",
+        "assets/ResultsPage-DSzrs62N.js": "511415c1f4f915a47bad518282dc5fbda6d809f1884119058a0e21bdd2851805"
+      },
+      "artifact_errors": [],
+      "session_id": 7,
+      "frame_count": 3,
+      "saved_result_sha256": "24a08aa33aa9040092aa58117def680eac1f89ff6adef21a5d88f7c98051f5cc",
+      "probe": {
+        "started": 968.6999999999534,
+        "decoded": 2182.899999999907,
+        "ready": 2196.0999999998603,
+        "ended": 2196.0999999998603,
+        "failure": null,
+        "scene": {
+          "url": "http://127.0.0.1:8086/api/assets/aa1b767a-4347-43d2-a3fa-abb4bb25b134/source",
+          "image": {
+            "x": 163.5625,
+            "y": 546.6875,
+            "width": 888.875,
+            "height": 500
+          },
+          "naturalWidth": 2560,
+          "naturalHeight": 1440,
+          "inViewport": false,
+          "detection_count": 21,
+          "grid_cell_count": 6
+        }
+      }
+    },
+    {
+      "scenario_id": "V1",
+      "viewport": "desktop",
+      "phase": "measured",
+      "repetition": 1,
+      "started_at": "2026-11-09T10:26:02.862Z",
+      "status": "completed",
+      "failure_code": null,
+      "network": [
+        {
+          "path": "/api/analyses/videos",
+          "status": 202,
+          "request_id": "50bba681-bc1e-45cd-a89a-318108176bc1"
+        },
+        {
+          "path": "/api/analyses/videos/8",
+          "status": 200,
+          "request_id": "b9444aea-938d-49ca-80e9-5add87b705f1"
+        },
+        {
+          "path": "/api/analyses/videos/8",
+          "status": 200,
+          "request_id": "6fb0a596-1a39-4716-8ace-eab69669760f"
+        },
+        {
+          "path": "/api/analyses/8",
+          "status": 200,
+          "request_id": "10f6676e-23a0-4e92-a25b-fdce45b410ce"
+        },
+        {
+          "path": "/api/assets/b3fe6240-d3a8-4ccb-8118-5a0d26bff827/source",
+          "status": 200,
+          "request_id": "9e565d0d-5d89-4a27-b599-f0bf0e216439"
+        },
+        {
+          "path": "/api/analyses/8",
+          "status": 200,
+          "request_id": "8ef460d8-55a1-4641-b5f7-ab49adbd5bc4"
+        }
+      ],
+      "page_errors": [],
+      "browser_seconds": 1.1945,
+      "screenshot": "V1-desktop-1.png",
+      "served_files": {
+        "index.html": "8dafc9cf15e0078ce2adeca78fcd8edc5487e24142afcb284a0a8886716c99cc",
+        "assets/index-DzzpNkdo.css": "5da7365ea8ba742ff3de0300f51dae66e5a8bea7689c4536640c9be4afac1eff",
+        "assets/rolldown-runtime-CbXtAM7H.js": "bbf7c5086ae414dc3f33777e3eebf16ea8631325b8bb4690d25091c03567f31a",
+        "assets/client-Dqs1GykM.js": "fb5f0c06d80154c001787b794c0a47df4099071d024219a812fb49af631a1b64",
+        "assets/index-DOtfSyKO.js": "d762922f69f1e448c23eb10cbbdbdf38030b241eb833e89640bef5a82c8c3493",
+        "assets/StatePanel-DsoCnj66.js": "7fb95f818d6ee3381565c6a6f9608e4db63a163735aaef1f97177adc54a93236",
+        "assets/WorkspacePage-C-ynSSv0.js": "7f3b940003b4430efa7a439038646afeb0d8b1c456c94941b9edf0d91cc8cc61",
+        "assets/file-play-CGPdfLPU.js": "d41e15c7a668250d98a840404e31179f84b2800364482e702548ed6a400ba033",
+        "assets/PageHeader-C0wfuyQu.js": "4dcfa8fa16d7856f611123063ffb320a5499c168115579d4d38a69dc6e1a31e5",
+        "assets/ToggleButtonGroup-Ti81Cxk2.js": "474466816cc333c2b4bc20c90442e1b3ae1d736cb9c1a75918d529a193e96d3d",
+        "assets/arrow-left-B_RS5HQq.js": "abd5660df5f51ceb18ff01d62cb8496ff4ef8f96b593e2738bfed87ada7e774e",
+        "assets/Pagination-BiPU-fkS.js": "c2ef6659087d8d9e13128c381f5fa626ebfad99784408a998d7a37d26f150381",
+        "assets/ResultsPage-DSzrs62N.js": "511415c1f4f915a47bad518282dc5fbda6d809f1884119058a0e21bdd2851805"
+      },
+      "artifact_errors": [],
+      "session_id": 8,
+      "frame_count": 3,
+      "saved_result_sha256": "3d9b43eecc8ef7c7932044e332c2083cba226f11d5312df6821c89cb370affeb",
+      "probe": {
+        "started": 1422.8999999999069,
+        "decoded": 2616.1999999999534,
+        "ready": 2617.399999999907,
+        "ended": 2617.399999999907,
+        "failure": null,
+        "scene": {
+          "url": "http://127.0.0.1:8086/api/assets/b3fe6240-d3a8-4ccb-8118-5a0d26bff827/source",
+          "image": {
+            "x": 163.5625,
+            "y": 546.6875,
+            "width": 888.875,
+            "height": 500
+          },
+          "naturalWidth": 2560,
+          "naturalHeight": 1440,
+          "inViewport": false,
+          "detection_count": 21,
+          "grid_cell_count": 6
+        }
+      }
+    },
+    {
+      "scenario_id": "V1",
+      "viewport": "desktop",
+      "phase": "measured",
+      "repetition": 2,
+      "started_at": "2026-11-09T10:26:05.676Z",
+      "status": "completed",
+      "failure_code": null,
+      "network": [
+        {
+          "path": "/api/analyses/videos",
+          "status": 202,
+          "request_id": "735bf4e2-9f4b-4547-8eeb-db7bf8f6d7b3"
+        },
+        {
+          "path": "/api/analyses/videos/9",
+          "status": 200,
+          "request_id": "947e5ede-7dde-4559-8ef3-6639cdc9bbf1"
+        },
+        {
+          "path": "/api/analyses/videos/9",
+          "status": 200,
+          "request_id": "19d21e0a-51d6-4827-8e4a-5ec37e399cb9"
+        },
+        {
+          "path": "/api/analyses/9",
+          "status": 200,
+          "request_id": "a25b0d49-0773-4265-98b7-49b3aa3a60c2"
+        },
+        {
+          "path": "/api/assets/efb8b913-079a-421b-ad9f-c66762316874/source",
+          "status": 200,
+          "request_id": "48d7f034-3a0f-4863-8022-16227f1c53a8"
+        },
+        {
+          "path": "/api/analyses/9",
+          "status": 200,
+          "request_id": "729c6350-7623-4b0f-9429-66e291dc2038"
+        }
+      ],
+      "page_errors": [],
+      "browser_seconds": 1.1945,
+      "screenshot": "V1-desktop-2.png",
+      "served_files": {
+        "index.html": "8dafc9cf15e0078ce2adeca78fcd8edc5487e24142afcb284a0a8886716c99cc",
+        "assets/index-DzzpNkdo.css": "5da7365ea8ba742ff3de0300f51dae66e5a8bea7689c4536640c9be4afac1eff",
+        "assets/rolldown-runtime-CbXtAM7H.js": "bbf7c5086ae414dc3f33777e3eebf16ea8631325b8bb4690d25091c03567f31a",
+        "assets/client-Dqs1GykM.js": "fb5f0c06d80154c001787b794c0a47df4099071d024219a812fb49af631a1b64",
+        "assets/StatePanel-DsoCnj66.js": "7fb95f818d6ee3381565c6a6f9608e4db63a163735aaef1f97177adc54a93236",
+        "assets/index-DOtfSyKO.js": "d762922f69f1e448c23eb10cbbdbdf38030b241eb833e89640bef5a82c8c3493",
+        "assets/WorkspacePage-C-ynSSv0.js": "7f3b940003b4430efa7a439038646afeb0d8b1c456c94941b9edf0d91cc8cc61",
+        "assets/PageHeader-C0wfuyQu.js": "4dcfa8fa16d7856f611123063ffb320a5499c168115579d4d38a69dc6e1a31e5",
+        "assets/file-play-CGPdfLPU.js": "d41e15c7a668250d98a840404e31179f84b2800364482e702548ed6a400ba033",
+        "assets/ToggleButtonGroup-Ti81Cxk2.js": "474466816cc333c2b4bc20c90442e1b3ae1d736cb9c1a75918d529a193e96d3d",
+        "assets/arrow-left-B_RS5HQq.js": "abd5660df5f51ceb18ff01d62cb8496ff4ef8f96b593e2738bfed87ada7e774e",
+        "assets/Pagination-BiPU-fkS.js": "c2ef6659087d8d9e13128c381f5fa626ebfad99784408a998d7a37d26f150381",
+        "assets/ResultsPage-DSzrs62N.js": "511415c1f4f915a47bad518282dc5fbda6d809f1884119058a0e21bdd2851805"
+      },
+      "artifact_errors": [],
+      "session_id": 9,
+      "frame_count": 3,
+      "saved_result_sha256": "101eaed4d0998ee57b49a39fef1692575b4ffd27310b63fb4a1cb9897820e61d",
+      "probe": {
+        "started": 941.3999999999069,
+        "decoded": 2130.5999999998603,
+        "ready": 2135.899999999907,
+        "ended": 2135.899999999907,
+        "failure": null,
+        "scene": {
+          "url": "http://127.0.0.1:8086/api/assets/efb8b913-079a-421b-ad9f-c66762316874/source",
+          "image": {
+            "x": 163.5625,
+            "y": 546.6875,
+            "width": 888.875,
+            "height": 500
+          },
+          "naturalWidth": 2560,
+          "naturalHeight": 1440,
+          "inViewport": false,
+          "detection_count": 21,
+          "grid_cell_count": 6
+        }
+      }
+    },
+    {
+      "scenario_id": "I1",
+      "viewport": "mobile",
+      "phase": "warmup",
+      "repetition": 0,
+      "started_at": "2026-11-09T10:26:08.028Z",
+      "status": "completed",
+      "failure_code": null,
+      "network": [
+        {
+          "path": "/api/analyses/images",
+          "status": 201,
+          "request_id": "7d25913c-fed4-4761-8963-2f0bd574b7bf"
+        },
+        {
+          "path": "/api/analyses/10",
+          "status": 200,
+          "request_id": "cc2b648d-1bc8-4ebb-be78-552960fc5608"
+        },
+        {
+          "path": "/api/assets/7f04192f-2a01-4e25-8825-45ec35a07208/source",
+          "status": 200,
+          "request_id": "19c9929c-772f-4d97-8cc5-d82b53e961d2"
+        },
+        {
+          "path": "/api/analyses/10",
+          "status": 200,
+          "request_id": "9a4a9444-799e-4915-9e21-6427fb196d92"
+        }
+      ],
+      "page_errors": [],
+      "browser_seconds": 0.27869999999995343,
+      "screenshot": "I1-mobile-0.png",
+      "served_files": {
+        "index.html": "8dafc9cf15e0078ce2adeca78fcd8edc5487e24142afcb284a0a8886716c99cc",
+        "assets/index-DzzpNkdo.css": "5da7365ea8ba742ff3de0300f51dae66e5a8bea7689c4536640c9be4afac1eff",
+        "assets/rolldown-runtime-CbXtAM7H.js": "bbf7c5086ae414dc3f33777e3eebf16ea8631325b8bb4690d25091c03567f31a",
+        "assets/client-Dqs1GykM.js": "fb5f0c06d80154c001787b794c0a47df4099071d024219a812fb49af631a1b64",
+        "assets/StatePanel-DsoCnj66.js": "7fb95f818d6ee3381565c6a6f9608e4db63a163735aaef1f97177adc54a93236",
+        "assets/index-DOtfSyKO.js": "d762922f69f1e448c23eb10cbbdbdf38030b241eb833e89640bef5a82c8c3493",
+        "assets/WorkspacePage-C-ynSSv0.js": "7f3b940003b4430efa7a439038646afeb0d8b1c456c94941b9edf0d91cc8cc61",
+        "assets/file-play-CGPdfLPU.js": "d41e15c7a668250d98a840404e31179f84b2800364482e702548ed6a400ba033",
+        "assets/PageHeader-C0wfuyQu.js": "4dcfa8fa16d7856f611123063ffb320a5499c168115579d4d38a69dc6e1a31e5",
+        "assets/ToggleButtonGroup-Ti81Cxk2.js": "474466816cc333c2b4bc20c90442e1b3ae1d736cb9c1a75918d529a193e96d3d",
+        "assets/arrow-left-B_RS5HQq.js": "abd5660df5f51ceb18ff01d62cb8496ff4ef8f96b593e2738bfed87ada7e774e",
+        "assets/Pagination-BiPU-fkS.js": "c2ef6659087d8d9e13128c381f5fa626ebfad99784408a998d7a37d26f150381",
+        "assets/ResultsPage-DSzrs62N.js": "511415c1f4f915a47bad518282dc5fbda6d809f1884119058a0e21bdd2851805"
+      },
+      "artifact_errors": [],
+      "session_id": 10,
+      "frame_count": 1,
+      "saved_result_sha256": "07b7e5091bce7f14625c65670b72c57c8ea39be27fff812e6f4c08a1d13d7db3",
+      "probe": {
+        "started": 1107.3000000000466,
+        "decoded": 1368.8000000000466,
+        "ready": 1386,
+        "ended": 1386,
+        "failure": null,
+        "scene": {
+          "url": "http://127.0.0.1:8086/api/assets/7f04192f-2a01-4e25-8825-45ec35a07208/source",
+          "image": {
+            "x": 16,
+            "y": 689.75,
+            "width": 288,
+            "height": 162
+          },
+          "naturalWidth": 2560,
+          "naturalHeight": 1440,
+          "inViewport": true,
+          "detection_count": 27,
+          "grid_cell_count": 6
+        }
+      }
+    },
+    {
+      "scenario_id": "I1",
+      "viewport": "mobile",
+      "phase": "measured",
+      "repetition": 1,
+      "started_at": "2026-11-09T10:26:09.572Z",
+      "status": "completed",
+      "failure_code": null,
+      "network": [
+        {
+          "path": "/api/analyses/images",
+          "status": 201,
+          "request_id": "774ccd5c-1694-413c-ac39-f16773afa9e1"
+        },
+        {
+          "path": "/api/analyses/11",
+          "status": 200,
+          "request_id": "b6cc9eb8-ca63-41c7-b680-04e7b10d73a3"
+        },
+        {
+          "path": "/api/assets/df1193a8-5ec7-4335-a74c-6554b7436215/source",
+          "status": 200,
+          "request_id": "115a97f2-6847-4cce-b397-6b7cf2c6fcc5"
+        },
+        {
+          "path": "/api/analyses/11",
+          "status": 200,
+          "request_id": "225a355c-9ed0-4b7e-930a-eea0009a26ff"
+        }
+      ],
+      "page_errors": [],
+      "browser_seconds": 0.2616999999999534,
+      "screenshot": "I1-mobile-1.png",
+      "served_files": {
+        "index.html": "8dafc9cf15e0078ce2adeca78fcd8edc5487e24142afcb284a0a8886716c99cc",
+        "assets/index-DzzpNkdo.css": "5da7365ea8ba742ff3de0300f51dae66e5a8bea7689c4536640c9be4afac1eff",
+        "assets/rolldown-runtime-CbXtAM7H.js": "bbf7c5086ae414dc3f33777e3eebf16ea8631325b8bb4690d25091c03567f31a",
+        "assets/client-Dqs1GykM.js": "fb5f0c06d80154c001787b794c0a47df4099071d024219a812fb49af631a1b64",
+        "assets/StatePanel-DsoCnj66.js": "7fb95f818d6ee3381565c6a6f9608e4db63a163735aaef1f97177adc54a93236",
+        "assets/index-DOtfSyKO.js": "d762922f69f1e448c23eb10cbbdbdf38030b241eb833e89640bef5a82c8c3493",
+        "assets/WorkspacePage-C-ynSSv0.js": "7f3b940003b4430efa7a439038646afeb0d8b1c456c94941b9edf0d91cc8cc61",
+        "assets/PageHeader-C0wfuyQu.js": "4dcfa8fa16d7856f611123063ffb320a5499c168115579d4d38a69dc6e1a31e5",
+        "assets/file-play-CGPdfLPU.js": "d41e15c7a668250d98a840404e31179f84b2800364482e702548ed6a400ba033",
+        "assets/ToggleButtonGroup-Ti81Cxk2.js": "474466816cc333c2b4bc20c90442e1b3ae1d736cb9c1a75918d529a193e96d3d",
+        "assets/Pagination-BiPU-fkS.js": "c2ef6659087d8d9e13128c381f5fa626ebfad99784408a998d7a37d26f150381",
+        "assets/arrow-left-B_RS5HQq.js": "abd5660df5f51ceb18ff01d62cb8496ff4ef8f96b593e2738bfed87ada7e774e",
+        "assets/ResultsPage-DSzrs62N.js": "511415c1f4f915a47bad518282dc5fbda6d809f1884119058a0e21bdd2851805"
+      },
+      "artifact_errors": [],
+      "session_id": 11,
+      "frame_count": 1,
+      "saved_result_sha256": "38df99b06740bf2344bf557c7a2e88de0aabed0562d4464e8a70850e611c29e2",
+      "probe": {
+        "started": 1094.1999999999534,
+        "decoded": 1350,
+        "ready": 1355.8999999999069,
+        "ended": 1355.8999999999069,
+        "failure": null,
+        "scene": {
+          "url": "http://127.0.0.1:8086/api/assets/df1193a8-5ec7-4335-a74c-6554b7436215/source",
+          "image": {
+            "x": 16,
+            "y": 689.75,
+            "width": 288,
+            "height": 162
+          },
+          "naturalWidth": 2560,
+          "naturalHeight": 1440,
+          "inViewport": true,
+          "detection_count": 27,
+          "grid_cell_count": 6
+        }
+      }
+    },
+    {
+      "scenario_id": "I1",
+      "viewport": "mobile",
+      "phase": "measured",
+      "repetition": 2,
+      "started_at": "2026-11-09T10:26:10.602Z",
+      "status": "completed",
+      "failure_code": null,
+      "network": [
+        {
+          "path": "/api/analyses/images",
+          "status": 201,
+          "request_id": "add98c3c-433c-4110-8b81-84985127bd0d"
+        },
+        {
+          "path": "/api/analyses/12",
+          "status": 200,
+          "request_id": "86d14447-f405-4c47-9f5a-c17a2547bf0a"
+        },
+        {
+          "path": "/api/assets/e6fef609-6425-481a-9761-d8a2a0e880c0/source",
+          "status": 200,
+          "request_id": "b4c9c0e8-bcc0-4cd8-820e-f255f0ad6ea2"
+        },
+        {
+          "path": "/api/analyses/12",
+          "status": 200,
+          "request_id": "2ea64a9d-f751-4871-8027-e75298251a0f"
+        }
+      ],
+      "page_errors": [],
+      "browser_seconds": 0.26060000000009315,
+      "screenshot": "I1-mobile-2.png",
+      "served_files": {
+        "index.html": "8dafc9cf15e0078ce2adeca78fcd8edc5487e24142afcb284a0a8886716c99cc",
+        "assets/index-DzzpNkdo.css": "5da7365ea8ba742ff3de0300f51dae66e5a8bea7689c4536640c9be4afac1eff",
+        "assets/rolldown-runtime-CbXtAM7H.js": "bbf7c5086ae414dc3f33777e3eebf16ea8631325b8bb4690d25091c03567f31a",
+        "assets/client-Dqs1GykM.js": "fb5f0c06d80154c001787b794c0a47df4099071d024219a812fb49af631a1b64",
+        "assets/index-DOtfSyKO.js": "d762922f69f1e448c23eb10cbbdbdf38030b241eb833e89640bef5a82c8c3493",
+        "assets/StatePanel-DsoCnj66.js": "7fb95f818d6ee3381565c6a6f9608e4db63a163735aaef1f97177adc54a93236",
+        "assets/WorkspacePage-C-ynSSv0.js": "7f3b940003b4430efa7a439038646afeb0d8b1c456c94941b9edf0d91cc8cc61",
+        "assets/PageHeader-C0wfuyQu.js": "4dcfa8fa16d7856f611123063ffb320a5499c168115579d4d38a69dc6e1a31e5",
+        "assets/file-play-CGPdfLPU.js": "d41e15c7a668250d98a840404e31179f84b2800364482e702548ed6a400ba033",
+        "assets/ToggleButtonGroup-Ti81Cxk2.js": "474466816cc333c2b4bc20c90442e1b3ae1d736cb9c1a75918d529a193e96d3d",
+        "assets/arrow-left-B_RS5HQq.js": "abd5660df5f51ceb18ff01d62cb8496ff4ef8f96b593e2738bfed87ada7e774e",
+        "assets/Pagination-BiPU-fkS.js": "c2ef6659087d8d9e13128c381f5fa626ebfad99784408a998d7a37d26f150381",
+        "assets/ResultsPage-DSzrs62N.js": "511415c1f4f915a47bad518282dc5fbda6d809f1884119058a0e21bdd2851805"
+      },
+      "artifact_errors": [],
+      "session_id": 12,
+      "frame_count": 1,
+      "saved_result_sha256": "9f66874acd2d77a3ae4bd5d6b2b309e39b6f009e50e21adfea95f800cebf939e",
+      "probe": {
+        "started": 1079,
+        "decoded": 1331.5,
+        "ready": 1339.6000000000931,
+        "ended": 1339.6999999999534,
+        "failure": null,
+        "scene": {
+          "url": "http://127.0.0.1:8086/api/assets/e6fef609-6425-481a-9761-d8a2a0e880c0/source",
+          "image": {
+            "x": 16,
+            "y": 689.75,
+            "width": 288,
+            "height": 162
+          },
+          "naturalWidth": 2560,
+          "naturalHeight": 1440,
+          "inViewport": true,
+          "detection_count": 27,
+          "grid_cell_count": 6
+        }
+      }
+    },
+    {
+      "scenario_id": "I2",
+      "viewport": "mobile",
+      "phase": "warmup",
+      "repetition": 0,
+      "started_at": "2026-11-09T10:26:10.425Z",
+      "status": "completed",
+      "failure_code": null,
+      "network": [
+        {
+          "path": "/api/analyses/images",
+          "status": 201,
+          "request_id": "6a75d6c4-6161-4b57-a6c3-f7aef558a501"
+        },
+        {
+          "path": "/api/analyses/13",
+          "status": 200,
+          "request_id": "4e5caecf-6807-4342-b98c-f0d8dbcc417f"
+        },
+        {
+          "path": "/api/assets/9536e961-c5ec-4994-8889-fc92db9f4e45/source",
+          "status": 200,
+          "request_id": "07d16298-c9e1-45fb-8263-78ee04548be7"
+        },
+        {
+          "path": "/api/analyses/13",
+          "status": 200,
+          "request_id": "a5233b28-002d-4dd6-8c0e-05a33e16bd06"
+        }
+      ],
+      "page_errors": [],
+      "browser_seconds": 0.2601999999999534,
+      "screenshot": "I2-mobile-0.png",
+      "served_files": {
+        "index.html": "8dafc9cf15e0078ce2adeca78fcd8edc5487e24142afcb284a0a8886716c99cc",
+        "assets/index-DzzpNkdo.css": "5da7365ea8ba742ff3de0300f51dae66e5a8bea7689c4536640c9be4afac1eff",
+        "assets/rolldown-runtime-CbXtAM7H.js": "bbf7c5086ae414dc3f33777e3eebf16ea8631325b8bb4690d25091c03567f31a",
+        "assets/client-Dqs1GykM.js": "fb5f0c06d80154c001787b794c0a47df4099071d024219a812fb49af631a1b64",
+        "assets/StatePanel-DsoCnj66.js": "7fb95f818d6ee3381565c6a6f9608e4db63a163735aaef1f97177adc54a93236",
+        "assets/index-DOtfSyKO.js": "d762922f69f1e448c23eb10cbbdbdf38030b241eb833e89640bef5a82c8c3493",
+        "assets/WorkspacePage-C-ynSSv0.js": "7f3b940003b4430efa7a439038646afeb0d8b1c456c94941b9edf0d91cc8cc61",
+        "assets/PageHeader-C0wfuyQu.js": "4dcfa8fa16d7856f611123063ffb320a5499c168115579d4d38a69dc6e1a31e5",
+        "assets/file-play-CGPdfLPU.js": "d41e15c7a668250d98a840404e31179f84b2800364482e702548ed6a400ba033",
+        "assets/ToggleButtonGroup-Ti81Cxk2.js": "474466816cc333c2b4bc20c90442e1b3ae1d736cb9c1a75918d529a193e96d3d",
+        "assets/arrow-left-B_RS5HQq.js": "abd5660df5f51ceb18ff01d62cb8496ff4ef8f96b593e2738bfed87ada7e774e",
+        "assets/Pagination-BiPU-fkS.js": "c2ef6659087d8d9e13128c381f5fa626ebfad99784408a998d7a37d26f150381",
+        "assets/ResultsPage-DSzrs62N.js": "511415c1f4f915a47bad518282dc5fbda6d809f1884119058a0e21bdd2851805"
+      },
+      "artifact_errors": [],
+      "session_id": 13,
+      "frame_count": 1,
+      "saved_result_sha256": "9fcb24151706cf89dea66d749bdb303d02d8f853b35c288bbf03d914f54f43f3",
+      "probe": {
+        "started": 1046.1000000000931,
+        "decoded": 1301.5,
+        "ready": 1306.3000000000466,
+        "ended": 1306.3000000000466,
+        "failure": null,
+        "scene": {
+          "url": "http://127.0.0.1:8086/api/assets/9536e961-c5ec-4994-8889-fc92db9f4e45/source",
+          "image": {
+            "x": 16,
+            "y": 689.75,
+            "width": 288,
+            "height": 162
+          },
+          "naturalWidth": 2560,
+          "naturalHeight": 1440,
+          "inViewport": true,
+          "detection_count": 32,
+          "grid_cell_count": 0
+        }
+      }
+    },
+    {
+      "scenario_id": "I2",
+      "viewport": "mobile",
+      "phase": "measured",
+      "repetition": 1,
+      "started_at": "2026-11-09T10:26:11.857Z",
+      "status": "completed",
+      "failure_code": null,
+      "network": [
+        {
+          "path": "/api/analyses/images",
+          "status": 201,
+          "request_id": "65898eca-ec57-4449-b6c8-d62d80b7ae59"
+        },
+        {
+          "path": "/api/analyses/14",
+          "status": 200,
+          "request_id": "0400ad74-6554-4c6e-b3c3-dd0d36fe1062"
+        },
+        {
+          "path": "/api/assets/3141096a-634c-44a8-82fc-29e3e46479cc/source",
+          "status": 200,
+          "request_id": "e8ea0bff-7151-4a7c-b1fa-c0500059501a"
+        },
+        {
+          "path": "/api/analyses/14",
+          "status": 200,
+          "request_id": "dc08b321-3993-4dea-9693-a4f763dbe8cb"
+        }
+      ],
+      "page_errors": [],
+      "browser_seconds": 0.2595,
+      "screenshot": "I2-mobile-1.png",
+      "served_files": {
+        "index.html": "8dafc9cf15e0078ce2adeca78fcd8edc5487e24142afcb284a0a8886716c99cc",
+        "assets/index-DzzpNkdo.css": "5da7365ea8ba742ff3de0300f51dae66e5a8bea7689c4536640c9be4afac1eff",
+        "assets/rolldown-runtime-CbXtAM7H.js": "bbf7c5086ae414dc3f33777e3eebf16ea8631325b8bb4690d25091c03567f31a",
+        "assets/client-Dqs1GykM.js": "fb5f0c06d80154c001787b794c0a47df4099071d024219a812fb49af631a1b64",
+        "assets/index-DOtfSyKO.js": "d762922f69f1e448c23eb10cbbdbdf38030b241eb833e89640bef5a82c8c3493",
+        "assets/StatePanel-DsoCnj66.js": "7fb95f818d6ee3381565c6a6f9608e4db63a163735aaef1f97177adc54a93236",
+        "assets/WorkspacePage-C-ynSSv0.js": "7f3b940003b4430efa7a439038646afeb0d8b1c456c94941b9edf0d91cc8cc61",
+        "assets/PageHeader-C0wfuyQu.js": "4dcfa8fa16d7856f611123063ffb320a5499c168115579d4d38a69dc6e1a31e5",
+        "assets/file-play-CGPdfLPU.js": "d41e15c7a668250d98a840404e31179f84b2800364482e702548ed6a400ba033",
+        "assets/ToggleButtonGroup-Ti81Cxk2.js": "474466816cc333c2b4bc20c90442e1b3ae1d736cb9c1a75918d529a193e96d3d",
+        "assets/arrow-left-B_RS5HQq.js": "abd5660df5f51ceb18ff01d62cb8496ff4ef8f96b593e2738bfed87ada7e774e",
+        "assets/Pagination-BiPU-fkS.js": "c2ef6659087d8d9e13128c381f5fa626ebfad99784408a998d7a37d26f150381",
+        "assets/ResultsPage-DSzrs62N.js": "511415c1f4f915a47bad518282dc5fbda6d809f1884119058a0e21bdd2851805"
+      },
+      "artifact_errors": [],
+      "session_id": 14,
+      "frame_count": 1,
+      "saved_result_sha256": "4efb52ba6430ff14747cdae60843054272298ec1d55645fd1d5456b53a988587",
+      "probe": {
+        "started": 565.5999999998603,
+        "decoded": 818.1999999999534,
+        "ready": 825.0999999998603,
+        "ended": 825.0999999998603,
+        "failure": null,
+        "scene": {
+          "url": "http://127.0.0.1:8086/api/assets/3141096a-634c-44a8-82fc-29e3e46479cc/source",
+          "image": {
+            "x": 16,
+            "y": 689.75,
+            "width": 288,
+            "height": 162
+          },
+          "naturalWidth": 2560,
+          "naturalHeight": 1440,
+          "inViewport": true,
+          "detection_count": 32,
+          "grid_cell_count": 0
+        }
+      }
+    },
+    {
+      "scenario_id": "I2",
+      "viewport": "mobile",
+      "phase": "measured",
+      "repetition": 2,
+      "started_at": "2026-11-09T10:26:12.807Z",
+      "status": "completed",
+      "failure_code": null,
+      "network": [
+        {
+          "path": "/api/analyses/images",
+          "status": 201,
+          "request_id": "e543106f-c720-40db-b2f5-db5315e24edd"
+        },
+        {
+          "path": "/api/analyses/15",
+          "status": 200,
+          "request_id": "70153e52-182d-48ad-8b3e-34142ff72cad"
+        },
+        {
+          "path": "/api/assets/613ae529-025f-40f8-a8aa-aa2c1099fe60/source",
+          "status": 200,
+          "request_id": "5d71cd8d-4f05-49fd-991e-c14172e8808a"
+        },
+        {
+          "path": "/api/analyses/15",
+          "status": 200,
+          "request_id": "230e88f4-f9f4-4ebc-9217-f4fb9de2f54d"
+        }
+      ],
+      "page_errors": [],
+      "browser_seconds": 0.2608999999999069,
+      "screenshot": "I2-mobile-2.png",
+      "served_files": {
+        "index.html": "8dafc9cf15e0078ce2adeca78fcd8edc5487e24142afcb284a0a8886716c99cc",
+        "assets/index-DzzpNkdo.css": "5da7365ea8ba742ff3de0300f51dae66e5a8bea7689c4536640c9be4afac1eff",
+        "assets/rolldown-runtime-CbXtAM7H.js": "bbf7c5086ae414dc3f33777e3eebf16ea8631325b8bb4690d25091c03567f31a",
+        "assets/client-Dqs1GykM.js": "fb5f0c06d80154c001787b794c0a47df4099071d024219a812fb49af631a1b64",
+        "assets/StatePanel-DsoCnj66.js": "7fb95f818d6ee3381565c6a6f9608e4db63a163735aaef1f97177adc54a93236",
+        "assets/index-DOtfSyKO.js": "d762922f69f1e448c23eb10cbbdbdf38030b241eb833e89640bef5a82c8c3493",
+        "assets/WorkspacePage-C-ynSSv0.js": "7f3b940003b4430efa7a439038646afeb0d8b1c456c94941b9edf0d91cc8cc61",
+        "assets/PageHeader-C0wfuyQu.js": "4dcfa8fa16d7856f611123063ffb320a5499c168115579d4d38a69dc6e1a31e5",
+        "assets/file-play-CGPdfLPU.js": "d41e15c7a668250d98a840404e31179f84b2800364482e702548ed6a400ba033",
+        "assets/ToggleButtonGroup-Ti81Cxk2.js": "474466816cc333c2b4bc20c90442e1b3ae1d736cb9c1a75918d529a193e96d3d",
+        "assets/arrow-left-B_RS5HQq.js": "abd5660df5f51ceb18ff01d62cb8496ff4ef8f96b593e2738bfed87ada7e774e",
+        "assets/Pagination-BiPU-fkS.js": "c2ef6659087d8d9e13128c381f5fa626ebfad99784408a998d7a37d26f150381",
+        "assets/ResultsPage-DSzrs62N.js": "511415c1f4f915a47bad518282dc5fbda6d809f1884119058a0e21bdd2851805"
+      },
+      "artifact_errors": [],
+      "session_id": 15,
+      "frame_count": 1,
+      "saved_result_sha256": "5cc2e282f575b0342432dd1bc140e39a01762c05fde40cfb6d8ed0c26cd93fa9",
+      "probe": {
+        "started": 1046.9000000001397,
+        "decoded": 1291.3000000000466,
+        "ready": 1307.8000000000466,
+        "ended": 1307.8000000000466,
+        "failure": null,
+        "scene": {
+          "url": "http://127.0.0.1:8086/api/assets/613ae529-025f-40f8-a8aa-aa2c1099fe60/source",
+          "image": {
+            "x": 16,
+            "y": 689.75,
+            "width": 288,
+            "height": 162
+          },
+          "naturalWidth": 2560,
+          "naturalHeight": 1440,
+          "inViewport": true,
+          "detection_count": 32,
+          "grid_cell_count": 0
+        }
+      }
+    },
+    {
+      "scenario_id": "V1",
+      "viewport": "mobile",
+      "phase": "warmup",
+      "repetition": 0,
+      "started_at": "2026-11-09T10:26:14.241Z",
+      "status": "completed",
+      "failure_code": null,
+      "network": [
+        {
+          "path": "/api/analyses/videos",
+          "status": 202,
+          "request_id": "90735bd5-ebe7-45fc-a55f-5804a5e32e73"
+        },
+        {
+          "path": "/api/analyses/videos/16",
+          "status": 200,
+          "request_id": "2531d0a1-8c2c-4e03-b39a-c3ffc4c88392"
+        },
+        {
+          "path": "/api/analyses/videos/16",
+          "status": 200,
+          "request_id": "5f0882a8-1161-4b0b-a724-248ee23852f6"
+        },
+        {
+          "path": "/api/analyses/16",
+          "status": 200,
+          "request_id": "0ad12f9e-d3e3-4569-9495-dc787275c700"
+        },
+        {
+          "path": "/api/assets/474b688c-0bb2-4295-987d-2afecb190daf/source",
+          "status": 200,
+          "request_id": "531dd8f0-8dbf-45d2-9bef-f9eda28ce950"
+        },
+        {
+          "path": "/api/analyses/16",
+          "status": 200,
+          "request_id": "d55e47b2-5aa6-4ba7-8009-816efadebefd"
+        }
+      ],
+      "page_errors": [],
+      "browser_seconds": 1.2426000000000932,
+      "screenshot": "V1-mobile-0.png",
+      "served_files": {
+        "index.html": "8dafc9cf15e0078ce2adeca78fcd8edc5487e24142afcb284a0a8886716c99cc",
+        "assets/index-DzzpNkdo.css": "5da7365ea8ba742ff3de0300f51dae66e5a8bea7689c4536640c9be4afac1eff",
+        "assets/rolldown-runtime-CbXtAM7H.js": "bbf7c5086ae414dc3f33777e3eebf16ea8631325b8bb4690d25091c03567f31a",
+        "assets/client-Dqs1GykM.js": "fb5f0c06d80154c001787b794c0a47df4099071d024219a812fb49af631a1b64",
+        "assets/StatePanel-DsoCnj66.js": "7fb95f818d6ee3381565c6a6f9608e4db63a163735aaef1f97177adc54a93236",
+        "assets/index-DOtfSyKO.js": "d762922f69f1e448c23eb10cbbdbdf38030b241eb833e89640bef5a82c8c3493",
+        "assets/WorkspacePage-C-ynSSv0.js": "7f3b940003b4430efa7a439038646afeb0d8b1c456c94941b9edf0d91cc8cc61",
+        "assets/file-play-CGPdfLPU.js": "d41e15c7a668250d98a840404e31179f84b2800364482e702548ed6a400ba033",
+        "assets/PageHeader-C0wfuyQu.js": "4dcfa8fa16d7856f611123063ffb320a5499c168115579d4d38a69dc6e1a31e5",
+        "assets/ToggleButtonGroup-Ti81Cxk2.js": "474466816cc333c2b4bc20c90442e1b3ae1d736cb9c1a75918d529a193e96d3d",
+        "assets/arrow-left-B_RS5HQq.js": "abd5660df5f51ceb18ff01d62cb8496ff4ef8f96b593e2738bfed87ada7e774e",
+        "assets/Pagination-BiPU-fkS.js": "c2ef6659087d8d9e13128c381f5fa626ebfad99784408a998d7a37d26f150381",
+        "assets/ResultsPage-DSzrs62N.js": "511415c1f4f915a47bad518282dc5fbda6d809f1884119058a0e21bdd2851805"
+      },
+      "artifact_errors": [],
+      "session_id": 16,
+      "frame_count": 3,
+      "saved_result_sha256": "ad3aed8a37b2b6fd9446aff77ce5057f454c32688c2028bcce81e79e4f102c71",
+      "probe": {
+        "started": 1398,
+        "decoded": 2624,
+        "ready": 2640.600000000093,
+        "ended": 2640.7000000001863,
+        "failure": null,
+        "scene": {
+          "url": "http://127.0.0.1:8086/api/assets/474b688c-0bb2-4295-987d-2afecb190daf/source",
+          "image": {
+            "x": 16,
+            "y": 866.109375,
+            "width": 288,
+            "height": 162
+          },
+          "naturalWidth": 2560,
+          "naturalHeight": 1440,
+          "inViewport": false,
+          "detection_count": 21,
+          "grid_cell_count": 6
+        }
+      }
+    },
+    {
+      "scenario_id": "V1",
+      "viewport": "mobile",
+      "phase": "measured",
+      "repetition": 1,
+      "started_at": "2026-11-09T10:26:17.025Z",
+      "status": "completed",
+      "failure_code": null,
+      "network": [
+        {
+          "path": "/api/analyses/videos",
+          "status": 202,
+          "request_id": "1fc5196d-fb97-43ca-8f1e-c2106498df4f"
+        },
+        {
+          "path": "/api/analyses/videos/17",
+          "status": 200,
+          "request_id": "186e6ad2-cbf6-4514-bccc-f832c5949c4c"
+        },
+        {
+          "path": "/api/analyses/videos/17",
+          "status": 200,
+          "request_id": "96991e6d-979f-44e8-bf2b-282ed57159ea"
+        },
+        {
+          "path": "/api/analyses/17",
+          "status": 200,
+          "request_id": "9796a9d1-bb85-4174-9ffd-d6b0bc8ab537"
+        },
+        {
+          "path": "/api/assets/6078304c-b1f1-494a-8b0a-184e222f7a7d/source",
+          "status": 200,
+          "request_id": "91b6f9b9-695e-4a9e-88bf-8caca1de2980"
+        },
+        {
+          "path": "/api/analyses/17",
+          "status": 200,
+          "request_id": "8b205f7b-b48f-41bf-b0e0-0a349444b492"
+        }
+      ],
+      "page_errors": [],
+      "browser_seconds": 1.1943999999999069,
+      "screenshot": "V1-mobile-1.png",
+      "served_files": {
+        "index.html": "8dafc9cf15e0078ce2adeca78fcd8edc5487e24142afcb284a0a8886716c99cc",
+        "assets/index-DzzpNkdo.css": "5da7365ea8ba742ff3de0300f51dae66e5a8bea7689c4536640c9be4afac1eff",
+        "assets/rolldown-runtime-CbXtAM7H.js": "bbf7c5086ae414dc3f33777e3eebf16ea8631325b8bb4690d25091c03567f31a",
+        "assets/client-Dqs1GykM.js": "fb5f0c06d80154c001787b794c0a47df4099071d024219a812fb49af631a1b64",
+        "assets/StatePanel-DsoCnj66.js": "7fb95f818d6ee3381565c6a6f9608e4db63a163735aaef1f97177adc54a93236",
+        "assets/index-DOtfSyKO.js": "d762922f69f1e448c23eb10cbbdbdf38030b241eb833e89640bef5a82c8c3493",
+        "assets/WorkspacePage-C-ynSSv0.js": "7f3b940003b4430efa7a439038646afeb0d8b1c456c94941b9edf0d91cc8cc61",
+        "assets/PageHeader-C0wfuyQu.js": "4dcfa8fa16d7856f611123063ffb320a5499c168115579d4d38a69dc6e1a31e5",
+        "assets/file-play-CGPdfLPU.js": "d41e15c7a668250d98a840404e31179f84b2800364482e702548ed6a400ba033",
+        "assets/ToggleButtonGroup-Ti81Cxk2.js": "474466816cc333c2b4bc20c90442e1b3ae1d736cb9c1a75918d529a193e96d3d",
+        "assets/arrow-left-B_RS5HQq.js": "abd5660df5f51ceb18ff01d62cb8496ff4ef8f96b593e2738bfed87ada7e774e",
+        "assets/Pagination-BiPU-fkS.js": "c2ef6659087d8d9e13128c381f5fa626ebfad99784408a998d7a37d26f150381",
+        "assets/ResultsPage-DSzrs62N.js": "511415c1f4f915a47bad518282dc5fbda6d809f1884119058a0e21bdd2851805"
+      },
+      "artifact_errors": [],
+      "session_id": 17,
+      "frame_count": 3,
+      "saved_result_sha256": "c3bd65d7c1fba43e5858046eabc9aeb02c420e31fef252a274f5584637108877",
+      "probe": {
+        "started": 1425.9000000001397,
+        "decoded": 2618.5,
+        "ready": 2620.3000000000466,
+        "ended": 2620.4000000001397,
+        "failure": null,
+        "scene": {
+          "url": "http://127.0.0.1:8086/api/assets/6078304c-b1f1-494a-8b0a-184e222f7a7d/source",
+          "image": {
+            "x": 16,
+            "y": 866.109375,
+            "width": 288,
+            "height": 162
+          },
+          "naturalWidth": 2560,
+          "naturalHeight": 1440,
+          "inViewport": false,
+          "detection_count": 21,
+          "grid_cell_count": 6
+        }
+      }
+    },
+    {
+      "scenario_id": "V1",
+      "viewport": "mobile",
+      "phase": "measured",
+      "repetition": 2,
+      "started_at": "2026-11-09T10:26:19.790Z",
+      "status": "completed",
+      "failure_code": null,
+      "network": [
+        {
+          "path": "/api/analyses/videos",
+          "status": 202,
+          "request_id": "a241f4b7-f675-4909-b2d1-12f4fc8ad5c9"
+        },
+        {
+          "path": "/api/analyses/videos/18",
+          "status": 200,
+          "request_id": "10e7c5df-f4b0-48a6-97a1-afcbcc03e91e"
+        },
+        {
+          "path": "/api/analyses/videos/18",
+          "status": 200,
+          "request_id": "8017544e-7a37-429f-883f-a9809ee0ad0a"
+        },
+        {
+          "path": "/api/analyses/18",
+          "status": 200,
+          "request_id": "ada8eb25-4ed1-4d8f-9c79-eac99c69ec4e"
+        },
+        {
+          "path": "/api/assets/cd122ba4-cdc3-487f-a1a2-d3a9d3a5fba1/source",
+          "status": 200,
+          "request_id": "12e4a746-dc1a-466b-bf85-516b02f953da"
+        },
+        {
+          "path": "/api/analyses/18",
+          "status": 200,
+          "request_id": "5eedfd73-7f81-4ecb-930a-b0ada172ca11"
+        }
+      ],
+      "page_errors": [],
+      "browser_seconds": 1.1933000000000467,
+      "screenshot": "V1-mobile-2.png",
+      "served_files": {
+        "index.html": "8dafc9cf15e0078ce2adeca78fcd8edc5487e24142afcb284a0a8886716c99cc",
+        "assets/index-DzzpNkdo.css": "5da7365ea8ba742ff3de0300f51dae66e5a8bea7689c4536640c9be4afac1eff",
+        "assets/rolldown-runtime-CbXtAM7H.js": "bbf7c5086ae414dc3f33777e3eebf16ea8631325b8bb4690d25091c03567f31a",
+        "assets/client-Dqs1GykM.js": "fb5f0c06d80154c001787b794c0a47df4099071d024219a812fb49af631a1b64",
+        "assets/StatePanel-DsoCnj66.js": "7fb95f818d6ee3381565c6a6f9608e4db63a163735aaef1f97177adc54a93236",
+        "assets/index-DOtfSyKO.js": "d762922f69f1e448c23eb10cbbdbdf38030b241eb833e89640bef5a82c8c3493",
+        "assets/WorkspacePage-C-ynSSv0.js": "7f3b940003b4430efa7a439038646afeb0d8b1c456c94941b9edf0d91cc8cc61",
+        "assets/file-play-CGPdfLPU.js": "d41e15c7a668250d98a840404e31179f84b2800364482e702548ed6a400ba033",
+        "assets/PageHeader-C0wfuyQu.js": "4dcfa8fa16d7856f611123063ffb320a5499c168115579d4d38a69dc6e1a31e5",
+        "assets/ToggleButtonGroup-Ti81Cxk2.js": "474466816cc333c2b4bc20c90442e1b3ae1d736cb9c1a75918d529a193e96d3d",
+        "assets/arrow-left-B_RS5HQq.js": "abd5660df5f51ceb18ff01d62cb8496ff4ef8f96b593e2738bfed87ada7e774e",
+        "assets/Pagination-BiPU-fkS.js": "c2ef6659087d8d9e13128c381f5fa626ebfad99784408a998d7a37d26f150381",
+        "assets/ResultsPage-DSzrs62N.js": "511415c1f4f915a47bad518282dc5fbda6d809f1884119058a0e21bdd2851805"
+      },
+      "artifact_errors": [],
+      "session_id": 18,
+      "frame_count": 3,
+      "saved_result_sha256": "73f305bdef829ac3c665e0123dece1f69c4a38b612d1c4e261a09d10d2ce0534",
+      "probe": {
+        "started": 1414.6999999999534,
+        "decoded": 2601.5999999998603,
+        "ready": 2608,
+        "ended": 2608,
+        "failure": null,
+        "scene": {
+          "url": "http://127.0.0.1:8086/api/assets/cd122ba4-cdc3-487f-a1a2-d3a9d3a5fba1/source",
+          "image": {
+            "x": 16,
+            "y": 866.109375,
+            "width": 288,
+            "height": 162
+          },
+          "naturalWidth": 2560,
+          "naturalHeight": 1440,
+          "inViewport": false,
+          "detection_count": 21,
+          "grid_cell_count": 6
+        }
+      }
+    }
+  ],
+  "artifacts": {
+    "local_directory": "data/output/system-measurements/browser-verification-2026-11-09",
+    "sha256": {
+      "report.json": "a4b9c47324b3bf8b167b5ed04b21e7ffd62e93ab720819a5d1fcf46ec2538be9",
+      "attempts.csv": "fc35ae1e5f80db138077dcb17aec6004d23522d1cf18018b93bd991a8fc4636d",
+      "I1-desktop-0.png": "7deea73f0a643d139d9542670c6f24c3620af794209b59ce366496609a26af6d",
+      "I1-desktop-1.png": "c9654d40f313b6d03ea46d090c25117263811993236f0eb37983e7218ef3052c",
+      "I1-desktop-2.png": "40a66e6fa29e29fd5a85980c1369fa33594765ef9a8ba1be9697989f04895e23",
+      "I2-desktop-0.png": "2c2328b3d685a81793f322c8b97e8f58cbd6df1eb71709749eac4ccc4120abe4",
+      "I2-desktop-1.png": "740318e1341f353ae40ebe5dc747f4ec8d95453d15a413ba057dacb2e9218fac",
+      "I2-desktop-2.png": "8f3939b39159c81d2f765671f3289045bde561069b7d13271fca0dbe1a9c8b93",
+      "V1-desktop-0.png": "da8c3575677032273a79b1ec5dd0813241c4612fe641425669f8c073c9c50437",
+      "V1-desktop-1.png": "9c022d8295c4e727d626478e71aea4cb90ae06e2c7e529d444b24aee8e39c583",
+      "V1-desktop-2.png": "3a93f403bd8e2b5ef07025134c00cc3199670915c1292f98bfbf529ec39b49d4",
+      "I1-mobile-0.png": "7833353747d89b90eb58d20724327848490eb908d62b7647ff8c1cd8c9c38d81",
+      "I1-mobile-1.png": "ff23742f9d1eca1667c0258f32f83bc7f48e59065c7bca256de5b079614cd13c",
+      "I1-mobile-2.png": "c54e07ffbe3c6205e475cf035c441ce9f051004a2fc3d90ef6b5fa7d103b2eaf",
+      "I2-mobile-0.png": "57d286f65cf32016a4c15cc6c59132ffa7eb08d6a84ffcd4868101096b2da3c8",
+      "I2-mobile-1.png": "70ee05e66b1ee59107dc6c1cab46cdb672841a55af69d84114d8e5eebc8b5b9f",
+      "I2-mobile-2.png": "8704218a1159ce63c20a083b39bc503f7d67f55dd766a1a4cc20e6396cd05e7c",
+      "V1-mobile-0.png": "fbff293975ab546479a9cb8898052f599b2eb0312927685a1d1528fb933e35e7",
+      "V1-mobile-1.png": "fbff293975ab546479a9cb8898052f599b2eb0312927685a1d1528fb933e35e7",
+      "V1-mobile-2.png": "fbff293975ab546479a9cb8898052f599b2eb0312927685a1d1528fb933e35e7"
+    },
+    "manifest_sha256": "7721c2d4c6aead5e2f0f146f1d31080b81b76a2ac9f8414a71e8c9ddd7b87ef6"
+  },
+  "gpu_regression": {
+    "path": "data/output/issue79-browser-gpu-regression.json",
+    "sha256": "3c8ff97fd55e9ac74a26806412c11a034e34f54b43f287ccd9370f3c3d850da8",
+    "status": "pass",
+    "differences": [],
+    "recorded_at": "2026-11-09T10:26:38.172802+00:00",
+    "sessions": [
+      19,
+      20,
+      21
+    ],
+    "frame_count": 5,
+    "baseline_sha256": "48febaa74e3b86350d074b348da37f9140e00c7e5aae5118921c93861f236423",
+    "manifest_sha256": "b9507dd760331e82387bd20881b3955c6ffaed2b8f316042b46650d33e03b3c9"
+  },
+  "automated_checks": {
+    "frontend_unit_tests": 115,
+    "evidence_rule_tests": 4,
+    "browser_tests_per_run": 36,
+    "browser_repetitions": 2,
+    "browser_retries": 0,
+    "lint": "passed",
+    "typecheck": "passed",
+    "format": "passed",
+    "production_build": "passed"
+  }
+}

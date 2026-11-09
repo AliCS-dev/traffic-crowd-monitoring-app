@@ -144,7 +144,9 @@ measurements or replace the dated development evidence above.
 The [#26 workflow coverage review](../testing.md) is now recorded separately.
 The [restart runner](system_restarts.md) now covers graceful backend restarts,
 first requests and saved-result integrity. Before final collection, we still
-need the natural-motion video decision, I3 preparation, browser readiness,
+need the natural-motion video decision, I3 preparation,
 full-stack startup and failure/recovery measurements, the final run order and
 the complete hardware/configuration freeze. We do not reopen the held-out
 accuracy test or assign new annotation work as part of this step.
+The separate [browser runner](browser_readiness.md), verified on 9 November,
+now records submission-to-scene readiness; it does not replace API timings.
