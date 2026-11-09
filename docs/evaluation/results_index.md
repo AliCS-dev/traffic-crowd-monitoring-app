@@ -111,6 +111,13 @@ includes six completed trials, the separate initial incomplete attempt and
 artifact hashes. The small development timing table is not a final performance
 result and must not be combined with the warm verification run.
 
+The [9 November browser verification](browser_readiness.md) records submission
+to decoded scene readiness, with overlay checks and desktop/narrow screenshots.
+Its [tracked evidence](../../data/evaluation/browser_readiness_verification.json)
+retains six warm-ups and twelve measured attempts. These are tooling checks,
+not final performance results, physical-paint timings or mobile-device tests.
+Full-stack startup/failure experiments, media decisions and the freeze remain.
+
 ## Current Final Result
 
 The selected VisDrone YOLO26m model **failed the final held-out quality gate**.
