@@ -125,8 +125,9 @@ dependency, model setting or regression baseline changed.
 ## Remaining Work
 
 The [browser runner](browser_readiness.md) now covers decoded-scene readiness.
-Issue #79 still needs full-stack startup and failure/recovery experiments,
-I3 preparation, the V2 media decision and an exact final run order.
+The [lifecycle runner](stack_lifecycle.md) now covers fresh-stack startup and
+controlled idle service outages. Issue #79 still needs I3 preparation, the V2
+media decision, final failure-scenario scope and an exact final run order.
 We then freeze the evaluated version and collect the planned repetitions.
 The native file-chooser MIME limitation remains tracked under #84. These records
 do not improve the detector's failed accuracy gate or add dense-crowd support.

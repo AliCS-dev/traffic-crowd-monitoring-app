@@ -116,7 +116,16 @@ to decoded scene readiness, with overlay checks and desktop/narrow screenshots.
 Its [tracked evidence](../../data/evaluation/browser_readiness_verification.json)
 retains six warm-ups and twelve measured attempts. These are tooling checks,
 not final performance results, physical-paint timings or mobile-device tests.
-Full-stack startup/failure experiments, media decisions and the freeze remain.
+Media decisions and the freeze remain; the lifecycle check below adds startup
+and controlled idle-outage evidence.
+
+The [10 November lifecycle verification](stack_lifecycle.md) measures fresh-stack
+startup with already-local images and controlled PostgreSQL/backend outages.
+The [tracked record](../../data/evaluation/stack_lifecycle_verification.json)
+retains the first incomplete attempt and corrected run. The latter completed
+nine analyses and six saved-result comparisons, with unchanged media hashes.
+These single observations are not final repeated measurements or proof of
+recovery from a crash during an active job.
 
 ## Current Final Result
 
