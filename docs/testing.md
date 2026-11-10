@@ -40,6 +40,11 @@ require a disposable database selected explicitly with `DATABASE_URL` and
 `RUN_DATABASE_INTEGRATION_TESTS=1`. Without the latter they are skipped, not passed.
 The tests create and remove records; they must not run against thesis evidence.
 
+The [lifecycle measurement guide](evaluation/stack_lifecycle.md) covers the
+separate opt-in GPU startup/outage runner. Its unit tests are included in
+`pytest`; live measurements require a new disposable project and are not run
+against a normal database by CI.
+
 From the repository root, this example starts a separate local test database:
 
 ```bash

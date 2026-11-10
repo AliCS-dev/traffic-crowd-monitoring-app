@@ -1,0 +1,1874 @@
+{
+  "schema_version": 1,
+  "purpose": "Lifecycle tooling verification; not final performance or accuracy",
+  "runs": [
+    {
+      "schema_version": 1,
+      "status": "incomplete",
+      "started_at": "2026-11-10T18:16:36.987830+00:00",
+      "purpose": "Lifecycle tooling verification; not final evaluation or accuracy",
+      "runner": {
+        "application_commit": "a4c6dee819a4179231547a1bc90bdb74ed3502c9",
+        "source_dirty": true,
+        "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+      },
+      "tool_sha256": {
+        "scripts/measure_stack_lifecycle.py": "6263af69fbda19b543afb7576bfe935f3585fac03c955b949a5af64f8f1cb7b5",
+        "evaluation/stack_lifecycle.py": "17ea56dca5138ab6060d03aa51ca959e7ec797d0acb442012043fbd6d2191b8f",
+        "evaluation/system_restart.py": "c4f5d3f8366b9c2dc9b4fbc1075c18505222b4a4938d3e3256c0ef5f52987092",
+        "evaluation/system_measurement.py": "00fea329ac8f2a2d8c8d7e11fe37a245f83cf077b9208c00831e3c8dca2f0660",
+        "scripts/measure_system_restarts.py": "cf4989a03ca9f1c74657754acf7a1a69f2df024f06b5ba1cf6dc5515bf2851f5",
+        "configs/evaluation/system_workflows.json": "22d896f0c4db2bff64a6426ee3bbbad4081bfd7ad0c361039ac7389a864d4191",
+        "docker-compose.app.yml": "16c83fc6c39215af117cbabcfa58e6ad6279a9290e2fd17123f9fcebfd44867e",
+        "docker-compose.gpu.yml": "0dee794d2dfbc068eadc128b5ba07fd4cc545d1c9451c2c7b8915cab735cc7f6",
+        "docker-compose.measurement.yml": "061000933981fff5dcc3d5575bb877190c06e6a022e061ca95794e8ef93bce34"
+      },
+      "settings": {
+        "project": "traffic-measure-lifecycle-20261110",
+        "port": 8086,
+        "backend_image": "traffic-issue26-backend:local",
+        "frontend_image": "traffic-issue26-frontend:local",
+        "allow_stack_interruption": true,
+        "timeout": 180,
+        "request_timeout": 360,
+        "poll_interval": 0.25,
+        "output_directory": "data/output/system-measurements/lifecycle-verification-2026-11-10"
+      },
+      "images": {
+        "backend": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+        "frontend": "sha256:a1add30e48b9881f6448e1a7654713920fba4a6d260f797dda7e4084f0cd4c94",
+        "postgres": "sha256:9e2cf6287f25c3151f4c9421ccce2b17f3e60061c111a29165e0d2cdd9ff0a97"
+      },
+      "scenarios": [
+        {
+          "scenario_id": "I1",
+          "kind": "image",
+          "path": "data/runtime-regression/fixtures/roundabout_6.png",
+          "sha256": "785414dccf5be9ecd1fbed0793ed32900069adbe8b8fe5953048141da7c45a4e",
+          "grid_rows": 2,
+          "grid_columns": 3,
+          "sampling_interval_seconds": 1
+        },
+        {
+          "scenario_id": "I2",
+          "kind": "image",
+          "path": "data/runtime-regression/fixtures/roundabout_29.png",
+          "sha256": "1c63462c1511db556411844f0eb2e4d0392b0f0f54484146492735dd662c669a",
+          "grid_rows": null,
+          "grid_columns": null,
+          "sampling_interval_seconds": 1
+        },
+        {
+          "scenario_id": "V1",
+          "kind": "video",
+          "path": "data/runtime-regression/fixtures/roundabout_sequence.avi",
+          "sha256": "d62fdd09d6963629f1c9a51258fab4ff8b90dff5efdae10f7d31bffe5e6ddc67",
+          "grid_rows": 2,
+          "grid_columns": 3,
+          "sampling_interval_seconds": 1
+        }
+      ],
+      "requests": [
+        {
+          "scenario_id": "I1",
+          "kind": "image",
+          "phase": "seed",
+          "repetition": 1,
+          "started_at": "2026-11-10T18:16:50.486361+00:00",
+          "status": "completed",
+          "request_id": "5302a6a0-dff4-4869-86f3-8417ff946193",
+          "session_id": 1,
+          "api_seconds": 17.622399286000018,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-10T18:17:08.144661+00:00",
+          "runtime_reference": "2026-11-10T18:16:46.752945Z"
+        },
+        {
+          "scenario_id": "I2",
+          "kind": "image",
+          "phase": "seed",
+          "repetition": 1,
+          "started_at": "2026-11-10T18:17:08.178659+00:00",
+          "status": "completed",
+          "request_id": "dc845ee4-e7e9-4a18-b21d-ca19b62d7982",
+          "session_id": 2,
+          "api_seconds": 0.29886585299999524,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-10T18:17:08.487962+00:00",
+          "runtime_reference": "2026-11-10T18:16:46.752945Z"
+        },
+        {
+          "scenario_id": "V1",
+          "kind": "video",
+          "phase": "seed",
+          "repetition": 1,
+          "started_at": "2026-11-10T18:17:08.518840+00:00",
+          "status": "completed",
+          "request_id": "6b42ee24-216c-424e-9693-87b94289baf7",
+          "session_id": 3,
+          "api_seconds": 0.5658063789999801,
+          "failure_code": null,
+          "http_status": 202,
+          "sampled_frames": 3,
+          "finished_at": "2026-11-10T18:17:09.095011+00:00",
+          "runtime_reference": "2026-11-10T18:16:46.752945Z"
+        },
+        {
+          "scenario_id": "I1",
+          "kind": "image",
+          "phase": "after_postgres_outage",
+          "repetition": 1,
+          "started_at": "2026-11-10T18:17:17.552782+00:00",
+          "status": "completed",
+          "request_id": "ee9ca4b8-d0f0-4133-9844-57613ba0965e",
+          "session_id": 4,
+          "api_seconds": 0.3174512609999738,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-10T18:17:17.880291+00:00",
+          "runtime_reference": "2026-11-10T18:16:46.752945Z"
+        },
+        {
+          "scenario_id": "I2",
+          "kind": "image",
+          "phase": "after_postgres_outage",
+          "repetition": 1,
+          "started_at": "2026-11-10T18:17:17.909389+00:00",
+          "status": "completed",
+          "request_id": "93a68154-1453-462e-b845-3678d6c7ea14",
+          "session_id": 5,
+          "api_seconds": 0.09672083199995996,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-10T18:17:18.015987+00:00",
+          "runtime_reference": "2026-11-10T18:16:46.752945Z"
+        },
+        {
+          "scenario_id": "V1",
+          "kind": "video",
+          "phase": "after_postgres_outage",
+          "repetition": 1,
+          "started_at": "2026-11-10T18:17:18.044260+00:00",
+          "status": "completed",
+          "request_id": "f3479674-df04-4276-acc1-ee8af5d3e258",
+          "session_id": 6,
+          "api_seconds": 0.5504384859999618,
+          "failure_code": null,
+          "http_status": 202,
+          "sampled_frames": 3,
+          "finished_at": "2026-11-10T18:17:18.605363+00:00",
+          "runtime_reference": "2026-11-10T18:16:46.752945Z"
+        }
+      ],
+      "baselines": [
+        {
+          "session_id": 1,
+          "frames": 1,
+          "result_sha256": "cae7252332851f37915d9b63e652ceef5e65ee95bfa889bb6c2fd572ac715529",
+          "assets": {
+            "/api/assets/937cbdf8-4acd-48c1-b5c9-b4843d51990c/source": "8fb98d6d91604c38ec25ba549d28b85f1a319ccf757426541067d500d6120373",
+            "/api/assets/937cbdf8-4acd-48c1-b5c9-b4843d51990c": "2feb75c522864e0d071216079891e1ef8c83cbb9a5bca78bfa1a2fac4b96aea3"
+          }
+        },
+        {
+          "session_id": 2,
+          "frames": 1,
+          "result_sha256": "6c704233453d9636340b6e06726df444eb3e427ccda852dace7352624c7feaef",
+          "assets": {
+            "/api/assets/123d5b93-ec96-4d4c-bf4d-75e5be4fa89f/source": "1bcc4c8595aedf2e82c858b9877e7aca9c0d7bdfc4da4ae77fb76e0598e62b4b",
+            "/api/assets/123d5b93-ec96-4d4c-bf4d-75e5be4fa89f": "acfac11efd8b8f400452ef4961cdcac7e0fddcca2de0f8e30d3ed377b01d6530"
+          }
+        },
+        {
+          "session_id": 3,
+          "frames": 3,
+          "result_sha256": "315e6030697254ddbd3ae19f0fd8fb176cdab044b053e5e96141219b6fddc2cc",
+          "assets": {
+            "/api/assets/e40ba642-c17d-482c-b53b-7705a0604fb3/source": "b7d94c8066c2ef87d7bc98b04aacab16b9be7db64259ba90a0251db964a25e02",
+            "/api/assets/e40ba642-c17d-482c-b53b-7705a0604fb3": "53b32688d5fb594210bc0fd2443b24b6620d421a3751244a59947dda5c041711",
+            "/api/assets/ee9bb566-d493-4e29-ae1f-0a2b1f1da04d/source": "282934fc43ff3d10a874344814c3646c13d6d3775ca1e56749ec30a4354bd148",
+            "/api/assets/ee9bb566-d493-4e29-ae1f-0a2b1f1da04d": "ff1decc7cadce8a568834515dc5b53e1d0d52673fee4d1ff04dbd28c339fac2e",
+            "/api/assets/e548cd96-d3ed-4862-896a-3db4c864541d/source": "00fd05a6ce8fc1017e2a324b2f99fb63149e9e87fc138f55a1c0d9d800606b38",
+            "/api/assets/e548cd96-d3ed-4862-896a-3db4c864541d": "b13a81a5f1a683410ba60b2ecacf13d6edec955f461bb028251504cf9967dd1d"
+          }
+        }
+      ],
+      "outages": [
+        {
+          "service": "postgres",
+          "status": "completed",
+          "started_at": "2026-11-10T18:17:09.159715+00:00",
+          "ready_seconds": 0.47268587799999295,
+          "stop_seconds": 0.3816548350000062,
+          "outage_probes": [
+            {
+              "path": "/healthz",
+              "started_at": "2026-11-10T18:17:09.872569+00:00",
+              "http_status": 200,
+              "request_id": null,
+              "seconds": 0.0009076040000195462
+            },
+            {
+              "path": "/workspace",
+              "started_at": "2026-11-10T18:17:09.873493+00:00",
+              "http_status": 200,
+              "request_id": null,
+              "app_shell": true,
+              "seconds": 0.0006518980000009833
+            },
+            {
+              "path": "/api/health",
+              "started_at": "2026-11-10T18:17:09.874156+00:00",
+              "http_status": 200,
+              "request_id": "0f0aedf8-76b4-4215-8c37-13c83c298b0d",
+              "status": "ok",
+              "checks": null,
+              "error_code": null,
+              "seconds": 0.0017129569999951855
+            },
+            {
+              "path": "/api/ready",
+              "started_at": "2026-11-10T18:17:09.875876+00:00",
+              "http_status": 503,
+              "request_id": "6fbd38af-08fe-41ef-a082-118794826d76",
+              "status": "not_ready",
+              "checks": {
+                "database": {
+                  "status": "not_ready"
+                },
+                "detector": {
+                  "status": "ready"
+                }
+              },
+              "error_code": null,
+              "seconds": 3.631010728000035
+            },
+            {
+              "path": "/api/analyses/1",
+              "started_at": "2026-11-10T18:17:13.506898+00:00",
+              "http_status": 500,
+              "request_id": "cfda287a-8927-49de-8a42-4adb38297a08",
+              "status": null,
+              "checks": null,
+              "error_code": "internal_error",
+              "seconds": 3.1277131159999954
+            }
+          ],
+          "outage_verified": true,
+          "recovery_started_at": "2026-11-10T18:17:16.634635+00:00",
+          "start_command_seconds": 0.1642502799999761,
+          "polls": [
+            {
+              "http_status": 503,
+              "request_id": "82091738-b4b5-4f80-ab4d-0c912eb445d1",
+              "status": "not_ready",
+              "seconds": 0.025721975999999813,
+              "elapsed_seconds": 0.1899935639999626
+            },
+            {
+              "http_status": 200,
+              "request_id": "60b47eeb-f808-4692-bc3f-dfb9266e57ed",
+              "status": "ready",
+              "seconds": 0.03224983699999484,
+              "elapsed_seconds": 0.47268587799999295
+            }
+          ],
+          "containers_after": {
+            "frontend": {
+              "id": "578f5f4bc8c8fa1f29272dfa6f111404eaa76dc24a3b542ea5cd901460186547",
+              "image": "sha256:a1add30e48b9881f6448e1a7654713920fba4a6d260f797dda7e4084f0cd4c94",
+              "mounts": [],
+              "running": true,
+              "exit_code": 0,
+              "started_at": "2026-11-10T18:16:49.989423601Z",
+              "health": "healthy"
+            },
+            "backend": {
+              "id": "bfee448620be75a3273f253628ff6128e4b653ae9bcade089a16897926ced9e0",
+              "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+              "mounts": [
+                {
+                  "name": "traffic-measure-lifecycle-20261110_uploads",
+                  "destination": "/app/data/input"
+                },
+                {
+                  "name": "traffic-measure-lifecycle-20261110_outputs",
+                  "destination": "/app/data/output"
+                }
+              ],
+              "running": true,
+              "exit_code": 0,
+              "started_at": "2026-11-10T18:16:43.982159014Z",
+              "health": "healthy"
+            },
+            "migrate": {
+              "id": "8a873651afe242efe2882d28f598b7087b89b56908e93cffc7b94be9d3c838ac",
+              "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+              "mounts": [],
+              "running": false,
+              "exit_code": 0,
+              "started_at": "2026-11-10T18:16:43.320921737Z",
+              "health": null
+            },
+            "postgres": {
+              "id": "a039cb4ad322bb250b1e155ba13289e7b4db5a6d7adab0ccc2e32202977ad52b",
+              "image": "sha256:9e2cf6287f25c3151f4c9421ccce2b17f3e60061c111a29165e0d2cdd9ff0a97",
+              "mounts": [
+                {
+                  "name": "traffic-measure-lifecycle-20261110_postgres_data",
+                  "destination": "/var/lib/postgresql/data"
+                }
+              ],
+              "running": true,
+              "exit_code": 0,
+              "started_at": "2026-11-10T18:17:16.678303872Z",
+              "health": "starting"
+            }
+          },
+          "restoration_status": "completed",
+          "elapsed_seconds": 8.102478179000002,
+          "finished_at": "2026-11-10T18:17:17.262208+00:00",
+          "backend_after": {
+            "id": "bfee448620be75a3273f253628ff6128e4b653ae9bcade089a16897926ced9e0",
+            "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+            "started_at": "2026-11-10T18:16:43.982159014Z",
+            "running": true,
+            "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+          },
+          "saved_recovery": [
+            {
+              "status": "completed",
+              "started_at": "2026-11-10T18:17:17.424437+00:00",
+              "seconds": 0.029986078000035832,
+              "elapsed_seconds": 0.029987752000010914,
+              "finished_at": "2026-11-10T18:17:17.454440+00:00",
+              "actual_matches_baseline": true
+            },
+            {
+              "status": "completed",
+              "started_at": "2026-11-10T18:17:17.454460+00:00",
+              "seconds": 0.02999076799994782,
+              "elapsed_seconds": 0.02999192499999026,
+              "finished_at": "2026-11-10T18:17:17.484457+00:00",
+              "actual_matches_baseline": true
+            },
+            {
+              "status": "completed",
+              "started_at": "2026-11-10T18:17:17.484471+00:00",
+              "seconds": 0.06829061700000238,
+              "elapsed_seconds": 0.0682920680000052,
+              "finished_at": "2026-11-10T18:17:17.552767+00:00",
+              "actual_matches_baseline": true
+            }
+          ],
+          "new_results": [
+            {
+              "session_id": 4,
+              "frames": 1,
+              "result_sha256": "ceb300031b4e240633bb4a30d07fb2f1470f25b94f4f95672f8e766b85167a7c",
+              "assets": {
+                "/api/assets/bfb5fa7a-afc6-4bd3-9f0f-528ad8494fd2/source": "8fb98d6d91604c38ec25ba549d28b85f1a319ccf757426541067d500d6120373",
+                "/api/assets/bfb5fa7a-afc6-4bd3-9f0f-528ad8494fd2": "2feb75c522864e0d071216079891e1ef8c83cbb9a5bca78bfa1a2fac4b96aea3"
+              }
+            },
+            {
+              "session_id": 5,
+              "frames": 1,
+              "result_sha256": "44a4c4c9e21739b44fcee41f5635aa4773b1bb0adf89310631ebc7f552206a4c",
+              "assets": {
+                "/api/assets/361db364-41cc-4616-bc31-2949f6fdd3de/source": "1bcc4c8595aedf2e82c858b9877e7aca9c0d7bdfc4da4ae77fb76e0598e62b4b",
+                "/api/assets/361db364-41cc-4616-bc31-2949f6fdd3de": "acfac11efd8b8f400452ef4961cdcac7e0fddcca2de0f8e30d3ed377b01d6530"
+              }
+            },
+            {
+              "session_id": 6,
+              "frames": 3,
+              "result_sha256": "f9627ecde63fa652db368b5bf64b132d58954909109c424a0577d42af03acbce",
+              "assets": {
+                "/api/assets/40e8d413-c35a-417f-aa73-1b88c28c4886/source": "b7d94c8066c2ef87d7bc98b04aacab16b9be7db64259ba90a0251db964a25e02",
+                "/api/assets/40e8d413-c35a-417f-aa73-1b88c28c4886": "53b32688d5fb594210bc0fd2443b24b6620d421a3751244a59947dda5c041711",
+                "/api/assets/8a8d1a21-abb7-4bc3-bc79-8b215a02569a/source": "282934fc43ff3d10a874344814c3646c13d6d3775ca1e56749ec30a4354bd148",
+                "/api/assets/8a8d1a21-abb7-4bc3-bc79-8b215a02569a": "ff1decc7cadce8a568834515dc5b53e1d0d52673fee4d1ff04dbd28c339fac2e",
+                "/api/assets/ab9eaa8e-8735-429a-b620-b63d5d755a05/source": "00fd05a6ce8fc1017e2a324b2f99fb63149e9e87fc138f55a1c0d9d800606b38",
+                "/api/assets/ab9eaa8e-8735-429a-b620-b63d5d755a05": "b13a81a5f1a683410ba60b2ecacf13d6edec955f461bb028251504cf9967dd1d"
+              }
+            }
+          ]
+        },
+        {
+          "service": "backend",
+          "status": "failed",
+          "started_at": "2026-11-10T18:17:18.824818+00:00",
+          "ready_seconds": 5.409218608999993,
+          "stop_seconds": 1.270105373999968,
+          "outage_probes": [
+            {
+              "path": "/healthz",
+              "started_at": "2026-11-10T18:17:20.392691+00:00",
+              "http_status": 200,
+              "request_id": null,
+              "seconds": 0.0008837880000100995
+            },
+            {
+              "path": "/workspace",
+              "started_at": "2026-11-10T18:17:20.393591+00:00",
+              "http_status": 200,
+              "request_id": null,
+              "app_shell": true,
+              "seconds": 0.0006837430000246059
+            },
+            {
+              "path": "/api/health",
+              "started_at": "2026-11-10T18:17:20.394283+00:00",
+              "http_status": 504,
+              "request_id": null,
+              "json_unavailable": true,
+              "seconds": 5.004718275000016
+            },
+            {
+              "path": "/api/ready",
+              "started_at": "2026-11-10T18:17:25.399010+00:00",
+              "http_status": 504,
+              "request_id": null,
+              "json_unavailable": true,
+              "seconds": 5.00370155600001
+            },
+            {
+              "path": "/api/analyses/1",
+              "started_at": "2026-11-10T18:17:30.402735+00:00",
+              "http_status": 502,
+              "request_id": null,
+              "json_unavailable": true,
+              "seconds": 0.002192148000006
+            }
+          ],
+          "failure_code": "ValueError",
+          "recovery_started_at": "2026-11-10T18:17:30.404969+00:00",
+          "start_command_seconds": 0.32470184999999674,
+          "polls": [
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.0010734269999943535,
+              "elapsed_seconds": 0.3258039520000011
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.0012058780000074876,
+              "elapsed_seconds": 0.5774130849999892
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.0011965780000195991,
+              "elapsed_seconds": 0.8288985190000062
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.0009737070000142012,
+              "elapsed_seconds": 1.080293800999982
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.0010518020000063188,
+              "elapsed_seconds": 1.3317151549999835
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.0010396240000432044,
+              "elapsed_seconds": 1.5830331010000123
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.0017123270000070079,
+              "elapsed_seconds": 1.835159162000025
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.0012761049999880925,
+              "elapsed_seconds": 2.0867811059999894
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.0010489780000284554,
+              "elapsed_seconds": 2.338188183999989
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.002375701999994817,
+              "elapsed_seconds": 2.591720882000004
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.002730053999982829,
+              "elapsed_seconds": 2.8447708850000026
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.0010557720000861082,
+              "elapsed_seconds": 3.0961465810000277
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.0023209189999988666,
+              "elapsed_seconds": 3.3487689579999937
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.0031551590000162832,
+              "elapsed_seconds": 3.60259115599996
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.0031980119999843737,
+              "elapsed_seconds": 3.8567230650000397
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.001291740000056052,
+              "elapsed_seconds": 4.108723408999992
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.0014515210000354273,
+              "elapsed_seconds": 4.360960626999997
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.0021104789999526474,
+              "elapsed_seconds": 4.613797359999978
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.0009560620000002018,
+              "elapsed_seconds": 4.865144859000054
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.0009816740000587743,
+              "elapsed_seconds": 5.116459383000063
+            },
+            {
+              "http_status": 200,
+              "request_id": "ae788c95-79d5-4498-870e-2e01b153a423",
+              "status": "ready",
+              "seconds": 0.04241825199994764,
+              "elapsed_seconds": 5.409218608999993
+            }
+          ],
+          "containers_after": {
+            "frontend": {
+              "id": "578f5f4bc8c8fa1f29272dfa6f111404eaa76dc24a3b542ea5cd901460186547",
+              "image": "sha256:a1add30e48b9881f6448e1a7654713920fba4a6d260f797dda7e4084f0cd4c94",
+              "mounts": [],
+              "running": true,
+              "exit_code": 0,
+              "started_at": "2026-11-10T18:16:49.989423601Z",
+              "health": "healthy"
+            },
+            "backend": {
+              "id": "bfee448620be75a3273f253628ff6128e4b653ae9bcade089a16897926ced9e0",
+              "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+              "mounts": [
+                {
+                  "name": "traffic-measure-lifecycle-20261110_uploads",
+                  "destination": "/app/data/input"
+                },
+                {
+                  "name": "traffic-measure-lifecycle-20261110_outputs",
+                  "destination": "/app/data/output"
+                }
+              ],
+              "running": true,
+              "exit_code": 0,
+              "started_at": "2026-11-10T18:17:30.450979261Z",
+              "health": "healthy"
+            },
+            "migrate": {
+              "id": "8a873651afe242efe2882d28f598b7087b89b56908e93cffc7b94be9d3c838ac",
+              "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+              "mounts": [],
+              "running": false,
+              "exit_code": 0,
+              "started_at": "2026-11-10T18:16:43.320921737Z",
+              "health": null
+            },
+            "postgres": {
+              "id": "a039cb4ad322bb250b1e155ba13289e7b4db5a6d7adab0ccc2e32202977ad52b",
+              "image": "sha256:9e2cf6287f25c3151f4c9421ccce2b17f3e60061c111a29165e0d2cdd9ff0a97",
+              "mounts": [
+                {
+                  "name": "traffic-measure-lifecycle-20261110_postgres_data",
+                  "destination": "/var/lib/postgresql/data"
+                }
+              ],
+              "running": true,
+              "exit_code": 0,
+              "started_at": "2026-11-10T18:17:16.678303872Z",
+              "health": "healthy"
+            }
+          },
+          "restoration_status": "completed",
+          "elapsed_seconds": 17.137759517000006,
+          "finished_at": "2026-11-10T18:17:35.995454+00:00"
+        }
+      ],
+      "errors": [
+        "RuntimeError"
+      ],
+      "retained_project": "traffic-measure-lifecycle-20261110",
+      "startup": {
+        "status": "completed",
+        "started_at": "2026-11-10T18:16:37.042783+00:00",
+        "ready_seconds": 13.124103447999971,
+        "command_seconds": 13.092413720000025,
+        "polls": [
+          {
+            "http_status": 200,
+            "request_id": "473e5179-d837-4dd1-8980-74de074646c4",
+            "status": "ready",
+            "seconds": 0.03166762600000084,
+            "elapsed_seconds": 13.124103447999971
+          }
+        ],
+        "frontend": {
+          "path": "/workspace",
+          "started_at": "2026-11-10T18:16:50.166903+00:00",
+          "http_status": 200,
+          "request_id": null,
+          "app_shell": true,
+          "seconds": 0.004462811999985661
+        },
+        "containers": {
+          "frontend": {
+            "id": "578f5f4bc8c8fa1f29272dfa6f111404eaa76dc24a3b542ea5cd901460186547",
+            "image": "sha256:a1add30e48b9881f6448e1a7654713920fba4a6d260f797dda7e4084f0cd4c94",
+            "mounts": [],
+            "running": true,
+            "exit_code": 0,
+            "started_at": "2026-11-10T18:16:49.989423601Z",
+            "health": "starting"
+          },
+          "backend": {
+            "id": "bfee448620be75a3273f253628ff6128e4b653ae9bcade089a16897926ced9e0",
+            "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+            "mounts": [
+              {
+                "name": "traffic-measure-lifecycle-20261110_uploads",
+                "destination": "/app/data/input"
+              },
+              {
+                "name": "traffic-measure-lifecycle-20261110_outputs",
+                "destination": "/app/data/output"
+              }
+            ],
+            "running": true,
+            "exit_code": 0,
+            "started_at": "2026-11-10T18:16:43.982159014Z",
+            "health": "healthy"
+          },
+          "migrate": {
+            "id": "8a873651afe242efe2882d28f598b7087b89b56908e93cffc7b94be9d3c838ac",
+            "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+            "mounts": [],
+            "running": false,
+            "exit_code": 0,
+            "started_at": "2026-11-10T18:16:43.320921737Z",
+            "health": null
+          },
+          "postgres": {
+            "id": "a039cb4ad322bb250b1e155ba13289e7b4db5a6d7adab0ccc2e32202977ad52b",
+            "image": "sha256:9e2cf6287f25c3151f4c9421ccce2b17f3e60061c111a29165e0d2cdd9ff0a97",
+            "mounts": [
+              {
+                "name": "traffic-measure-lifecycle-20261110_postgres_data",
+                "destination": "/var/lib/postgresql/data"
+              }
+            ],
+            "running": true,
+            "exit_code": 0,
+            "started_at": "2026-11-10T18:16:37.636743821Z",
+            "health": "healthy"
+          }
+        },
+        "elapsed_seconds": 13.280494120000014,
+        "finished_at": "2026-11-10T18:16:50.323292+00:00"
+      },
+      "backend": {
+        "id": "bfee448620be75a3273f253628ff6128e4b653ae9bcade089a16897926ced9e0",
+        "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+        "started_at": "2026-11-10T18:16:43.982159014Z",
+        "running": true,
+        "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+      },
+      "model_profile": {
+        "profile_id": "yolo26m-visdrone-experimental-v1",
+        "model_id": "yolo26m-visdrone",
+        "quality_gate_status": "failed",
+        "evaluation_reference": "configs/evaluation/final_model_selection.json",
+        "checkpoint_path": "models/candidates/yolo26m-visdrone/best.pt",
+        "checkpoint_sha256": "e57204b8d77b5b22ea9253cbd5664b707623aeb7c19dbaa9034fe5a60bed6571",
+        "class_mapping": {
+          "bus": "bus",
+          "car": "car_or_van",
+          "van": "car_or_van",
+          "motor": "motorcycle",
+          "truck": "truck",
+          "people": "person",
+          "bicycle": "bicycle",
+          "pedestrian": "person"
+        },
+        "confidence": 0.25,
+        "image_size": 1280,
+        "scale_factor": 2,
+        "max_detections": 300,
+        "numeric_precision": "float32",
+        "device": "cuda:0"
+      },
+      "finished_at": "2026-11-10T18:17:35.996703+00:00",
+      "runtimes": {
+        "2026-11-10T18:16:46.752945Z": {
+          "schema_version": 1,
+          "captured_at": "2026-11-10T18:16:46.752945Z",
+          "application_commit": null,
+          "source_dirty": null,
+          "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725",
+          "python_version": "3.12.3",
+          "platform": "Linux 6.6.87.2-microsoft-standard-WSL2 x86_64",
+          "device": "cuda:0",
+          "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+          "cuda_version": "13.0",
+          "cudnn_version": 92400,
+          "container_id": "bfee448620be",
+          "dependencies_sha256": "02f95103859ea98378652cf3d161173e657a8484beea85664c4412576770e9ba"
+        }
+      },
+      "artifacts": {
+        "directory": "data/output/system-measurements/lifecycle-verification-2026-11-10",
+        "sha256": {
+          "report.json": "0a143f7f9270c218ab03b69729a26968e9f8e0d7335ca160f8405293a2f0d7f4",
+          "lifecycle.csv": "d32d8e217f2f8f6ef0e847388d262b30e77ca3f980d1e85990778a0f4c76d1a8"
+        },
+        "manifest_sha256": "3ed6acf15346d479abca02f12633e1034bc5d32ed1fa683ff4955d9576b08dde"
+      }
+    },
+    {
+      "schema_version": 1,
+      "status": "recorded",
+      "started_at": "2026-11-10T18:19:57.853943+00:00",
+      "purpose": "Lifecycle tooling verification; not final evaluation or accuracy",
+      "runner": {
+        "application_commit": "a4c6dee819a4179231547a1bc90bdb74ed3502c9",
+        "source_dirty": true,
+        "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+      },
+      "tool_sha256": {
+        "scripts/measure_stack_lifecycle.py": "3a95bf1991e15ee29d57320307ce5592087535367f0b837043408b4ea18b1535",
+        "evaluation/stack_lifecycle.py": "026ecc94c5523105edf94c38d5910b275000e893e8a7b91e62da080c8d547ec1",
+        "evaluation/system_restart.py": "c4f5d3f8366b9c2dc9b4fbc1075c18505222b4a4938d3e3256c0ef5f52987092",
+        "evaluation/system_measurement.py": "00fea329ac8f2a2d8c8d7e11fe37a245f83cf077b9208c00831e3c8dca2f0660",
+        "scripts/measure_system_restarts.py": "cf4989a03ca9f1c74657754acf7a1a69f2df024f06b5ba1cf6dc5515bf2851f5",
+        "configs/evaluation/system_workflows.json": "22d896f0c4db2bff64a6426ee3bbbad4081bfd7ad0c361039ac7389a864d4191",
+        "docker-compose.app.yml": "16c83fc6c39215af117cbabcfa58e6ad6279a9290e2fd17123f9fcebfd44867e",
+        "docker-compose.gpu.yml": "0dee794d2dfbc068eadc128b5ba07fd4cc545d1c9451c2c7b8915cab735cc7f6",
+        "docker-compose.measurement.yml": "061000933981fff5dcc3d5575bb877190c06e6a022e061ca95794e8ef93bce34"
+      },
+      "settings": {
+        "project": "traffic-measure-lifecycle-20261110-v2",
+        "port": 8086,
+        "backend_image": "traffic-issue26-backend:local",
+        "frontend_image": "traffic-issue26-frontend:local",
+        "allow_stack_interruption": true,
+        "timeout": 180,
+        "request_timeout": 360,
+        "poll_interval": 0.25,
+        "output_directory": "data/output/system-measurements/lifecycle-verification-2026-11-10-v2"
+      },
+      "images": {
+        "backend": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+        "frontend": "sha256:a1add30e48b9881f6448e1a7654713920fba4a6d260f797dda7e4084f0cd4c94",
+        "postgres": "sha256:9e2cf6287f25c3151f4c9421ccce2b17f3e60061c111a29165e0d2cdd9ff0a97"
+      },
+      "scenarios": [
+        {
+          "scenario_id": "I1",
+          "kind": "image",
+          "path": "data/runtime-regression/fixtures/roundabout_6.png",
+          "sha256": "785414dccf5be9ecd1fbed0793ed32900069adbe8b8fe5953048141da7c45a4e",
+          "grid_rows": 2,
+          "grid_columns": 3,
+          "sampling_interval_seconds": 1
+        },
+        {
+          "scenario_id": "I2",
+          "kind": "image",
+          "path": "data/runtime-regression/fixtures/roundabout_29.png",
+          "sha256": "1c63462c1511db556411844f0eb2e4d0392b0f0f54484146492735dd662c669a",
+          "grid_rows": null,
+          "grid_columns": null,
+          "sampling_interval_seconds": 1
+        },
+        {
+          "scenario_id": "V1",
+          "kind": "video",
+          "path": "data/runtime-regression/fixtures/roundabout_sequence.avi",
+          "sha256": "d62fdd09d6963629f1c9a51258fab4ff8b90dff5efdae10f7d31bffe5e6ddc67",
+          "grid_rows": 2,
+          "grid_columns": 3,
+          "sampling_interval_seconds": 1
+        }
+      ],
+      "requests": [
+        {
+          "scenario_id": "I1",
+          "kind": "image",
+          "phase": "seed",
+          "repetition": 1,
+          "started_at": "2026-11-10T18:20:11.201404+00:00",
+          "status": "completed",
+          "request_id": "b6c45ce3-d34f-42a6-bdfb-31de9f4d115d",
+          "session_id": 1,
+          "api_seconds": 16.407041952999975,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-10T18:20:27.620693+00:00",
+          "runtime_reference": "2026-11-10T18:20:06.556725Z"
+        },
+        {
+          "scenario_id": "I2",
+          "kind": "image",
+          "phase": "seed",
+          "repetition": 1,
+          "started_at": "2026-11-10T18:20:27.652868+00:00",
+          "status": "completed",
+          "request_id": "e1ca5750-226b-41c5-b23f-51ce2b4cb7f3",
+          "session_id": 2,
+          "api_seconds": 0.10306925199995476,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-10T18:20:27.765424+00:00",
+          "runtime_reference": "2026-11-10T18:20:06.556725Z"
+        },
+        {
+          "scenario_id": "V1",
+          "kind": "video",
+          "phase": "seed",
+          "repetition": 1,
+          "started_at": "2026-11-10T18:20:27.795851+00:00",
+          "status": "completed",
+          "request_id": "a2758db5-7e0e-4af1-b691-46a094c4e854",
+          "session_id": 3,
+          "api_seconds": 0.5513842829999476,
+          "failure_code": null,
+          "http_status": 202,
+          "sampled_frames": 3,
+          "finished_at": "2026-11-10T18:20:28.358131+00:00",
+          "runtime_reference": "2026-11-10T18:20:06.556725Z"
+        },
+        {
+          "scenario_id": "I1",
+          "kind": "image",
+          "phase": "after_postgres_outage",
+          "repetition": 1,
+          "started_at": "2026-11-10T18:20:36.747685+00:00",
+          "status": "completed",
+          "request_id": "1f973876-779c-41a8-be31-8ef995c3f750",
+          "session_id": 4,
+          "api_seconds": 0.34572851799998716,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-10T18:20:37.104132+00:00",
+          "runtime_reference": "2026-11-10T18:20:06.556725Z"
+        },
+        {
+          "scenario_id": "I2",
+          "kind": "image",
+          "phase": "after_postgres_outage",
+          "repetition": 1,
+          "started_at": "2026-11-10T18:20:37.134843+00:00",
+          "status": "completed",
+          "request_id": "047d26cf-84e3-4c88-98c7-465774697440",
+          "session_id": 5,
+          "api_seconds": 0.10795756099992104,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-10T18:20:37.252853+00:00",
+          "runtime_reference": "2026-11-10T18:20:06.556725Z"
+        },
+        {
+          "scenario_id": "V1",
+          "kind": "video",
+          "phase": "after_postgres_outage",
+          "repetition": 1,
+          "started_at": "2026-11-10T18:20:37.285943+00:00",
+          "status": "completed",
+          "request_id": "953a10cb-a2de-48be-8f06-981731f617c0",
+          "session_id": 6,
+          "api_seconds": 0.5650527760000159,
+          "failure_code": null,
+          "http_status": 202,
+          "sampled_frames": 3,
+          "finished_at": "2026-11-10T18:20:37.861811+00:00",
+          "runtime_reference": "2026-11-10T18:20:06.556725Z"
+        },
+        {
+          "scenario_id": "I1",
+          "kind": "image",
+          "phase": "after_backend_outage",
+          "repetition": 1,
+          "started_at": "2026-11-10T18:20:51.688307+00:00",
+          "status": "completed",
+          "request_id": "0d8121a0-0d2d-4ccb-a9fa-7b9b1752e44a",
+          "session_id": 7,
+          "api_seconds": 7.83001582899999,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-10T18:20:59.529709+00:00",
+          "runtime_reference": "2026-11-10T18:20:51.090619Z"
+        },
+        {
+          "scenario_id": "I2",
+          "kind": "image",
+          "phase": "after_backend_outage",
+          "repetition": 1,
+          "started_at": "2026-11-10T18:20:59.560262+00:00",
+          "status": "completed",
+          "request_id": "ef5e06cc-9595-4969-b7ff-19896b1a0628",
+          "session_id": 8,
+          "api_seconds": 0.106985753999993,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-10T18:20:59.677863+00:00",
+          "runtime_reference": "2026-11-10T18:20:51.090619Z"
+        },
+        {
+          "scenario_id": "V1",
+          "kind": "video",
+          "phase": "after_backend_outage",
+          "repetition": 1,
+          "started_at": "2026-11-10T18:20:59.708111+00:00",
+          "status": "completed",
+          "request_id": "5e5743c9-645d-436c-b822-9c3136863e0c",
+          "session_id": 9,
+          "api_seconds": 0.5529676229999723,
+          "failure_code": null,
+          "http_status": 202,
+          "sampled_frames": 3,
+          "finished_at": "2026-11-10T18:21:00.272387+00:00",
+          "runtime_reference": "2026-11-10T18:20:51.090619Z"
+        }
+      ],
+      "baselines": [
+        {
+          "session_id": 1,
+          "frames": 1,
+          "result_sha256": "5eaf82ce36a86ccf5350795ad9c9a6dde68c15b139f2ae0235ac84b8b078447b",
+          "assets": {
+            "/api/assets/a405ba06-9e4e-449c-bc32-ab5c6afaaf32/source": "8fb98d6d91604c38ec25ba549d28b85f1a319ccf757426541067d500d6120373",
+            "/api/assets/a405ba06-9e4e-449c-bc32-ab5c6afaaf32": "2feb75c522864e0d071216079891e1ef8c83cbb9a5bca78bfa1a2fac4b96aea3"
+          }
+        },
+        {
+          "session_id": 2,
+          "frames": 1,
+          "result_sha256": "249faa1c90e203c77bfa6f8464abf4fd2f72e74f9a70599c119e0b21a698f1fc",
+          "assets": {
+            "/api/assets/75be951c-b373-48a4-a376-4f895880826c/source": "1bcc4c8595aedf2e82c858b9877e7aca9c0d7bdfc4da4ae77fb76e0598e62b4b",
+            "/api/assets/75be951c-b373-48a4-a376-4f895880826c": "acfac11efd8b8f400452ef4961cdcac7e0fddcca2de0f8e30d3ed377b01d6530"
+          }
+        },
+        {
+          "session_id": 3,
+          "frames": 3,
+          "result_sha256": "1af7da9bfacf431b4d0958969f8855d775f87f9e3a9513fb1da1dc0a886a29a2",
+          "assets": {
+            "/api/assets/409ef7e0-8a37-4afc-828f-1bc1de64a436/source": "b7d94c8066c2ef87d7bc98b04aacab16b9be7db64259ba90a0251db964a25e02",
+            "/api/assets/409ef7e0-8a37-4afc-828f-1bc1de64a436": "53b32688d5fb594210bc0fd2443b24b6620d421a3751244a59947dda5c041711",
+            "/api/assets/c33210fc-575f-4f54-bcbe-4d38e2ab3667/source": "282934fc43ff3d10a874344814c3646c13d6d3775ca1e56749ec30a4354bd148",
+            "/api/assets/c33210fc-575f-4f54-bcbe-4d38e2ab3667": "ff1decc7cadce8a568834515dc5b53e1d0d52673fee4d1ff04dbd28c339fac2e",
+            "/api/assets/b70e852a-9c26-429f-9651-06931236bf58/source": "00fd05a6ce8fc1017e2a324b2f99fb63149e9e87fc138f55a1c0d9d800606b38",
+            "/api/assets/b70e852a-9c26-429f-9651-06931236bf58": "b13a81a5f1a683410ba60b2ecacf13d6edec955f461bb028251504cf9967dd1d"
+          }
+        }
+      ],
+      "outages": [
+        {
+          "service": "postgres",
+          "status": "completed",
+          "started_at": "2026-11-10T18:20:28.427634+00:00",
+          "ready_seconds": 0.4840916680000191,
+          "stop_seconds": 0.3030494049999106,
+          "outage_probes": [
+            {
+              "path": "/healthz",
+              "started_at": "2026-11-10T18:20:29.045556+00:00",
+              "http_status": 200,
+              "request_id": null,
+              "seconds": 0.0010082550001015989
+            },
+            {
+              "path": "/workspace",
+              "started_at": "2026-11-10T18:20:29.046604+00:00",
+              "http_status": 200,
+              "request_id": null,
+              "app_shell": true,
+              "seconds": 0.0007087820000606371
+            },
+            {
+              "path": "/api/health",
+              "started_at": "2026-11-10T18:20:29.047321+00:00",
+              "http_status": 200,
+              "request_id": "7f8156c1-00ed-47da-98a5-38b791ffb245",
+              "status": "ok",
+              "checks": null,
+              "error_code": null,
+              "seconds": 0.0017700980000654454
+            },
+            {
+              "path": "/api/ready",
+              "started_at": "2026-11-10T18:20:29.049098+00:00",
+              "http_status": 503,
+              "request_id": "d6b2f52b-81bd-4954-9682-8b5942ca07ed",
+              "status": "not_ready",
+              "checks": {
+                "database": {
+                  "status": "not_ready"
+                },
+                "detector": {
+                  "status": "ready"
+                }
+              },
+              "error_code": null,
+              "seconds": 3.6175256220000165
+            },
+            {
+              "path": "/api/analyses/1",
+              "started_at": "2026-11-10T18:20:32.666632+00:00",
+              "http_status": 500,
+              "request_id": "dad4315b-53cb-4edb-8f4b-25d8645545aa",
+              "status": null,
+              "checks": null,
+              "error_code": "internal_error",
+              "seconds": 3.1371881899999607
+            }
+          ],
+          "expected_http_statuses": [
+            [
+              200
+            ],
+            [
+              200
+            ],
+            [
+              200
+            ],
+            [
+              503
+            ],
+            [
+              500
+            ]
+          ],
+          "outage_verified": true,
+          "recovery_started_at": "2026-11-10T18:20:35.826729+00:00",
+          "start_command_seconds": 0.1745939529999987,
+          "polls": [
+            {
+              "http_status": 503,
+              "request_id": "028198f8-de7f-48cc-b7b7-98105804550e",
+              "status": "not_ready",
+              "seconds": 0.0265215580000131,
+              "elapsed_seconds": 0.20113952300005167
+            },
+            {
+              "http_status": 200,
+              "request_id": "1d437ae9-21f7-406c-9575-59dc9a60806a",
+              "status": "ready",
+              "seconds": 0.03255522699998892,
+              "elapsed_seconds": 0.4840916680000191
+            }
+          ],
+          "containers_after": {
+            "frontend": {
+              "id": "721f36a94695baf90cd60d84c7e04245e6c4595df0436e792fef54bf269c1193",
+              "image": "sha256:a1add30e48b9881f6448e1a7654713920fba4a6d260f797dda7e4084f0cd4c94",
+              "mounts": [],
+              "running": true,
+              "exit_code": 0,
+              "started_at": "2026-11-10T18:20:10.715380798Z",
+              "health": "healthy"
+            },
+            "backend": {
+              "id": "d2d9ce53b09afcee475dddaab94387b26e30e04a57b12cd0fb18c06533ffbbeb",
+              "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+              "mounts": [
+                {
+                  "name": "traffic-measure-lifecycle-20261110-v2_uploads",
+                  "destination": "/app/data/input"
+                },
+                {
+                  "name": "traffic-measure-lifecycle-20261110-v2_outputs",
+                  "destination": "/app/data/output"
+                }
+              ],
+              "running": true,
+              "exit_code": 0,
+              "started_at": "2026-11-10T18:20:04.769408479Z",
+              "health": "healthy"
+            },
+            "migrate": {
+              "id": "20b1aafec0be81dc89a6ebb9042f42fbcdae3a9d6200a88cec97fa4aebcbea39",
+              "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+              "mounts": [],
+              "running": false,
+              "exit_code": 0,
+              "started_at": "2026-11-10T18:20:04.095592001Z",
+              "health": null
+            },
+            "postgres": {
+              "id": "284506dc36b4bb0c79c1bbbe23443f55af3e525ef01e2649c5d6562b4f4b51cc",
+              "image": "sha256:9e2cf6287f25c3151f4c9421ccce2b17f3e60061c111a29165e0d2cdd9ff0a97",
+              "mounts": [
+                {
+                  "name": "traffic-measure-lifecycle-20261110-v2_postgres_data",
+                  "destination": "/var/lib/postgresql/data"
+                }
+              ],
+              "running": true,
+              "exit_code": 0,
+              "started_at": "2026-11-10T18:20:35.871376147Z",
+              "health": "starting"
+            }
+          },
+          "restoration_status": "completed",
+          "elapsed_seconds": 8.013861318999943,
+          "finished_at": "2026-11-10T18:20:36.464356+00:00",
+          "backend_after": {
+            "id": "d2d9ce53b09afcee475dddaab94387b26e30e04a57b12cd0fb18c06533ffbbeb",
+            "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+            "started_at": "2026-11-10T18:20:04.769408479Z",
+            "running": true,
+            "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+          },
+          "saved_recovery": [
+            {
+              "status": "completed",
+              "started_at": "2026-11-10T18:20:36.620225+00:00",
+              "seconds": 0.03200776799997129,
+              "elapsed_seconds": 0.03200932999993711,
+              "finished_at": "2026-11-10T18:20:36.652250+00:00",
+              "actual_matches_baseline": true
+            },
+            {
+              "status": "completed",
+              "started_at": "2026-11-10T18:20:36.652267+00:00",
+              "seconds": 0.02910889899999347,
+              "elapsed_seconds": 0.029110194999930172,
+              "finished_at": "2026-11-10T18:20:36.681381+00:00",
+              "actual_matches_baseline": true
+            },
+            {
+              "status": "completed",
+              "started_at": "2026-11-10T18:20:36.681394+00:00",
+              "seconds": 0.06626726699994379,
+              "elapsed_seconds": 0.06626919499990436,
+              "finished_at": "2026-11-10T18:20:36.747667+00:00",
+              "actual_matches_baseline": true
+            }
+          ],
+          "new_results": [
+            {
+              "session_id": 4,
+              "frames": 1,
+              "result_sha256": "54fe2ce5066b7dcb32dbe142848034b2746afefab2010ec67c5ab5a7c748e3cf",
+              "assets": {
+                "/api/assets/c3aa5e51-de3d-4c9e-8fb0-73dd5d18b5c9/source": "8fb98d6d91604c38ec25ba549d28b85f1a319ccf757426541067d500d6120373",
+                "/api/assets/c3aa5e51-de3d-4c9e-8fb0-73dd5d18b5c9": "2feb75c522864e0d071216079891e1ef8c83cbb9a5bca78bfa1a2fac4b96aea3"
+              }
+            },
+            {
+              "session_id": 5,
+              "frames": 1,
+              "result_sha256": "2bb0fa9456df4f41ba6e3d2f865a60d92ff79fafe139ed4c99e658be29af1b9f",
+              "assets": {
+                "/api/assets/a4fc846d-3816-411c-908c-d4320c0cb26c/source": "1bcc4c8595aedf2e82c858b9877e7aca9c0d7bdfc4da4ae77fb76e0598e62b4b",
+                "/api/assets/a4fc846d-3816-411c-908c-d4320c0cb26c": "acfac11efd8b8f400452ef4961cdcac7e0fddcca2de0f8e30d3ed377b01d6530"
+              }
+            },
+            {
+              "session_id": 6,
+              "frames": 3,
+              "result_sha256": "cb2d827117fdbae863e009c7270ed70da5cf38e5695465840543269d35049c49",
+              "assets": {
+                "/api/assets/8ca12947-58c2-4c92-b320-fa966207c797/source": "b7d94c8066c2ef87d7bc98b04aacab16b9be7db64259ba90a0251db964a25e02",
+                "/api/assets/8ca12947-58c2-4c92-b320-fa966207c797": "53b32688d5fb594210bc0fd2443b24b6620d421a3751244a59947dda5c041711",
+                "/api/assets/88da72da-d4bb-4366-993e-7f6c886010f7/source": "282934fc43ff3d10a874344814c3646c13d6d3775ca1e56749ec30a4354bd148",
+                "/api/assets/88da72da-d4bb-4366-993e-7f6c886010f7": "ff1decc7cadce8a568834515dc5b53e1d0d52673fee4d1ff04dbd28c339fac2e",
+                "/api/assets/713561bc-55c7-48cf-b217-e338a775e701/source": "00fd05a6ce8fc1017e2a324b2f99fb63149e9e87fc138f55a1c0d9d800606b38",
+                "/api/assets/713561bc-55c7-48cf-b217-e338a775e701": "b13a81a5f1a683410ba60b2ecacf13d6edec955f461bb028251504cf9967dd1d"
+              }
+            }
+          ]
+        },
+        {
+          "service": "backend",
+          "status": "completed",
+          "started_at": "2026-11-10T18:20:38.092878+00:00",
+          "ready_seconds": 1.9442825249999487,
+          "stop_seconds": 0.8819430359999387,
+          "outage_probes": [
+            {
+              "path": "/healthz",
+              "started_at": "2026-11-10T18:20:39.281466+00:00",
+              "http_status": 200,
+              "request_id": null,
+              "seconds": 0.0009656089999907636
+            },
+            {
+              "path": "/workspace",
+              "started_at": "2026-11-10T18:20:39.282447+00:00",
+              "http_status": 200,
+              "request_id": null,
+              "app_shell": true,
+              "seconds": 0.000707425999962652
+            },
+            {
+              "path": "/api/health",
+              "started_at": "2026-11-10T18:20:39.283162+00:00",
+              "http_status": 504,
+              "request_id": null,
+              "json_unavailable": true,
+              "seconds": 5.004691172999969
+            },
+            {
+              "path": "/api/ready",
+              "started_at": "2026-11-10T18:20:44.287862+00:00",
+              "http_status": 504,
+              "request_id": null,
+              "json_unavailable": true,
+              "seconds": 5.006253810999965
+            },
+            {
+              "path": "/api/analyses/1",
+              "started_at": "2026-11-10T18:20:49.294133+00:00",
+              "http_status": 502,
+              "request_id": null,
+              "json_unavailable": true,
+              "seconds": 0.0009849009999243208
+            }
+          ],
+          "expected_http_statuses": [
+            [
+              200
+            ],
+            [
+              200
+            ],
+            [
+              502,
+              504
+            ],
+            [
+              502,
+              504
+            ],
+            [
+              502,
+              504
+            ]
+          ],
+          "outage_verified": true,
+          "recovery_started_at": "2026-11-10T18:20:49.295134+00:00",
+          "start_command_seconds": 0.3903098419999651,
+          "polls": [
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.0011394540000537745,
+              "elapsed_seconds": 0.391478349999943
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.0012506760000405848,
+              "elapsed_seconds": 0.6430477799999608
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.004887394999968819,
+              "elapsed_seconds": 0.8982505079999328
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.0012341930000729917,
+              "elapsed_seconds": 1.1497355449999986
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.001176082000029055,
+              "elapsed_seconds": 1.401033912999992
+            },
+            {
+              "http_status": 502,
+              "request_id": null,
+              "seconds": 0.001137423000045601,
+              "elapsed_seconds": 1.6526031239999384
+            },
+            {
+              "http_status": 200,
+              "request_id": "656b141a-91ba-44ea-a6e7-4e4076885402",
+              "status": "ready",
+              "seconds": 0.041269326000019646,
+              "elapsed_seconds": 1.9442825249999487
+            }
+          ],
+          "containers_after": {
+            "frontend": {
+              "id": "721f36a94695baf90cd60d84c7e04245e6c4595df0436e792fef54bf269c1193",
+              "image": "sha256:a1add30e48b9881f6448e1a7654713920fba4a6d260f797dda7e4084f0cd4c94",
+              "mounts": [],
+              "running": true,
+              "exit_code": 0,
+              "started_at": "2026-11-10T18:20:10.715380798Z",
+              "health": "healthy"
+            },
+            "backend": {
+              "id": "d2d9ce53b09afcee475dddaab94387b26e30e04a57b12cd0fb18c06533ffbbeb",
+              "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+              "mounts": [
+                {
+                  "name": "traffic-measure-lifecycle-20261110-v2_uploads",
+                  "destination": "/app/data/input"
+                },
+                {
+                  "name": "traffic-measure-lifecycle-20261110-v2_outputs",
+                  "destination": "/app/data/output"
+                }
+              ],
+              "running": true,
+              "exit_code": 0,
+              "started_at": "2026-11-10T18:20:49.338238067Z",
+              "health": "starting"
+            },
+            "migrate": {
+              "id": "20b1aafec0be81dc89a6ebb9042f42fbcdae3a9d6200a88cec97fa4aebcbea39",
+              "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+              "mounts": [],
+              "running": false,
+              "exit_code": 0,
+              "started_at": "2026-11-10T18:20:04.095592001Z",
+              "health": null
+            },
+            "postgres": {
+              "id": "284506dc36b4bb0c79c1bbbe23443f55af3e525ef01e2649c5d6562b4f4b51cc",
+              "image": "sha256:9e2cf6287f25c3151f4c9421ccce2b17f3e60061c111a29165e0d2cdd9ff0a97",
+              "mounts": [
+                {
+                  "name": "traffic-measure-lifecycle-20261110-v2_postgres_data",
+                  "destination": "/var/lib/postgresql/data"
+                }
+              ],
+              "running": true,
+              "exit_code": 0,
+              "started_at": "2026-11-10T18:20:35.871376147Z",
+              "health": "healthy"
+            }
+          },
+          "restoration_status": "completed",
+          "elapsed_seconds": 13.307848332999924,
+          "finished_at": "2026-11-10T18:20:51.400741+00:00",
+          "backend_after": {
+            "id": "d2d9ce53b09afcee475dddaab94387b26e30e04a57b12cd0fb18c06533ffbbeb",
+            "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+            "started_at": "2026-11-10T18:20:49.338238067Z",
+            "running": true,
+            "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+          },
+          "saved_recovery": [
+            {
+              "status": "completed",
+              "started_at": "2026-11-10T18:20:51.557450+00:00",
+              "seconds": 0.034710502000052657,
+              "elapsed_seconds": 0.0347118130000581,
+              "finished_at": "2026-11-10T18:20:51.592175+00:00",
+              "actual_matches_baseline": true
+            },
+            {
+              "status": "completed",
+              "started_at": "2026-11-10T18:20:51.592192+00:00",
+              "seconds": 0.028519152999933794,
+              "elapsed_seconds": 0.028520690999926046,
+              "finished_at": "2026-11-10T18:20:51.620717+00:00",
+              "actual_matches_baseline": true
+            },
+            {
+              "status": "completed",
+              "started_at": "2026-11-10T18:20:51.620731+00:00",
+              "seconds": 0.06755398500001775,
+              "elapsed_seconds": 0.0675557499999968,
+              "finished_at": "2026-11-10T18:20:51.688292+00:00",
+              "actual_matches_baseline": true
+            }
+          ],
+          "new_results": [
+            {
+              "session_id": 7,
+              "frames": 1,
+              "result_sha256": "bac1a7a01b71e9dfd96f1850de0cbeea19dda220306dd32c493fae6d46d6fcf2",
+              "assets": {
+                "/api/assets/9da6ce8c-775d-4b81-9a1b-74ac904279ac/source": "8fb98d6d91604c38ec25ba549d28b85f1a319ccf757426541067d500d6120373",
+                "/api/assets/9da6ce8c-775d-4b81-9a1b-74ac904279ac": "2feb75c522864e0d071216079891e1ef8c83cbb9a5bca78bfa1a2fac4b96aea3"
+              }
+            },
+            {
+              "session_id": 8,
+              "frames": 1,
+              "result_sha256": "45f7cc39913b76e681f2ca185047324b3ec05a2dacf7b8a61b43e760017031f5",
+              "assets": {
+                "/api/assets/54bd8123-4c25-4475-8eda-3672ed877292/source": "1bcc4c8595aedf2e82c858b9877e7aca9c0d7bdfc4da4ae77fb76e0598e62b4b",
+                "/api/assets/54bd8123-4c25-4475-8eda-3672ed877292": "acfac11efd8b8f400452ef4961cdcac7e0fddcca2de0f8e30d3ed377b01d6530"
+              }
+            },
+            {
+              "session_id": 9,
+              "frames": 3,
+              "result_sha256": "0d1edae0770ab9a25a033c5b79631f1a77c708b6b18defbb5c7d31db635b2311",
+              "assets": {
+                "/api/assets/d872e639-cb81-4ffc-8c1f-f2921eefa96b/source": "b7d94c8066c2ef87d7bc98b04aacab16b9be7db64259ba90a0251db964a25e02",
+                "/api/assets/d872e639-cb81-4ffc-8c1f-f2921eefa96b": "53b32688d5fb594210bc0fd2443b24b6620d421a3751244a59947dda5c041711",
+                "/api/assets/68c5336f-b7d0-4483-8807-1b3224348588/source": "282934fc43ff3d10a874344814c3646c13d6d3775ca1e56749ec30a4354bd148",
+                "/api/assets/68c5336f-b7d0-4483-8807-1b3224348588": "ff1decc7cadce8a568834515dc5b53e1d0d52673fee4d1ff04dbd28c339fac2e",
+                "/api/assets/7b60e09f-9e7a-4531-a41f-a1b854d537ce/source": "00fd05a6ce8fc1017e2a324b2f99fb63149e9e87fc138f55a1c0d9d800606b38",
+                "/api/assets/7b60e09f-9e7a-4531-a41f-a1b854d537ce": "b13a81a5f1a683410ba60b2ecacf13d6edec955f461bb028251504cf9967dd1d"
+              }
+            }
+          ]
+        }
+      ],
+      "errors": [],
+      "retained_project": "traffic-measure-lifecycle-20261110-v2",
+      "startup": {
+        "status": "completed",
+        "started_at": "2026-11-10T18:19:57.903458+00:00",
+        "ready_seconds": 12.945908800999973,
+        "command_seconds": 12.912803058000009,
+        "polls": [
+          {
+            "http_status": 200,
+            "request_id": "ed14ff9d-ea88-4e5a-9829-756d47564c5f",
+            "status": "ready",
+            "seconds": 0.03306851900003949,
+            "elapsed_seconds": 12.945908800999973
+          }
+        ],
+        "frontend": {
+          "path": "/workspace",
+          "started_at": "2026-11-10T18:20:10.881867+00:00",
+          "http_status": 200,
+          "request_id": null,
+          "app_shell": true,
+          "seconds": 0.0012507569999797852
+        },
+        "containers": {
+          "frontend": {
+            "id": "721f36a94695baf90cd60d84c7e04245e6c4595df0436e792fef54bf269c1193",
+            "image": "sha256:a1add30e48b9881f6448e1a7654713920fba4a6d260f797dda7e4084f0cd4c94",
+            "mounts": [],
+            "running": true,
+            "exit_code": 0,
+            "started_at": "2026-11-10T18:20:10.715380798Z",
+            "health": "starting"
+          },
+          "backend": {
+            "id": "d2d9ce53b09afcee475dddaab94387b26e30e04a57b12cd0fb18c06533ffbbeb",
+            "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+            "mounts": [
+              {
+                "name": "traffic-measure-lifecycle-20261110-v2_uploads",
+                "destination": "/app/data/input"
+              },
+              {
+                "name": "traffic-measure-lifecycle-20261110-v2_outputs",
+                "destination": "/app/data/output"
+              }
+            ],
+            "running": true,
+            "exit_code": 0,
+            "started_at": "2026-11-10T18:20:04.769408479Z",
+            "health": "healthy"
+          },
+          "migrate": {
+            "id": "20b1aafec0be81dc89a6ebb9042f42fbcdae3a9d6200a88cec97fa4aebcbea39",
+            "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+            "mounts": [],
+            "running": false,
+            "exit_code": 0,
+            "started_at": "2026-11-10T18:20:04.095592001Z",
+            "health": null
+          },
+          "postgres": {
+            "id": "284506dc36b4bb0c79c1bbbe23443f55af3e525ef01e2649c5d6562b4f4b51cc",
+            "image": "sha256:9e2cf6287f25c3151f4c9421ccce2b17f3e60061c111a29165e0d2cdd9ff0a97",
+            "mounts": [
+              {
+                "name": "traffic-measure-lifecycle-20261110-v2_postgres_data",
+                "destination": "/var/lib/postgresql/data"
+              }
+            ],
+            "running": true,
+            "exit_code": 0,
+            "started_at": "2026-11-10T18:19:58.427506726Z",
+            "health": "healthy"
+          }
+        },
+        "elapsed_seconds": 13.107077688000004,
+        "finished_at": "2026-11-10T18:20:11.043032+00:00"
+      },
+      "backend": {
+        "id": "d2d9ce53b09afcee475dddaab94387b26e30e04a57b12cd0fb18c06533ffbbeb",
+        "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+        "started_at": "2026-11-10T18:20:04.769408479Z",
+        "running": true,
+        "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+      },
+      "model_profile": {
+        "profile_id": "yolo26m-visdrone-experimental-v1",
+        "model_id": "yolo26m-visdrone",
+        "quality_gate_status": "failed",
+        "evaluation_reference": "configs/evaluation/final_model_selection.json",
+        "checkpoint_path": "models/candidates/yolo26m-visdrone/best.pt",
+        "checkpoint_sha256": "e57204b8d77b5b22ea9253cbd5664b707623aeb7c19dbaa9034fe5a60bed6571",
+        "class_mapping": {
+          "bus": "bus",
+          "car": "car_or_van",
+          "van": "car_or_van",
+          "motor": "motorcycle",
+          "truck": "truck",
+          "people": "person",
+          "bicycle": "bicycle",
+          "pedestrian": "person"
+        },
+        "confidence": 0.25,
+        "image_size": 1280,
+        "scale_factor": 2,
+        "max_detections": 300,
+        "numeric_precision": "float32",
+        "device": "cuda:0"
+      },
+      "final_containers": {
+        "frontend": {
+          "id": "721f36a94695baf90cd60d84c7e04245e6c4595df0436e792fef54bf269c1193",
+          "image": "sha256:a1add30e48b9881f6448e1a7654713920fba4a6d260f797dda7e4084f0cd4c94",
+          "mounts": [],
+          "running": true,
+          "exit_code": 0,
+          "started_at": "2026-11-10T18:20:10.715380798Z",
+          "health": "healthy"
+        },
+        "backend": {
+          "id": "d2d9ce53b09afcee475dddaab94387b26e30e04a57b12cd0fb18c06533ffbbeb",
+          "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+          "mounts": [
+            {
+              "name": "traffic-measure-lifecycle-20261110-v2_uploads",
+              "destination": "/app/data/input"
+            },
+            {
+              "name": "traffic-measure-lifecycle-20261110-v2_outputs",
+              "destination": "/app/data/output"
+            }
+          ],
+          "running": true,
+          "exit_code": 0,
+          "started_at": "2026-11-10T18:20:49.338238067Z",
+          "health": "healthy"
+        },
+        "migrate": {
+          "id": "20b1aafec0be81dc89a6ebb9042f42fbcdae3a9d6200a88cec97fa4aebcbea39",
+          "image": "sha256:c3fe8d2e5c12e493f249eada3e65bf78bec12895f13a3ee728d14e575ddf296f",
+          "mounts": [],
+          "running": false,
+          "exit_code": 0,
+          "started_at": "2026-11-10T18:20:04.095592001Z",
+          "health": null
+        },
+        "postgres": {
+          "id": "284506dc36b4bb0c79c1bbbe23443f55af3e525ef01e2649c5d6562b4f4b51cc",
+          "image": "sha256:9e2cf6287f25c3151f4c9421ccce2b17f3e60061c111a29165e0d2cdd9ff0a97",
+          "mounts": [
+            {
+              "name": "traffic-measure-lifecycle-20261110-v2_postgres_data",
+              "destination": "/var/lib/postgresql/data"
+            }
+          ],
+          "running": true,
+          "exit_code": 0,
+          "started_at": "2026-11-10T18:20:35.871376147Z",
+          "health": "healthy"
+        }
+      },
+      "finished_at": "2026-11-10T18:21:00.649240+00:00",
+      "runtimes": {
+        "2026-11-10T18:20:06.556725Z": {
+          "schema_version": 1,
+          "captured_at": "2026-11-10T18:20:06.556725Z",
+          "application_commit": null,
+          "source_dirty": null,
+          "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725",
+          "python_version": "3.12.3",
+          "platform": "Linux 6.6.87.2-microsoft-standard-WSL2 x86_64",
+          "device": "cuda:0",
+          "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+          "cuda_version": "13.0",
+          "cudnn_version": 92400,
+          "container_id": "d2d9ce53b09a",
+          "dependencies_sha256": "02f95103859ea98378652cf3d161173e657a8484beea85664c4412576770e9ba"
+        },
+        "2026-11-10T18:20:51.090619Z": {
+          "schema_version": 1,
+          "captured_at": "2026-11-10T18:20:51.090619Z",
+          "application_commit": null,
+          "source_dirty": null,
+          "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725",
+          "python_version": "3.12.3",
+          "platform": "Linux 6.6.87.2-microsoft-standard-WSL2 x86_64",
+          "device": "cuda:0",
+          "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+          "cuda_version": "13.0",
+          "cudnn_version": 92400,
+          "container_id": "d2d9ce53b09a",
+          "dependencies_sha256": "02f95103859ea98378652cf3d161173e657a8484beea85664c4412576770e9ba"
+        }
+      },
+      "artifacts": {
+        "directory": "data/output/system-measurements/lifecycle-verification-2026-11-10-v2",
+        "sha256": {
+          "report.json": "e9500d987f7a1d40d7a54ac618f28930a98468a5e917c4b495f998a51ecd7841",
+          "lifecycle.csv": "ec4827c2fb4fe9a3fccaed590beba98765a2eb995a45309a6260ee155988a53f"
+        },
+        "manifest_sha256": "4ad909a541d90d0dfd22370d59a1cb9c0d63d2d3228e57f4e8312b0227af304e"
+      }
+    }
+  ],
+  "gpu_regression": {
+    "baseline_sha256": "48febaa74e3b86350d074b348da37f9140e00c7e5aae5118921c93861f236423",
+    "differences": [],
+    "manifest_sha256": "b9507dd760331e82387bd20881b3955c6ffaed2b8f316042b46650d33e03b3c9",
+    "model": {
+      "checkpoint_path": "models/candidates/yolo26m-visdrone/best.pt",
+      "checkpoint_sha256": "e57204b8d77b5b22ea9253cbd5664b707623aeb7c19dbaa9034fe5a60bed6571",
+      "class_mapping": {
+        "bicycle": "bicycle",
+        "bus": "bus",
+        "car": "car_or_van",
+        "motor": "motorcycle",
+        "pedestrian": "person",
+        "people": "person",
+        "truck": "truck",
+        "van": "car_or_van"
+      },
+      "confidence": 0.25,
+      "device": "cuda:0",
+      "evaluation_reference": "configs/evaluation/final_model_selection.json",
+      "image_size": 1280,
+      "max_detections": 300,
+      "model_id": "yolo26m-visdrone",
+      "numeric_precision": "float32",
+      "profile_id": "yolo26m-visdrone-experimental-v1",
+      "quality_gate_status": "failed",
+      "scale_factor": 2
+    },
+    "purpose": "development regression, not accuracy",
+    "recorded_at": "2026-11-10T18:21:34.661146+00:00",
+    "runtime": {
+      "application_commit": null,
+      "captured_at": "2026-11-10T18:20:51.090619Z",
+      "container_id": "d2d9ce53b09a",
+      "cuda_version": "13.0",
+      "cudnn_version": 92400,
+      "dependencies": {
+        "annotated-doc": "0.0.5",
+        "annotated-types": "0.8.0",
+        "anyio": "4.15.1",
+        "asttokens": "3.0.2",
+        "build": "1.6.1",
+        "certifi": "2026.7.22",
+        "charset-normalizer": "3.5.2",
+        "click": "8.3.3",
+        "cloudpickle": "3.1.2",
+        "cmake": "4.4.3",
+        "contourpy": "1.4.0",
+        "cuda-bindings": "13.3.1",
+        "cuda-pathfinder": "1.6.0",
+        "cuda-toolkit": "13.0.3.0",
+        "cycler": "0.12.1",
+        "dnspython": "2.8.0",
+        "executing": "2.2.1",
+        "expecttest": "0.3.0",
+        "fastapi": "0.156.8",
+        "filelock": "4.0.7",
+        "fonttools": "4.67.0",
+        "fsspec": "2026.9.0",
+        "h11": "0.16.0",
+        "httpcore": "1.0.9",
+        "httpx": "0.28.1",
+        "hypothesis": "6.168.3",
+        "idna": "3.20",
+        "importlib-metadata": "9.0.1",
+        "ipython": "9.17.1",
+        "ipython-pygments-lexers": "1.1.1",
+        "jedi": "0.20.0",
+        "jinja2": "3.1.6",
+        "kiwisolver": "1.5.1",
+        "lintrunner": "0.13.1",
+        "markupsafe": "3.0.3",
+        "matplotlib": "3.11.2",
+        "matplotlib-inline": "0.2.2",
+        "mpmath": "1.3.0",
+        "networkx": "3.7",
+        "ninja": "1.13.2",
+        "numpy": "2.5.4",
+        "nvidia-cublas": "13.1.1.3",
+        "nvidia-cuda-cupti": "13.0.85",
+        "nvidia-cuda-nvrtc": "13.0.88",
+        "nvidia-cuda-runtime": "13.0.96",
+        "nvidia-cudnn-cu13": "9.24.0.43",
+        "nvidia-cufft": "12.0.0.61",
+        "nvidia-cufile": "1.15.1.6",
+        "nvidia-curand": "10.4.0.35",
+        "nvidia-cusolver": "12.0.4.66",
+        "nvidia-cusparse": "12.6.3.3",
+        "nvidia-cusparselt-cu13": "0.8.1",
+        "nvidia-ml-py": "13.615.71",
+        "nvidia-nccl-cu13": "2.30.7",
+        "nvidia-nvjitlink": "13.3.33",
+        "nvidia-nvshmem-cu13": "3.4.5",
+        "nvidia-nvtx": "13.0.85",
+        "opencv-python": "5.0.0.93",
+        "opentelemetry-api": "1.45.1",
+        "optree": "0.20.0",
+        "packaging": "26.3",
+        "parso": "0.8.7",
+        "pathspec": "1.1.1",
+        "pexpect": "4.9.0",
+        "pillow": "13.0.0",
+        "pip": "24.0",
+        "polars": "2.0.0",
+        "polars-runtime-32": "2.0.0",
+        "prompt-toolkit": "3.0.53",
+        "psutil": "7.2.2",
+        "psycopg": "3.3.6",
+        "psycopg-binary": "3.3.6",
+        "ptyprocess": "0.7.0",
+        "pure-eval": "0.2.4",
+        "pydantic": "2.14.1",
+        "pydantic-core": "2.50.1",
+        "pygments": "2.21.0",
+        "pyparsing": "3.3.3",
+        "pyproject-hooks": "1.3.3",
+        "python-dateutil": "2.9.0.post0",
+        "python-dotenv": "1.2.4",
+        "python-etcd": "0.4.5",
+        "python-multipart": "0.0.32",
+        "pyyaml": "6.0.3",
+        "requests": "2.34.2",
+        "scikit-build-core": "1.1.0",
+        "scipy": "1.18.1",
+        "setuptools": "81.0.0",
+        "six": "1.17.0",
+        "sortedcontainers": "2.4.0",
+        "spin": "0.18",
+        "stack-data": "0.6.3",
+        "starlette": "1.9.0",
+        "sympy": "1.14.0",
+        "torch": "2.14.1+cu130",
+        "torchaudio": "2.11.0+cu130",
+        "torchelastic": "0.2.2",
+        "torchvision": "0.29.1+cu130",
+        "traitlets": "5.16.1",
+        "triton": "3.8.0",
+        "typing-extensions": "4.16.0",
+        "typing-inspection": "0.4.4",
+        "ultralytics": "8.4.183",
+        "ultralytics-platform": "0.1.90",
+        "ultralytics-thop": "2.2.3",
+        "urllib3": "2.8.0",
+        "uv": "0.12.21",
+        "uvicorn": "0.54.0",
+        "wcwidth": "0.9.1",
+        "wheel": "0.48.0",
+        "zipp": "4.1.0"
+      },
+      "device": "cuda:0",
+      "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+      "platform": "Linux 6.6.87.2-microsoft-standard-WSL2 x86_64",
+      "python_version": "3.12.3",
+      "schema_version": 1,
+      "source_dirty": null,
+      "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+    },
+    "schema_version": 1,
+    "sessions": [
+      10,
+      11,
+      12
+    ],
+    "status": "pass"
+  },
+  "gpu_regression_artifact": {
+    "path": "data/output/issue79-lifecycle-gpu-regression.json",
+    "sha256": "67d8ce4f1d4cbaca25a3b05b217d41e933385b7f116732f6a7cc71b3e5699072",
+    "frame_count": 5
+  },
+  "automated_checks": {
+    "focused_tests": 110,
+    "new_lifecycle_tests": 49,
+    "full_python_passed": 699,
+    "local_postgresql_skipped": 14,
+    "ruff": "passed",
+    "format": "passed"
+  },
+  "limitations": [
+    "One corrected startup and one controlled idle outage per service, not final repetition statistics.",
+    "Initial incomplete run retained after correcting the overly narrow 502-only gateway assertion; connection timeout can return 504.",
+    "Already-local images; initial startup includes empty database initialization and migrations, not build/download or first inference.",
+    "Recovery timer starts before docker start and excludes stop and outage observation time. HTTP readiness is not browser readiness.",
+    "Source-matching reused images and dirty runner tree; not a frozen release.",
+    "Local tests finished before collection; exclusive host/GPU use not established.",
+    "No active-video crash, network partition, corruption, concurrency or maintenance-lock recovery claim.",
+    "Detector failed quality gate and unsupported dense-crowd status unchanged."
+  ]
+}

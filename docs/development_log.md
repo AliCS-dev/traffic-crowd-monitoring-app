@@ -1178,3 +1178,26 @@ final performance results or proof of physical screen paint. The video scene
 was not wholly inside the viewport at the timer boundary; screenshots scroll
 afterwards. Full-stack startup/failure checks, media decisions and the final
 freeze remain under #79, with the detector's failed quality gate unchanged.
+
+### Issue #79: Fresh-Stack Startup and Service Recovery (10 November 2026)
+
+We added a separate runner for starting a fresh Compose project from local
+images, stopping PostgreSQL and the backend in turn, and checking recovery.
+It refuses existing project data, verifies container and volume ownership,
+attempts restoration even after a failed check, and leaves the isolated stack
+available for inspection. Existing measurement runners are unchanged.
+
+The first run exposed an overly narrow runner assertion: Nginx returned both
+504 and 502 during the backend outage, while the check accepted only 502.
+We retained that incomplete report, corrected the assertion and added tests.
+A new project then completed startup, both idle outages, nine analyses and six
+saved-result comparisons. Saved JSON and media hashes matched, and the unchanged
+five-frame GPU regression passed. No production component or dependency changed.
+
+The full local Python suite passed 699 tests, with 14 PostgreSQL tests skipped
+locally. The 110 focused tests include 49 lifecycle checks. Ruff and formatting
+passed. The [report](evaluation/stack_lifecycle.md) links timings, both attempts
+and artifact hashes. These single development observations are not final
+performance estimates or evidence of recovery during an active video job.
+Media decisions, final failure scope, run order and the release freeze remain
+under #79; model-quality limitations are unchanged.

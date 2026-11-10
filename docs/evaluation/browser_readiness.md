@@ -153,7 +153,8 @@ changed.
 
 ## Remaining Work
 
-Full-stack startup and failure/recovery experiments, I3 preparation, the V2 media
-decision and the final combined run order remain. We then freeze the evaluated
+The [lifecycle runner](stack_lifecycle.md) now covers fresh-stack startup and
+controlled idle outages. I3 preparation, the V2 media decision, final failure
+scope and the combined run order remain. We then freeze the evaluated
 version and collect the planned repetitions. These checks neither improve the
 failed detector quality gate nor add dense-crowd support.

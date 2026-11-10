@@ -21,6 +21,11 @@ On 9 November, the [browser runner](browser_readiness.md) added submission-to-sc
 timing, checked against saved image/video results and served frontend hashes.
 Its two-sample verification remains separate from final performance collection.
 
+On 10 November, the [lifecycle runner](stack_lifecycle.md) added fresh-stack
+startup and controlled idle PostgreSQL/backend outages, with saved-result
+integrity and new analyses after recovery. Its single-run verification and
+initial incomplete attempt are retained separately from final collection.
+
 Issue #79 measures the application as a system. We are not selecting another
 detector, reopening the historical held-out test, or turning successful requests
 into evidence of detection accuracy. Issues #113-#115 remain deferred.
@@ -101,7 +106,7 @@ silently substitute a clip or start another annotation campaign.
 | Browser result readiness | Captured submit click to decoded image and stable overlay layout; not physical paint or guaranteed viewport visibility | Browser runner implemented and verified; first sampled frame for video |
 | Throughput | Successful images or sampled frames divided by wall time in a declared sequential batch | Warm batch recorded, including evidence reads; not source-video FPS |
 | Resources | Timestamped backend cgroup memory and whole-device GPU memory samples | Runner records reading times/errors; samples can miss peaks |
-| Startup/recovery | Container start/restart to API readiness, followed by reopening a saved session | Graceful backend restart and saved-result timing implemented; full-stack startup and failure experiments remain |
+| Startup/recovery | Compose startup or service start to API readiness, with saved-result checks afterwards | Backend restart, fresh-stack startup and idle PostgreSQL/backend outage runners verified; active-job crash behavior is not established by these timings |
 
 The JSON logs now contain separate inference, persistence and queue records as
 well as the existing whole-request and workflow durations. We do not infer those
@@ -173,8 +178,10 @@ The warm runner and stage timers have tests for timing boundaries, failed runs
 and provenance mismatch. The separate restart runner now covers cold-process
 requests and saved-result recovery. The browser runner now records decoded-scene
 readiness in fresh contexts, with one warm-up per scenario and viewport.
-Full-stack startup and failure experiments remain. Before final collection,
-we prepare I3, resolve V2, fix the
+The lifecycle runner now covers fresh-stack startup and idle service outages,
+including retained failures and saved media comparisons. It does not establish
+active-job crash recovery. Before final collection, we prepare I3, resolve V2,
+declare any additional failure experiment and fix the
 exact combined run order, rerun the #26 software gate and commit the freeze
 record. The tools do not yet execute the entire protocol as one command.
 Issue #26 is closed; these development checks do not close #79.
