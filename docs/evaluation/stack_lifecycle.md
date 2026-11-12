@@ -90,6 +90,13 @@ networks for that project. It uses the fixed measurement Compose files, ignores
 `.env` and application overrides, and supplies a random disposable database
 password that is not written to the report. The frontend binds only to loopback.
 
+The default scenarios remain I1, I2 and V1. To use the
+[five-input candidate](system_scenarios.md), we add
+`--scenarios configs/evaluation/system_workflows_candidate.json`.
+The config must be inside the repository. Its hash and selected inputs are
+retained, and every configured scenario runs during seeding and after each
+outage: 15 analyses for the five-input candidate, rather than nine.
+
 Before any interruption, it checks the full stack, image IDs, measurement label,
 container IDs and project-specific mounts. Stop/start commands use immutable
 container IDs. Restoration is attempted even when a stop or observation fails.
@@ -160,8 +167,9 @@ tests skipped locally; CI runs those separately. Ruff and formatting passed.
 
 ## Remaining Work
 
-The final protocol still needs I3 preparation, the V2 media or scope decision,
-the exact combined run order and release freeze. Any active-job recovery claims
-need their own declared experiment; these idle-outage checks do not establish
-them. We then collect the agreed repetitions on the frozen version. Issue #79
+The [12 November preparation](system_scenarios.md) now records I3, V2 and the
+combined run order. Ali approved keeping live recovery limited to idle outages;
+these checks do not establish real-GPU active-job crash recovery. Input
+compatibility, release dependency decisions, the software gate and release
+freeze precede final collection. Issue #79
 remains open, and detector-quality and dense-crowd limitations are unchanged.

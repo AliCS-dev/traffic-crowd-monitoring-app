@@ -313,7 +313,10 @@ def test_outage_restores_even_after_failure_and_retains_observations(
 @pytest.mark.parametrize(
     "problem", [None, "startup", "outage", "saved", "request", "provenance"]
 )
-def test_runner_retains_partial_results_without_retries(tmp_path, monkeypatch, problem):
+@pytest.mark.parametrize("custom_scenarios", [False, True])
+def test_runner_retains_partial_results_without_retries(
+    tmp_path, monkeypatch, problem, custom_scenarios
+):
     instance = stack()
     monkeypatch.setattr(script, "DisposableStack", lambda *a: instance)
     monkeypatch.setattr(instance, "preflight", lambda: None)
@@ -323,7 +326,13 @@ def test_runner_retains_partial_results_without_retries(tmp_path, monkeypatch, p
     scenarios = [
         Scenario(scenario_id="I1", kind="image", path="test.png", sha256="a" * 64)
     ]
-    monkeypatch.setattr(script, "load_scenarios", lambda _: scenarios)
+    loaded_paths = []
+
+    def load(path):
+        loaded_paths.append(path)
+        return scenarios
+
+    monkeypatch.setattr(script, "load_scenarios", load)
     monkeypatch.setattr(
         script,
         "measure_startup",
@@ -381,8 +390,16 @@ def test_runner_retains_partial_results_without_retries(tmp_path, monkeypatch, p
         "--output-directory",
         str(directory),
     ]
+    scenario_file = script.ROOT / "configs/evaluation/system_workflows.json"
+    if custom_scenarios:
+        scenario_file = (
+            script.ROOT / "configs/evaluation/system_workflows_candidate.json"
+        )
+        args.extend(["--scenarios", str(scenario_file)])
     assert script.main(args) == (0 if problem is None else 1)
+    assert loaded_paths == [scenario_file] * (2 if problem is None else 1)
     report = json.loads((directory / "report.json").read_text())
+    assert str(scenario_file.relative_to(script.ROOT)) in report["tool_sha256"]
     assert report["status"] == ("recorded" if problem is None else "incomplete")
     assert (directory / "lifecycle.csv").exists()
     assert (directory / "sha256.json").exists()
@@ -405,6 +422,36 @@ def test_runner_requires_interruption_consent(tmp_path):
                 "b",
                 "--frontend-image",
                 "f",
+                "--output-directory",
+                str(directory),
+            ]
+        )
+    assert not directory.exists()
+
+
+def test_runner_rejects_external_scenario_config_before_touching_stack(
+    tmp_path, monkeypatch
+):
+    instance = stack()
+    monkeypatch.setattr(script, "DisposableStack", lambda *args: instance)
+
+    def unexpected_preflight():
+        pytest.fail("External configuration must be rejected before Docker access")
+
+    monkeypatch.setattr(instance, "preflight", unexpected_preflight)
+    directory = tmp_path / "external-config"
+    with pytest.raises(SystemExit):
+        script.main(
+            [
+                "--project",
+                "traffic-measure-test",
+                "--backend-image",
+                "b",
+                "--frontend-image",
+                "f",
+                "--allow-stack-interruption",
+                "--scenarios",
+                str(tmp_path / "scenarios.json"),
                 "--output-directory",
                 str(directory),
             ]

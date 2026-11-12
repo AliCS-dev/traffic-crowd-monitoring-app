@@ -6,7 +6,7 @@ const sampleImage = fileURLToPath(
   new URL("../../data/input/sample_image.jpg", import.meta.url),
 );
 
-async function openScene(page: Page, count = 3) {
+async function openScene(page: Page, count = 3, tiny = false) {
   const result = gridResultFixture();
   result.session_name = "Scene inspection fixture";
   const frame = result.frames[0];
@@ -27,6 +27,13 @@ async function openScene(page: Page, count = 3) {
     url: `${frame.visual_asset!.url}/source`,
     rendered_overlays: [],
   };
+  if (tiny)
+    frame.detections[0].bounds = {
+      x_min: 100,
+      y_min: 100,
+      x_max: 100.5,
+      y_max: 100.5,
+    };
   if (count > 3)
     frame.detections = Array.from({ length: count }, (_, index) => ({
       ...frame.detections[index % 3],
@@ -49,6 +56,51 @@ async function openScene(page: Page, count = 3) {
   ).toBeVisible();
   return frame;
 }
+
+test("subpixel detection boxes keep their geometry when selected", async ({
+  page,
+}) => {
+  const frame = await openScene(page, 3, true);
+  const id = frame.detections[0].id;
+  for (const selected of [false, true]) {
+    if (selected)
+      await page
+        .getByRole("button", { name: `Inspect detection ${id}` })
+        .click();
+    const box = page.getByRole("button", {
+      name: new RegExp(`^Detection ${id}:`),
+    });
+    await expect(box).toHaveAttribute("aria-pressed", String(selected));
+    await expect(async () => {
+      const { image, bounds } = await page
+        .locator("[data-scene-stage]")
+        .evaluate(
+          (stage, id) => ({
+            image: stage.querySelector("img")!.getBoundingClientRect().toJSON(),
+            bounds: stage
+              .querySelector(`[aria-label^="Detection ${id}:"]`)!
+              .getBoundingClientRect()
+              .toJSON(),
+          }),
+          id,
+        );
+      expect(bounds.width).toBeGreaterThan(0);
+      expect(bounds.height).toBeGreaterThan(0);
+      expect(Math.abs(bounds.width - (image.width * 0.5) / 590)).toBeLessThan(
+        0.1,
+      );
+      expect(Math.abs(bounds.height - (image.height * 0.5) / 332)).toBeLessThan(
+        0.1,
+      );
+      expect(
+        Math.abs(bounds.x - image.x - (image.width * 100) / 590),
+      ).toBeLessThan(0.1);
+      expect(
+        Math.abs(bounds.y - image.y - (image.height * 100) / 332),
+      ).toBeLessThan(0.1);
+    }).toPass({ timeout: 1000 });
+  }
+});
 
 async function checkAlignment(page: Page, timeout = 5000) {
   const detection = gridResultFixture().frames[0].detections[0];

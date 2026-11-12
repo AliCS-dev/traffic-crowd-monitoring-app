@@ -49,8 +49,9 @@ export function DetectionOverlay({
               p: 0,
               borderRadius: 0,
               pointerEvents: "auto",
-              border: `${selected ? 3 : 1}px solid ${selected ? "#ffffff" : (colors[detection.object_class] ?? "#ffffff")}`,
-              boxShadow: "0 0 0 1px #111111",
+              // Borders impose a minimum box size on tiny, downscaled detections.
+              border: 0,
+              boxShadow: `inset 0 0 0 ${selected ? 3 : 1}px ${selected ? "#ffffff" : (colors[detection.object_class] ?? "#ffffff")}, 0 0 0 1px #111111`,
               bgcolor: selected ? "rgba(255,255,255,0.18)" : "transparent",
               zIndex: selected ? 2 : 1,
               "&:hover, &:focus-visible": {

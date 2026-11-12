@@ -1,0 +1,42 @@
+[
+  {
+    "scenario_id": "I1",
+    "kind": "image",
+    "path": "data/runtime-regression/fixtures/roundabout_6.png",
+    "sha256": "785414dccf5be9ecd1fbed0793ed32900069adbe8b8fe5953048141da7c45a4e",
+    "grid_rows": 2,
+    "grid_columns": 3
+  },
+  {
+    "scenario_id": "I2",
+    "kind": "image",
+    "path": "data/runtime-regression/fixtures/roundabout_29.png",
+    "sha256": "1c63462c1511db556411844f0eb2e4d0392b0f0f54484146492735dd662c669a"
+  },
+  {
+    "scenario_id": "I3",
+    "kind": "image",
+    "path": "data/evaluation/raw/wikimedia/Renai_Dunhua_traffic_circle_202006.jpg",
+    "sha256": "88d8ea239eeee2e6ad1e19f84fd2dff11fdd78845c1ce00611270ae6a2151dc9",
+    "grid_rows": 2,
+    "grid_columns": 3
+  },
+  {
+    "scenario_id": "V1",
+    "kind": "video",
+    "path": "data/runtime-regression/fixtures/roundabout_sequence.avi",
+    "sha256": "d62fdd09d6963629f1c9a51258fab4ff8b90dff5efdae10f7d31bffe5e6ddc67",
+    "grid_rows": 2,
+    "grid_columns": 3,
+    "sampling_interval_seconds": 1.0
+  },
+  {
+    "scenario_id": "V2",
+    "kind": "video",
+    "path": "data/evaluation/raw/system_inputs/pexels_30106869.mp4",
+    "sha256": "820a9b1a3d0a80fc0355f4d16683f38a16c67b474aace205806d32787c74f5c5",
+    "grid_rows": 2,
+    "grid_columns": 3,
+    "sampling_interval_seconds": 2.0
+  }
+]

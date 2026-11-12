@@ -105,6 +105,11 @@ def main(argv=None):
     parser.add_argument("--request-timeout", type=positive_seconds, default=360)
     parser.add_argument("--poll-interval", type=positive_seconds, default=0.25)
     parser.add_argument("--output-directory", type=Path, required=True)
+    parser.add_argument(
+        "--scenarios",
+        type=Path,
+        default=ROOT / "configs/evaluation/system_workflows.json",
+    )
     args = parser.parse_args(argv)
     try:
         if not args.allow_stack_interruption:
@@ -116,7 +121,9 @@ def main(argv=None):
             args.frontend_image,
             secrets.token_urlsafe(24),
         )
-        scenarios_path = ROOT / "configs/evaluation/system_workflows.json"
+        scenarios_path = args.scenarios.resolve()
+        if not scenarios_path.is_relative_to(ROOT):
+            raise ValueError("Scenario configuration must be inside the repository.")
         scenarios = load_scenarios(scenarios_path)
         stack.preflight()
         args.output_directory.mkdir(parents=True, exist_ok=False)

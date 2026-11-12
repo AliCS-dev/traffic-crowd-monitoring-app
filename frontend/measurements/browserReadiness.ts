@@ -1,6 +1,38 @@
-import { expect, type Page, type Response } from "@playwright/test";
+import {
+  expect,
+  type Locator,
+  type Page,
+  type Response,
+} from "@playwright/test";
 import type { MonitoringSessionResult } from "../src/api/analysisResults.ts";
 import { orderedVideoFrames } from "../src/features/results/frameNavigation.ts";
+
+export async function selectFixture(
+  input: Locator,
+  payload: string | { name: string; mimeType: string; buffer: Buffer },
+): Promise<{ name: string; size: number; type: string }> {
+  // Read before React clears the native input to allow reselecting the same file.
+  await input.evaluate((element: HTMLInputElement) => {
+    delete element.dataset.measurementFile;
+    element.addEventListener(
+      "change",
+      () => {
+        const file = element.files?.[0];
+        if (file)
+          element.dataset.measurementFile = JSON.stringify({
+            name: file.name,
+            size: file.size,
+            type: file.type,
+          });
+      },
+      { capture: true, once: true },
+    );
+  });
+  await input.setInputFiles(payload);
+  const selected = await input.getAttribute("data-measurement-file");
+  if (!selected) throw new Error("selected_file_unavailable");
+  return JSON.parse(selected);
+}
 
 interface Rect {
   x: number;
