@@ -73,6 +73,9 @@ and V1 in that order. Their licensed inputs and hashes come from the existing
 [runtime fixtures](../../data/runtime-regression/README.md). I2 has no grid.
 V1 repeats still images; it is not natural-motion evidence. I3 and V2 are not
 silently replaced by these fixtures.
+The [five-input candidate](system_scenarios.md) is selected with
+`--scenarios configs/evaluation/system_workflows_candidate.json`; it requires
+the unchanged I3 and V2 source files outside Git.
 
 Each scenario gets one warm-up followed by the requested number of measured
 requests. The default is ten repetitions; the command above uses two to check
@@ -144,9 +147,13 @@ measurements or replace the dated development evidence above.
 The [#26 workflow coverage review](../testing.md) is now recorded separately.
 The [restart runner](system_restarts.md) now covers graceful backend restarts,
 first requests and saved-result integrity. Before final collection, we still
-need the natural-motion video decision, I3 preparation,
-full-stack startup and failure/recovery measurements, the final run order and
-the complete hardware/configuration freeze. We do not reopen the held-out
+need the input compatibility checks, release dependency decisions, software
+gate and complete hardware/configuration freeze. The
+[12 November preparation](system_scenarios.md) records I3, V2, recovery scope
+and the declared run order. We do not reopen the held-out
 accuracy test or assign new annotation work as part of this step.
 The separate [browser runner](browser_readiness.md), verified on 9 November,
 now records submission-to-scene readiness; it does not replace API timings.
+The [lifecycle runner](stack_lifecycle.md), verified on 10 November, adds
+fresh-stack startup and controlled idle database/backend outages. These are
+also development checks, not final repeated collection.

@@ -89,17 +89,21 @@ video and memory measurements do not change the model-quality results below.
 
 ## Application Evaluation Preparation
 
+The [12 November input preparation](system_scenarios.md) records the five
+candidate scenarios, the licensed natural-motion video, source checksums and
+the agreed bounded recovery scope. The collection order is now fixed in the
+plan. This is preparation, not a new accuracy or final performance result.
+
 The [system evaluation plan](system_evaluation_plan.md), prepared on 28 October,
 identifies the merged application candidate, timing boundaries, repetitions,
 media choices and evidence requirements for #79. No final system measurements
 have been collected under that plan. The [measurement guide](system_measurements.md)
 links the warm runner, its stage boundaries and the 29 October development
-verification record. Stage timing is implemented; remaining measurement paths,
-the media decision and release freeze are open.
+verification record. The later dated entries below add the other measurement
+paths and media preparation; release freeze and final collection remain open.
 The [4 November workflow review](../testing.md) now records the #26 coverage matrix,
 repeated correctness checks and merge protection. Those checks are not final
-performance measurements; the remaining #79 paths, media choice and freeze are
-still open.
+performance measurements and do not close #79.
 The [workspace verification](../scene_workspace_verification.md) records the
 completed interface checks; they do not replace final evaluation or change the
 historical model results below.
@@ -116,7 +120,16 @@ to decoded scene readiness, with overlay checks and desktop/narrow screenshots.
 Its [tracked evidence](../../data/evaluation/browser_readiness_verification.json)
 retains six warm-ups and twelve measured attempts. These are tooling checks,
 not final performance results, physical-paint timings or mobile-device tests.
-Full-stack startup/failure experiments, media decisions and the freeze remain.
+The lifecycle check below adds startup and controlled idle-outage evidence;
+the 12 November entry records the subsequent media decisions.
+
+The [10 November lifecycle verification](stack_lifecycle.md) measures fresh-stack
+startup with already-local images and controlled PostgreSQL/backend outages.
+The [tracked record](../../data/evaluation/stack_lifecycle_verification.json)
+retains the first incomplete attempt and corrected run. The latter completed
+nine analyses and six saved-result comparisons, with unchanged media hashes.
+These single observations are not final repeated measurements or proof of
+recovery from a crash during an active job.
 
 ## Current Final Result
 

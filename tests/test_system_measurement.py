@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 from types import SimpleNamespace
 
 import httpx
@@ -17,6 +18,30 @@ from evaluation.system_measurement import (
     summarize,
     validate_local_url,
 )
+
+
+def test_candidate_scenarios_preserve_existing_inputs_and_match_source_record():
+    root = Path(__file__).resolve().parents[1]
+    original = json.loads(
+        (root / "configs/evaluation/system_workflows.json").read_text()
+    )
+    candidate = json.loads(
+        (root / "configs/evaluation/system_workflows_candidate.json").read_text()
+    )
+    assert [row["scenario_id"] for row in candidate] == ["I1", "I2", "I3", "V1", "V2"]
+    assert [
+        row for row in candidate if row["scenario_id"] in {"I1", "I2", "V1"}
+    ] == original
+    sources = json.loads(
+        (root / "data/evaluation/system_scenario_sources.json").read_text()
+    )
+    for row in candidate:
+        Scenario.model_validate(row)
+        if row["scenario_id"] in sources["inputs"]:
+            source = sources["inputs"][row["scenario_id"]]
+            assert row["path"] == source["path"]
+            assert row["sha256"] == source["sha256"]
+    assert candidate[-1]["sampling_interval_seconds"] == 2.0
 
 
 @pytest.fixture

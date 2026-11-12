@@ -10,9 +10,11 @@ import {
 import { dirname, resolve, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs, isDeepStrictEqual } from "node:util";
-import { measureSubmission } from "./browserReadiness.ts";
+import { measureSubmission, selectFixture } from "./browserReadiness.ts";
 import {
   digest,
+  fixtureMime,
+  fixtureUpload,
   localOrigin,
   repetitions,
   checkStack,
@@ -30,6 +32,10 @@ const { values } = parseArgs({
     "frontend-container": { type: "string" },
     "output-directory": { type: "string" },
     repetitions: { type: "string", default: "10" },
+    scenarios: {
+      type: "string",
+      default: "configs/evaluation/system_workflows.json",
+    },
   },
 });
 for (const key of [
@@ -42,6 +48,7 @@ for (const key of [
 const origin = localOrigin(values["base-url"]!);
 const count = repetitions(values.repetitions);
 const directory = resolve(root, values["output-directory"]!);
+const scenarioPath = resolve(root, values.scenarios);
 const command = (executable: string, args: string[]) =>
   execFileSync(executable, args, {
     cwd: root,
@@ -77,9 +84,7 @@ function fileManifest(path: string): Record<string, string> {
 function toolHashes() {
   return {
     ...fileManifest(resolve(frontend, "measurements")),
-    scenario_file: digest(
-      readFileSync(resolve(root, "configs/evaluation/system_workflows.json")),
-    ),
+    scenario_file: digest(readFileSync(scenarioPath)),
   };
 }
 function sourceHashes() {
@@ -101,8 +106,9 @@ function setup() {
   return JSON.parse(
     command(resolve(root, ".venv/bin/python"), [
       "-c",
-      'import json,sys; from pathlib import Path; from evaluation.system_measurement import backend_identity,load_scenarios; from app.runtime_provenance import source_identity; print(json.dumps({"runner":source_identity(Path.cwd()),"backend":backend_identity(sys.argv[1]),"scenarios":[s.model_dump() for s in load_scenarios(Path("configs/evaluation/system_workflows.json"))]}))',
+      'import json,sys; from pathlib import Path; from evaluation.system_measurement import backend_identity,load_scenarios; from app.runtime_provenance import source_identity; print(json.dumps({"runner":source_identity(Path.cwd()),"backend":backend_identity(sys.argv[1]),"scenarios":[s.model_dump() for s in load_scenarios(Path(sys.argv[2]))]}))',
       values["backend-container"]!,
+      scenarioPath,
     ]),
   );
 }
@@ -115,6 +121,7 @@ type Attempt = Awaited<ReturnType<typeof measureSubmission>> & {
   screenshot?: string;
   artifact_errors?: string[];
   served_files?: Record<string, string>;
+  selected_file?: { name: string; size: number; type: string };
 };
 const report: {
   schema_version: number;
@@ -142,6 +149,7 @@ const report: {
   started_at: new Date().toISOString(),
   settings: {
     origin,
+    scenarios: relative(root, scenarioPath),
     repetitions: count,
     warmups_per_scenario_viewport: 1,
     timeout_ms: 360000,
@@ -254,21 +262,24 @@ try {
             await page
               .getByRole("button", { name: "Video", exact: true })
               .click();
-          const bytes = readFileSync(resolve(root, scenario.path));
+          const inputPath = resolve(root, scenario.path);
+          const bytes = readFileSync(inputPath);
           if (digest(bytes) !== scenario.sha256)
             throw new Error("input_changed");
-          const mime =
-            scenario.kind === "video" ? "video/x-msvideo" : "image/png";
-          // Current scenarios are the three fixed PNG/AVI fixtures, not arbitrary media.
+          const mime = fixtureMime(scenario.path, scenario.kind);
+          const input = page.getByLabel(`Choose ${scenario.kind} file`);
+          const selected = await selectFixture(
+            input,
+            fixtureUpload(inputPath, scenario.kind, bytes),
+          );
+          attempt.selected_file = selected;
           if (
-            !scenario.path.endsWith(scenario.kind === "video" ? ".avi" : ".png")
+            !selected ||
+            selected.type !== mime ||
+            selected.size !== bytes.length ||
+            selected.name !== scenario.path.split("/").at(-1)
           )
-            throw new Error("unsupported_measurement_fixture");
-          await page.getByLabel(`Choose ${scenario.kind} file`).setInputFiles({
-            name: scenario.path.split("/").at(-1),
-            mimeType: mime,
-            buffer: bytes,
-          });
+            throw new Error("selected_file_mismatch");
           await page
             .getByLabel("Session name")
             .fill(`browser-${scenario.scenario_id}-${viewport}-${repetition}`);

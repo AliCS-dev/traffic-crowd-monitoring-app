@@ -74,8 +74,15 @@ Desktop (1440 by 1000) runs before the narrow viewport (320 by 900). Within each
 we run I1, I2 and V1 from the [scenario file](../../configs/evaluation/system_workflows.json),
 with one excluded warm-up followed by measured repetitions. The default is ten;
 two here check the tooling. The backend remains running between attempts.
-Input hashes are verified, and PNG/AVI MIME metadata is supplied explicitly.
+Input hashes are verified. PNG/JPEG/AVI/MP4 MIME metadata is supplied explicitly
+for small fixtures; files above 50 MiB use their local path. We capture and
+verify the browser's selected file metadata before the app clears its input.
 This does **not** resolve native file-chooser compatibility under #84.
+
+The five-input candidate, including I3 and V2, is selected explicitly with
+`--scenarios configs/evaluation/system_workflows_candidate.json`. Its source
+requirements and checksums are in [system evaluation inputs](system_scenarios.md).
+The old configuration remains the default for reproducing earlier checks.
 
 The runner builds the local production frontend before collection, then compares
 served HTML and asset hashes with that build. It verifies backend source and
@@ -153,7 +160,9 @@ changed.
 
 ## Remaining Work
 
-Full-stack startup and failure/recovery experiments, I3 preparation, the V2 media
-decision and the final combined run order remain. We then freeze the evaluated
-version and collect the planned repetitions. These checks neither improve the
+The [lifecycle runner](stack_lifecycle.md) now covers fresh-stack startup and
+controlled idle outages. The [12 November input preparation](system_scenarios.md)
+records I3, V2, the agreed recovery scope and combined run order. Input
+compatibility, release dependency decisions, the software gate and version
+freeze come before final collection. These checks neither improve the
 failed detector quality gate nor add dense-crowd support.
