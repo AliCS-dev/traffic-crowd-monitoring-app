@@ -1,9 +1,28 @@
 import { createHash } from "node:crypto";
 import { isDeepStrictEqual } from "node:util";
+import { basename, extname } from "node:path";
 import type { MonitoringSessionResult } from "../src/api/analysisResults.ts";
 
 export const digest = (bytes: string | Buffer) =>
   createHash("sha256").update(bytes).digest("hex");
+
+export function fixtureMime(path: string, kind: string): string {
+  const extension = extname(path).toLowerCase();
+  const formats: Record<string, Record<string, string>> = {
+    image: { ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg" },
+    video: { ".avi": "video/x-msvideo", ".mp4": "video/mp4" },
+  };
+  const mime = formats[kind]?.[extension];
+  if (!mime) throw new Error("unsupported_measurement_fixture");
+  return mime;
+}
+export function fixtureUpload(path: string, kind: string, bytes: Buffer) {
+  const mimeType = fixtureMime(path, kind);
+  // Playwright limits in-memory file payloads to 50 MiB.
+  return bytes.length > 50 * 1024 * 1024
+    ? path
+    : { name: basename(path), mimeType, buffer: bytes };
+}
 export function localOrigin(value: string) {
   const url = new URL(value);
   if (

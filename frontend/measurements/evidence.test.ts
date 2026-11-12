@@ -6,9 +6,48 @@ import {
   checkStack,
   checkProfile,
   summaries,
+  fixtureMime,
+  fixtureUpload,
   type ContainerIdentity,
 } from "./evidence.ts";
 import { analysisResultFixture } from "../src/test/analysisResultFixture.ts";
+
+test("large fixtures use paths while small fixtures retain explicit MIME", () => {
+  const bytes = Buffer.from("fixture");
+  assert.deepEqual(fixtureUpload("/tmp/image.jpg", "image", bytes), {
+    name: "image.jpg",
+    mimeType: "image/jpeg",
+    buffer: bytes,
+  });
+  assert.equal(
+    fixtureUpload(
+      "/tmp/video.mp4",
+      "video",
+      Buffer.alloc(50 * 1024 * 1024 + 1),
+    ),
+    "/tmp/video.mp4",
+  );
+  assert.throws(() => fixtureUpload("/tmp/file.txt", "video", bytes));
+});
+
+test("measurement payload MIME follows the supported file kind and extension", () => {
+  for (const [path, kind, mime] of [
+    ["image.png", "image", "image/png"],
+    ["Renai.JPG", "image", "image/jpeg"],
+    ["image.jpeg", "image", "image/jpeg"],
+    ["sequence.avi", "video", "video/x-msvideo"],
+    ["traffic.mp4", "video", "video/mp4"],
+  ])
+    assert.equal(fixtureMime(path, kind), mime);
+  for (const [path, kind] of [
+    ["image.jpg", "video"],
+    ["traffic.mp4", "image"],
+    ["clip.webm", "video"],
+    ["image.png", "unknown"],
+  ]) {
+    assert.throws(() => fixtureMime(path, kind));
+  }
+});
 
 test("origin and repetition settings are bounded", () => {
   assert.equal(localOrigin("http://127.0.0.1:8086"), "http://127.0.0.1:8086");

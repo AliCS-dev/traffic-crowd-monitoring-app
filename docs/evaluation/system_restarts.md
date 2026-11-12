@@ -70,6 +70,9 @@ uses two for tooling verification, with 250 ms polling, a 180-second restart
 deadline and one-second target resource sampling. The request deadline is
 360 seconds. The scenario order and licensed fixture hashes come from
 [system_workflows.json](../../configs/evaluation/system_workflows.json).
+For the five-input candidate we add
+`--scenarios configs/evaluation/system_workflows_candidate.json`; the
+[input guide](system_scenarios.md) records its media requirements and sources.
 
 The runner writes `report.json`, `restarts.csv` and their hashes in `sha256.json`.
 The JSON includes seeds, attempts, stage logs, readiness polls, resource samples,
@@ -126,8 +129,9 @@ dependency, model setting or regression baseline changed.
 
 The [browser runner](browser_readiness.md) now covers decoded-scene readiness.
 The [lifecycle runner](stack_lifecycle.md) now covers fresh-stack startup and
-controlled idle service outages. Issue #79 still needs I3 preparation, the V2
-media decision, final failure-scenario scope and an exact final run order.
-We then freeze the evaluated version and collect the planned repetitions.
+controlled idle service outages. The [12 November input guide](system_scenarios.md)
+records the candidate I3/V2 files and the plan now fixes recovery scope and phase
+order. Issue #79 still needs completed input compatibility checks, release
+dependency decisions, the software gate and version freeze before collection.
 The native file-chooser MIME limitation remains tracked under #84. These records
 do not improve the detector's failed accuracy gate or add dense-crowd support.

@@ -3,12 +3,38 @@ import { fileURLToPath } from "node:url";
 import {
   measureSubmission,
   armReadiness,
+  selectFixture,
 } from "../measurements/browserReadiness.ts";
 import { gridResultFixture } from "../src/test/analysisResultFixture.ts";
 
 const imagePath = fileURLToPath(
   new URL("../../data/input/sample_image.jpg", import.meta.url),
 );
+
+test("file metadata survives the application's native input reset", async ({
+  page,
+}) => {
+  await form(page);
+  const input = page.getByLabel("Choose image file");
+  const bytes = Buffer.from("fixture");
+  const selected = await selectFixture(input, {
+    name: "selected.jpg",
+    mimeType: "image/jpeg",
+    buffer: bytes,
+  });
+  expect(selected).toEqual({
+    name: "selected.jpg",
+    type: "image/jpeg",
+    size: bytes.length,
+  });
+  await expect(input).toHaveValue("");
+  const native = await selectFixture(input, imagePath);
+  expect(native.name).toBe("sample_image.jpg");
+  expect(native.type).toBe("image/jpeg");
+  expect(native.size).toBeGreaterThan(0);
+  await expect(input).toHaveValue("");
+});
+
 async function form(page: Page, zero = false, reject = false) {
   const result = gridResultFixture();
   const frame = result.frames[0];

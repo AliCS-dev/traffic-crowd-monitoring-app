@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "recorded_on": "2026-11-12",
+  "purpose": "System workflow input preparation, not an accuracy reference or final performance result",
+  "scenario_file": "configs/evaluation/system_workflows_candidate.json",
+  "selection": "Source permission, daytime aerial traffic, input diversity and existing application limits; selected before running detections on V2",
+  "inputs": {
+    "I3": {
+      "path": "data/evaluation/raw/wikimedia/Renai_Dunhua_traffic_circle_202006.jpg",
+      "sha256": "88d8ea239eeee2e6ad1e19f84fd2dff11fdd78845c1ce00611270ae6a2151dc9",
+      "bytes": 2802162,
+      "width": 2160,
+      "height": 1620,
+      "format": "JPEG",
+      "creator": "MiNe",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Ren%27ai_Dunhua_traffic_circle_202006.jpg",
+      "download_url": "https://upload.wikimedia.org/wikipedia/commons/6/62/Ren%27ai_Dunhua_traffic_circle_202006.jpg",
+      "licence": "CC BY 2.0",
+      "licence_url": "https://creativecommons.org/licenses/by/2.0/",
+      "existing_role": "validation",
+      "source_group": "wikimedia_renai_roundabout",
+      "preparation": "Existing source file, unchanged; no crop or re-encoding"
+    },
+    "V2": {
+      "path": "data/evaluation/raw/system_inputs/pexels_30106869.mp4",
+      "sha256": "820a9b1a3d0a80fc0355f4d16683f38a16c67b474aace205806d32787c74f5c5",
+      "bytes": 369380661,
+      "width": 2160,
+      "height": 3840,
+      "format": "MP4",
+      "codec": "h264",
+      "fps": 29.97002997002997,
+      "reported_frames": 907,
+      "decoded_frames": 907,
+      "duration_seconds_from_frames_and_fps": 30.263566666666666,
+      "opencv_version": "4.13.0",
+      "title": "Aerial View of Busy Highway Traffic in Daylight",
+      "creator": "David Pickup | Advertising & Marketing",
+      "source_page": "https://www.pexels.com/video/aerial-view-of-busy-highway-traffic-in-daylight-30106869/",
+      "download_url": "https://videos.pexels.com/video-files/30106869/12912796_2160_3840_30fps.mp4",
+      "licence": "Pexels License, not Creative Commons",
+      "licence_url": "https://www.pexels.com/license/",
+      "terms_url": "https://www.pexels.com/terms-of-service/",
+      "terms_date": "2026-10-20",
+      "source_group": "pexels_30106869_highway",
+      "role": "system_workflow_only",
+      "preparation": "Original publisher download, unchanged; no trimming, crop or re-encoding",
+      "review": "Decoded all frames; inspected source previews at approximately 0, 10, 20 and 29 seconds. Daylight road traffic, portrait framing and changing vehicle positions. No reference labels or detection-based selection.",
+      "redistribution": "Raw video and unmodified frames remain outside Git. Obtain the original through the publisher. Retain source attribution in contextual application figures; do not imply endorsement. Third-party rights are not guaranteed by the licence."
+    }
+  },
+  "excluded_inputs": [
+    {"path": "data/input/test_video.mp4", "reason": "Source and licence not recorded; Ali confirmed the original link is unavailable"},
+    {"source_group": "wikimedia_jane_byrne", "reason": "Historical held-out group, excluded under the system protocol"}
+  ],
+  "limitations": [
+    "These inputs have no new accuracy reference annotations.",
+    "Five scenarios represent three source groups, not broad scene coverage.",
+    "Frame count divided by reported FPS is the decoded nominal duration, not a timestamp audit.",
+    "Natural traffic video does not establish tracking accuracy or real-time source-frame throughput.",
+    "Compatibility checks and the final version freeze remain separate from media preparation."
+  ]
+}
