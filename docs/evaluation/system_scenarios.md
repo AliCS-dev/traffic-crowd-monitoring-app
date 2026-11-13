@@ -94,9 +94,41 @@ MP4 path, but does not resolve all file-chooser compatibility under #84.
 
 ## Before Final Collection
 
+The [verification record](../../data/evaluation/system_scenario_verification.json)
+now links the retained local reports and their verified artifact hashes. The
+first 12 November attempt stopped before submission because the runner read
+file metadata after the application cleared its input. The second completed
+14 attempts, then rejected the narrow I3 scene: a CSS border enlarged a tiny
+detection box beyond its stored geometry. PR #167 fixed the event capture and
+replaced detection borders with inset shadows, without relaxing the alignment
+tolerance. The corrected run completed all 20 attempts: one warm-up and one
+measured submission for every scenario at each viewport size.
+
+The separate five-frame GPU regression passed without differences. These are
+compatibility checks, not final timing samples or proof of detector accuracy.
+The screenshot below shows the first of V2's 16 sampled frames, after scrolling
+to the scene. The original portrait aspect ratio is preserved.
+
+![V2 saved result in the desktop workspace](../images/measurements/scenario-video-desktop.png)
+
+Source: David Pickup | Advertising & Marketing,
+[Pexels video 30106869](https://www.pexels.com/video/aerial-view-of-busy-highway-traffic-in-daylight-30106869/),
+[Pexels License](https://www.pexels.com/license/). The application adds the
+interface, detections and grid. This is a 12 November development screenshot,
+not a new accuracy reference or an endorsement by the contributor.
+
+![I3 saved result at the narrow viewport](../images/measurements/scenario-image-mobile.png)
+
+Source: MiNe, [Ren'ai traffic circle](https://commons.wikimedia.org/wiki/File:Ren%27ai_Dunhua_traffic_circle_202006.jpg),
+[CC BY 2.0](https://creativecommons.org/licenses/by/2.0/). The application adds
+the interface, detections and grid. The screenshot was taken after the tiny-box
+fix on 12 November. It is a narrow desktop-browser viewport, not a mobile-device
+performance test.
+
 The [evaluation plan](system_evaluation_plan.md) fixes the phase order and
 repetitions. Ali approved live recovery tests limited to idle service outages;
 interrupted videos remain covered by controlled software tests, with no claimed
 real-GPU crash-recovery timing. Compatibility evidence is separate from final
-performance collection. We still need release dependency decisions, the #26
-software gate and a clean version/configuration freeze. Issue #79 remains open.
+performance collection. The [13 November dependency decision](release_dependency_review.md)
+retains current versions. The final software gate and a clean version/configuration
+freeze still precede collection. Issue #79 remains open.

@@ -89,6 +89,15 @@ video and memory measurements do not change the model-quality results below.
 
 ## Application Evaluation Preparation
 
+The [13 November dependency decision](release_dependency_review.md) records
+Ali's agreement to retain current versions for evaluation, the three deferred
+PRs and their review limits. The
+[scenario verification record](../../data/evaluation/system_scenario_verification.json)
+retains the earlier incomplete attempts and both successful compatibility runs,
+with hashes of the original local artifacts. The updated frontend completed
+20 live submissions; five saved sessions and 44 JPEG assets were checked, and
+the unchanged GPU regression passed. These are not final performance results.
+
 The [12 November input preparation](system_scenarios.md) records the five
 candidate scenarios, the licensed natural-motion video, source checksums and
 the agreed bounded recovery scope. The collection order is now fixed in the
