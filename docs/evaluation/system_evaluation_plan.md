@@ -38,6 +38,12 @@ into evidence of detection accuracy. Issues #113-#115 remain deferred.
 
 ## Version and Freeze
 
+The [13 November dependency review](release_dependency_review.md) records the
+agreed boundary: retain the merged versions and defer PRs #153, #154 and #163,
+unless a necessary security fix changes that decision. Post-update compatibility
+checks passed; the full software gate and clean freeze record still precede
+final collection.
+
 The application candidate is commit `a229688b8858289ea740efe6433e72cef71bb88b`, merged through PR #155.
 The interactive workspace and its corrected browser checks are included.
 This identifies the starting version, not the final measured release.

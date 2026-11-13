@@ -1,5 +1,26 @@
 # Development Log
 
+### Issue #79: Scenario Evidence and Dependency Boundary (13 November 2026)
+
+We completed the missing evidence summary for the 12 November scenario work,
+retaining its two incomplete attempts and successful rerun. The source guide
+now includes attributed screenshots and explains the tiny-box rendering fix
+merged in PR #167. We then verified the frontend dependency update from PR #164
+using a rebuilt frontend and a fresh disposable GPU stack.
+
+The updated version passed 115 frontend unit tests, six measurement-rule tests,
+40 browser checks and 20 live browser submissions. All 44 JPEG assets from five
+selected saved sessions were available, and parsed results matched the browser
+records. The unchanged five-frame GPU regression passed. The 88 focused Python
+tests, frontend lint, formatting, types and container build passed too.
+
+Ali approved retaining current versions for evaluation and deferring PRs #153,
+#154 and #163 unless a necessary security fix requires another candidate. We
+recorded this on the PRs and in the [dependency review](evaluation/release_dependency_review.md).
+The Python update still lacks passing regression-evidence approval. No application
+code, dependency pin, model setting or screenshot baseline changed in this step.
+The final software gate, clean freeze and repeated collection remain under #79.
+
 Current setup and usage are in the [documentation index](README.md). The entries
 below record work at the time it was completed, not a checklist of today's state.
 
