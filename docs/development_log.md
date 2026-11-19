@@ -24,6 +24,12 @@ final timing table and links the full evidence. We removed only the disposable
 trial stacks. Cold API, warm API and browser measurements still belong to #79;
 the issue is not complete.
 
+The first PR checks found a formatting difference in the results page's Python
+example. CI installed Ruff 0.17.6, which checked Markdown examples; the local
+gate used 0.15.19. We formatted that example with 0.17.6 and verified the whole
+repository with both versions. The table reproduced unchanged. No application,
+measurement tool, frozen input or collected observation changed in this follow-up.
+
 ### Issue #79: Scenario Evidence and Dependency Boundary (13 November 2026)
 
 We completed the missing evidence summary for the 12 November scenario work,

@@ -110,12 +110,20 @@ import math
 import statistics
 from pathlib import Path
 
-record = json.loads(Path("data/evaluation/system_lifecycle_final_2026_11_19.json").read_text())
+record = json.loads(
+    Path("data/evaluation/system_lifecycle_final_2026_11_19.json").read_text()
+)
 for name, row in record["timing_summary"].items():
     values = sorted(row["observations"])
     p95 = values[math.ceil(0.95 * len(values)) - 1]
-    print(name, len(values), *(round(v, 3) for v in
-          (min(values), statistics.median(values), max(values), p95)))
+    print(
+        name,
+        len(values),
+        *(
+            round(v, 3)
+            for v in (min(values), statistics.median(values), max(values), p95)
+        ),
+    )
 ```
 
 The next phase is the planned cold-process API collection. We do not pool these
