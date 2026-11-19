@@ -2,7 +2,8 @@
 
 [Results index](results_index.md) | [Documentation index](../README.md)
 
-**Prepared 28 October 2026. Status: preparation, not a completed evaluation.**
+**Prepared 28 October 2026. Updated 19 November: software gate passed and
+freeze recorded; final collection is not yet complete.**
 
 On 29 October we added and verified [warm workflow measurements](system_measurements.md)
 and structured stage timers. The complete protocol below still needs the
@@ -38,11 +39,16 @@ into evidence of detection accuracy. Issues #113-#115 remain deferred.
 
 ## Version and Freeze
 
+The [19 November freeze](system_freeze.md) records clean application commit
+`5cbd433eebed9678f2e288329d4a99b8ad295cc4`, immutable container IDs, hardware,
+settings and the passing software gate. The paragraphs below explain how we
+reached that candidate; they are not a second release selection.
+
 The [13 November dependency review](release_dependency_review.md) records the
 agreed boundary: retain the merged versions and defer PRs #153, #154 and #163,
 unless a necessary security fix changes that decision. Post-update compatibility
 checks passed; the full software gate and clean freeze record still precede
-final collection.
+final collection. Those prerequisites are now recorded in the freeze above.
 
 The application candidate is commit `a229688b8858289ea740efe6433e72cef71bb88b`, merged through PR #155.
 The interactive workspace and its corrected browser checks are included.

@@ -89,6 +89,14 @@ video and memory measurements do not change the model-quality results below.
 
 ## Application Evaluation Preparation
 
+The [19 November system freeze](system_freeze.md) identifies the exact
+application, container images, hardware and settings for final measurements.
+All 721 Python tests passed with PostgreSQL enabled, along with 115 frontend
+unit tests, six measurement-rule tests, 40 browser checks, four live GPU checks
+and the unchanged five-frame regression. The linked record also retains the
+new dependency-alert decision. These are software-gate results, not accuracy
+scores or completed final performance tables.
+
 The [13 November dependency decision](release_dependency_review.md) records
 Ali's agreement to retain current versions for evaluation, the three deferred
 PRs and their review limits. The

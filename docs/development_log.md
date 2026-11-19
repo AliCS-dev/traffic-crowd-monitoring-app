@@ -1,5 +1,21 @@
 # Development Log
 
+### Issue #79: Software Gate and System Freeze (19 November 2026)
+
+We built clean application commit `5cbd433` with explicit version metadata,
+verified the served frontend files, and recorded the container IDs, hardware,
+model, settings and input hashes in the [system freeze](evaluation/system_freeze.md).
+All 721 Python tests passed twice with real PostgreSQL enabled. The frontend
+passed 115 unit tests, six measurement-rule tests and 40 browser checks. Four
+live GPU browser checks, the five-frame regression and controlled restart
+recovery passed too. No model, dependency or application behavior changed.
+
+We corrected four measurement report headings that still described every run
+as tooling verification. A committed freeze and separate collection record,
+not the heading alone, distinguish final runs. The new OpenTelemetry alert
+remains documented and open; no active exposure path was identified in this
+local stack. The remaining measurements and final tables still belong to #79.
+
 ### Issue #79: Scenario Evidence and Dependency Boundary (13 November 2026)
 
 We completed the missing evidence summary for the 12 November scenario work,
