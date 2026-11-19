@@ -91,3 +91,22 @@ container IDs, dependency versions, hardware and scenario hashes, then pass the
 software gate on that candidate. A later necessary security fix produces a new
 labelled candidate and rerun; results from different versions are not pooled.
 No final measurements or accuracy claims are approved by this decision.
+
+## 19 November Recheck
+
+The new paginated alert query returned one open advisory:
+[GHSA-mf5v-w3w3-f6cg](https://github.com/advisories/GHSA-mf5v-w3w3-f6cg),
+tracked as repository alert #60. The installed `opentelemetry-api` 1.45.1 is
+affected; 1.45.2 is the first patched version. The medium-severity issue concerns
+CPU exhaustion when the trace-context propagator receives a specially formed
+untrusted `traceparent` value containing an embedded newline.
+
+We found no OpenTelemetry imports, trace-context extraction or MCP carrier in
+the application. Its entrypoint starts Uvicorn directly; the evaluated container
+has no OpenTelemetry instrumentation packages or `OTEL_` environment settings.
+We therefore did not identify an enabled exposure path in this loopback-only
+evaluation stack and retained the agreed versions. This is a bounded source and
+configuration review, not proof that the dependency is safe in every integration.
+The alert stays open. A standalone patch and regression check remain necessary
+before broader deployment; adding instrumentation would require another review.
+The earlier statement of no open alerts applies only to 13 November.

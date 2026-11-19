@@ -95,7 +95,7 @@ def main(argv=None):
     report = {
         "schema_version": 1,
         "run_id": str(uuid4()),
-        "purpose": "Warm workflow instrumentation check; not final evaluation/accuracy",
+        "purpose": "Warm sequential workflow measurements; not detection accuracy",
         "started_at": utc_now(),
         "status": "in_progress",
         "runner": source_identity(ROOT),

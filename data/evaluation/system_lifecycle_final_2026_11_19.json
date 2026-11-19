@@ -1,0 +1,2079 @@
+{
+  "schema_version": 1,
+  "classification": "final_system_evaluation_phase_1",
+  "status": "completed",
+  "started_at": "2026-11-19T16:57:47.547952+00:00",
+  "freeze_commit": "2028ca7a6c3ab514c70206f74465a7762ae3f16e",
+  "freeze_file_sha256": "af11b2834663499dab9b4e65e06752432bebcaff2b473bb8af04d7aa8f9e2b30",
+  "planned_trials": 3,
+  "conditions": "User reports plugged in and no heavy work. No local tests/builds overlap collection. Exclusive GPU use not verified.",
+  "backend_idle_memory_before_fresh_start": null,
+  "backend_idle_note": "No trial backend exists before fresh-stack startup. Whole-device GPU baseline is retained instead.",
+  "finished_at": "2026-11-19T17:03:36.796698+00:00",
+  "freeze_record": "data/evaluation/system_freeze_2026_11_19.json",
+  "application": {
+    "application_commit": "5cbd433eebed9678f2e288329d4a99b8ad295cc4",
+    "source_dirty": false,
+    "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+  },
+  "images": {
+    "backend": "sha256:79e5daa60b37da453e64983683dd203745583213ef5f913f561d1c62c98fd7ad",
+    "frontend": "sha256:ab569278d359810402704804ec94a2c8f7872f954f56619d1944ad49e6ad5f4b",
+    "postgres": "sha256:9e2cf6287f25c3151f4c9421ccce2b17f3e60061c111a29165e0d2cdd9ff0a97"
+  },
+  "scenario_order": [
+    "I1",
+    "I2",
+    "I3",
+    "V1",
+    "V2"
+  ],
+  "trials": [
+    {
+      "index": 1,
+      "project": "traffic-measure-final-lifecycle-1",
+      "started_at": "2026-11-19T16:57:47.549577+00:00",
+      "disk_free_bytes": 899365539840,
+      "wsl_loadavg": "0.15 0.61 0.48 1/950 9849",
+      "background_containers": "traffic-measure-scenarios-frontend-1\tUp 12 minutes (healthy)\ntraffic-measure-scenarios-postgres-1\tUp 12 minutes (healthy)\ntraffic-issue79-frontend-1\tUp 12 minutes (healthy)\ntraffic-issue79-postgres-1\tUp 12 minutes (healthy)\ntraffic-issue116-frontend-1\tUp 12 minutes (healthy)\ntraffic-issue116-postgres-1\tUp 12 minutes (healthy)\ntraffic-dependency-review-frontend-1\tUp 12 minutes (healthy)\ntraffic-dependency-review-postgres-1\tUp 12 minutes (healthy)",
+      "background_stats": [
+        {
+          "BlockIO": "483kB / 4.1kB",
+          "CPUPerc": "0.00%",
+          "Container": "0e32c8dbbf7eaaefa66a030199c4a9d75cf2ae931d9ed0e4ff1797d84ab6e090",
+          "ID": "0e32c8dbbf7e",
+          "MemPerc": "0.08%",
+          "MemUsage": "13.38MiB / 15.47GiB",
+          "Name": "traffic-measure-scenarios-frontend-1",
+          "NetIO": "2kB / 126B",
+          "PIDs": "17"
+        },
+        {
+          "BlockIO": "11MB / 692kB",
+          "CPUPerc": "0.01%",
+          "Container": "9844379134d54370fe930b0949db2fadc23c130bdd8335b1dfe2db096346f443",
+          "ID": "9844379134d5",
+          "MemPerc": "0.18%",
+          "MemUsage": "28.51MiB / 15.47GiB",
+          "Name": "traffic-measure-scenarios-postgres-1",
+          "NetIO": "1.83kB / 126B",
+          "PIDs": "6"
+        },
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "0.00%",
+          "Container": "e45605222cdd2cce5eef876307cac4b06e7d8fe46b6b2999c1af93bfe5004fca",
+          "ID": "e45605222cdd",
+          "MemPerc": "0.08%",
+          "MemUsage": "13.17MiB / 15.47GiB",
+          "Name": "traffic-issue79-frontend-1",
+          "NetIO": "2.08kB / 126B",
+          "PIDs": "17"
+        },
+        {
+          "BlockIO": "10.4MB / 299kB",
+          "CPUPerc": "0.01%",
+          "Container": "a609810af5271ba304b9b7aa9ac88b031c536a198387302713f967d6e3bc7dcb",
+          "ID": "a609810af527",
+          "MemPerc": "0.18%",
+          "MemUsage": "28.2MiB / 15.47GiB",
+          "Name": "traffic-issue79-postgres-1",
+          "NetIO": "1.83kB / 126B",
+          "PIDs": "6"
+        },
+        {
+          "BlockIO": "12.3kB / 4.1kB",
+          "CPUPerc": "0.00%",
+          "Container": "52cdf94939428055082dbeea59167af5f4670f06096e6b0a4383ca101fcfd94d",
+          "ID": "52cdf9493942",
+          "MemPerc": "0.08%",
+          "MemUsage": "13.19MiB / 15.47GiB",
+          "Name": "traffic-issue116-frontend-1",
+          "NetIO": "2.01kB / 126B",
+          "PIDs": "17"
+        },
+        {
+          "BlockIO": "11.7MB / 299kB",
+          "CPUPerc": "0.01%",
+          "Container": "8bfde79cdda9d1b69b10b6acc5e0a5f8f2fc6cb0373a0e9dce92421462c6da85",
+          "ID": "8bfde79cdda9",
+          "MemPerc": "0.19%",
+          "MemUsage": "29.52MiB / 15.47GiB",
+          "Name": "traffic-issue116-postgres-1",
+          "NetIO": "1.84kB / 126B",
+          "PIDs": "6"
+        },
+        {
+          "BlockIO": "6.77MB / 4.1kB",
+          "CPUPerc": "0.00%",
+          "Container": "8d9dfafe9412048200c0e28a321b011dd26a3ed9f6ac5f4bbad0e5c912ddbda7",
+          "ID": "8d9dfafe9412",
+          "MemPerc": "0.11%",
+          "MemUsage": "17.98MiB / 15.47GiB",
+          "Name": "traffic-dependency-review-frontend-1",
+          "NetIO": "1.95kB / 126B",
+          "PIDs": "17"
+        },
+        {
+          "BlockIO": "10.1MB / 299kB",
+          "CPUPerc": "0.01%",
+          "Container": "de6e7aea5a14cce2030c611ce923c0384c51565f4f2b21c71bf1b0466bdae0ec",
+          "ID": "de6e7aea5a14",
+          "MemPerc": "0.18%",
+          "MemUsage": "28.1MiB / 15.47GiB",
+          "Name": "traffic-dependency-review-postgres-1",
+          "NetIO": "1.78kB / 126B",
+          "PIDs": "6"
+        }
+      ],
+      "idle_gpu": [
+        {
+          "at": "2026-11-19T16:57:49.248008+00:00",
+          "csv": "220, 0, 54, 5.66"
+        },
+        {
+          "at": "2026-11-19T16:57:50.364560+00:00",
+          "csv": "220, 0, 54, 6.97"
+        },
+        {
+          "at": "2026-11-19T16:57:51.431452+00:00",
+          "csv": "220, 0, 54, 5.60"
+        }
+      ],
+      "idle_gpu_columns": [
+        "memory_used_MiB",
+        "utilization_percent",
+        "temperature_C",
+        "power_W"
+      ],
+      "command": [
+        ".venv/bin/python",
+        "scripts/measure_stack_lifecycle.py",
+        "--project",
+        "traffic-measure-final-lifecycle-1",
+        "--port",
+        "8088",
+        "--backend-image",
+        "sha256:79e5daa60b37da453e64983683dd203745583213ef5f913f561d1c62c98fd7ad",
+        "--frontend-image",
+        "sha256:ab569278d359810402704804ec94a2c8f7872f954f56619d1944ad49e6ad5f4b",
+        "--scenarios",
+        "configs/evaluation/system_workflows_candidate.json",
+        "--allow-stack-interruption",
+        "--output-directory",
+        "data/output/system-measurements/final-lifecycle-2026-11-19-1"
+      ],
+      "exit_code": 0,
+      "finished_at": "2026-11-19T16:59:43.172152+00:00",
+      "report_path": "data/output/system-measurements/final-lifecycle-2026-11-19-1/report.json",
+      "report_status": "recorded",
+      "request_count": 15,
+      "report_sha256": "76af5a0f6155e685400bd8ccf86099977c7235a4b7c29718af59dbb4320361af",
+      "cleanup_exit_code": 0,
+      "runner": {
+        "application_commit": "2028ca7a6c3ab514c70206f74465a7762ae3f16e",
+        "source_dirty": false,
+        "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+      },
+      "startup": {
+        "status": "completed",
+        "started_at": "2026-11-19T16:57:53.178307+00:00",
+        "ready_seconds": 13.005121336000002,
+        "command_seconds": 12.974916535000034,
+        "frontend": {
+          "path": "/workspace",
+          "started_at": "2026-11-19T16:58:06.127237+00:00",
+          "http_status": 200,
+          "request_id": null,
+          "app_shell": true,
+          "seconds": 0.0009199009999747432
+        },
+        "elapsed_seconds": 13.17853944500007,
+        "finished_at": "2026-11-19T16:58:06.300654+00:00"
+      },
+      "requests": [
+        {
+          "scenario_id": "I1",
+          "kind": "image",
+          "phase": "seed",
+          "repetition": 1,
+          "started_at": "2026-11-19T16:58:06.448887+00:00",
+          "status": "completed",
+          "request_id": "9215d657-df8c-42d8-86ee-4623812976e6",
+          "session_id": 1,
+          "api_seconds": 16.45500007999999,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T16:58:22.915697+00:00"
+        },
+        {
+          "scenario_id": "I2",
+          "kind": "image",
+          "phase": "seed",
+          "repetition": 1,
+          "started_at": "2026-11-19T16:58:22.950010+00:00",
+          "status": "completed",
+          "request_id": "143ff76f-16db-428e-a24a-2b2d0727210c",
+          "session_id": 2,
+          "api_seconds": 0.10706334099995729,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T16:58:23.068462+00:00"
+        },
+        {
+          "scenario_id": "I3",
+          "kind": "image",
+          "phase": "seed",
+          "repetition": 1,
+          "started_at": "2026-11-19T16:58:23.100911+00:00",
+          "status": "completed",
+          "request_id": "c0a3ef39-6f20-4fef-bf2f-bd38b6ce1d05",
+          "session_id": 3,
+          "api_seconds": 0.23615448399993966,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T16:58:23.349479+00:00"
+        },
+        {
+          "scenario_id": "V1",
+          "kind": "video",
+          "phase": "seed",
+          "repetition": 1,
+          "started_at": "2026-11-19T16:58:23.408546+00:00",
+          "status": "completed",
+          "request_id": "5a566a01-9ee9-420a-b245-e69eeeab570b",
+          "session_id": 4,
+          "api_seconds": 0.6255971460000183,
+          "failure_code": null,
+          "http_status": 202,
+          "sampled_frames": 3,
+          "finished_at": "2026-11-19T16:58:24.046853+00:00"
+        },
+        {
+          "scenario_id": "V2",
+          "kind": "video",
+          "phase": "seed",
+          "repetition": 1,
+          "started_at": "2026-11-19T16:58:24.114511+00:00",
+          "status": "completed",
+          "request_id": "a6aaa179-e4e8-4617-ad23-e87272e1d144",
+          "session_id": 5,
+          "api_seconds": 13.149477057000013,
+          "failure_code": null,
+          "http_status": 202,
+          "sampled_frames": 16,
+          "finished_at": "2026-11-19T16:58:37.216616+00:00"
+        },
+        {
+          "scenario_id": "I1",
+          "kind": "image",
+          "phase": "after_postgres_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T16:58:48.122547+00:00",
+          "status": "completed",
+          "request_id": "2e9a6e73-8c01-41fd-9e09-f29e8238b5c2",
+          "session_id": 6,
+          "api_seconds": 0.20908851499996217,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T16:58:48.341743+00:00"
+        },
+        {
+          "scenario_id": "I2",
+          "kind": "image",
+          "phase": "after_postgres_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T16:58:48.370437+00:00",
+          "status": "completed",
+          "request_id": "199b91f4-e9e0-4558-a3d9-88cffb1afeec",
+          "session_id": 7,
+          "api_seconds": 0.10495966600001339,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T16:58:48.485042+00:00"
+        },
+        {
+          "scenario_id": "I3",
+          "kind": "image",
+          "phase": "after_postgres_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T16:58:48.516377+00:00",
+          "status": "completed",
+          "request_id": "e31eb81f-5432-49cc-970e-da7a4596b3dd",
+          "session_id": 8,
+          "api_seconds": 0.24015745700000934,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T16:58:48.766626+00:00"
+        },
+        {
+          "scenario_id": "V1",
+          "kind": "video",
+          "phase": "after_postgres_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T16:58:48.813534+00:00",
+          "status": "completed",
+          "request_id": "ca61252a-658a-4f65-bac8-a446f4c101c8",
+          "session_id": 9,
+          "api_seconds": 0.5523450229999298,
+          "failure_code": null,
+          "http_status": 202,
+          "sampled_frames": 3,
+          "finished_at": "2026-11-19T16:58:49.376919+00:00"
+        },
+        {
+          "scenario_id": "V2",
+          "kind": "video",
+          "phase": "after_postgres_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T16:58:49.444395+00:00",
+          "status": "completed",
+          "request_id": "dadc8d88-cd2a-4180-b88c-9b9a08ea1b1c",
+          "session_id": 10,
+          "api_seconds": 13.075344914000084,
+          "failure_code": null,
+          "http_status": 202,
+          "sampled_frames": 16,
+          "finished_at": "2026-11-19T16:59:02.478748+00:00"
+        },
+        {
+          "scenario_id": "I1",
+          "kind": "image",
+          "phase": "after_backend_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T16:59:18.894368+00:00",
+          "status": "completed",
+          "request_id": "118d7560-fd2a-4a42-8695-d25a93989841",
+          "session_id": 11,
+          "api_seconds": 7.84249230599994,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T16:59:26.747129+00:00"
+        },
+        {
+          "scenario_id": "I2",
+          "kind": "image",
+          "phase": "after_backend_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T16:59:26.777744+00:00",
+          "status": "completed",
+          "request_id": "9e3daebb-8bb4-4b37-b644-860c386eda0b",
+          "session_id": 12,
+          "api_seconds": 0.10118909699997403,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T16:59:26.889153+00:00"
+        },
+        {
+          "scenario_id": "I3",
+          "kind": "image",
+          "phase": "after_backend_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T16:59:26.917794+00:00",
+          "status": "completed",
+          "request_id": "7f26a5bf-3bfe-4337-98bc-ec398cbd8f43",
+          "session_id": 13,
+          "api_seconds": 0.22682918099997096,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T16:59:27.156906+00:00"
+        },
+        {
+          "scenario_id": "V1",
+          "kind": "video",
+          "phase": "after_backend_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T16:59:27.207567+00:00",
+          "status": "completed",
+          "request_id": "2080537f-6229-4d30-ba6b-942e83da8030",
+          "session_id": 14,
+          "api_seconds": 0.5591087540000217,
+          "failure_code": null,
+          "http_status": 202,
+          "sampled_frames": 3,
+          "finished_at": "2026-11-19T16:59:27.779083+00:00"
+        },
+        {
+          "scenario_id": "V2",
+          "kind": "video",
+          "phase": "after_backend_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T16:59:27.844154+00:00",
+          "status": "completed",
+          "request_id": "35b73921-79ca-4b45-a44d-708656a68c32",
+          "session_id": 15,
+          "api_seconds": 13.676889576000008,
+          "failure_code": null,
+          "http_status": 202,
+          "sampled_frames": 16,
+          "finished_at": "2026-11-19T16:59:41.469046+00:00"
+        }
+      ],
+      "outages": [
+        {
+          "service": "postgres",
+          "status": "completed",
+          "started_at": "2026-11-19T16:58:38.362743+00:00",
+          "ready_seconds": 0.5009622530000115,
+          "stop_seconds": 0.6059898149999299,
+          "outage_probes": [
+            {
+              "path": "/healthz",
+              "started_at": "2026-11-19T16:58:39.297280+00:00",
+              "http_status": 200,
+              "request_id": null,
+              "seconds": 0.001034808999975212
+            },
+            {
+              "path": "/workspace",
+              "started_at": "2026-11-19T16:58:39.298330+00:00",
+              "http_status": 200,
+              "request_id": null,
+              "app_shell": true,
+              "seconds": 0.000850019999916185
+            },
+            {
+              "path": "/api/health",
+              "started_at": "2026-11-19T16:58:39.299190+00:00",
+              "http_status": 200,
+              "request_id": "d81d5765-39db-4687-9b5b-5f4ee621b756",
+              "status": "ok",
+              "checks": null,
+              "error_code": null,
+              "seconds": 0.0017480449999993652
+            },
+            {
+              "path": "/api/ready",
+              "started_at": "2026-11-19T16:58:39.300944+00:00",
+              "http_status": 503,
+              "request_id": "62c96c4d-1c5c-47c6-8e21-45df0baa56f5",
+              "status": "not_ready",
+              "checks": {
+                "database": {
+                  "status": "not_ready"
+                },
+                "detector": {
+                  "status": "ready"
+                }
+              },
+              "error_code": null,
+              "seconds": 3.591748982000013
+            },
+            {
+              "path": "/api/analyses/1",
+              "started_at": "2026-11-19T16:58:42.892702+00:00",
+              "http_status": 500,
+              "request_id": "9f780f79-c0f0-4faf-b8e0-e0dbd52e83ad",
+              "status": null,
+              "checks": null,
+              "error_code": "internal_error",
+              "seconds": 3.1161626379999916
+            }
+          ],
+          "expected_http_statuses": [
+            [
+              200
+            ],
+            [
+              200
+            ],
+            [
+              200
+            ],
+            [
+              503
+            ],
+            [
+              500
+            ]
+          ],
+          "outage_verified": true,
+          "recovery_started_at": "2026-11-19T16:58:46.008889+00:00",
+          "start_command_seconds": 0.18543098899999677,
+          "restoration_status": "completed",
+          "elapsed_seconds": 8.306512400999964,
+          "finished_at": "2026-11-19T16:58:46.669270+00:00",
+          "saved_recovery": [
+            {
+              "session_id": 1,
+              "status": "completed",
+              "seconds": 0.031955193000044346,
+              "frames": 1,
+              "result_sha256": "cb107e1d5fd6c1e8c030b34c4f7109554e4d1acece214fb335e8f6e99d7a9cc5",
+              "asset_count": 2,
+              "asset_map_sha256": "1318281c461d522acf06fc7a65deb0bf928a9b96525c9834cdd83bb57e85615d",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 2,
+              "status": "completed",
+              "seconds": 0.028715037999972992,
+              "frames": 1,
+              "result_sha256": "f5112d7a3bd489ffdfe8a611571b6af638ee4f20822e99bb1bbc291ecc1a8b02",
+              "asset_count": 2,
+              "asset_map_sha256": "8b22ea0f2d8cf3dca94d4ec437467e652b21aed4fa788dc473d4fdf45aadb1a2",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 3,
+              "status": "completed",
+              "seconds": 0.05041684200000418,
+              "frames": 1,
+              "result_sha256": "1d73c340927c5dff427ed2910ea5e8d12c4e5b8b25a03fc3fb224e405c0ef0f1",
+              "asset_count": 2,
+              "asset_map_sha256": "c3024e1fed59191599ded367416db4d9132c016ca7474c50cdc11dcb41120fce",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 4,
+              "status": "completed",
+              "seconds": 0.06534963800004334,
+              "frames": 3,
+              "result_sha256": "0b3b5f2fc8a030a7946f43714937ededb13dc3c2ac6752ef1090e66529f6fd3e",
+              "asset_count": 6,
+              "asset_map_sha256": "9e28242ec2b54f4a2b39f7c08f079bd275b142918974876ac1126cab0f70bfa9",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 5,
+              "status": "completed",
+              "seconds": 1.1177958309999667,
+              "frames": 16,
+              "result_sha256": "f23ae4c2733cedcb96e427317264e7ca6149f15bddb6fdce37e1d6bad0658fc8",
+              "asset_count": 32,
+              "asset_map_sha256": "fc5d9daa1356e12f0d9b91b1279281b294f35bfe1919462b62e9805d11119a4d",
+              "result_and_all_assets_match": true
+            }
+          ]
+        },
+        {
+          "service": "backend",
+          "status": "completed",
+          "started_at": "2026-11-19T16:59:03.683284+00:00",
+          "ready_seconds": 2.0347260810000307,
+          "stop_seconds": 1.2412290460000577,
+          "outage_probes": [
+            {
+              "path": "/healthz",
+              "started_at": "2026-11-19T16:59:05.248946+00:00",
+              "http_status": 200,
+              "request_id": null,
+              "seconds": 0.0009671579999803726
+            },
+            {
+              "path": "/workspace",
+              "started_at": "2026-11-19T16:59:05.249929+00:00",
+              "http_status": 200,
+              "request_id": null,
+              "app_shell": true,
+              "seconds": 0.0007811259999925824
+            },
+            {
+              "path": "/api/health",
+              "started_at": "2026-11-19T16:59:05.250719+00:00",
+              "http_status": 504,
+              "request_id": null,
+              "json_unavailable": true,
+              "seconds": 5.004464009999992
+            },
+            {
+              "path": "/api/ready",
+              "started_at": "2026-11-19T16:59:10.255192+00:00",
+              "http_status": 504,
+              "request_id": null,
+              "json_unavailable": true,
+              "seconds": 5.006557976000067
+            },
+            {
+              "path": "/api/analyses/1",
+              "started_at": "2026-11-19T16:59:15.261764+00:00",
+              "http_status": 502,
+              "request_id": null,
+              "json_unavailable": true,
+              "seconds": 0.0008643049999363939
+            }
+          ],
+          "expected_http_statuses": [
+            [
+              200
+            ],
+            [
+              200
+            ],
+            [
+              502,
+              504
+            ],
+            [
+              502,
+              504
+            ],
+            [
+              502,
+              504
+            ]
+          ],
+          "outage_verified": true,
+          "recovery_started_at": "2026-11-19T16:59:15.262647+00:00",
+          "start_command_seconds": 0.47317431499993745,
+          "restoration_status": "completed",
+          "elapsed_seconds": 13.781871183000021,
+          "finished_at": "2026-11-19T16:59:17.465171+00:00",
+          "saved_recovery": [
+            {
+              "session_id": 1,
+              "status": "completed",
+              "seconds": 0.03534288200000901,
+              "frames": 1,
+              "result_sha256": "cb107e1d5fd6c1e8c030b34c4f7109554e4d1acece214fb335e8f6e99d7a9cc5",
+              "asset_count": 2,
+              "asset_map_sha256": "1318281c461d522acf06fc7a65deb0bf928a9b96525c9834cdd83bb57e85615d",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 2,
+              "status": "completed",
+              "seconds": 0.031320828000048095,
+              "frames": 1,
+              "result_sha256": "f5112d7a3bd489ffdfe8a611571b6af638ee4f20822e99bb1bbc291ecc1a8b02",
+              "asset_count": 2,
+              "asset_map_sha256": "8b22ea0f2d8cf3dca94d4ec437467e652b21aed4fa788dc473d4fdf45aadb1a2",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 3,
+              "status": "completed",
+              "seconds": 0.04855512500000714,
+              "frames": 1,
+              "result_sha256": "1d73c340927c5dff427ed2910ea5e8d12c4e5b8b25a03fc3fb224e405c0ef0f1",
+              "asset_count": 2,
+              "asset_map_sha256": "c3024e1fed59191599ded367416db4d9132c016ca7474c50cdc11dcb41120fce",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 4,
+              "status": "completed",
+              "seconds": 0.07116418700002214,
+              "frames": 3,
+              "result_sha256": "0b3b5f2fc8a030a7946f43714937ededb13dc3c2ac6752ef1090e66529f6fd3e",
+              "asset_count": 6,
+              "asset_map_sha256": "9e28242ec2b54f4a2b39f7c08f079bd275b142918974876ac1126cab0f70bfa9",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 5,
+              "status": "completed",
+              "seconds": 1.0875110510000923,
+              "frames": 16,
+              "result_sha256": "f23ae4c2733cedcb96e427317264e7ca6149f15bddb6fdce37e1d6bad0658fc8",
+              "asset_count": 32,
+              "asset_map_sha256": "fc5d9daa1356e12f0d9b91b1279281b294f35bfe1919462b62e9805d11119a4d",
+              "result_and_all_assets_match": true
+            }
+          ]
+        }
+      ],
+      "artifact_sha256": {
+        "data/output/system-measurements/final-lifecycle-2026-11-19-1/lifecycle.csv": "1585790f836ba650b596ab0ca14524a93dfc8c84b42359259fb2a62f51b3e5b2",
+        "data/output/system-measurements/final-lifecycle-2026-11-19-1/report.json": "76af5a0f6155e685400bd8ccf86099977c7235a4b7c29718af59dbb4320361af",
+        "data/output/system-measurements/final-lifecycle-2026-11-19-1/sha256.json": "bcaf7f319a6f0a26270a1fb38821718cee5ab975ddb5e3610ca35bf85769a47d"
+      },
+      "all_request_runtimes_match_freeze": true
+    },
+    {
+      "index": 2,
+      "project": "traffic-measure-final-lifecycle-2",
+      "started_at": "2026-11-19T16:59:45.617089+00:00",
+      "disk_free_bytes": 899364945920,
+      "wsl_loadavg": "2.56 1.22 0.71 3/949 11239",
+      "background_containers": "traffic-measure-scenarios-frontend-1\tUp 14 minutes (healthy)\ntraffic-measure-scenarios-postgres-1\tUp 14 minutes (healthy)\ntraffic-issue79-frontend-1\tUp 14 minutes (healthy)\ntraffic-issue79-postgres-1\tUp 14 minutes (healthy)\ntraffic-issue116-frontend-1\tUp 14 minutes (healthy)\ntraffic-issue116-postgres-1\tUp 14 minutes (healthy)\ntraffic-dependency-review-frontend-1\tUp 14 minutes (healthy)\ntraffic-dependency-review-postgres-1\tUp 14 minutes (healthy)",
+      "background_stats": [
+        {
+          "BlockIO": "483kB / 4.1kB",
+          "CPUPerc": "0.00%",
+          "Container": "0e32c8dbbf7eaaefa66a030199c4a9d75cf2ae931d9ed0e4ff1797d84ab6e090",
+          "ID": "0e32c8dbbf7e",
+          "MemPerc": "0.08%",
+          "MemUsage": "13.39MiB / 15.47GiB",
+          "Name": "traffic-measure-scenarios-frontend-1",
+          "NetIO": "2kB / 126B",
+          "PIDs": "17"
+        },
+        {
+          "BlockIO": "11MB / 692kB",
+          "CPUPerc": "4.11%",
+          "Container": "9844379134d54370fe930b0949db2fadc23c130bdd8335b1dfe2db096346f443",
+          "ID": "9844379134d5",
+          "MemPerc": "0.18%",
+          "MemUsage": "28.57MiB / 15.47GiB",
+          "Name": "traffic-measure-scenarios-postgres-1",
+          "NetIO": "1.83kB / 126B",
+          "PIDs": "6"
+        },
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "0.01%",
+          "Container": "e45605222cdd2cce5eef876307cac4b06e7d8fe46b6b2999c1af93bfe5004fca",
+          "ID": "e45605222cdd",
+          "MemPerc": "0.08%",
+          "MemUsage": "13.16MiB / 15.47GiB",
+          "Name": "traffic-issue79-frontend-1",
+          "NetIO": "2.08kB / 126B",
+          "PIDs": "17"
+        },
+        {
+          "BlockIO": "10.4MB / 299kB",
+          "CPUPerc": "5.20%",
+          "Container": "a609810af5271ba304b9b7aa9ac88b031c536a198387302713f967d6e3bc7dcb",
+          "ID": "a609810af527",
+          "MemPerc": "0.18%",
+          "MemUsage": "28.36MiB / 15.47GiB",
+          "Name": "traffic-issue79-postgres-1",
+          "NetIO": "1.83kB / 126B",
+          "PIDs": "6"
+        },
+        {
+          "BlockIO": "12.3kB / 4.1kB",
+          "CPUPerc": "0.00%",
+          "Container": "52cdf94939428055082dbeea59167af5f4670f06096e6b0a4383ca101fcfd94d",
+          "ID": "52cdf9493942",
+          "MemPerc": "0.08%",
+          "MemUsage": "13.18MiB / 15.47GiB",
+          "Name": "traffic-issue116-frontend-1",
+          "NetIO": "2.01kB / 126B",
+          "PIDs": "17"
+        },
+        {
+          "BlockIO": "11.7MB / 299kB",
+          "CPUPerc": "4.01%",
+          "Container": "8bfde79cdda9d1b69b10b6acc5e0a5f8f2fc6cb0373a0e9dce92421462c6da85",
+          "ID": "8bfde79cdda9",
+          "MemPerc": "0.19%",
+          "MemUsage": "29.54MiB / 15.47GiB",
+          "Name": "traffic-issue116-postgres-1",
+          "NetIO": "1.84kB / 126B",
+          "PIDs": "6"
+        },
+        {
+          "BlockIO": "6.77MB / 4.1kB",
+          "CPUPerc": "0.00%",
+          "Container": "8d9dfafe9412048200c0e28a321b011dd26a3ed9f6ac5f4bbad0e5c912ddbda7",
+          "ID": "8d9dfafe9412",
+          "MemPerc": "0.11%",
+          "MemUsage": "18.05MiB / 15.47GiB",
+          "Name": "traffic-dependency-review-frontend-1",
+          "NetIO": "1.95kB / 126B",
+          "PIDs": "17"
+        },
+        {
+          "BlockIO": "10.1MB / 299kB",
+          "CPUPerc": "4.24%",
+          "Container": "de6e7aea5a14cce2030c611ce923c0384c51565f4f2b21c71bf1b0466bdae0ec",
+          "ID": "de6e7aea5a14",
+          "MemPerc": "0.18%",
+          "MemUsage": "28.13MiB / 15.47GiB",
+          "Name": "traffic-dependency-review-postgres-1",
+          "NetIO": "1.78kB / 126B",
+          "PIDs": "6"
+        }
+      ],
+      "idle_gpu": [
+        {
+          "at": "2026-11-19T16:59:47.807427+00:00",
+          "csv": "220, 0, 56, 5.70"
+        },
+        {
+          "at": "2026-11-19T16:59:48.918451+00:00",
+          "csv": "220, 0, 56, 5.57"
+        },
+        {
+          "at": "2026-11-19T16:59:50.012702+00:00",
+          "csv": "220, 0, 56, 5.60"
+        }
+      ],
+      "idle_gpu_columns": [
+        "memory_used_MiB",
+        "utilization_percent",
+        "temperature_C",
+        "power_W"
+      ],
+      "command": [
+        ".venv/bin/python",
+        "scripts/measure_stack_lifecycle.py",
+        "--project",
+        "traffic-measure-final-lifecycle-2",
+        "--port",
+        "8088",
+        "--backend-image",
+        "sha256:79e5daa60b37da453e64983683dd203745583213ef5f913f561d1c62c98fd7ad",
+        "--frontend-image",
+        "sha256:ab569278d359810402704804ec94a2c8f7872f954f56619d1944ad49e6ad5f4b",
+        "--scenarios",
+        "configs/evaluation/system_workflows_candidate.json",
+        "--allow-stack-interruption",
+        "--output-directory",
+        "data/output/system-measurements/final-lifecycle-2026-11-19-2"
+      ],
+      "exit_code": 0,
+      "finished_at": "2026-11-19T17:01:39.574392+00:00",
+      "report_path": "data/output/system-measurements/final-lifecycle-2026-11-19-2/report.json",
+      "report_status": "recorded",
+      "request_count": 15,
+      "report_sha256": "cdff4a1dc137a24ca18dac5afc369605cfb40408872c46ea68de4c240c2c8b08",
+      "cleanup_exit_code": 0,
+      "runner": {
+        "application_commit": "2028ca7a6c3ab514c70206f74465a7762ae3f16e",
+        "source_dirty": false,
+        "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+      },
+      "startup": {
+        "status": "completed",
+        "started_at": "2026-11-19T16:59:51.772481+00:00",
+        "ready_seconds": 13.05563155499999,
+        "command_seconds": 13.025467858999946,
+        "frontend": {
+          "path": "/workspace",
+          "started_at": "2026-11-19T17:00:04.765482+00:00",
+          "http_status": 200,
+          "request_id": null,
+          "app_shell": true,
+          "seconds": 0.0008833779999122271
+        },
+        "elapsed_seconds": 13.191825722999965,
+        "finished_at": "2026-11-19T17:00:04.901674+00:00"
+      },
+      "requests": [
+        {
+          "scenario_id": "I1",
+          "kind": "image",
+          "phase": "seed",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:00:05.055669+00:00",
+          "status": "completed",
+          "request_id": "155245b6-02df-4001-95fc-98352a2abd61",
+          "session_id": 1,
+          "api_seconds": 16.777623619999986,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T17:00:21.845317+00:00"
+        },
+        {
+          "scenario_id": "I2",
+          "kind": "image",
+          "phase": "seed",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:00:21.877252+00:00",
+          "status": "completed",
+          "request_id": "16eca462-04bc-4ae2-8e55-3b1e948e0cc9",
+          "session_id": 2,
+          "api_seconds": 0.22884405199999946,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T17:00:22.117160+00:00"
+        },
+        {
+          "scenario_id": "I3",
+          "kind": "image",
+          "phase": "seed",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:00:22.146989+00:00",
+          "status": "completed",
+          "request_id": "24f1ef4d-b126-44a5-a1aa-a8cc4ff106e9",
+          "session_id": 3,
+          "api_seconds": 0.22601032199997917,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T17:00:22.383797+00:00"
+        },
+        {
+          "scenario_id": "V1",
+          "kind": "video",
+          "phase": "seed",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:00:22.445843+00:00",
+          "status": "completed",
+          "request_id": "4b34b523-a593-4ae7-827f-b5c37b397a86",
+          "session_id": 4,
+          "api_seconds": 0.5536366229999885,
+          "failure_code": null,
+          "http_status": 202,
+          "sampled_frames": 3,
+          "finished_at": "2026-11-19T17:00:23.011123+00:00"
+        },
+        {
+          "scenario_id": "V2",
+          "kind": "video",
+          "phase": "seed",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:00:23.082491+00:00",
+          "status": "completed",
+          "request_id": "883dd89c-8d22-4c82-81f1-6c8c517db6a9",
+          "session_id": 5,
+          "api_seconds": 13.164016327000127,
+          "failure_code": null,
+          "http_status": 202,
+          "sampled_frames": 16,
+          "finished_at": "2026-11-19T17:00:36.199246+00:00"
+        },
+        {
+          "scenario_id": "I1",
+          "kind": "image",
+          "phase": "after_postgres_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:00:47.089298+00:00",
+          "status": "completed",
+          "request_id": "40587ebe-5e98-4b27-807a-be2db0edc409",
+          "session_id": 6,
+          "api_seconds": 0.22782344999995985,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T17:00:47.329056+00:00"
+        },
+        {
+          "scenario_id": "I2",
+          "kind": "image",
+          "phase": "after_postgres_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:00:47.360776+00:00",
+          "status": "completed",
+          "request_id": "8d7b4fa6-4c33-43c8-a32b-e49f35e400d2",
+          "session_id": 7,
+          "api_seconds": 0.10938010900008521,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T17:00:47.480584+00:00"
+        },
+        {
+          "scenario_id": "I3",
+          "kind": "image",
+          "phase": "after_postgres_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:00:47.511469+00:00",
+          "status": "completed",
+          "request_id": "54b375df-880e-4e20-b5b6-97d5d61bf62e",
+          "session_id": 8,
+          "api_seconds": 0.21140003999994406,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T17:00:47.733062+00:00"
+        },
+        {
+          "scenario_id": "V1",
+          "kind": "video",
+          "phase": "after_postgres_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:00:47.781506+00:00",
+          "status": "completed",
+          "request_id": "78fd3c6b-8aa9-4dce-bb7b-fb58c7439d10",
+          "session_id": 9,
+          "api_seconds": 0.5491118459999598,
+          "failure_code": null,
+          "http_status": 202,
+          "sampled_frames": 3,
+          "finished_at": "2026-11-19T17:00:48.343217+00:00"
+        },
+        {
+          "scenario_id": "V2",
+          "kind": "video",
+          "phase": "after_postgres_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:00:48.408318+00:00",
+          "status": "completed",
+          "request_id": "897639b4-300a-4cd3-8ca4-c9f0c7342d62",
+          "session_id": 10,
+          "api_seconds": 12.744816321999906,
+          "failure_code": null,
+          "http_status": 202,
+          "sampled_frames": 16,
+          "finished_at": "2026-11-19T17:01:01.175555+00:00"
+        },
+        {
+          "scenario_id": "I1",
+          "kind": "image",
+          "phase": "after_backend_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:01:15.548918+00:00",
+          "status": "completed",
+          "request_id": "ef54f30f-ed30-415e-af27-b47934e06d41",
+          "session_id": 11,
+          "api_seconds": 7.825911602000133,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T17:01:23.385990+00:00"
+        },
+        {
+          "scenario_id": "I2",
+          "kind": "image",
+          "phase": "after_backend_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:01:23.416305+00:00",
+          "status": "completed",
+          "request_id": "1805ce1a-54fd-4069-b530-7988f4de01cd",
+          "session_id": 12,
+          "api_seconds": 0.1135438690000683,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T17:01:23.540833+00:00"
+        },
+        {
+          "scenario_id": "I3",
+          "kind": "image",
+          "phase": "after_backend_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:01:23.570143+00:00",
+          "status": "completed",
+          "request_id": "0476daae-1b99-4e51-8dbd-c056cdb58a05",
+          "session_id": 13,
+          "api_seconds": 0.23344101700013198,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T17:01:23.814362+00:00"
+        },
+        {
+          "scenario_id": "V1",
+          "kind": "video",
+          "phase": "after_backend_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:01:23.867875+00:00",
+          "status": "completed",
+          "request_id": "935ccc67-76cb-49ea-a6a2-700ae05bb769",
+          "session_id": 14,
+          "api_seconds": 0.553925086999925,
+          "failure_code": null,
+          "http_status": 202,
+          "sampled_frames": 3,
+          "finished_at": "2026-11-19T17:01:24.432906+00:00"
+        },
+        {
+          "scenario_id": "V2",
+          "kind": "video",
+          "phase": "after_backend_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:01:24.500356+00:00",
+          "status": "completed",
+          "request_id": "3d1cb3a3-027e-409f-9301-3a8a0cabb776",
+          "session_id": 15,
+          "api_seconds": 13.377963480000062,
+          "failure_code": null,
+          "http_status": 202,
+          "sampled_frames": 16,
+          "finished_at": "2026-11-19T17:01:37.830563+00:00"
+        }
+      ],
+      "outages": [
+        {
+          "service": "postgres",
+          "status": "completed",
+          "started_at": "2026-11-19T17:00:37.418703+00:00",
+          "ready_seconds": 0.47209197300003325,
+          "stop_seconds": 0.5856023979999918,
+          "outage_probes": [
+            {
+              "path": "/healthz",
+              "started_at": "2026-11-19T17:00:38.367925+00:00",
+              "http_status": 200,
+              "request_id": null,
+              "seconds": 0.000999966999870594
+            },
+            {
+              "path": "/workspace",
+              "started_at": "2026-11-19T17:00:38.368942+00:00",
+              "http_status": 200,
+              "request_id": null,
+              "app_shell": true,
+              "seconds": 0.0008124569999381492
+            },
+            {
+              "path": "/api/health",
+              "started_at": "2026-11-19T17:00:38.369763+00:00",
+              "http_status": 200,
+              "request_id": "2cc2139f-02ab-449a-a08a-fe7885d34983",
+              "status": "ok",
+              "checks": null,
+              "error_code": null,
+              "seconds": 0.001771506000068257
+            },
+            {
+              "path": "/api/ready",
+              "started_at": "2026-11-19T17:00:38.371541+00:00",
+              "http_status": 503,
+              "request_id": "6c3092f9-7dc8-4cf6-aa6f-23716ee95588",
+              "status": "not_ready",
+              "checks": {
+                "database": {
+                  "status": "not_ready"
+                },
+                "detector": {
+                  "status": "ready"
+                }
+              },
+              "error_code": null,
+              "seconds": 3.5976567080001587
+            },
+            {
+              "path": "/api/analyses/1",
+              "started_at": "2026-11-19T17:00:41.969207+00:00",
+              "http_status": 500,
+              "request_id": "f3d150eb-52d6-4d43-b206-35c8c9831a26",
+              "status": null,
+              "checks": null,
+              "error_code": "internal_error",
+              "seconds": 3.119035042000178
+            }
+          ],
+          "expected_http_statuses": [
+            [
+              200
+            ],
+            [
+              200
+            ],
+            [
+              200
+            ],
+            [
+              503
+            ],
+            [
+              500
+            ]
+          ],
+          "outage_verified": true,
+          "recovery_started_at": "2026-11-19T17:00:45.088271+00:00",
+          "start_command_seconds": 0.15965827099989838,
+          "restoration_status": "completed",
+          "elapsed_seconds": 8.298443192999912,
+          "finished_at": "2026-11-19T17:00:45.717165+00:00",
+          "saved_recovery": [
+            {
+              "session_id": 1,
+              "status": "completed",
+              "seconds": 0.03096765600002982,
+              "frames": 1,
+              "result_sha256": "13c5231e240773510be40bfd8d9d8dca6ae96195b589ea2907de135b8cf3216a",
+              "asset_count": 2,
+              "asset_map_sha256": "5f327e50035acdcca3e9f7db3494e45509b755cf7b83a9ae70ef5271cafffc11",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 2,
+              "status": "completed",
+              "seconds": 0.028999285000054442,
+              "frames": 1,
+              "result_sha256": "e685f144367b840aee4c2a66c03948fbe1438d97d7f0eb578c87069d4078ad95",
+              "asset_count": 2,
+              "asset_map_sha256": "af075292862d6a5db01f2bbf5f777758081286d79801f60123695f084e9c9eaa",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 3,
+              "status": "completed",
+              "seconds": 0.048253032999809875,
+              "frames": 1,
+              "result_sha256": "2810f8b3e668df867c92258b5b6afeca08379804c72a3a96162b6ae1ad4a92a8",
+              "asset_count": 2,
+              "asset_map_sha256": "93e1ec2ffbeaed01551a8da6d7f28e23b15911de17d655c0cb1a4a18641b7306",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 4,
+              "status": "completed",
+              "seconds": 0.06580952300009812,
+              "frames": 3,
+              "result_sha256": "c93b62925045d02f7b8078546ec5febf322ea7bdeb63f0598b2044e365dc1d38",
+              "asset_count": 6,
+              "asset_map_sha256": "815efc266630daf7b257b2e6a4112348ef4a6ef7bd280e589fbac21cd02fc36a",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 5,
+              "status": "completed",
+              "seconds": 1.0383908000001156,
+              "frames": 16,
+              "result_sha256": "ec87af46ccb5717c3415bf129bc652328caba28ddf109afc1b4efe18840e9e10",
+              "asset_count": 32,
+              "asset_map_sha256": "ca8b2679370747d62d5c63fac1235126e39fafd122c302ea70b7edad5633b3a4",
+              "result_and_all_assets_match": true
+            }
+          ]
+        },
+        {
+          "service": "backend",
+          "status": "completed",
+          "started_at": "2026-11-19T17:01:02.355179+00:00",
+          "ready_seconds": 5.048765551000088,
+          "stop_seconds": 1.2250541440000688,
+          "outage_probes": [
+            {
+              "path": "/healthz",
+              "started_at": "2026-11-19T17:01:03.901932+00:00",
+              "http_status": 200,
+              "request_id": null,
+              "seconds": 0.0011274810001395963
+            },
+            {
+              "path": "/workspace",
+              "started_at": "2026-11-19T17:01:03.903075+00:00",
+              "http_status": 200,
+              "request_id": null,
+              "app_shell": true,
+              "seconds": 0.0007902890001787455
+            },
+            {
+              "path": "/api/health",
+              "started_at": "2026-11-19T17:01:03.903876+00:00",
+              "http_status": 504,
+              "request_id": null,
+              "json_unavailable": true,
+              "seconds": 5.00267338499998
+            },
+            {
+              "path": "/api/ready",
+              "started_at": "2026-11-19T17:01:08.906558+00:00",
+              "http_status": 502,
+              "request_id": null,
+              "json_unavailable": true,
+              "seconds": 0.0009959490000710502
+            },
+            {
+              "path": "/api/analyses/1",
+              "started_at": "2026-11-19T17:01:08.907571+00:00",
+              "http_status": 502,
+              "request_id": null,
+              "json_unavailable": true,
+              "seconds": 0.0010827459998381528
+            }
+          ],
+          "expected_http_statuses": [
+            [
+              200
+            ],
+            [
+              200
+            ],
+            [
+              502,
+              504
+            ],
+            [
+              502,
+              504
+            ],
+            [
+              502,
+              504
+            ]
+          ],
+          "outage_verified": true,
+          "recovery_started_at": "2026-11-19T17:01:08.908669+00:00",
+          "start_command_seconds": 0.4738041250000151,
+          "restoration_status": "completed",
+          "elapsed_seconds": 11.767602348000082,
+          "finished_at": "2026-11-19T17:01:14.122797+00:00",
+          "saved_recovery": [
+            {
+              "session_id": 1,
+              "status": "completed",
+              "seconds": 0.034946219999937966,
+              "frames": 1,
+              "result_sha256": "13c5231e240773510be40bfd8d9d8dca6ae96195b589ea2907de135b8cf3216a",
+              "asset_count": 2,
+              "asset_map_sha256": "5f327e50035acdcca3e9f7db3494e45509b755cf7b83a9ae70ef5271cafffc11",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 2,
+              "status": "completed",
+              "seconds": 0.030038433999834524,
+              "frames": 1,
+              "result_sha256": "e685f144367b840aee4c2a66c03948fbe1438d97d7f0eb578c87069d4078ad95",
+              "asset_count": 2,
+              "asset_map_sha256": "af075292862d6a5db01f2bbf5f777758081286d79801f60123695f084e9c9eaa",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 3,
+              "status": "completed",
+              "seconds": 0.05229955200002223,
+              "frames": 1,
+              "result_sha256": "2810f8b3e668df867c92258b5b6afeca08379804c72a3a96162b6ae1ad4a92a8",
+              "asset_count": 2,
+              "asset_map_sha256": "93e1ec2ffbeaed01551a8da6d7f28e23b15911de17d655c0cb1a4a18641b7306",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 4,
+              "status": "completed",
+              "seconds": 0.07247320100009347,
+              "frames": 3,
+              "result_sha256": "c93b62925045d02f7b8078546ec5febf322ea7bdeb63f0598b2044e365dc1d38",
+              "asset_count": 6,
+              "asset_map_sha256": "815efc266630daf7b257b2e6a4112348ef4a6ef7bd280e589fbac21cd02fc36a",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 5,
+              "status": "completed",
+              "seconds": 1.080150902000014,
+              "frames": 16,
+              "result_sha256": "ec87af46ccb5717c3415bf129bc652328caba28ddf109afc1b4efe18840e9e10",
+              "asset_count": 32,
+              "asset_map_sha256": "ca8b2679370747d62d5c63fac1235126e39fafd122c302ea70b7edad5633b3a4",
+              "result_and_all_assets_match": true
+            }
+          ]
+        }
+      ],
+      "artifact_sha256": {
+        "data/output/system-measurements/final-lifecycle-2026-11-19-2/lifecycle.csv": "7387514673cb7999be824857de8bfd24d2798acb4e52930052ebb0b0ef4e750a",
+        "data/output/system-measurements/final-lifecycle-2026-11-19-2/report.json": "cdff4a1dc137a24ca18dac5afc369605cfb40408872c46ea68de4c240c2c8b08",
+        "data/output/system-measurements/final-lifecycle-2026-11-19-2/sha256.json": "d74ca926f98a189968348c6df9c205e89af17e4b60f285a1cf3945512546f223"
+      },
+      "all_request_runtimes_match_freeze": true
+    },
+    {
+      "index": 3,
+      "project": "traffic-measure-final-lifecycle-3",
+      "started_at": "2026-11-19T17:01:41.659379+00:00",
+      "disk_free_bytes": 899360600064,
+      "wsl_loadavg": "2.97 1.79 0.98 5/949 12923",
+      "background_containers": "traffic-measure-scenarios-frontend-1\tUp 16 minutes (healthy)\ntraffic-measure-scenarios-postgres-1\tUp 16 minutes (healthy)\ntraffic-issue79-frontend-1\tUp 16 minutes (healthy)\ntraffic-issue79-postgres-1\tUp 16 minutes (healthy)\ntraffic-issue116-frontend-1\tUp 16 minutes (healthy)\ntraffic-issue116-postgres-1\tUp 16 minutes (healthy)\ntraffic-dependency-review-frontend-1\tUp 16 minutes (healthy)\ntraffic-dependency-review-postgres-1\tUp 16 minutes (healthy)",
+      "background_stats": [
+        {
+          "BlockIO": "483kB / 4.1kB",
+          "CPUPerc": "0.00%",
+          "Container": "0e32c8dbbf7eaaefa66a030199c4a9d75cf2ae931d9ed0e4ff1797d84ab6e090",
+          "ID": "0e32c8dbbf7e",
+          "MemPerc": "0.08%",
+          "MemUsage": "13.39MiB / 15.47GiB",
+          "Name": "traffic-measure-scenarios-frontend-1",
+          "NetIO": "2kB / 126B",
+          "PIDs": "17"
+        },
+        {
+          "BlockIO": "11.2MB / 692kB",
+          "CPUPerc": "3.85%",
+          "Container": "9844379134d54370fe930b0949db2fadc23c130bdd8335b1dfe2db096346f443",
+          "ID": "9844379134d5",
+          "MemPerc": "0.18%",
+          "MemUsage": "28.63MiB / 15.47GiB",
+          "Name": "traffic-measure-scenarios-postgres-1",
+          "NetIO": "1.83kB / 126B",
+          "PIDs": "6"
+        },
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "0.00%",
+          "Container": "e45605222cdd2cce5eef876307cac4b06e7d8fe46b6b2999c1af93bfe5004fca",
+          "ID": "e45605222cdd",
+          "MemPerc": "0.08%",
+          "MemUsage": "13.17MiB / 15.47GiB",
+          "Name": "traffic-issue79-frontend-1",
+          "NetIO": "2.08kB / 126B",
+          "PIDs": "17"
+        },
+        {
+          "BlockIO": "10.4MB / 299kB",
+          "CPUPerc": "4.26%",
+          "Container": "a609810af5271ba304b9b7aa9ac88b031c536a198387302713f967d6e3bc7dcb",
+          "ID": "a609810af527",
+          "MemPerc": "0.18%",
+          "MemUsage": "28.29MiB / 15.47GiB",
+          "Name": "traffic-issue79-postgres-1",
+          "NetIO": "1.83kB / 126B",
+          "PIDs": "6"
+        },
+        {
+          "BlockIO": "12.3kB / 4.1kB",
+          "CPUPerc": "0.00%",
+          "Container": "52cdf94939428055082dbeea59167af5f4670f06096e6b0a4383ca101fcfd94d",
+          "ID": "52cdf9493942",
+          "MemPerc": "0.08%",
+          "MemUsage": "13.18MiB / 15.47GiB",
+          "Name": "traffic-issue116-frontend-1",
+          "NetIO": "2.01kB / 126B",
+          "PIDs": "17"
+        },
+        {
+          "BlockIO": "11.7MB / 299kB",
+          "CPUPerc": "3.75%",
+          "Container": "8bfde79cdda9d1b69b10b6acc5e0a5f8f2fc6cb0373a0e9dce92421462c6da85",
+          "ID": "8bfde79cdda9",
+          "MemPerc": "0.19%",
+          "MemUsage": "29.49MiB / 15.47GiB",
+          "Name": "traffic-issue116-postgres-1",
+          "NetIO": "1.84kB / 126B",
+          "PIDs": "6"
+        },
+        {
+          "BlockIO": "6.77MB / 4.1kB",
+          "CPUPerc": "0.00%",
+          "Container": "8d9dfafe9412048200c0e28a321b011dd26a3ed9f6ac5f4bbad0e5c912ddbda7",
+          "ID": "8d9dfafe9412",
+          "MemPerc": "0.11%",
+          "MemUsage": "18.03MiB / 15.47GiB",
+          "Name": "traffic-dependency-review-frontend-1",
+          "NetIO": "1.95kB / 126B",
+          "PIDs": "17"
+        },
+        {
+          "BlockIO": "10.1MB / 299kB",
+          "CPUPerc": "0.00%",
+          "Container": "de6e7aea5a14cce2030c611ce923c0384c51565f4f2b21c71bf1b0466bdae0ec",
+          "ID": "de6e7aea5a14",
+          "MemPerc": "0.18%",
+          "MemUsage": "28.03MiB / 15.47GiB",
+          "Name": "traffic-dependency-review-postgres-1",
+          "NetIO": "1.78kB / 126B",
+          "PIDs": "6"
+        }
+      ],
+      "idle_gpu": [
+        {
+          "at": "2026-11-19T17:01:43.832668+00:00",
+          "csv": "220, 0, 56, 6.09"
+        },
+        {
+          "at": "2026-11-19T17:01:44.935920+00:00",
+          "csv": "220, 0, 55, 5.62"
+        },
+        {
+          "at": "2026-11-19T17:01:46.038894+00:00",
+          "csv": "220, 0, 55, 5.60"
+        }
+      ],
+      "idle_gpu_columns": [
+        "memory_used_MiB",
+        "utilization_percent",
+        "temperature_C",
+        "power_W"
+      ],
+      "command": [
+        ".venv/bin/python",
+        "scripts/measure_stack_lifecycle.py",
+        "--project",
+        "traffic-measure-final-lifecycle-3",
+        "--port",
+        "8088",
+        "--backend-image",
+        "sha256:79e5daa60b37da453e64983683dd203745583213ef5f913f561d1c62c98fd7ad",
+        "--frontend-image",
+        "sha256:ab569278d359810402704804ec94a2c8f7872f954f56619d1944ad49e6ad5f4b",
+        "--scenarios",
+        "configs/evaluation/system_workflows_candidate.json",
+        "--allow-stack-interruption",
+        "--output-directory",
+        "data/output/system-measurements/final-lifecycle-2026-11-19-3"
+      ],
+      "exit_code": 0,
+      "finished_at": "2026-11-19T17:03:34.613063+00:00",
+      "report_path": "data/output/system-measurements/final-lifecycle-2026-11-19-3/report.json",
+      "report_status": "recorded",
+      "request_count": 15,
+      "report_sha256": "7f13696d800a54566e5b957665430477972f1e97ee5baad8faa2a96ed9a5d7c9",
+      "cleanup_exit_code": 0,
+      "runner": {
+        "application_commit": "2028ca7a6c3ab514c70206f74465a7762ae3f16e",
+        "source_dirty": false,
+        "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+      },
+      "startup": {
+        "status": "completed",
+        "started_at": "2026-11-19T17:01:47.843829+00:00",
+        "ready_seconds": 13.073602779000112,
+        "command_seconds": 13.042455666000023,
+        "frontend": {
+          "path": "/workspace",
+          "started_at": "2026-11-19T17:02:00.917452+00:00",
+          "http_status": 200,
+          "request_id": null,
+          "app_shell": true,
+          "seconds": 0.0023744699999497243
+        },
+        "elapsed_seconds": 13.246537345000206,
+        "finished_at": "2026-11-19T17:02:01.090385+00:00"
+      },
+      "requests": [
+        {
+          "scenario_id": "I1",
+          "kind": "image",
+          "phase": "seed",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:02:01.239097+00:00",
+          "status": "completed",
+          "request_id": "3d61a03d-09fe-4e2d-bfa3-cbb3132e83c3",
+          "session_id": 1,
+          "api_seconds": 16.447893386000032,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T17:02:17.635510+00:00"
+        },
+        {
+          "scenario_id": "I2",
+          "kind": "image",
+          "phase": "seed",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:02:17.667617+00:00",
+          "status": "completed",
+          "request_id": "b136acc2-1127-4c12-95da-b84177213a4f",
+          "session_id": 2,
+          "api_seconds": 0.09948750700004894,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T17:02:17.777151+00:00"
+        },
+        {
+          "scenario_id": "I3",
+          "kind": "image",
+          "phase": "seed",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:02:17.808700+00:00",
+          "status": "completed",
+          "request_id": "31a3e913-d237-44cc-93e5-b3a24426a433",
+          "session_id": 3,
+          "api_seconds": 0.21691624400000364,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T17:02:18.035236+00:00"
+        },
+        {
+          "scenario_id": "V1",
+          "kind": "video",
+          "phase": "seed",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:02:18.090512+00:00",
+          "status": "completed",
+          "request_id": "b0dc1f75-fca3-45fe-97c5-fa412742f9b1",
+          "session_id": 4,
+          "api_seconds": 0.5581476490001478,
+          "failure_code": null,
+          "http_status": 202,
+          "sampled_frames": 3,
+          "finished_at": "2026-11-19T17:02:18.661245+00:00"
+        },
+        {
+          "scenario_id": "V2",
+          "kind": "video",
+          "phase": "seed",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:02:18.725643+00:00",
+          "status": "completed",
+          "request_id": "b7a0292e-a57b-4ee5-8e24-4834b7cbfc5d",
+          "session_id": 5,
+          "api_seconds": 12.546607699000106,
+          "failure_code": null,
+          "http_status": 202,
+          "sampled_frames": 16,
+          "finished_at": "2026-11-19T17:02:31.287794+00:00"
+        },
+        {
+          "scenario_id": "I1",
+          "kind": "image",
+          "phase": "after_postgres_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:02:41.958027+00:00",
+          "status": "completed",
+          "request_id": "b1aadcf7-ff5e-435a-9a2e-21e00c3fbeb4",
+          "session_id": 6,
+          "api_seconds": 0.3368322070000431,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T17:02:42.305627+00:00"
+        },
+        {
+          "scenario_id": "I2",
+          "kind": "image",
+          "phase": "after_postgres_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:02:42.334302+00:00",
+          "status": "completed",
+          "request_id": "55628fa8-8d80-47cc-ad20-4af585c85383",
+          "session_id": 7,
+          "api_seconds": 0.11127877400008401,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T17:02:42.457113+00:00"
+        },
+        {
+          "scenario_id": "I3",
+          "kind": "image",
+          "phase": "after_postgres_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:02:42.489296+00:00",
+          "status": "completed",
+          "request_id": "6823f4bb-fd93-4b82-a924-0d1d37d92422",
+          "session_id": 8,
+          "api_seconds": 0.2487619599999107,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T17:02:42.749290+00:00"
+        },
+        {
+          "scenario_id": "V1",
+          "kind": "video",
+          "phase": "after_postgres_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:02:42.799939+00:00",
+          "status": "completed",
+          "request_id": "23bc543b-f979-4937-bb4a-65c9a6ce1e08",
+          "session_id": 9,
+          "api_seconds": 0.5489171720000741,
+          "failure_code": null,
+          "http_status": 202,
+          "sampled_frames": 3,
+          "finished_at": "2026-11-19T17:02:43.360155+00:00"
+        },
+        {
+          "scenario_id": "V2",
+          "kind": "video",
+          "phase": "after_postgres_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:02:43.425808+00:00",
+          "status": "completed",
+          "request_id": "fafa4e29-c6a9-41d5-a7c8-d72500d5c2eb",
+          "session_id": 10,
+          "api_seconds": 13.059400247999974,
+          "failure_code": null,
+          "http_status": 202,
+          "sampled_frames": 16,
+          "finished_at": "2026-11-19T17:02:56.508202+00:00"
+        },
+        {
+          "scenario_id": "I1",
+          "kind": "image",
+          "phase": "after_backend_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:03:11.527443+00:00",
+          "status": "completed",
+          "request_id": "2a378bd9-3999-4110-b801-30b25bc14fd6",
+          "session_id": 11,
+          "api_seconds": 7.622257165000065,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T17:03:19.159507+00:00"
+        },
+        {
+          "scenario_id": "I2",
+          "kind": "image",
+          "phase": "after_backend_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:03:19.190805+00:00",
+          "status": "completed",
+          "request_id": "48706805-482d-48be-a2aa-31a0bf88b840",
+          "session_id": 12,
+          "api_seconds": 0.09999675599988223,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T17:03:19.300835+00:00"
+        },
+        {
+          "scenario_id": "I3",
+          "kind": "image",
+          "phase": "after_backend_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:03:19.331552+00:00",
+          "status": "completed",
+          "request_id": "9213e6ba-4caa-4af9-9a10-ffc1e78c3bac",
+          "session_id": 13,
+          "api_seconds": 0.24260157699995943,
+          "failure_code": null,
+          "http_status": 201,
+          "sampled_frames": 1,
+          "finished_at": "2026-11-19T17:03:19.585203+00:00"
+        },
+        {
+          "scenario_id": "V1",
+          "kind": "video",
+          "phase": "after_backend_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:03:19.637373+00:00",
+          "status": "completed",
+          "request_id": "f67e8727-1491-4ecb-a3cd-3bb316ab4070",
+          "session_id": 14,
+          "api_seconds": 0.5521974319999572,
+          "failure_code": null,
+          "http_status": 202,
+          "sampled_frames": 3,
+          "finished_at": "2026-11-19T17:03:20.202065+00:00"
+        },
+        {
+          "scenario_id": "V2",
+          "kind": "video",
+          "phase": "after_backend_outage",
+          "repetition": 1,
+          "started_at": "2026-11-19T17:03:20.274239+00:00",
+          "status": "completed",
+          "request_id": "6262d675-d5e9-418f-83ad-8d4494008b2c",
+          "session_id": 15,
+          "api_seconds": 12.820700931999909,
+          "failure_code": null,
+          "http_status": 202,
+          "sampled_frames": 16,
+          "finished_at": "2026-11-19T17:03:33.037550+00:00"
+        }
+      ],
+      "outages": [
+        {
+          "service": "postgres",
+          "status": "completed",
+          "started_at": "2026-11-19T17:02:32.324578+00:00",
+          "ready_seconds": 0.4954077630000029,
+          "stop_seconds": 0.5798568019999948,
+          "outage_probes": [
+            {
+              "path": "/healthz",
+              "started_at": "2026-11-19T17:02:33.233107+00:00",
+              "http_status": 200,
+              "request_id": null,
+              "seconds": 0.0009326169999894773
+            },
+            {
+              "path": "/workspace",
+              "started_at": "2026-11-19T17:02:33.234056+00:00",
+              "http_status": 200,
+              "request_id": null,
+              "app_shell": true,
+              "seconds": 0.0006453460000557243
+            },
+            {
+              "path": "/api/health",
+              "started_at": "2026-11-19T17:02:33.234709+00:00",
+              "http_status": 200,
+              "request_id": "55a1d03e-6492-4df0-b473-3140cf1e5fd2",
+              "status": "ok",
+              "checks": null,
+              "error_code": null,
+              "seconds": 0.0017121440000664734
+            },
+            {
+              "path": "/api/ready",
+              "started_at": "2026-11-19T17:02:33.236427+00:00",
+              "http_status": 503,
+              "request_id": "16bdde5d-9059-4a94-bc2e-b75eb8f245e1",
+              "status": "not_ready",
+              "checks": {
+                "database": {
+                  "status": "not_ready"
+                },
+                "detector": {
+                  "status": "ready"
+                }
+              },
+              "error_code": null,
+              "seconds": 3.577410412000063
+            },
+            {
+              "path": "/api/analyses/1",
+              "started_at": "2026-11-19T17:02:36.813847+00:00",
+              "http_status": 500,
+              "request_id": "b0518f9c-6de3-4264-8280-98985eac35d5",
+              "status": null,
+              "checks": null,
+              "error_code": "internal_error",
+              "seconds": 3.122313401999918
+            }
+          ],
+          "expected_http_statuses": [
+            [
+              200
+            ],
+            [
+              200
+            ],
+            [
+              200
+            ],
+            [
+              503
+            ],
+            [
+              500
+            ]
+          ],
+          "outage_verified": true,
+          "recovery_started_at": "2026-11-19T17:02:39.936183+00:00",
+          "start_command_seconds": 0.18447043100013616,
+          "restoration_status": "completed",
+          "elapsed_seconds": 8.266258115000028,
+          "finished_at": "2026-11-19T17:02:40.590851+00:00",
+          "saved_recovery": [
+            {
+              "session_id": 1,
+              "status": "completed",
+              "seconds": 0.031112409000115804,
+              "frames": 1,
+              "result_sha256": "acc7e8c4d06f5dca7e590794f706fc5102606cdfa6776d0627e80b529bccb996",
+              "asset_count": 2,
+              "asset_map_sha256": "47014178cc1cf660e6abac0643f3cd997c96422ce89a437af8f7c96172f44db2",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 2,
+              "status": "completed",
+              "seconds": 0.028103330000021742,
+              "frames": 1,
+              "result_sha256": "f9687925d2c071ce6181174dd2174a828445df8645a73750685686b539ec64a4",
+              "asset_count": 2,
+              "asset_map_sha256": "bec125201bf9eb4ec793a2e50b8fe782424d3599f5331753e007945e86e02db7",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 3,
+              "status": "completed",
+              "seconds": 0.04749460799985172,
+              "frames": 1,
+              "result_sha256": "47a0d81e3e50655a310a2b260d361168fcc59aeb2ffe60cf9f983b0b1f024dc0",
+              "asset_count": 2,
+              "asset_map_sha256": "1e4a16124bb4ca82d49f68fb1b98fd9cfc6a5859d18cbe4fdb7e8d82c2778a36",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 4,
+              "status": "completed",
+              "seconds": 0.06827184000007946,
+              "frames": 3,
+              "result_sha256": "9ac76a52f90f34424be13c09d0a8dd5dedff74a3d34133a44d4cbd0106899669",
+              "asset_count": 6,
+              "asset_map_sha256": "d921df872c9533d6cf9ce5d02c426af997b92fd27847968fa422740f5e5d9c26",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 5,
+              "status": "completed",
+              "seconds": 1.036425220000183,
+              "frames": 16,
+              "result_sha256": "c9ffa560fd74983d8c3f0e484c3315531ef9c821772242eb3d39f9a7da3af0a3",
+              "asset_count": 32,
+              "asset_map_sha256": "6f4e3f4b8ccaf9b825b525aed8a3cd7ff3dfb30ba0c0ec4ccead54f3380fb9db",
+              "result_and_all_assets_match": true
+            }
+          ]
+        },
+        {
+          "service": "backend",
+          "status": "completed",
+          "started_at": "2026-11-19T17:02:57.795304+00:00",
+          "ready_seconds": 5.727240957000049,
+          "stop_seconds": 1.1960835790000601,
+          "outage_probes": [
+            {
+              "path": "/healthz",
+              "started_at": "2026-11-19T17:02:59.331956+00:00",
+              "http_status": 200,
+              "request_id": null,
+              "seconds": 0.001241336000020965
+            },
+            {
+              "path": "/workspace",
+              "started_at": "2026-11-19T17:02:59.333220+00:00",
+              "http_status": 200,
+              "request_id": null,
+              "app_shell": true,
+              "seconds": 0.0011254890000600426
+            },
+            {
+              "path": "/api/health",
+              "started_at": "2026-11-19T17:02:59.334361+00:00",
+              "http_status": 504,
+              "request_id": null,
+              "json_unavailable": true,
+              "seconds": 5.001110225000048
+            },
+            {
+              "path": "/api/ready",
+              "started_at": "2026-11-19T17:03:04.264978+00:00",
+              "http_status": 502,
+              "request_id": null,
+              "json_unavailable": true,
+              "seconds": 0.0008387459999994462
+            },
+            {
+              "path": "/api/analyses/1",
+              "started_at": "2026-11-19T17:03:04.265831+00:00",
+              "http_status": 502,
+              "request_id": null,
+              "json_unavailable": true,
+              "seconds": 0.0006308739998530655
+            }
+          ],
+          "expected_http_statuses": [
+            [
+              200
+            ],
+            [
+              200
+            ],
+            [
+              502,
+              504
+            ],
+            [
+              502,
+              504
+            ],
+            [
+              502,
+              504
+            ]
+          ],
+          "outage_verified": true,
+          "recovery_started_at": "2026-11-19T17:03:04.266475+00:00",
+          "start_command_seconds": 0.405986091999921,
+          "restoration_status": "completed",
+          "elapsed_seconds": 12.441637801999832,
+          "finished_at": "2026-11-19T17:03:10.166452+00:00",
+          "saved_recovery": [
+            {
+              "session_id": 1,
+              "status": "completed",
+              "seconds": 0.03488435700000991,
+              "frames": 1,
+              "result_sha256": "acc7e8c4d06f5dca7e590794f706fc5102606cdfa6776d0627e80b529bccb996",
+              "asset_count": 2,
+              "asset_map_sha256": "47014178cc1cf660e6abac0643f3cd997c96422ce89a437af8f7c96172f44db2",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 2,
+              "status": "completed",
+              "seconds": 0.03008246300009887,
+              "frames": 1,
+              "result_sha256": "f9687925d2c071ce6181174dd2174a828445df8645a73750685686b539ec64a4",
+              "asset_count": 2,
+              "asset_map_sha256": "bec125201bf9eb4ec793a2e50b8fe782424d3599f5331753e007945e86e02db7",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 3,
+              "status": "completed",
+              "seconds": 0.050735769000084474,
+              "frames": 1,
+              "result_sha256": "47a0d81e3e50655a310a2b260d361168fcc59aeb2ffe60cf9f983b0b1f024dc0",
+              "asset_count": 2,
+              "asset_map_sha256": "1e4a16124bb4ca82d49f68fb1b98fd9cfc6a5859d18cbe4fdb7e8d82c2778a36",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 4,
+              "status": "completed",
+              "seconds": 0.06614979699998003,
+              "frames": 3,
+              "result_sha256": "9ac76a52f90f34424be13c09d0a8dd5dedff74a3d34133a44d4cbd0106899669",
+              "asset_count": 6,
+              "asset_map_sha256": "d921df872c9533d6cf9ce5d02c426af997b92fd27847968fa422740f5e5d9c26",
+              "result_and_all_assets_match": true
+            },
+            {
+              "session_id": 5,
+              "status": "completed",
+              "seconds": 1.0223698170000262,
+              "frames": 16,
+              "result_sha256": "c9ffa560fd74983d8c3f0e484c3315531ef9c821772242eb3d39f9a7da3af0a3",
+              "asset_count": 32,
+              "asset_map_sha256": "6f4e3f4b8ccaf9b825b525aed8a3cd7ff3dfb30ba0c0ec4ccead54f3380fb9db",
+              "result_and_all_assets_match": true
+            }
+          ]
+        }
+      ],
+      "artifact_sha256": {
+        "data/output/system-measurements/final-lifecycle-2026-11-19-3/lifecycle.csv": "ac26f8c4111cef95dff73af1d7e27344bd58eb46666f98490a3a6189106c05ad",
+        "data/output/system-measurements/final-lifecycle-2026-11-19-3/report.json": "7f13696d800a54566e5b957665430477972f1e97ee5baad8faa2a96ed9a5d7c9",
+        "data/output/system-measurements/final-lifecycle-2026-11-19-3/sha256.json": "3f18f5fe4fb9c4204e715e4d8e55d7ba728aed9b83d48ff329e4761e4b369b32"
+      },
+      "all_request_runtimes_match_freeze": true
+    }
+  ],
+  "failures": [],
+  "saved_result_comparisons": 30,
+  "saved_asset_comparisons": 264,
+  "analyses_completed": 45,
+  "frames_processed": 198,
+  "remaining_phases": [
+    "cold_api",
+    "warm_api",
+    "browser"
+  ],
+  "collection_artifact_sha256": {
+    "data/output/system-measurements/final-lifecycle-2026-11-19/collection.json": "6cf6b28316e1889011a78e792588840eb5244ce63e8bae1cb024515a26e5bc74",
+    "data/output/system-measurements/final-lifecycle-2026-11-19/trial-1-cleanup.log": "fa7adab2332cc5377fb20cca7f0dc8e6553406216c06ab0d94b3918ba0581d9a",
+    "data/output/system-measurements/final-lifecycle-2026-11-19/trial-1.log": "98e1b54ee3d7314015ade86abffd6b063f49d8b16d5e536cb49e1917bbdabc2e",
+    "data/output/system-measurements/final-lifecycle-2026-11-19/trial-2-cleanup.log": "de03c82cb749db493048ac491552d0057aa81ce0129bcaae699280cd4a668e17",
+    "data/output/system-measurements/final-lifecycle-2026-11-19/trial-2.log": "728304ed7d01d1ea6cb5863c32bfd05d7507f45199bc6626ff9a6c1bf831a575",
+    "data/output/system-measurements/final-lifecycle-2026-11-19/trial-3-cleanup.log": "2ea890625836a1cafe0d91b90acec909da14d9e5204983e349819f8bd0a91e8c",
+    "data/output/system-measurements/final-lifecycle-2026-11-19/trial-3.log": "00e54f65fbf964aad41c06972913b9d821cf138ac1649cb936474a900d3d8f69"
+  },
+  "timing_summary": {
+    "fresh_stack_ready_seconds": {
+      "n": 3,
+      "observations": [
+        13.005121336000002,
+        13.05563155499999,
+        13.073602779000112
+      ],
+      "median": 13.05563155499999,
+      "min": 13.005121336000002,
+      "max": 13.073602779000112,
+      "p95_nearest_rank": 13.073602779000112
+    },
+    "postgres_start_to_ready_seconds": {
+      "n": 3,
+      "observations": [
+        0.5009622530000115,
+        0.47209197300003325,
+        0.4954077630000029
+      ],
+      "median": 0.4954077630000029,
+      "min": 0.47209197300003325,
+      "max": 0.5009622530000115,
+      "p95_nearest_rank": 0.5009622530000115
+    },
+    "backend_start_to_ready_seconds": {
+      "n": 3,
+      "observations": [
+        2.0347260810000307,
+        5.048765551000088,
+        5.727240957000049
+      ],
+      "median": 5.048765551000088,
+      "min": 2.0347260810000307,
+      "max": 5.727240957000049,
+      "p95_nearest_rank": 5.727240957000049
+    }
+  },
+  "limitations": [
+    "Only lifecycle phase is complete; no cold/warm/browser final tables yet.",
+    "Three descriptive observations per measure, not a population estimate.",
+    "Recovery timing starts at docker start, excludes prior stop and outage probes, and does not include first inference.",
+    "Fresh project and volumes, but host caches were not cleared. Images already existed locally.",
+    "Unrelated idle containers remained running. Exclusive GPU use is not verified.",
+    "Idle service outages only; no real-GPU in-flight crash experiment.",
+    "These are system results, not detector accuracy or new quality-gate evidence."
+  ]
+}

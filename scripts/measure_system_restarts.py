@@ -200,7 +200,7 @@ def main(argv=None):
         "schema_version": 1,
         "run_id": str(uuid4()),
         "started_at": utc_now(),
-        "purpose": "Restart tooling verification; not final evaluation or accuracy",
+        "purpose": "Backend restart and cold-process requests; not detection accuracy",
         "status": "in_progress",
         "runner": source_identity(ROOT),
         "tool_sha256": hashes,

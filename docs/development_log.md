@@ -1,5 +1,35 @@
 # Development Log
 
+### Issue #79: Software Gate and System Freeze (19 November 2026)
+
+We built clean application commit `5cbd433` with explicit version metadata,
+verified the served frontend files, and recorded the container IDs, hardware,
+model, settings and input hashes in the [system freeze](evaluation/system_freeze.md).
+All 721 Python tests passed twice with real PostgreSQL enabled. The frontend
+passed 115 unit tests, six measurement-rule tests and 40 browser checks. Four
+live GPU browser checks, the five-frame regression and controlled restart
+recovery passed too. No model, dependency or application behavior changed.
+
+We corrected four measurement report headings that still described every run
+as tooling verification. A committed freeze and separate collection record,
+not the heading alone, distinguish final runs. The new OpenTelemetry alert
+remains documented and open; no active exposure path was identified in this
+local stack.
+
+After committing the freeze, we ran three fresh-stack lifecycle trials with
+no overlapping local tests. All 45 analyses completed, and 30 saved-session
+comparisons plus 264 media-hash comparisons matched after the idle outages.
+The [system-results page](evaluation/system_results.md) now holds the first
+final timing table and links the full evidence. We removed only the disposable
+trial stacks. Cold API, warm API and browser measurements still belong to #79;
+the issue is not complete.
+
+The first PR checks found a formatting difference in the results page's Python
+example. CI installed Ruff 0.17.6, which checked Markdown examples; the local
+gate used 0.15.19. We formatted that example with 0.17.6 and verified the whole
+repository with both versions. The table reproduced unchanged. No application,
+measurement tool, frozen input or collected observation changed in this follow-up.
+
 ### Issue #79: Scenario Evidence and Dependency Boundary (13 November 2026)
 
 We completed the missing evidence summary for the 12 November scenario work,
