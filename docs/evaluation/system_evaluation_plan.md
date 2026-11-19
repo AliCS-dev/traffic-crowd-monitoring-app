@@ -41,27 +41,28 @@ into evidence of detection accuracy. Issues #113-#115 remain deferred.
 
 The [19 November freeze](system_freeze.md) records clean application commit
 `5cbd433eebed9678f2e288329d4a99b8ad295cc4`, immutable container IDs, hardware,
-settings and the passing software gate. The paragraphs below explain how we
+settings and the passing software gate. The [lifecycle results](system_results.md)
+now cover the first final phase. The paragraphs below explain how we
 reached that candidate; they are not a second release selection.
 
 The [13 November dependency review](release_dependency_review.md) records the
 agreed boundary: retain the merged versions and defer PRs #153, #154 and #163,
 unless a necessary security fix changes that decision. Post-update compatibility
-checks passed; the full software gate and clean freeze record still precede
-final collection. Those prerequisites are now recorded in the freeze above.
+checks passed, followed by the full software gate and clean freeze recorded above.
 
-The application candidate is commit `a229688b8858289ea740efe6433e72cef71bb88b`, merged through PR #155.
+The starting candidate was commit `a229688b8858289ea740efe6433e72cef71bb88b`,
+merged through PR #155.
 The interactive workspace and its corrected browser checks are included.
 This identifies the starting version, not the final measured release.
 
-Before final measurements, we need verified candidate-input compatibility and
-release dependency decisions, with the #26 software gate passing on the candidate.
-Any required instrumentation changes produce a new candidate. We then record
-one clean commit and immutable container image IDs before running the scenarios.
+Before final measurements, we verified candidate-input compatibility and
+release dependency decisions, then passed the #26 software gate on the candidate.
+We recorded a clean application commit and immutable container image IDs
+before running the scenarios.
 A later code, dependency, model or configuration change requires a new labelled
 run; results from different candidates are not silently combined.
 
-The freeze record will contain:
+The freeze record contains:
 
 - Full application and runner commits, clean-tree state and backend source hash.
 - Frontend/backend image IDs, PostgreSQL version and migration versions.
@@ -73,8 +74,8 @@ The freeze record will contain:
 The current model is `yolo26m-visdrone-experimental-v1`: confidence 0.25,
 inference size 1280, preprocessing scale 2, maximum 300 detections, float32,
 and `cuda:0`. Its quality gate remains failed. The exact profile is
-[tracked here](../../configs/runtime/yolo26m_visdrone.json); we record its hash
-again at the freeze rather than assuming the present settings cannot change.
+[tracked here](../../configs/runtime/yolo26m_visdrone.json); its hash was verified
+again at the freeze rather than assuming the settings had not changed.
 
 ## Media and Scenarios
 
@@ -240,10 +241,11 @@ readiness in fresh contexts, with one warm-up per scenario and viewport.
 The lifecycle runner now covers fresh-stack startup and idle service outages,
 including retained failures and saved media comparisons. It does not establish
 active-job crash recovery. The candidate inputs, bounded failure scope and
-combined run order are now documented. Before final collection, we finish the
-input compatibility checks, resolve release dependency decisions, rerun the #26
-software gate and commit the freeze record. The tools do not execute the entire
-protocol as one command; each phase has a separate report and explicit command.
+combined run order are documented. Input compatibility, dependency decisions,
+the #26 software gate and the committed freeze now precede the completed
+lifecycle phase. Cold API, warm API and browser phases remain. The tools do not
+execute the entire protocol as one command; each phase has a separate report
+and explicit command.
 Issue #26 is closed; these development checks do not close #79.
 
 We will retain raw JSON/CSV records, the input and runtime manifest, the exact

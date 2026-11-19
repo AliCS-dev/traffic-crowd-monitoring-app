@@ -7,6 +7,8 @@ images, settings and inputs for final system measurements. The
 [freeze record](../../data/evaluation/system_freeze_2026_11_19.json) was prepared
 before collection. Its status describes that point in time, not later progress.
 It contains the full versions, hashes, workload limits and test-artifact hashes.
+The later [system-results page](system_results.md) records collection progress
+without changing this pre-collection freeze.
 
 ## What Is Fixed
 

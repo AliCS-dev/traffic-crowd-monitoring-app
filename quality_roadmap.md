@@ -33,6 +33,12 @@ and clean release freeze still precede final collection.
 
 ## Work Order
 
+**19 November update:** the application and environment are now
+[frozen](docs/evaluation/system_freeze.md), with the full software gate passing.
+The first final [system-results table](docs/evaluation/system_results.md) records
+three startup/recovery trials and 45 completed analyses. Cold API, warm API and
+browser collection remain under #79. Model-selection work is still deferred.
+
 **4 November update:** the warm runner is merged through PR #157. The
 [#26 coverage review](docs/testing.md) adds browser submission tests, real
 transaction rollback checks and controlled Compose startup/recovery in CI.

@@ -123,6 +123,7 @@ software checks do not establish model accuracy.
 | Use the API or image CLI | [API reference](docs/api.md) and [command-line processing](docs/command_line.md) |
 | Understand the data model | [Database schema](docs/database/database_schema.md) |
 | Find thesis metrics and experiment decisions | [Evaluation results index](docs/evaluation/results_index.md) |
+| Find final application timings and collection progress | [System results](docs/evaluation/system_results.md) |
 | Find the remaining work | [Quality roadmap](quality_roadmap.md) |
 
 The [documentation index](docs/README.md) separates current guides from dated

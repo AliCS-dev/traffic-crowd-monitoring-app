@@ -1,6 +1,6 @@
 # Evaluation Results Index
 
-This page is the starting point for our model-evaluation evidence. It keeps the
+This page is the starting point for our model and application evidence. It keeps the
 important decisions and metrics easy to find when we write the thesis, while
 the larger generated predictions, images, training logs, and timing samples
 remain outside Git.
@@ -87,6 +87,17 @@ Application limits and preliminary resource budgets are recorded separately in
 the [operational safeguards guide](../operational_safeguards.md). Its upload,
 video and memory measurements do not change the model-quality results below.
 
+## Application System Results
+
+The [system-results page](system_results.md) is the starting point for final
+application measurements. On 19 November, all three frozen lifecycle trials
+completed: 45 analyses, 30 saved-session comparisons and 264 matching media
+hash comparisons. Median fresh-stack readiness was **13.056 s**; median
+PostgreSQL and backend start-to-ready times were **0.495 s** and **5.049 s**.
+Each measure has only three observations. These boundaries exclude first
+inference and are not end-to-end user latency. Cold API, warm API and browser
+phases remain uncollected, so #79 stays open.
+
 ## Application Evaluation Preparation
 
 The [19 November system freeze](system_freeze.md) identifies the exact
@@ -113,11 +124,11 @@ plan. This is preparation, not a new accuracy or final performance result.
 
 The [system evaluation plan](system_evaluation_plan.md), prepared on 28 October,
 identifies the merged application candidate, timing boundaries, repetitions,
-media choices and evidence requirements for #79. No final system measurements
-have been collected under that plan. The [measurement guide](system_measurements.md)
+media choices and evidence requirements for #79. Its first final phase is now
+recorded above. The [measurement guide](system_measurements.md)
 links the warm runner, its stage boundaries and the 29 October development
 verification record. The later dated entries below add the other measurement
-paths and media preparation; release freeze and final collection remain open.
+paths and media preparation; they are not pooled with the frozen collection.
 The [4 November workflow review](../testing.md) now records the #26 coverage matrix,
 repeated correctness checks and merge protection. Those checks are not final
 performance measurements and do not close #79.

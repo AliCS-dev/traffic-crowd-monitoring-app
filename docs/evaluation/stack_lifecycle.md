@@ -8,6 +8,10 @@ checks whether saved results survive a database outage and a backend outage.
 It also submits new analyses after each recovery. This is development verification
 for #79, not the final repeated system evaluation.
 
+The separate [19 November results](system_results.md) now record three final
+five-scenario trials under the committed [system freeze](system_freeze.md).
+The historical verification below is not pooled with those measurements.
+
 ## What We Measure
 
 | Record | Timer boundary |
@@ -165,11 +169,11 @@ All 110 focused measurement tests passed, including 49 new lifecycle tests.
 The full local Python suite passed 699 tests, with 14 PostgreSQL integration
 tests skipped locally; CI runs those separately. Ruff and formatting passed.
 
-## Remaining Work
+## Later Collection
 
 The [12 November preparation](system_scenarios.md) now records I3, V2 and the
 combined run order. Ali approved keeping live recovery limited to idle outages;
 these checks do not establish real-GPU active-job crash recovery. Input
-compatibility, release dependency decisions, the software gate and release
-freeze precede final collection. Issue #79
-remains open, and detector-quality and dense-crowd limitations are unchanged.
+compatibility, dependency review, the software gate and the committed freeze
+preceded the three final trials on 19 November. Cold API, warm API and browser
+phases remain under #79; detector-quality and dense-crowd limitations are unchanged.

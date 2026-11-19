@@ -14,7 +14,15 @@ We corrected four measurement report headings that still described every run
 as tooling verification. A committed freeze and separate collection record,
 not the heading alone, distinguish final runs. The new OpenTelemetry alert
 remains documented and open; no active exposure path was identified in this
-local stack. The remaining measurements and final tables still belong to #79.
+local stack.
+
+After committing the freeze, we ran three fresh-stack lifecycle trials with
+no overlapping local tests. All 45 analyses completed, and 30 saved-session
+comparisons plus 264 media-hash comparisons matched after the idle outages.
+The [system-results page](evaluation/system_results.md) now holds the first
+final timing table and links the full evidence. We removed only the disposable
+trial stacks. Cold API, warm API and browser measurements still belong to #79;
+the issue is not complete.
 
 ### Issue #79: Scenario Evidence and Dependency Boundary (13 November 2026)
 
