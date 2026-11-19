@@ -143,8 +143,7 @@ const report: {
   summary?: ReturnType<typeof summaries>;
 } = {
   schema_version: 1,
-  purpose:
-    "Browser readiness tooling verification; not final performance or accuracy",
+  purpose: "Browser submission-to-scene readiness; not detection accuracy",
   status: "in_progress",
   started_at: new Date().toISOString(),
   settings: {

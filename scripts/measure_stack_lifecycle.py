@@ -142,7 +142,7 @@ def main(argv=None):
         "schema_version": 1,
         "status": "in_progress",
         "started_at": utc_now(),
-        "purpose": "Lifecycle tooling verification; not final evaluation or accuracy",
+        "purpose": "Stack startup and idle service recovery; not detection accuracy",
         "runner": source_identity(ROOT),
         "tool_sha256": hashes,
         "settings": {
