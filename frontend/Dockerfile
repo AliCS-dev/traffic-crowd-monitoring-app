@@ -1,4 +1,4 @@
-FROM node:26-alpine@sha256:143494b1da2945f061539253adc65e4f1569ddf07da2d384c022c791a9d90a4a AS build
+FROM node:26-alpine@sha256:40cd011b55415bc894e45b02fdd5a5dfde056921b7d23a64c74f80497af48797 AS build
 WORKDIR /app
 COPY package.json package-lock.json .nvmrc ./
 RUN node -e "if (process.versions.node.split('.')[0] !== require('node:fs').readFileSync('.nvmrc', 'utf8').trim()) throw new Error('Docker Node version must match .nvmrc and CI')" \
