@@ -33,6 +33,13 @@ and clean release freeze still precede final collection.
 
 ## Work Order
 
+**21 November update:** the first frozen cold-process attempt found a
+client-visible proxy failure after a backend restart. We retained the
+[incomplete evidence](docs/evaluation/cold_api_attempt.md), including unattempted
+work. [#172](https://github.com/AliCS-dev/traffic-crowd-monitoring-app/issues/172)
+is the next focused fix before further #79 collection. We are not changing the
+model or silently replacing the failed attempt.
+
 **19 November update:** the application and environment are now
 [frozen](docs/evaluation/system_freeze.md), with the full software gate passing.
 The first final [system-results table](docs/evaluation/system_results.md) records

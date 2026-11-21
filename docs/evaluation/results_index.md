@@ -95,8 +95,15 @@ completed: 45 analyses, 30 saved-session comparisons and 264 matching media
 hash comparisons. Median fresh-stack readiness was **13.056 s**; median
 PostgreSQL and backend start-to-ready times were **0.495 s** and **5.049 s**.
 Each measure has only three observations. These boundaries exclude first
-inference and are not end-to-end user latency. Cold API, warm API and browser
-phases remain uncollected, so #79 stays open.
+inference and are not end-to-end user latency.
+
+The [21 November cold-process attempt](cold_api_attempt.md) stopped after ten
+completed trials and one failed video-status polling sequence; four cold trials
+and the V2 setup request were not attempted. The later saved video was available,
+but the client-visible 502 remains a failure. Partial timings and original
+artifact hashes are retained. Proxy recovery is now tracked in
+[#172](https://github.com/AliCS-dev/traffic-crowd-monitoring-app/issues/172).
+Warm/browser collection has not started and #79 remains open.
 
 ## Application Evaluation Preparation
 

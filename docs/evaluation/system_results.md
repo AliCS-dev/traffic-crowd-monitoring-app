@@ -2,8 +2,9 @@
 
 [Results index](results_index.md) | [Freeze](system_freeze.md) | [Protocol](system_evaluation_plan.md)
 
-**19 November 2026: the lifecycle phase is complete. The full evaluation is
-still in progress under #79.** We keep these system measurements separate from
+**21 November 2026: lifecycle collection is complete; the first cold-process
+attempt stopped on a proxy failure. The full evaluation remains open under #79.**
+We keep these system measurements separate from
 the historical detector scores. Successful processing does not establish that
 the detections are correct.
 
@@ -12,7 +13,7 @@ the detections are correct.
 | Phase | Planned work | Recorded so far |
 | --- | --- | --- |
 | Fresh-stack startup and idle service recovery | Three independent projects, 45 analyses | Complete: three trials, 45 successful analyses, no failed attempts |
-| Cold-process API requests | Three restarts per scenario, plus seeds | Not collected |
+| Cold-process API requests | Three restarts per scenario, plus seeds | Incomplete: ten completed trials, one failed and four not attempted; four setup requests completed |
 | Warm API requests | One warm-up and ten measured requests per scenario | Not collected |
 | Browser result readiness | One warm-up and ten measured submissions per scenario at each viewport | Not collected |
 
@@ -22,6 +23,16 @@ snapshot and raw-artifact checksum. The freeze was committed as `2028ca7` before
 the first trial. All three runs used that clean runner checkout and the same
 application images, input hashes and model settings. No local test suite, build
 or regression run overlapped the timed trials.
+
+## Cold-Process Attempt
+
+The [21 November attempt](cold_api_attempt.md) retains partial timings and the
+failed V1 polling request. Nginx returned 502 after a backend DNS-resolution
+error; the video finished in the backend later. That later completion does not
+turn the client-visible failure into a successful trial. We stopped as planned
+and opened [#172](https://github.com/AliCS-dev/traffic-crowd-monitoring-app/issues/172)
+before changing the frozen application. Warm and browser collection have not
+started. The lifecycle table below still belongs to the original frozen images.
 
 ## Startup and Recovery
 
@@ -126,7 +137,7 @@ for name, row in record["timing_summary"].items():
     )
 ```
 
-The next phase is the planned cold-process API collection. We do not pool these
-lifecycle request timings with the forthcoming cold, warm or browser tables.
+The next step is the proxy-recovery investigation before further cold-process
+collection. We do not pool these lifecycle request timings with cold, warm or browser tables.
 The failed detector quality gate, unsupported dense-crowd counting and documented
 dependency risk remain unchanged.
