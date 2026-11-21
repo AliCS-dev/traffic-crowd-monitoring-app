@@ -3,9 +3,13 @@
 [Results index](results_index.md) | [Warm measurements](system_measurements.md)
 
 We measure a graceful backend restart, the first analysis request afterwards,
-and whether a previously saved result still opens with unchanged media. This
-adds a second measurement path for #79. It is not a final evaluation, a full
-Compose startup measurement, or a database-outage experiment.
+and whether a previously saved result still opens with unchanged media. The
+7 November verification below established the tooling, not final performance.
+This method is separate from full Compose startup and database-outage experiments.
+
+The separate [21 November cold-process attempt](cold_api_attempt.md) used the
+frozen candidate and five inputs. It stopped on a proxy failure and remains
+incomplete; it is not pooled with the development verification below.
 
 ## What the Times Mean
 
@@ -131,7 +135,8 @@ The [browser runner](browser_readiness.md) now covers decoded-scene readiness.
 The [lifecycle runner](stack_lifecycle.md) now covers fresh-stack startup and
 controlled idle service outages. The [12 November input guide](system_scenarios.md)
 records the candidate I3/V2 files and the plan now fixes recovery scope and phase
-order. Issue #79 still needs completed input compatibility checks, release
-dependency decisions, the software gate and version freeze before collection.
+order. The software gate and freeze were recorded on 19 November. The first
+cold-process attempt on 21 November stopped after a transient proxy DNS failure.
+Issue #172 now precedes further collection; #79 remains open.
 The native file-chooser MIME limitation remains tracked under #84. These records
 do not improve the detector's failed accuracy gate or add dense-crowd support.

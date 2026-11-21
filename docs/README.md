@@ -45,6 +45,7 @@ accuracy.
 | Final application measurements and remaining prerequisites | [System evaluation plan](evaluation/system_evaluation_plan.md) |
 | Frozen application, images, hardware and passing software gate | [System evaluation freeze](evaluation/system_freeze.md) |
 | Final system timing tables and collection progress | [System results](evaluation/system_results.md) |
+| Incomplete cold-process run and observed proxy failure | [Cold-process attempt](evaluation/cold_api_attempt.md) |
 | Selected image/video inputs, sources and checksums | [System evaluation inputs](evaluation/system_scenarios.md) |
 | Warm request timings, raw records and verification | [Measuring application workflows](evaluation/system_measurements.md) |
 | Backend restarts, first requests and saved-result recovery | [Restart measurements](evaluation/system_restarts.md) |
@@ -54,8 +55,10 @@ accuracy.
 | Results and Discussion | [Results index](evaluation/results_index.md), including unsuccessful experiments and limitations |
 | Reproduction commands | [Running evaluations](evaluation/running_evaluations.md) and [Docker Compose](compose_stack.md) |
 
-The final lifecycle phase is recorded; cold API, warm API and browser phases
-remain. Earlier deployment checks are not a substitute for that evaluation. The
+The lifecycle phase is recorded. The first cold-process attempt stopped on a
+proxy failure; its evidence is retained and #172 precedes further collection.
+Warm API and browser phases remain. Earlier deployment checks are not a
+substitute for that evaluation. The
 [quality roadmap](../quality_roadmap.md) records the remaining work.
 
 ## Research Plans and Historical Records

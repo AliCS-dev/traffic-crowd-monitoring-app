@@ -3,7 +3,8 @@
 [Results index](results_index.md) | [Documentation index](../README.md)
 
 **Prepared 28 October 2026. Updated 19 November: software gate passed and
-freeze recorded; final collection is not yet complete.**
+freeze recorded; final collection is not yet complete. The 21 November
+cold-process attempt is retained as incomplete pending proxy recovery review.**
 
 On 29 October we added and verified [warm workflow measurements](system_measurements.md)
 and structured stage timers. The complete protocol below still needs the
@@ -44,6 +45,12 @@ The [19 November freeze](system_freeze.md) records clean application commit
 settings and the passing software gate. The [lifecycle results](system_results.md)
 now cover the first final phase. The paragraphs below explain how we
 reached that candidate; they are not a second release selection.
+
+The [21 November cold-process attempt](cold_api_attempt.md) stopped on its first
+client-visible failure, as this protocol requires. Ali chose to retain it and
+address proxy recovery separately in #172 before changing the frozen candidate.
+Any changed runtime image/configuration needs a newly labelled collection;
+we do not silently reuse old observations as results for the changed application.
 
 The [13 November dependency review](release_dependency_review.md) records the
 agreed boundary: retain the merged versions and defer PRs #153, #154 and #163,

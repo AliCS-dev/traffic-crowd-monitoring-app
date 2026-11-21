@@ -1,5 +1,25 @@
 # Development Log
 
+### Issue #79: Incomplete Cold-Process Attempt (21 November 2026)
+
+We checked the frozen files, images and runtime, passed all 118 focused
+measurement tests, then started cold-process collection on a new isolated
+request stack. Ten measured trials completed; the next video-status poll failed
+with HTTP 502 after Nginx reported a backend DNS-resolution failure. The runner
+stopped, leaving four cold trials and the V2 setup request unattempted.
+
+The backend finished and saved the video after the runner stopped. We kept that
+later diagnostic read separate from the original failed observation. All ten
+earlier saved-session comparisons and 24 media-hash comparisons matched. The
+[attempt report](evaluation/cold_api_attempt.md) retains partial timings,
+resource readings, operating conditions and artifact hashes, including the
+small WSL memory-reporting difference and observed pre-run GPU activity.
+
+Ali chose to record the failure and open #172 before changing the frozen
+application. No code, model, dependency or measurement behavior changed. The
+original reports and isolated stack are retained; no repeat collection was
+performed. #79 remains open, and warm/browser measurements have not started.
+
 ### Issue #79: Software Gate and System Freeze (19 November 2026)
 
 We built clean application commit `5cbd433` with explicit version metadata,
