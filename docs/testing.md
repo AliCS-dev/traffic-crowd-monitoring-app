@@ -31,6 +31,7 @@ but replaces inference with one deterministic detection per frame.
 | Restart and interrupted video jobs | [PostgreSQL recovery](../tests/integration/test_video_job_repository_integration.py), [Compose restart](../tests/compose/check_workflows.py) | Seeds an abandoned queued job; restart marks it failed and preserves completed assets |
 | Scene alignment and accessible interaction | [Browser scene](../frontend/e2e/scene-workspace.spec.ts), [dashboard](../frontend/e2e/dashboard.spec.ts), [components](../frontend/src/features/results/SceneInspection.test.tsx) | Desktop/mobile, keyboard, touch, resize and filters; not a full accessibility certification |
 | Startup, migrations, proxy and health | [CI workflow](../.github/workflows/ci.yml), [Compose check](../tests/compose/check_workflows.py) | Production images with an explicit test-only inference override |
+| Proxy DNS recovery and container address changes | [Proxy regression](../tests/compose/check_proxy_recovery.py) | Real Docker DNS and Nginx, small HTTP fixture; ten restarts, changed-address recreation, no errors allowed after first readiness |
 | Real GPU and saved image/video workflows | [Regression runner](../scripts/check_runtime_regression.py), [live browser suite](../frontend/stack-tests) | Local GPU required; unchanged licensed fixtures, not held-out accuracy evaluation |
 
 ## Running the Checks
@@ -93,6 +94,34 @@ this overlay or cleanup command with the demo or measurement project. Each check
 prints JSON with session IDs and saved-media hashes; the restart check compares
 those hashes and verifies the interrupted-job failure. CI runs the same sequence
 inside the existing container job and prints logs on failure.
+
+### Proxy Recovery Check
+
+The separate proxy check uses the built frontend image and a small HTTP fixture
+inside the backend image. It needs no model, GPU or database. Each invocation
+creates uniquely named containers and a network, publishes a random loopback
+port, and removes only those resources afterwards. We pass the image tags
+explicitly and use a new output directory:
+
+```bash
+python3 tests/compose/check_proxy_recovery.py \
+  --backend-image traffic-quality-backend:local \
+  --frontend-image traffic-quality-frontend:local \
+  --output data/output/proxy-recovery-local
+```
+
+After startup, each of ten restarts, and recreation at a different address, we
+observe requests for at least 12 seconds after the first ready response. This
+covers more than two DNS cache lifetimes and alternates persistent and fresh
+connections. A later HTTP or connection error fails the check immediately.
+Readiness polling before that boundary is recorded, not counted as successful
+availability. The check also verifies encoded paths, query strings, a 1 MiB
+upload and no replay after an accepted POST loses its response.
+
+The report and container logs are retained even on failure. CI runs this inside
+the required container job and uploads the evidence for seven days. This is a
+bounded regression, not a guarantee against every DNS outage, a throughput
+benchmark or a substitute for the full Compose image/video checks.
 
 ### Local GPU Check
 

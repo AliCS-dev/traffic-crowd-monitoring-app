@@ -101,9 +101,10 @@ The [21 November cold-process attempt](cold_api_attempt.md) stopped after ten
 completed trials and one failed video-status polling sequence; four cold trials
 and the V2 setup request were not attempted. The later saved video was available,
 but the client-visible 502 remains a failure. Partial timings and original
-artifact hashes are retained. Proxy recovery is now tracked in
-[#172](https://github.com/AliCS-dev/traffic-crowd-monitoring-app/issues/172).
-Warm/browser collection has not started and #79 remains open.
+artifact hashes are retained. The [22 November proxy-recovery record](proxy_recovery.md)
+documents the fix and its checks. Ali approved recollecting **all final phases**
+under a new candidate, including lifecycle; these earlier results remain
+separate. Warm/browser collection has not started and #79 remains open.
 
 ## Application Evaluation Preparation
 

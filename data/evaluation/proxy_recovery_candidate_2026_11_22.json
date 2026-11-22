@@ -1,0 +1,715 @@
+{
+  "schema_version": 1,
+  "candidate": "proxy-recovery-2026-11-22",
+  "purpose": "proxy fix verification and candidate identity; not a pre-collection freeze or final performance result",
+  "runtime_change": "Nginx single event worker, request-time Docker DNS with five-second cache/timeout, upstream retries disabled",
+  "source_base_commit": "c785c0efbac4a2a713c8143a0b50d9e2a7b2d14d",
+  "backend_reused_from_clean_commit": "5cbd433eebed9678f2e288329d4a99b8ad295cc4",
+  "images": {
+    "backend": "sha256:79e5daa60b37da453e64983683dd203745583213ef5f913f561d1c62c98fd7ad",
+    "frontend": "sha256:135f02cd3cdb9edd2a6f51c587658f76c584762e5829a4a682d9bcc2a62c25cf",
+    "postgres": "sha256:9e2cf6287f25c3151f4c9421ccce2b17f3e60061c111a29165e0d2cdd9ff0a97"
+  },
+  "frontend_static_files_unchanged": {
+    "/usr/share/nginx/html/index.html": "47a716280d3d1272a7c09765e846be1bb77a2c0dcffa614a8cf3b3e1e444f5d6",
+    "/usr/share/nginx/html/50x.html": "876766b4e80133fd490603e073d3567425b88794828a9292104244c9e40875ed",
+    "/usr/share/nginx/html/assets/NotFoundPage-CI5JAGw4.js": "5462740f93cdac225b7073836081407b2739339c35189efc7f4398a3b9076259",
+    "/usr/share/nginx/html/assets/client-CtwouoZi.js": "5b09cdf6e3d571128cf97cb20332f2c84b91161f3f14a8698c30d20e3f949903",
+    "/usr/share/nginx/html/assets/PageHeader-9TK8pDhg.js": "f2658523fbab7b6b839bc70c428633ebb0165b3f85b4d757e5759ade9f3c112b",
+    "/usr/share/nginx/html/assets/arrow-left-CCQVr7uW.js": "0aef9cad8d438871c94934bffe6e87b9998c96e971a452a45092328dddd8fcb3",
+    "/usr/share/nginx/html/assets/SessionsPage-CG6ysIcs.js": "c602b4c2707661ff2e0a27a2845ffb6e1f9c9b2878e1b8ce99b8cd1f82ba2854",
+    "/usr/share/nginx/html/assets/Pagination-DoOKImtJ.js": "9bd9b132b1fe813db1fa6e41bdfce2ee05351a46bb7aa33751f31a29c7123c16",
+    "/usr/share/nginx/html/assets/ResultsPage-DBkCAj3N.js": "e0cfb1a1c41a35e16c8eb362f33655fb3bf8e248a0e447bd5f7ff7a91ef319dc",
+    "/usr/share/nginx/html/assets/ToggleButtonGroup-D70cyNA5.js": "4e72a4d2e7e1b193f7a60ad6d9f39e21f15c49b1e90d69a38d25f511e023e429",
+    "/usr/share/nginx/html/assets/file-play-2SQFucmP.js": "cdb20181ecf7fe7c217768e64e8434f3b4a27b6c9cd3736e712de7e714ce7932",
+    "/usr/share/nginx/html/assets/index-CoFl69IF.js": "4fc52d8946facf5a470a91f400e28a9528c7b4fc3e57d919df1e6663fce1af7b",
+    "/usr/share/nginx/html/assets/StatePanel-D_25kDnX.js": "68c76af4bd472ff3732b1e775ec6d6c6e3e103cdc26c91f03866e75020ef4dfa",
+    "/usr/share/nginx/html/assets/index-DzzpNkdo.css": "5da7365ea8ba742ff3de0300f51dae66e5a8bea7689c4536640c9be4afac1eff",
+    "/usr/share/nginx/html/assets/rolldown-runtime-WkwZ5CU-.js": "2629f2ad3cb75a57d98de697127f5af7d777ef572bbcdfa6e3ce8f438cd4527e",
+    "/usr/share/nginx/html/assets/WorkspacePage-CK6lWXCw.js": "a6139eb952fa3e157b93d944c924e58df79387e43d00b342eef18938a98179cd"
+  },
+  "source_sha256": {
+    "frontend/nginx.conf": "beaed8214408cd331285ecb289a7f3f8aa0c44be479111f074bdad85d6603fb4",
+    "frontend/Dockerfile": "1408ac1959767cab4d28761dbc1af7df7d0ee3277881bfc059066528359557d7",
+    "tests/compose/check_proxy_recovery.py": "c5b84fc48e81d4e3d8facea33b6dfb2312f6bfe6c72046049dbbdd7e80d76336",
+    "tests/compose/proxy_backend.py": "e2a86302e0a608e1c7b06d6902603ef5ee6dab505c6cf6c6151b4326efd9d10b",
+    "docker-compose.app.yml": "16c83fc6c39215af117cbabcfa58e6ad6279a9290e2fd17123f9fcebfd44867e",
+    "docker-compose.gpu.yml": "0dee794d2dfbc068eadc128b5ba07fd4cc545d1c9451c2c7b8915cab735cc7f6",
+    "configs/evaluation/system_workflows_candidate.json": "3faaab2aa01730df7d3e7498299444c146661739ef5e5f74f0197a3f35c0d50f"
+  },
+  "original_proxy_reproduction": {
+    "fixture": "small HTTP server; real Docker DNS; frozen frontend image; no model or database",
+    "observations": "The fifth restart produced readiness followed by 502 responses from about 2.863 to 8.795 seconds after readiness.",
+    "nginx_log": "original-proxy.log",
+    "first_dns_error_utc": "2026-11-22T11:02:40.811592132Z",
+    "dns_error": "backend could not be resolved (3: Host not found)",
+    "boundary": "The log was captured during the exploratory run; it is not a complete end-of-run log or final timing measurement."
+  },
+  "unsuccessful_multi_worker_candidate": {
+    "started_at": "2026-11-22T11:05:51.308143+00:00",
+    "project": "traffic-proxy-test-f13f7ce4f1b3",
+    "trials": [
+      {
+        "kind": "startup",
+        "index": 0,
+        "recovery_statuses": [
+          200
+        ],
+        "post_ready_requests": 116,
+        "observed_seconds": 12.103756218999933,
+        "forwarding": {
+          "path_and_query": true,
+          "upload_bytes": 1048576,
+          "post_replay": false
+        }
+      },
+      {
+        "kind": "restart",
+        "index": 1,
+        "stopped_seconds": 0.5,
+        "recovery_statuses": [
+          502,
+          200
+        ],
+        "post_ready_requests": 116,
+        "observed_seconds": 12.049367769000014,
+        "forwarding": {
+          "path_and_query": true,
+          "upload_bytes": 1048576,
+          "post_replay": false
+        }
+      },
+      {
+        "kind": "restart",
+        "index": 2,
+        "stopped_seconds": 1.0,
+        "recovery_statuses": [
+          502,
+          200
+        ],
+        "post_ready_requests": 116,
+        "observed_seconds": 12.083225620000007,
+        "forwarding": {
+          "path_and_query": true,
+          "upload_bytes": 1048576,
+          "post_replay": false
+        }
+      },
+      {
+        "kind": "restart",
+        "index": 3,
+        "stopped_seconds": 0.0,
+        "recovery_statuses": [
+          502,
+          200
+        ],
+        "post_ready_requests": 116,
+        "observed_seconds": 12.09343654600002,
+        "forwarding": {
+          "path_and_query": true,
+          "upload_bytes": 1048576,
+          "post_replay": false
+        }
+      },
+      {
+        "kind": "restart",
+        "index": 4,
+        "stopped_seconds": 0.5,
+        "recovery_statuses": [
+          502,
+          200
+        ],
+        "post_ready_requests": 115,
+        "observed_seconds": 12.08285778200002,
+        "forwarding": {
+          "path_and_query": true,
+          "upload_bytes": 1048576,
+          "post_replay": false
+        }
+      },
+      {
+        "kind": "restart",
+        "index": 5,
+        "stopped_seconds": 1.0,
+        "recovery_statuses": [
+          502,
+          200
+        ],
+        "post_ready_requests": 115,
+        "observed_seconds": 12.075414302000013,
+        "forwarding": {
+          "path_and_query": true,
+          "upload_bytes": 1048576,
+          "post_replay": false
+        }
+      },
+      {
+        "kind": "restart",
+        "index": 6,
+        "stopped_seconds": 0.0,
+        "recovery_statuses": [
+          502,
+          200
+        ],
+        "post_ready_requests": 116,
+        "observed_seconds": 12.096900317000063,
+        "forwarding": {
+          "path_and_query": true,
+          "upload_bytes": 1048576,
+          "post_replay": false
+        }
+      },
+      {
+        "kind": "restart",
+        "index": 7,
+        "stopped_seconds": 0.5,
+        "recovery_statuses": [
+          502,
+          200
+        ],
+        "post_ready_requests": 116,
+        "observed_seconds": 12.057348778999994,
+        "forwarding": {
+          "path_and_query": true,
+          "upload_bytes": 1048576,
+          "post_replay": false
+        }
+      },
+      {
+        "kind": "restart",
+        "index": 8,
+        "stopped_seconds": 1.0,
+        "recovery_statuses": [
+          502,
+          200
+        ],
+        "post_ready_requests": 116,
+        "observed_seconds": 12.085573581000062,
+        "forwarding": {
+          "path_and_query": true,
+          "upload_bytes": 1048576,
+          "post_replay": false
+        }
+      },
+      {
+        "kind": "restart",
+        "index": 9,
+        "stopped_seconds": 0.0,
+        "recovery_statuses": [
+          502,
+          200
+        ],
+        "post_ready_requests": 116,
+        "observed_seconds": 12.032189644000027,
+        "forwarding": {
+          "path_and_query": true,
+          "upload_bytes": 1048576,
+          "post_replay": false
+        }
+      },
+      {
+        "kind": "restart",
+        "index": 10,
+        "stopped_seconds": 0.5,
+        "recovery_statuses": [
+          502,
+          200
+        ],
+        "post_ready_requests": 116,
+        "observed_seconds": 12.091033280000033,
+        "forwarding": {
+          "path_and_query": true,
+          "upload_bytes": 1048576,
+          "post_replay": false
+        }
+      },
+      {
+        "kind": "recreate_changed_address",
+        "index": 11,
+        "old_address": "172.23.0.2",
+        "new_address": "172.23.0.4",
+        "recovery_statuses": [
+          200
+        ],
+        "post_ready_requests": 2,
+        "failure": {
+          "status": 502,
+          "seconds_after_ready": 0.10226392899994607
+        }
+      }
+    ],
+    "status": "failed",
+    "images": {
+      "backend": "sha256:79e5daa60b37da453e64983683dd203745583213ef5f913f561d1c62c98fd7ad",
+      "frontend": "sha256:bd5f1b897da1277cf8462386990f8e440bca5fea86c4c7aea0a0f33e12101b15"
+    },
+    "nginx_config_sha256": "9937eb0fb828e0663844165c28089a0589574e8554e4e37a7bc64ae52a54d1cf",
+    "error": "{'kind': 'recreate_changed_address', 'index': 11, 'old_address': '172.23.0.2', 'new_address': '172.23.0.4', 'recovery_statuses': [200], 'post_ready_requests': 2, 'failure': {'status': 502, 'seconds_after_ready': 0.10226392899994607}}",
+    "finished_at": "2026-11-22T11:08:05.706894+00:00"
+  },
+  "final_proxy_regression": {
+    "started_at": "2026-11-22T11:12:19.765463+00:00",
+    "project": "traffic-proxy-test-d3ba8cbc86fc",
+    "trials": [
+      {
+        "kind": "startup",
+        "index": 0,
+        "recovery_statuses": [
+          200
+        ],
+        "post_ready_requests": 115,
+        "observed_seconds": 12.028182648999973,
+        "forwarding": {
+          "path_and_query": true,
+          "upload_bytes": 1048576,
+          "post_replay": false
+        }
+      },
+      {
+        "kind": "restart",
+        "index": 1,
+        "stopped_seconds": 0.5,
+        "recovery_statuses": [
+          502,
+          200
+        ],
+        "post_ready_requests": 115,
+        "observed_seconds": 12.033056459999898,
+        "forwarding": {
+          "path_and_query": true,
+          "upload_bytes": 1048576,
+          "post_replay": false
+        }
+      },
+      {
+        "kind": "restart",
+        "index": 2,
+        "stopped_seconds": 1.0,
+        "recovery_statuses": [
+          502,
+          200
+        ],
+        "post_ready_requests": 116,
+        "observed_seconds": 12.030513693000103,
+        "forwarding": {
+          "path_and_query": true,
+          "upload_bytes": 1048576,
+          "post_replay": false
+        }
+      },
+      {
+        "kind": "restart",
+        "index": 3,
+        "stopped_seconds": 0.0,
+        "recovery_statuses": [
+          502,
+          200
+        ],
+        "post_ready_requests": 117,
+        "observed_seconds": 12.001839293000103,
+        "forwarding": {
+          "path_and_query": true,
+          "upload_bytes": 1048576,
+          "post_replay": false
+        }
+      },
+      {
+        "kind": "restart",
+        "index": 4,
+        "stopped_seconds": 0.5,
+        "recovery_statuses": [
+          502,
+          200
+        ],
+        "post_ready_requests": 118,
+        "observed_seconds": 12.095540933000166,
+        "forwarding": {
+          "path_and_query": true,
+          "upload_bytes": 1048576,
+          "post_replay": false
+        }
+      },
+      {
+        "kind": "restart",
+        "index": 5,
+        "stopped_seconds": 1.0,
+        "recovery_statuses": [
+          502,
+          200
+        ],
+        "post_ready_requests": 118,
+        "observed_seconds": 12.085690900999907,
+        "forwarding": {
+          "path_and_query": true,
+          "upload_bytes": 1048576,
+          "post_replay": false
+        }
+      },
+      {
+        "kind": "restart",
+        "index": 6,
+        "stopped_seconds": 0.0,
+        "recovery_statuses": [
+          502,
+          200
+        ],
+        "post_ready_requests": 118,
+        "observed_seconds": 12.09591857700002,
+        "forwarding": {
+          "path_and_query": true,
+          "upload_bytes": 1048576,
+          "post_replay": false
+        }
+      },
+      {
+        "kind": "restart",
+        "index": 7,
+        "stopped_seconds": 0.5,
+        "recovery_statuses": [
+          502,
+          200
+        ],
+        "post_ready_requests": 118,
+        "observed_seconds": 12.082758882999997,
+        "forwarding": {
+          "path_and_query": true,
+          "upload_bytes": 1048576,
+          "post_replay": false
+        }
+      },
+      {
+        "kind": "restart",
+        "index": 8,
+        "stopped_seconds": 1.0,
+        "recovery_statuses": [
+          502,
+          200
+        ],
+        "post_ready_requests": 117,
+        "observed_seconds": 12.047657673999993,
+        "forwarding": {
+          "path_and_query": true,
+          "upload_bytes": 1048576,
+          "post_replay": false
+        }
+      },
+      {
+        "kind": "restart",
+        "index": 9,
+        "stopped_seconds": 0.0,
+        "recovery_statuses": [
+          502,
+          200
+        ],
+        "post_ready_requests": 116,
+        "observed_seconds": 12.085692696000024,
+        "forwarding": {
+          "path_and_query": true,
+          "upload_bytes": 1048576,
+          "post_replay": false
+        }
+      },
+      {
+        "kind": "restart",
+        "index": 10,
+        "stopped_seconds": 0.5,
+        "recovery_statuses": [
+          502,
+          200
+        ],
+        "post_ready_requests": 116,
+        "observed_seconds": 12.1007968240001,
+        "forwarding": {
+          "path_and_query": true,
+          "upload_bytes": 1048576,
+          "post_replay": false
+        }
+      },
+      {
+        "kind": "recreate_changed_address",
+        "index": 11,
+        "old_address": "172.23.0.2",
+        "new_address": "172.23.0.4",
+        "recovery_statuses": [
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          502,
+          200
+        ],
+        "post_ready_requests": 116,
+        "observed_seconds": 12.032360403999974,
+        "forwarding": {
+          "path_and_query": true,
+          "upload_bytes": 1048576,
+          "post_replay": false
+        }
+      }
+    ],
+    "status": "passed",
+    "test_sha256": {
+      "check_proxy_recovery.py": "c5b84fc48e81d4e3d8facea33b6dfb2312f6bfe6c72046049dbbdd7e80d76336",
+      "proxy_backend.py": "e2a86302e0a608e1c7b06d6902603ef5ee6dab505c6cf6c6151b4326efd9d10b"
+    },
+    "images": {
+      "backend": "sha256:79e5daa60b37da453e64983683dd203745583213ef5f913f561d1c62c98fd7ad",
+      "frontend": "sha256:135f02cd3cdb9edd2a6f51c587658f76c584762e5829a4a682d9bcc2a62c25cf"
+    },
+    "nginx_config_sha256": "beaed8214408cd331285ecb289a7f3f8aa0c44be479111f074bdad85d6603fb4",
+    "finished_at": "2026-11-22T11:14:51.292217+00:00"
+  },
+  "local_checks": {
+    "python_with_postgresql": {
+      "passed": 726,
+      "skipped": 0
+    },
+    "frontend_unit": {
+      "passed": 115
+    },
+    "browser_regression": {
+      "passed": 40,
+      "retries": 0
+    },
+    "live_gpu_browser": {
+      "passed": 4,
+      "retries": 0
+    },
+    "gpu_regression": {
+      "runs": 2,
+      "frames_per_run": 5,
+      "differences": []
+    },
+    "controlled_compose": {
+      "image_and_video": "passed",
+      "saved_assets_after_restart": "passed",
+      "abandoned_job": "worker_interrupted"
+    }
+  },
+  "evaluation_decision": {
+    "approved_by": "Ali",
+    "date": "2026-11-22",
+    "recollect": [
+      "lifecycle",
+      "cold_api",
+      "warm_api",
+      "browser"
+    ],
+    "new_precollection_freeze_required": true,
+    "old_evidence": [
+      "data/evaluation/system_freeze_2026_11_19.json",
+      "data/evaluation/system_lifecycle_final_2026_11_19.json",
+      "data/evaluation/system_cold_api_attempt_2026_11_21.json"
+    ],
+    "pool_old_and_new": false,
+    "issue_79_complete": false
+  },
+  "limitations": [
+    "Bounded regression, not proof against all DNS/backend failures or a throughput benchmark.",
+    "No DNS packet capture; the cause of Docker's original NXDOMAIN answer remains unproven.",
+    "No inference, schema, model or measurement-rule change; failed model quality gate and unsupported dense crowds unchanged."
+  ],
+  "raw_artifacts": {
+    "data/output/issue172-proxy-recovery/controlled-cleanup.log": {
+      "sha256": "381661d88bdf47fc3229e5e20f76cffd68b1d71a6e0897fffff3b9cf5d4883c1",
+      "bytes": 1386
+    },
+    "data/output/issue172-proxy-recovery/controlled-containers.log": {
+      "sha256": "113bb6f16410f2fc90681a1153d1f7010503fd845043689a4be85e4ec6e94b90",
+      "bytes": 28107
+    },
+    "data/output/issue172-proxy-recovery/controlled-final/controlled-cleanup.log": {
+      "sha256": "f2efeb82383bf2251f853d16fdb4889f108a7cf8e9daf3e44224fccd7b8244b7",
+      "bytes": 1386
+    },
+    "data/output/issue172-proxy-recovery/controlled-final/controlled-containers.log": {
+      "sha256": "26a0053150eb322d202da5870c4829a2f3a9b77473c06a806b375426eae78801",
+      "bytes": 28860
+    },
+    "data/output/issue172-proxy-recovery/controlled-final/controlled-recovery.log": {
+      "sha256": "7ac21fef06836d5e36ed0b0edca68a5f1f3e9bf95bf6f8f66b4567a230b4ec9f",
+      "bytes": 1227
+    },
+    "data/output/issue172-proxy-recovery/controlled-final/controlled-restart.log": {
+      "sha256": "1c63dd3c3b3bead04e3859f17eaa7cda3dae8d6a4efb497600520b3b400a6563",
+      "bytes": 119
+    },
+    "data/output/issue172-proxy-recovery/controlled-final/controlled-saved.log": {
+      "sha256": "79d56b9bb2029b86ec431aab7d5af600d3b0be7edf12eaee744470d23052cb4a",
+      "bytes": 1169
+    },
+    "data/output/issue172-proxy-recovery/controlled-final/controlled-start.log": {
+      "sha256": "25d935640a5fd5f9e2d0f15a262ec8a13a39a2899944395a0dc0ec2d6c3af112",
+      "bytes": 2762
+    },
+    "data/output/issue172-proxy-recovery/controlled-final/controlled-workflows.log": {
+      "sha256": "38bb3b75639b58adab52de6a93bd4fe37b9382d22dfe58b44103b3993b2ae730",
+      "bytes": 1170
+    },
+    "data/output/issue172-proxy-recovery/controlled-recovery.log": {
+      "sha256": "d89acedb2502747258c5605bac530a3671a1752b9998300fabcf10f4fa91088a",
+      "bytes": 1227
+    },
+    "data/output/issue172-proxy-recovery/controlled-restart.log": {
+      "sha256": "1c63dd3c3b3bead04e3859f17eaa7cda3dae8d6a4efb497600520b3b400a6563",
+      "bytes": 119
+    },
+    "data/output/issue172-proxy-recovery/controlled-saved.log": {
+      "sha256": "89d0098b3bcd0ba1430f1123ca2c2a6c96546171775de5ebfbf044e451d5633a",
+      "bytes": 1169
+    },
+    "data/output/issue172-proxy-recovery/controlled-start.log": {
+      "sha256": "f7aaefd99890566e950a846be73f7f14de8376e3c027e73b3274a18e369ec6fd",
+      "bytes": 2762
+    },
+    "data/output/issue172-proxy-recovery/controlled-workflows.log": {
+      "sha256": "02a2e5cdfcd246b1ed6e0133053165a6db371d34e34a352b17148527bd0fa6ac",
+      "bytes": 1170
+    },
+    "data/output/issue172-proxy-recovery/final-regression/report.json": {
+      "sha256": "08c8783c6ef148827971a8fc903269c36a3af2dc0b63e72043f12465a9ce4ad5",
+      "bytes": 5588
+    },
+    "data/output/issue172-proxy-recovery/final-regression/traffic-proxy-test-d3ba8cbc86fc-api.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "data/output/issue172-proxy-recovery/final-regression/traffic-proxy-test-d3ba8cbc86fc-hold.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "data/output/issue172-proxy-recovery/final-regression/traffic-proxy-test-d3ba8cbc86fc-web.log": {
+      "sha256": "926f46cfdde4a9cf81b1c3df6889c664e0d23d3f3dd7d0390ecb8d47263a090e",
+      "bytes": 197644
+    },
+    "data/output/issue172-proxy-recovery/fixed-1/report.json": {
+      "sha256": "4ef82aaacf69e58f8c19058daec2543ecaa79ac5d141a02b886ff5d967c3cb1d",
+      "bytes": 4902
+    },
+    "data/output/issue172-proxy-recovery/fixed-1/traffic-proxy-test-f13f7ce4f1b3-api.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "data/output/issue172-proxy-recovery/fixed-1/traffic-proxy-test-f13f7ce4f1b3-hold.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "data/output/issue172-proxy-recovery/fixed-1/traffic-proxy-test-f13f7ce4f1b3-web.log": {
+      "sha256": "0b94bd1373e0205e83726e0c3750b1d71ee7c0e14a659ca53f507615942fda67",
+      "bytes": 163036
+    },
+    "data/output/issue172-proxy-recovery/fixed-2/report.json": {
+      "sha256": "94040fe8c669d11bc0324faaee8832381be24831db69ac57cee506101e368da1",
+      "bytes": 4740
+    },
+    "data/output/issue172-proxy-recovery/fixed-2/traffic-proxy-test-f3cb1c34625c-api.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "data/output/issue172-proxy-recovery/fixed-2/traffic-proxy-test-f3cb1c34625c-hold.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "data/output/issue172-proxy-recovery/fixed-2/traffic-proxy-test-f3cb1c34625c-web.log": {
+      "sha256": "d0ab7af84b6342371afa333d8b67c1c9d3b1af28ecf63f8e41bd4a7a2149b71c",
+      "bytes": 177111
+    },
+    "data/output/issue172-proxy-recovery/gpu-after-restart.json": {
+      "sha256": "9d678c5a74acd3642cd01581ba7c8699dea4618e2c321a18de2cfa4607498340",
+      "bytes": 32750
+    },
+    "data/output/issue172-proxy-recovery/gpu-after-restart.log": {
+      "sha256": "f2b121120a007cdf7c7b5678b9c1d557b21b09dffc768ab11b9d8a58b7844bb1",
+      "bytes": 85
+    },
+    "data/output/issue172-proxy-recovery/gpu-browser.log": {
+      "sha256": "9804998523e3264dfbe6c990238f884281064628fe1c29546ff1d8c81b43400c",
+      "bytes": 1807
+    },
+    "data/output/issue172-proxy-recovery/gpu-check.json": {
+      "sha256": "74af8b4199135c6e4d39b441460ddf6fd90fa5ec8078b67a35f479cf5b4f3605",
+      "bytes": 2256
+    },
+    "data/output/issue172-proxy-recovery/gpu-container-backend.log": {
+      "sha256": "1a19dc77f18a334f4957a5acac3f7be6a9d4aad574db17df047aa7a3026aa91d",
+      "bytes": 130531
+    },
+    "data/output/issue172-proxy-recovery/gpu-container-frontend.log": {
+      "sha256": "cb5e084ee9d052942cd40198e8ed547fcb6cd444a560b92d38f7b75fee02c558",
+      "bytes": 65926
+    },
+    "data/output/issue172-proxy-recovery/gpu-container-migrate.log": {
+      "sha256": "3fa18beabaf8067bead9fa550253b4a37de4170ed9e1ae888ae294cab051e6b6",
+      "bytes": 625
+    },
+    "data/output/issue172-proxy-recovery/gpu-container-postgres.log": {
+      "sha256": "4e403d43515faae18523cd3504bc2a69584f5ae63ae15181990a50adbaa0f83d",
+      "bytes": 4923
+    },
+    "data/output/issue172-proxy-recovery/gpu-initial.json": {
+      "sha256": "ef14d1d37f326a4237d6be6c6f118ee390b55c5909c950866c61ccb1728d7204",
+      "bytes": 32750
+    },
+    "data/output/issue172-proxy-recovery/gpu-initial.log": {
+      "sha256": "266dc70badd82b15206a78f282cf0795eb20a5529e02c5f1af147602c964713f",
+      "bytes": 85
+    },
+    "data/output/issue172-proxy-recovery/original-proxy.log": {
+      "sha256": "18a92abd927ad02467bd5b00ebeff6f7b86c28617ecde8e4007c5353a05044fa",
+      "bytes": 165338
+    },
+    "data/output/issue172-proxy-recovery/original_probe.py": {
+      "sha256": "3a52309506f642a147d6f3dd36db4af26c4bb32e1b0a77d9bcd9571af18032c1",
+      "bytes": 2093
+    },
+    "data/output/issue172-proxy-recovery/python-tests.log": {
+      "sha256": "4fbc3fa2576c9cd1efbb213cf47498a7d159be1fa04cc45a74440427edfb3ca9",
+      "bytes": 901
+    }
+  }
+}
