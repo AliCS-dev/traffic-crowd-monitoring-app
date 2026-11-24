@@ -91,11 +91,20 @@ video and memory measurements do not change the model-quality results below.
 
 **Current candidate:** the [replacement collection](system_results_refrozen.md)
 uses the [24 November freeze](system_refreeze.md), after PR #174 fixed proxy
-recovery. We are repeating every final phase. The observations below remain
-historical results for the previous candidate, not a completed replacement table.
+recovery. We are repeating every final phase rather than combining versions.
 
-The [system-results page](system_results.md) is the starting point for final
-application measurements. On 19 November, all three frozen lifecycle trials
+On 24 November, the replacement lifecycle phase completed all **45 analyses**,
+**30 saved-session comparisons** and **264 media-hash comparisons**. Median
+fresh-stack, PostgreSQL-start and backend-start readiness times were **13.436 s**,
+**0.493 s** and **1.996 s**, respectively, with three observations each. These
+exclude first inference and are not end-to-end analysis latency. Cold, warm and
+browser phases remain open; the linked replacement report contains the exact
+boundaries, background activity and raw-evidence references.
+
+### Previous Candidate
+
+The [earlier system-results page](system_results.md) retains the previous
+candidate's observations. On 19 November, all three frozen lifecycle trials
 completed: 45 analyses, 30 saved-session comparisons and 264 matching media
 hash comparisons. Median fresh-stack readiness was **13.056 s**; median
 PostgreSQL and backend start-to-ready times were **0.495 s** and **5.049 s**.
