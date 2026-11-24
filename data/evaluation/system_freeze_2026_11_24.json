@@ -1,0 +1,530 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-24T14:40:06.810539+00:00",
+  "status": "verified_candidate_collection_not_started",
+  "candidate": "proxy-recovery-2026-11-22",
+  "application": {
+    "application_commit": "84f85e2b2c2e842d259e45ae82a8b04920effaaf",
+    "source_dirty": false,
+    "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+  },
+  "component_identity_note": "The clean merged checkout contains the reviewed proxy fix. The unchanged backend image retains its true build commit 5cbd433; the frontend artifact is identified by immutable image ID, matching committed nginx.conf and all sixteen verified served files. No image was rebuilt for this freeze.",
+  "runner_baseline": {
+    "application_commit": "84f85e2b2c2e842d259e45ae82a8b04920effaaf",
+    "source_dirty": false,
+    "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725"
+  },
+  "runner_note": "Measurement tools and inputs match the 19 November protocol; documentation and the proxy regression do not change their hashes. Actual invocation commits are retained in reports.",
+  "container_images": {
+    "backend": {
+      "Id": "sha256:79e5daa60b37da453e64983683dd203745583213ef5f913f561d1c62c98fd7ad",
+      "Created": "2026-11-19T16:47:03.374044921Z",
+      "Architecture": "amd64",
+      "Os": "linux",
+      "RepoDigests": [
+        "traffic-eval-5cbd433-backend@sha256:79e5daa60b37da453e64983683dd203745583213ef5f913f561d1c62c98fd7ad"
+      ],
+      "local_tag": "traffic-eval-5cbd433-backend:local"
+    },
+    "frontend": {
+      "Id": "sha256:135f02cd3cdb9edd2a6f51c587658f76c584762e5829a4a682d9bcc2a62c25cf",
+      "Created": "2026-11-22T11:08:42.265487803Z",
+      "Architecture": "amd64",
+      "Os": "linux",
+      "RepoDigests": [
+        "traffic-eval-proxy-recovery-2026-11-22-frontend@sha256:135f02cd3cdb9edd2a6f51c587658f76c584762e5829a4a682d9bcc2a62c25cf",
+        "traffic-issue172-frontend@sha256:135f02cd3cdb9edd2a6f51c587658f76c584762e5829a4a682d9bcc2a62c25cf"
+      ],
+      "local_tag": "traffic-eval-proxy-recovery-2026-11-22-frontend:local"
+    },
+    "postgres": {
+      "Id": "sha256:9e2cf6287f25c3151f4c9421ccce2b17f3e60061c111a29165e0d2cdd9ff0a97",
+      "Created": "2026-10-21T00:38:09.198430998Z",
+      "Architecture": "amd64",
+      "Os": "linux",
+      "RepoDigests": [
+        "postgres@sha256:9e2cf6287f25c3151f4c9421ccce2b17f3e60061c111a29165e0d2cdd9ff0a97"
+      ],
+      "local_tag": "postgres:16"
+    }
+  },
+  "backend_runtime": {
+    "schema_version": 1,
+    "captured_at": "2026-11-24T14:39:42.424769+00:00",
+    "application_commit": "5cbd433eebed9678f2e288329d4a99b8ad295cc4",
+    "source_dirty": false,
+    "source_sha256": "8a737384522e42f4a8a55968548561d73993d75646346a95a114d76e83f62725",
+    "python_version": "3.12.3",
+    "platform": "Linux 6.6.87.2-microsoft-standard-WSL2 x86_64",
+    "dependencies": {
+      "annotated-doc": "0.0.5",
+      "annotated-types": "0.8.0",
+      "anyio": "4.15.1",
+      "asttokens": "3.0.2",
+      "build": "1.6.1",
+      "certifi": "2026.7.22",
+      "charset-normalizer": "3.5.2",
+      "click": "8.3.3",
+      "cloudpickle": "3.1.2",
+      "cmake": "4.4.3",
+      "contourpy": "1.4.0",
+      "cuda-bindings": "13.3.1",
+      "cuda-pathfinder": "1.6.0",
+      "cuda-toolkit": "13.0.3.0",
+      "cycler": "0.12.1",
+      "dnspython": "2.8.0",
+      "executing": "2.2.1",
+      "expecttest": "0.3.0",
+      "fastapi": "0.156.8",
+      "filelock": "4.0.7",
+      "fonttools": "4.67.0",
+      "fsspec": "2026.9.0",
+      "h11": "0.16.0",
+      "httpcore": "1.0.9",
+      "httpx": "0.28.1",
+      "hypothesis": "6.168.3",
+      "idna": "3.20",
+      "importlib-metadata": "9.0.1",
+      "ipython": "9.17.1",
+      "ipython-pygments-lexers": "1.1.1",
+      "jedi": "0.20.0",
+      "jinja2": "3.1.6",
+      "kiwisolver": "1.5.1",
+      "lintrunner": "0.13.1",
+      "markupsafe": "3.0.3",
+      "matplotlib": "3.11.2",
+      "matplotlib-inline": "0.2.2",
+      "mpmath": "1.3.0",
+      "networkx": "3.7",
+      "ninja": "1.13.2",
+      "numpy": "2.5.4",
+      "nvidia-cublas": "13.1.1.3",
+      "nvidia-cuda-cupti": "13.0.85",
+      "nvidia-cuda-nvrtc": "13.0.88",
+      "nvidia-cuda-runtime": "13.0.96",
+      "nvidia-cudnn-cu13": "9.24.0.43",
+      "nvidia-cufft": "12.0.0.61",
+      "nvidia-cufile": "1.15.1.6",
+      "nvidia-curand": "10.4.0.35",
+      "nvidia-cusolver": "12.0.4.66",
+      "nvidia-cusparse": "12.6.3.3",
+      "nvidia-cusparselt-cu13": "0.8.1",
+      "nvidia-ml-py": "13.615.71",
+      "nvidia-nccl-cu13": "2.30.7",
+      "nvidia-nvjitlink": "13.3.33",
+      "nvidia-nvshmem-cu13": "3.4.5",
+      "nvidia-nvtx": "13.0.85",
+      "opencv-python": "5.0.0.93",
+      "opentelemetry-api": "1.45.1",
+      "optree": "0.20.0",
+      "packaging": "26.3",
+      "parso": "0.8.7",
+      "pathspec": "1.1.1",
+      "pexpect": "4.9.0",
+      "pillow": "13.0.0",
+      "pip": "24.0",
+      "polars": "2.0.0",
+      "polars-runtime-32": "2.0.0",
+      "prompt-toolkit": "3.0.53",
+      "psutil": "7.2.2",
+      "psycopg": "3.3.6",
+      "psycopg-binary": "3.3.6",
+      "ptyprocess": "0.7.0",
+      "pure-eval": "0.2.4",
+      "pydantic": "2.14.1",
+      "pydantic-core": "2.50.1",
+      "pygments": "2.21.0",
+      "pyparsing": "3.3.3",
+      "pyproject-hooks": "1.3.3",
+      "python-dateutil": "2.9.0.post0",
+      "python-dotenv": "1.2.4",
+      "python-etcd": "0.4.5",
+      "python-multipart": "0.0.32",
+      "pyyaml": "6.0.3",
+      "requests": "2.34.2",
+      "scikit-build-core": "1.1.0",
+      "scipy": "1.18.1",
+      "setuptools": "81.0.0",
+      "six": "1.17.0",
+      "sortedcontainers": "2.4.0",
+      "spin": "0.18",
+      "stack-data": "0.6.3",
+      "starlette": "1.9.0",
+      "sympy": "1.14.0",
+      "torch": "2.14.1+cu130",
+      "torchaudio": "2.11.0+cu130",
+      "torchelastic": "0.2.2",
+      "torchvision": "0.29.1+cu130",
+      "traitlets": "5.16.1",
+      "triton": "3.8.0",
+      "typing-extensions": "4.16.0",
+      "typing-inspection": "0.4.4",
+      "ultralytics": "8.4.183",
+      "ultralytics-platform": "0.1.90",
+      "ultralytics-thop": "2.2.3",
+      "urllib3": "2.8.0",
+      "uv": "0.12.21",
+      "uvicorn": "0.54.0",
+      "wcwidth": "0.9.1",
+      "wheel": "0.48.0",
+      "zipp": "4.1.0"
+    },
+    "device": "cuda:0",
+    "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "cuda_version": "13.0",
+    "cudnn_version": 92400,
+    "container_id": "cc17fff11ba1"
+  },
+  "api_settings": {
+    "title": "Traffic and Crowd Monitoring API",
+    "version": "0.1.0",
+    "cors_origins": [],
+    "image_upload_directory": "/app/data/input/uploads",
+    "image_output_directory": "/app/data/output/analyses",
+    "video_upload_directory": "/app/data/input/video-uploads",
+    "video_output_directory": "/app/data/output/video-frames",
+    "max_image_upload_bytes": 10485760,
+    "max_image_pixels": 40000000,
+    "max_grid_dimension": 20,
+    "max_video_upload_bytes": 524288000,
+    "video_workers": 1,
+    "model_device": "cuda:0",
+    "workload": {
+      "max_inflight_analyses": 3,
+      "max_video_duration_seconds": 300,
+      "max_video_source_frames": 36000,
+      "max_sampled_frames": 300,
+      "max_video_detection_records": 100000,
+      "max_processed_pixels": 40000000,
+      "min_sampling_interval_seconds": 0.25,
+      "max_queue_seconds": 60,
+      "max_processing_seconds": 300
+    }
+  },
+  "database": {
+    "server": [
+      "PostgreSQL 16.15 (Debian 16.15-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+      "16.15 (Debian 16.15-1.pgdg13+2)"
+    ],
+    "migrations": [
+      [
+        1,
+        "create_initial_tables",
+        "eaafaec94f6f8f0a6fe0cdad5a47c5a4f6e8e72f5c302f64664d882f5d06de60"
+      ],
+      [
+        2,
+        "add_model_run_profiles",
+        "29da9c07f357340d572f4e875dedfb52c363c4a0af39f01e2b5d9de48a6b6039"
+      ],
+      [
+        3,
+        "add_session_history_index",
+        "1b19b721974733238e9d6518dadc3c5eb1c04b8d774b19c05e301bdfdbf62c9c"
+      ],
+      [
+        4,
+        "add_output_asset_references",
+        "436c85434ea2653b3b6a4289e459a50771c6da68514e85d5e0688d8a4dd52c8e"
+      ],
+      [
+        5,
+        "add_dense_crowd_analysis_results",
+        "1b44f5928ce448324bece360b55179b4818c2365455b133baaeacd39e7e6324d"
+      ],
+      [
+        6,
+        "add_video_analysis_jobs",
+        "7a92705f79a15400ecd4861437a3a34375aeddf730b05c697b2aa0f14b1b03c3"
+      ],
+      [
+        7,
+        "add_threshold_alert_metadata",
+        "22b6fa0b19b2493622ff6c2d1b914f0d761ea604acc4225fa5a20d37f8beb233"
+      ],
+      [
+        8,
+        "add_runtime_provenance",
+        "45d50d78083f7891889e373a3f756c38cfb608f7c4486e13faa525bfa987991d"
+      ],
+      [
+        9,
+        "add_source_frame_assets",
+        "da10eb1fc44b28c947e7962c457659a54e8cac1e56d936c752a9845cc81012a0"
+      ]
+    ]
+  },
+  "served_frontend_sha256": {
+    "index.html": "47a716280d3d1272a7c09765e846be1bb77a2c0dcffa614a8cf3b3e1e444f5d6",
+    "50x.html": "876766b4e80133fd490603e073d3567425b88794828a9292104244c9e40875ed",
+    "assets/NotFoundPage-CI5JAGw4.js": "5462740f93cdac225b7073836081407b2739339c35189efc7f4398a3b9076259",
+    "assets/client-CtwouoZi.js": "5b09cdf6e3d571128cf97cb20332f2c84b91161f3f14a8698c30d20e3f949903",
+    "assets/PageHeader-9TK8pDhg.js": "f2658523fbab7b6b839bc70c428633ebb0165b3f85b4d757e5759ade9f3c112b",
+    "assets/arrow-left-CCQVr7uW.js": "0aef9cad8d438871c94934bffe6e87b9998c96e971a452a45092328dddd8fcb3",
+    "assets/SessionsPage-CG6ysIcs.js": "c602b4c2707661ff2e0a27a2845ffb6e1f9c9b2878e1b8ce99b8cd1f82ba2854",
+    "assets/Pagination-DoOKImtJ.js": "9bd9b132b1fe813db1fa6e41bdfce2ee05351a46bb7aa33751f31a29c7123c16",
+    "assets/ResultsPage-DBkCAj3N.js": "e0cfb1a1c41a35e16c8eb362f33655fb3bf8e248a0e447bd5f7ff7a91ef319dc",
+    "assets/ToggleButtonGroup-D70cyNA5.js": "4e72a4d2e7e1b193f7a60ad6d9f39e21f15c49b1e90d69a38d25f511e023e429",
+    "assets/file-play-2SQFucmP.js": "cdb20181ecf7fe7c217768e64e8434f3b4a27b6c9cd3736e712de7e714ce7932",
+    "assets/index-CoFl69IF.js": "4fc52d8946facf5a470a91f400e28a9528c7b4fc3e57d919df1e6663fce1af7b",
+    "assets/StatePanel-D_25kDnX.js": "68c76af4bd472ff3732b1e775ec6d6c6e3e103cdc26c91f03866e75020ef4dfa",
+    "assets/index-DzzpNkdo.css": "5da7365ea8ba742ff3de0300f51dae66e5a8bea7689c4536640c9be4afac1eff",
+    "assets/rolldown-runtime-WkwZ5CU-.js": "2629f2ad3cb75a57d98de697127f5af7d777ef572bbcdfa6e3ce8f438cd4527e",
+    "assets/WorkspacePage-CK6lWXCw.js": "a6139eb952fa3e157b93d944c924e58df79387e43d00b342eef18938a98179cd"
+  },
+  "file_sha256": {
+    "configs/evaluation/system_workflows_candidate.json": "3faaab2aa01730df7d3e7498299444c146661739ef5e5f74f0197a3f35c0d50f",
+    "configs/runtime/alert_rules.json": "6d3e971cc01db67fcbc3ef9422e6e1c3bc959073d95acf816a9d51ee81122155",
+    "configs/runtime/yolo26m_visdrone.json": "be2fe875ebdac4be75d54bcff148142398ae87cc4b5a9ede8c6e212568e7b126",
+    "data/evaluation/proxy_recovery_candidate_2026_11_22.json": "f07ff05c2224e3c6dd7b2cbce1995f04ea0701f10091881e9b3d3f5068aefe66",
+    "data/evaluation/system_scenario_sources.json": "e01c8543f64d4d87e19b377742cdaaed5bb0d4e3926d4a14640747d052ca6380",
+    "docker-compose.app.yml": "16c83fc6c39215af117cbabcfa58e6ad6279a9290e2fd17123f9fcebfd44867e",
+    "docker-compose.gpu.yml": "0dee794d2dfbc068eadc128b5ba07fd4cc545d1c9451c2c7b8915cab735cc7f6",
+    "docker-compose.measurement.yml": "061000933981fff5dcc3d5575bb877190c06e6a022e061ca95794e8ef93bce34",
+    "docker-compose.test.yml": "bb357046b97bfee741383d4a06ad8a57da00e1d853ed77d0d95cf6139f37cdf1",
+    "docker-compose.yml": "a24849d4bc03efe78031380483f52857fe056a7abeada34cd9fa78d9f64015ac",
+    "docs/evaluation/system_evaluation_plan.md": "aefadd78e4ac82c62094a72912bde57eb5749181223eaed9995f728eba432bec",
+    "evaluation/stack_lifecycle.py": "026ecc94c5523105edf94c38d5910b275000e893e8a7b91e62da080c8d547ec1",
+    "evaluation/system_measurement.py": "00fea329ac8f2a2d8c8d7e11fe37a245f83cf077b9208c00831e3c8dca2f0660",
+    "evaluation/system_restart.py": "c4f5d3f8366b9c2dc9b4fbc1075c18505222b4a4938d3e3256c0ef5f52987092",
+    "frontend/Dockerfile": "1408ac1959767cab4d28761dbc1af7df7d0ee3277881bfc059066528359557d7",
+    "frontend/measurements/browserReadiness.ts": "30695b212ce13d16fc04b1d01f997032539d183bb8cbae9e6c2eed022ef45b0a",
+    "frontend/measurements/evidence.test.ts": "1e9f42a75e904415e1fc677bd5860cf8642ca18bf9c99b7bd25b0975038b0a27",
+    "frontend/measurements/evidence.ts": "a25136bc8c98ef5d9d10041205d2992aa3a7571033e1f0fcab0126fc5b377ff3",
+    "frontend/measurements/runBrowserMeasurements.ts": "577e2009f9fc32dca224a03a8625ab95072e8fab52c7fc00d3cba6e82d544dac",
+    "frontend/nginx.conf": "beaed8214408cd331285ecb289a7f3f8aa0c44be479111f074bdad85d6603fb4",
+    "frontend/package-lock.json": "fd176d40363870e90f205c36c1d54bf1abe9903251b949e7849d797fd96aadfe",
+    "requirements-container.txt": "6956a5f79e224d92f582c707e8a6fb62e2c571d5bf0a6518862fedb157de3366",
+    "requirements-dev.txt": "f4b592ec6ef5fa8ef37a626e0b510f7bd3931299e2519c1d6f837a3da3595f3c",
+    "requirements.txt": "8345b5d7341de2aa43f683ee7ed2c4367a74e22d9c2e5ea8de59c3690da1b644",
+    "scripts/measure_stack_lifecycle.py": "f0a73696b8f9997b4e81430dbd1694a5096c9c1a43af4e0b9481a1e56b716ded",
+    "scripts/measure_system_budget.py": "335445a8a852f851de90b83a1c34b6b529256da256517119a99ad69376961124",
+    "scripts/measure_system_restarts.py": "c04ae7c3ed7926e73cdc0b4ffcc001df2b67146959eadd8b1319fcc869844123",
+    "scripts/measure_system_workflows.py": "3b48911767ed7fc4be784bb2acce4658a7968319850d8e90371c48ec1aa208d3",
+    "tests/compose/check_proxy_recovery.py": "c5b84fc48e81d4e3d8facea33b6dfb2312f6bfe6c72046049dbbdd7e80d76336",
+    "tests/compose/proxy_backend.py": "e2a86302e0a608e1c7b06d6902603ef5ee6dab505c6cf6c6151b4326efd9d10b"
+  },
+  "model_profile": {
+    "schema_version": 1,
+    "profile_id": "yolo26m-visdrone-experimental-v1",
+    "model_id": "yolo26m-visdrone",
+    "quality_gate_status": "failed",
+    "evaluation_reference": "configs/evaluation/final_model_selection.json",
+    "checkpoint": {
+      "path": "models/candidates/yolo26m-visdrone/best.pt",
+      "sha256": "e57204b8d77b5b22ea9253cbd5664b707623aeb7c19dbaa9034fe5a60bed6571",
+      "size_bytes": 44055513
+    },
+    "class_mapping": {
+      "pedestrian": "person",
+      "people": "person",
+      "bicycle": "bicycle",
+      "car": "car_or_van",
+      "van": "car_or_van",
+      "truck": "truck",
+      "bus": "bus",
+      "motor": "motorcycle"
+    },
+    "inference": {
+      "confidence": 0.25,
+      "image_size": 1280,
+      "scale_factor": 2,
+      "device": "cuda:0",
+      "max_detections": 300,
+      "numeric_precision": "float32"
+    }
+  },
+  "scenarios": [
+    {
+      "scenario_id": "I1",
+      "kind": "image",
+      "path": "data/runtime-regression/fixtures/roundabout_6.png",
+      "sha256": "785414dccf5be9ecd1fbed0793ed32900069adbe8b8fe5953048141da7c45a4e",
+      "grid_rows": 2,
+      "grid_columns": 3,
+      "sampling_interval_seconds": 1.0
+    },
+    {
+      "scenario_id": "I2",
+      "kind": "image",
+      "path": "data/runtime-regression/fixtures/roundabout_29.png",
+      "sha256": "1c63462c1511db556411844f0eb2e4d0392b0f0f54484146492735dd662c669a",
+      "grid_rows": null,
+      "grid_columns": null,
+      "sampling_interval_seconds": 1.0
+    },
+    {
+      "scenario_id": "I3",
+      "kind": "image",
+      "path": "data/evaluation/raw/wikimedia/Renai_Dunhua_traffic_circle_202006.jpg",
+      "sha256": "88d8ea239eeee2e6ad1e19f84fd2dff11fdd78845c1ce00611270ae6a2151dc9",
+      "grid_rows": 2,
+      "grid_columns": 3,
+      "sampling_interval_seconds": 1.0
+    },
+    {
+      "scenario_id": "V1",
+      "kind": "video",
+      "path": "data/runtime-regression/fixtures/roundabout_sequence.avi",
+      "sha256": "d62fdd09d6963629f1c9a51258fab4ff8b90dff5efdae10f7d31bffe5e6ddc67",
+      "grid_rows": 2,
+      "grid_columns": 3,
+      "sampling_interval_seconds": 1.0
+    },
+    {
+      "scenario_id": "V2",
+      "kind": "video",
+      "path": "data/evaluation/raw/system_inputs/pexels_30106869.mp4",
+      "sha256": "820a9b1a3d0a80fc0355f4d16683f38a16c67b474aace205806d32787c74f5c5",
+      "grid_rows": 2,
+      "grid_columns": 3,
+      "sampling_interval_seconds": 2.0
+    }
+  ],
+  "input_metadata_reference": "data/evaluation/system_scenario_sources.json",
+  "machine": {
+    "cpu_visible_to_wsl": {
+      "Architecture": "x86_64",
+      "CPU(s)": "16",
+      "Model name": "Intel(R) Core(TM) 7 240H",
+      "Thread(s) per core": "2",
+      "Core(s) per socket": "8",
+      "Socket(s)": "1",
+      "Hypervisor vendor": "Microsoft"
+    },
+    "memory_visible_to_wsl": {
+      "MemTotal": "16224444 kB",
+      "MemAvailable": "12748108 kB",
+      "SwapTotal": "4194304 kB"
+    },
+    "kernel": "6.6.87.2-microsoft-standard-WSL2",
+    "runner_python": "3.10.12",
+    "docker": {
+      "ServerVersion": "29.9.2",
+      "OperatingSystem": "Docker Desktop",
+      "KernelVersion": "6.6.87.2-microsoft-standard-WSL2",
+      "Architecture": "x86_64",
+      "NCPU": 16,
+      "MemTotal": 16613830656
+    },
+    "compose": "5.6.1",
+    "gpu_csv_columns": [
+      "name",
+      "driver_version",
+      "memory.total MiB"
+    ],
+    "gpu_csv": "NVIDIA GeForce RTX 5060 Laptop GPU, 617.14, 8151",
+    "node": "v26.12.1",
+    "browser": "Google Chrome for Testing 158.0.8127.18",
+    "user_reported": "Ali confirmed on 24 November: Docker started; plugged in and no heavy work during measurements.",
+    "exclusive_gpu_use_verified": false
+  },
+  "protocol": {
+    "phase_order": [
+      "lifecycle",
+      "cold_api",
+      "warm_api",
+      "browser"
+    ],
+    "lifecycle_repetitions": 3,
+    "cold_repetitions_per_scenario": 3,
+    "warmups_per_scenario": 1,
+    "warm_repetitions_per_scenario": 10,
+    "browser_viewports": [
+      [
+        1440,
+        1000
+      ],
+      [
+        320,
+        900
+      ]
+    ],
+    "browser_repetitions_per_scenario_viewport": 10,
+    "api_poll_seconds": 0.25,
+    "browser_poll_seconds": 1,
+    "resource_sample_target_seconds": 1,
+    "planned_total_analyses_including_seeds_warmups": 230,
+    "failures_retained": true,
+    "live_outages": "idle services only"
+  },
+  "software_gate": {
+    "local_verification_date": "2026-11-22",
+    "local_verification_reference": "data/evaluation/proxy_recovery_candidate_2026_11_22.json",
+    "local_checks": {
+      "python_with_postgresql": {
+        "passed": 726,
+        "skipped": 0
+      },
+      "frontend_unit": {
+        "passed": 115
+      },
+      "browser_regression": {
+        "passed": 40,
+        "retries": 0
+      },
+      "live_gpu_browser": {
+        "passed": 4,
+        "retries": 0
+      },
+      "gpu_regression": {
+        "runs": 2,
+        "frames_per_run": 5,
+        "differences": []
+      },
+      "controlled_compose": {
+        "image_and_video": "passed",
+        "saved_assets_after_restart": "passed",
+        "abandoned_job": "worker_interrupted"
+      }
+    },
+    "ci_head": "3b6c9939a6a11ccbadf6bcb934ce5c707048cb52",
+    "ci_runs": [
+      45016491142,
+      45016502284
+    ],
+    "ci_checks_passed": 8,
+    "rechecked_on_2026_11_24": {
+      "focused_tests_passed": 123,
+      "source_input_and_evidence_hashes_checked": 73,
+      "runtime_settings_migrations_assets": "matched",
+      "gpu_regression": "pass; five frames, no differences"
+    },
+    "gate_note": "The full software gate is dated 22 November and applies to the exact retained images. On 24 November we reverified artifact/runtime identities and GPU compatibility; we did not claim a second full suite run.",
+    "artifact_sha256": {
+      "data/output/system-measurements/refreeze-preflight-2026-11-24/files.json": "3710ec6b8443708feaa99b5096ea08486b3be9ec20ffb06af5b6550bc18d57a0",
+      "data/output/system-measurements/refreeze-preflight-2026-11-24/gpu-regression.json": "8e7140e0569c1c14e6ea01fdb5b8c6c1ba21d1c7849deed5846d0d1f82127dec",
+      "data/output/system-measurements/refreeze-preflight-2026-11-24/gpu-regression.log": "266dc70badd82b15206a78f282cf0795eb20a5529e02c5f1af147602c964713f",
+      "data/output/system-measurements/refreeze-preflight-2026-11-24/live-gate.json": "e346d780b1c0625c592910f2632a9ed6048e99ab47dc4f3c716e4eb84980627e",
+      "data/output/system-measurements/refreeze-preflight-2026-11-24/live-runtime.json": "3f9aa1643ee28d4e30cd3767d030835ed801d1e1a8e876bf8c334af8946c214d"
+    }
+  },
+  "security": {
+    "reviewed_at": "2026-11-24",
+    "open_dependabot_alerts": [
+      60
+    ],
+    "advisory": "GHSA-mf5v-w3w3-f6cg",
+    "package": "opentelemetry-api",
+    "installed": "1.45.1",
+    "patched": "1.45.2",
+    "severity": "medium",
+    "decision": "Retain evaluation candidate. No propagator extraction, MCP carrier or instrumentation path found in application; no OTEL environment settings or instrumentation packages in runtime. Known dependency risk remains; patch before broad deployment. Not a security certification.",
+    "review_note": "Open alert query still returned only #60. Backend/source/dependencies/entrypoint and application configuration are unchanged from the recorded exposure review; the advisory remains open."
+  },
+  "recollection_decision": {
+    "approved_by": "Ali",
+    "approved_date": "2026-11-22",
+    "recollect_all_phases": true,
+    "prior_freeze": "data/evaluation/system_freeze_2026_11_19.json",
+    "prior_observations_retained_separately": true
+  },
+  "limitations": [
+    "Model quality gate remains failed.",
+    "Dense-crowd counting unsupported.",
+    "No new accuracy evaluation.",
+    "WSL memory/CPU are visible allocations, not verified physical host capacity.",
+    "Final classification requires this committed freeze and a separate collection record; headings alone do not establish final evidence.",
+    "Bounded proxy recovery checks do not guarantee availability during every DNS/backend outage."
+  ]
+}
