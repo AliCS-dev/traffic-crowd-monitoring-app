@@ -89,6 +89,11 @@ video and memory measurements do not change the model-quality results below.
 
 ## Application System Results
 
+**Current candidate:** the [replacement collection](system_results_refrozen.md)
+uses the [24 November freeze](system_refreeze.md), after PR #174 fixed proxy
+recovery. We are repeating every final phase. The observations below remain
+historical results for the previous candidate, not a completed replacement table.
+
 The [system-results page](system_results.md) is the starting point for final
 application measurements. On 19 November, all three frozen lifecycle trials
 completed: 45 analyses, 30 saved-session comparisons and 264 matching media

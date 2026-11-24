@@ -2,6 +2,10 @@
 
 [Results index](results_index.md) | [Protocol](system_evaluation_plan.md)
 
+**Historical candidate.** After the proxy fix, the
+[24 November replacement freeze](system_refreeze.md) governs new collection.
+This page and its original record continue to describe the earlier candidate.
+
 On 19 November 2026 we passed the software gate and fixed the application,
 images, settings and inputs for final system measurements. The
 [freeze record](../../data/evaluation/system_freeze_2026_11_19.json) was prepared

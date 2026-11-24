@@ -4,6 +4,8 @@
 
 **22 November 2026: these results belong to the original candidate. After the
 proxy fix, all final phases will be recollected under a new freeze. #79 remains open.**
+The [replacement collection](system_results_refrozen.md) now has its own
+[24 November freeze](system_refreeze.md); no observations are pooled across versions.
 We keep these system measurements separate from
 the historical detector scores. Successful processing does not establish that
 the detections are correct.

@@ -2,9 +2,9 @@
 
 [Results index](results_index.md) | [Documentation index](../README.md)
 
-**Prepared 28 October 2026. Updated 19 November: software gate passed and
-freeze recorded; final collection is not yet complete. The 21 November
-cold-process attempt is retained as incomplete pending proxy recovery review.**
+**Prepared 28 October 2026. Updated 24 November: proxy fix merged; a new
+freeze governs recollection of every final phase. Earlier results and the
+incomplete cold attempt are retained separately.**
 
 On 29 October we added and verified [warm workflow measurements](system_measurements.md)
 and structured stage timers. The complete protocol below still needs the
@@ -39,6 +39,11 @@ detector, reopening the historical held-out test, or turning successful requests
 into evidence of detection accuracy. Issues #113-#115 remain deferred.
 
 ## Version and Freeze
+
+The [24 November replacement freeze](system_refreeze.md) identifies the reviewed
+proxy-recovery candidate. Ali approved recollecting all phases with unchanged
+measurement rules. The [replacement results page](system_results_refrozen.md)
+tracks this collection; the following paragraphs describe the earlier candidate.
 
 The [19 November freeze](system_freeze.md) records clean application commit
 `5cbd433eebed9678f2e288329d4a99b8ad295cc4`, immutable container IDs, hardware,
