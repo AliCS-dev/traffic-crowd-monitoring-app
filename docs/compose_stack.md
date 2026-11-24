@@ -95,7 +95,19 @@ an explicit `nginx.conf` change and rebuild. Nginx streams requests rather than
 buffering a second full upload. The proxy waits up to 300 seconds between response reads
 for synchronous image inference. Asynchronous video processing uses short status
 requests. A timed-out browser request does not cancel already accepted work.
-Docker DNS re-resolution lets the proxy follow a recreated backend container.
+Nginx resolves the backend through Docker DNS when a request needs a fresh
+address, with a five-second cache and a five-second resolution timeout. We use
+one event worker so local clients share the same resolver state. This worker
+can serve concurrent connections; it is not one request at a time. The setting
+fits our single-backend, bounded local demonstration, not a claim about public
+hosting capacity. The original background-updated upstream could become empty
+after readiness had already succeeded during a restart.
+
+The proxy follows a recreated backend without a fixed container address and
+does not retry upstream requests. A real backend or DNS outage can still return
+502/504. We do not promise uninterrupted service during restart or replay an
+analysis whose response was lost. The [proxy recovery record](evaluation/proxy_recovery.md)
+explains the observed failure, regression checks and evaluation-version boundary.
 
 ## Storage and Daily Use
 

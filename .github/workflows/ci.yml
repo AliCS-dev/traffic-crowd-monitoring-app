@@ -55,6 +55,21 @@ jobs:
         if: failure()
         run: docker logs frontend-check
 
+      - name: Check proxy recovery across DNS refreshes and address changes
+        run: |
+          python3 tests/compose/check_proxy_recovery.py \
+            --backend-image traffic-monitoring-backend:ci \
+            --frontend-image traffic-monitoring-frontend:ci \
+            --output data/output/proxy-recovery-ci
+      - name: Retain proxy recovery evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: proxy-recovery-${{ github.event_name }}
+          path: data/output/proxy-recovery-ci/
+          if-no-files-found: ignore
+          retention-days: 7
+
       - name: Check complete Compose workflows with controlled detection
         run: |
           docker compose --env-file /dev/null up -d --no-build --wait --wait-timeout 180

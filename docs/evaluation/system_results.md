@@ -2,13 +2,18 @@
 
 [Results index](results_index.md) | [Freeze](system_freeze.md) | [Protocol](system_evaluation_plan.md)
 
-**21 November 2026: lifecycle collection is complete; the first cold-process
-attempt stopped on a proxy failure. The full evaluation remains open under #79.**
+**22 November 2026: these results belong to the original candidate. After the
+proxy fix, all final phases will be recollected under a new freeze. #79 remains open.**
 We keep these system measurements separate from
 the historical detector scores. Successful processing does not establish that
 the detections are correct.
 
 ## Collection Status
+
+The table describes the 19 November candidate, not completion of the replacement
+collection. The [proxy-recovery record](proxy_recovery.md) explains the changed
+configuration and Ali's decision to recollect all final phases without pooling
+versions. No new final timings have been collected yet.
 
 | Phase | Planned work | Recorded so far |
 | --- | --- | --- |
@@ -137,7 +142,8 @@ for name, row in record["timing_summary"].items():
     )
 ```
 
-The next step is the proxy-recovery investigation before further cold-process
-collection. We do not pool these lifecycle request timings with cold, warm or browser tables.
+After proxy-fix review, the next step is a new pre-collection freeze and
+recollection of lifecycle, cold API, warm API and browser phases. We do not pool
+these earlier timings with the replacement candidate or with other timer boundaries.
 The failed detector quality gate, unsupported dense-crowd counting and documented
 dependency risk remain unchanged.
