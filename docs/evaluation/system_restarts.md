@@ -7,6 +7,10 @@ and whether a previously saved result still opens with unchanged media. The
 7 November verification below established the tooling, not final performance.
 This method is separate from full Compose startup and database-outage experiments.
 
+The [26 November cold-process results](cold_api_refrozen.md) completed all
+15 planned trials under the replacement freeze, with matching saved-session
+and media hashes. Warm API and browser phases remain separate and uncollected.
+
 The separate [21 November cold-process attempt](cold_api_attempt.md) used the
 frozen candidate and five inputs. It stopped on a proxy failure and remains
 incomplete; it is not pooled with the development verification below.

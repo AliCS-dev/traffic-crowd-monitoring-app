@@ -97,9 +97,15 @@ On 24 November, the replacement lifecycle phase completed all **45 analyses**,
 **30 saved-session comparisons** and **264 media-hash comparisons**. Median
 fresh-stack, PostgreSQL-start and backend-start readiness times were **13.436 s**,
 **0.493 s** and **1.996 s**, respectively, with three observations each. These
-exclude first inference and are not end-to-end analysis latency. Cold, warm and
-browser phases remain open; the linked replacement report contains the exact
-boundaries, background activity and raw-evidence references.
+exclude first inference and are not end-to-end analysis latency.
+
+On 26 November, [cold-process API collection](cold_api_refrozen.md) completed
+all **15 cold trials** and **five setup analyses**, with no failures. Median
+first-request times were **2.536 s**, **2.540 s**, **2.758 s**, **2.987 s** and
+**16.703 s** for I1, I2, I3, V1 and V2, respectively (three observations each).
+All **15 saved-session comparisons** and **132 media-hash comparisons** matched.
+The report retains the longer I1 observation and separates request timing from
+restart, stage and memory measures. Warm API and browser phases remain open.
 
 ### Previous Candidate
 
@@ -146,7 +152,7 @@ plan. This is preparation, not a new accuracy or final performance result.
 
 The [system evaluation plan](system_evaluation_plan.md), prepared on 28 October,
 identifies the merged application candidate, timing boundaries, repetitions,
-media choices and evidence requirements for #79. Its first final phase is now
+media choices and evidence requirements for #79. Its first two final phases are now
 recorded above. The [measurement guide](system_measurements.md)
 links the warm runner, its stage boundaries and the 29 October development
 verification record. The later dated entries below add the other measurement
