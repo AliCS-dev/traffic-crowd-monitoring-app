@@ -9,19 +9,33 @@ are not pooled into these tables.
 
 ## Collection Status
 
-**24 November 2026:** all three lifecycle trials completed. The other phases
-remain open. The freeze was committed as `36d43eb` before the first trial, and
-each runner recorded that clean revision and the same frozen images and inputs.
+**26 November 2026:** lifecycle and cold-process API collection are complete.
+Warm API and browser phases remain open. The freeze was committed as `36d43eb`
+before collection. Lifecycle runners recorded that clean revision; the cold
+runner used clean `7fee585`, with the same frozen images, inputs and tools.
 
 | Phase | Planned work | Status |
 | --- | --- | --- |
 | Lifecycle | Three new projects, 45 analyses | Complete: 45 successful analyses, no failed trials or analyses |
-| Cold API | Three restarts per scenario plus seeds | Not collected |
+| Cold API | Three restarts per scenario plus seeds | Complete: 15 cold trials and five setup analyses, no failures |
 | Warm API | One warm-up and ten measured requests per scenario | Not collected |
 | Browser | One warm-up and ten measured submissions per scenario at each viewport | Not collected |
 
 Successful processing establishes workflow behavior, not detector accuracy.
 All attempts, failures and unattempted work will remain visible. Issue #79 is open.
+
+## Cold-Process API
+
+The [26 November cold results](cold_api_refrozen.md) contain the request,
+restart, stage and sampled-memory tables. Median first-request times were
+**2.536 s (I1)**, **2.540 s (I2)**, **2.758 s (I3)**, **2.987 s (V1)** and
+**16.703 s (V2)**, with three observations each. One I1 request took 8.514 s
+and remains included. All 15 saved-session comparisons and 132 media-hash
+comparisons matched. Setup requests, backend restarts and saved-result checks
+are outside those request times; browser rendering is not measured here.
+
+The following sections retain the separate **24 November lifecycle** results
+and their collection conditions.
 
 ## Startup and Recovery
 
@@ -85,6 +99,6 @@ entries reference the matching baseline hashes. Full originals remain locally:
 
 Only successful trials' disposable projects and volumes were removed, after
 their evidence was retained and validated. The old failed-attempt stack remains
-untouched. Next is cold-process API collection under this same freeze, followed
-by warm API and browser phases. Detector accuracy and dense-crowd limitations
-have not changed.
+untouched. Cold-process collection is now recorded separately above. Next are
+warm API and browser phases under the same freeze. Detector accuracy and
+dense-crowd limitations have not changed.
