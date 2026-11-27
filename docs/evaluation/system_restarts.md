@@ -9,7 +9,8 @@ This method is separate from full Compose startup and database-outage experiment
 
 The [26 November cold-process results](cold_api_refrozen.md) completed all
 15 planned trials under the replacement freeze, with matching saved-session
-and media hashes. Warm API and browser phases remain separate and uncollected.
+and media hashes. The [27 November warm API results](warm_api_refrozen.md) are
+recorded separately; browser collection remains open.
 
 The separate [21 November cold-process attempt](cold_api_attempt.md) used the
 frozen candidate and five inputs. It stopped on a proxy failure and remains

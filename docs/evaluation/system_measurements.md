@@ -4,9 +4,10 @@
 
 We now have a runner for repeated image and video requests, with separate
 inference, result-saving and video queue timings. We checked it on 29 October
-2026. This is the measurement tooling for #79, not a completed final evaluation.
-The model, its failed quality gate and the unsupported dense-crowd result have
-not changed.
+2026. The [27 November warm results](warm_api_refrozen.md) now record the final
+50 measured requests and five warm-ups under the replacement freeze. Browser
+collection and the final evidence review remain open. The model, its failed
+quality gate and the unsupported dense-crowd result have not changed.
 
 The [backend restart guide](system_restarts.md) covers the separate runner added
 on 7 November for cold-process requests and saved-result recovery. This page
@@ -146,14 +147,13 @@ measurements or replace the dated development evidence above.
 
 The [#26 workflow coverage review](../testing.md) is now recorded separately.
 The [restart runner](system_restarts.md) now covers graceful backend restarts,
-first requests and saved-result integrity. Before final collection, we still
-need the input compatibility checks, release dependency decisions, software
-gate and complete hardware/configuration freeze. The
-[12 November preparation](system_scenarios.md) records I3, V2, recovery scope
-and the declared run order. We do not reopen the held-out
-accuracy test or assign new annotation work as part of this step.
+first requests and saved-result integrity. Input compatibility, the dependency
+decision and software gate preceded the [24 November freeze](system_refreeze.md).
+The [current results](system_results_refrozen.md) now contain completed lifecycle,
+cold API and warm API collection. The [12 November preparation](system_scenarios.md)
+records I3, V2, recovery scope and the declared run order. We do not reopen the
+held-out accuracy test or assign new annotation work as part of this step.
 The separate [browser runner](browser_readiness.md), verified on 9 November,
-now records submission-to-scene readiness; it does not replace API timings.
-The [lifecycle runner](stack_lifecycle.md), verified on 10 November, adds
-fresh-stack startup and controlled idle database/backend outages. These are
-also development checks, not final repeated collection.
+records submission-to-scene readiness; its final collection at both viewports
+is next. It does not replace API timings. The 29 October development observations
+above remain separate from the final warm results.

@@ -105,7 +105,16 @@ first-request times were **2.536 s**, **2.540 s**, **2.758 s**, **2.987 s** and
 **16.703 s** for I1, I2, I3, V1 and V2, respectively (three observations each).
 All **15 saved-session comparisons** and **132 media-hash comparisons** matched.
 The report retains the longer I1 observation and separates request timing from
-restart, stage and memory measures. Warm API and browser phases remain open.
+restart, stage and memory measures.
+
+On 27 November, [warm API collection](warm_api_refrozen.md) completed all
+**50 measured requests** and **five warm-ups**, with no failures. Median API
+times were **0.138 s**, **0.114 s**, **0.256 s**, **0.574 s** and **15.831 s**
+for I1, I2, I3, V1 and V2, respectively (ten observations each). All 55 analyses
+had complete stage evidence and all **392 resource readings** were available.
+The report gives separate stage/throughput tables, the high cgroup-memory
+observation and its interpretation limits, and the startup interruption before
+collection. Browser measurements and final evidence review remain open.
 
 ### Previous Candidate
 
@@ -152,7 +161,7 @@ plan. This is preparation, not a new accuracy or final performance result.
 
 The [system evaluation plan](system_evaluation_plan.md), prepared on 28 October,
 identifies the merged application candidate, timing boundaries, repetitions,
-media choices and evidence requirements for #79. Its first two final phases are now
+media choices and evidence requirements for #79. Its first three final phases are now
 recorded above. The [measurement guide](system_measurements.md)
 links the warm runner, its stage boundaries and the 29 October development
 verification record. The later dated entries below add the other measurement

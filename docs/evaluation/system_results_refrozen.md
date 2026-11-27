@@ -9,16 +9,17 @@ are not pooled into these tables.
 
 ## Collection Status
 
-**26 November 2026:** lifecycle and cold-process API collection are complete.
-Warm API and browser phases remain open. The freeze was committed as `36d43eb`
-before collection. Lifecycle runners recorded that clean revision; the cold
-runner used clean `7fee585`, with the same frozen images, inputs and tools.
+**27 November 2026:** lifecycle, cold-process API and warm API collection are
+complete. Browser collection remains open. The freeze was committed as
+`36d43eb` before collection. Lifecycle runners recorded that clean revision;
+cold and warm runners used clean `7fee585` and `ffa4c91`, respectively, with
+the same frozen images, inputs and tools.
 
 | Phase | Planned work | Status |
 | --- | --- | --- |
 | Lifecycle | Three new projects, 45 analyses | Complete: 45 successful analyses, no failed trials or analyses |
 | Cold API | Three restarts per scenario plus seeds | Complete: 15 cold trials and five setup analyses, no failures |
-| Warm API | One warm-up and ten measured requests per scenario | Not collected |
+| Warm API | One warm-up and ten measured requests per scenario | Complete: 50 measured requests and five warm-ups, no failures |
 | Browser | One warm-up and ten measured submissions per scenario at each viewport | Not collected |
 
 Successful processing establishes workflow behavior, not detector accuracy.
@@ -33,6 +34,17 @@ restart, stage and sampled-memory tables. Median first-request times were
 and remains included. All 15 saved-session comparisons and 132 media-hash
 comparisons matched. Setup requests, backend restarts and saved-result checks
 are outside those request times; browser rendering is not measured here.
+
+## Warm API
+
+The [27 November warm results](warm_api_refrozen.md) report medians of
+**0.138 s (I1)**, **0.114 s (I2)**, **0.256 s (I3)**, **0.574 s (V1)** and
+**15.831 s (V2)**, with ten measured requests per scenario. All 55 analyses,
+including warm-ups, had complete timing evidence. All 392 resource readings
+were available. The report separates API latency, backend stages, sequential
+batch throughput and memory, and records the backend startup interruption
+before collection. The observed cgroup maximum was 8634.0 MiB, including
+file-backed and kernel memory; this is not a Python heap measurement.
 
 The following sections retain the separate **24 November lifecycle** results
 and their collection conditions.
@@ -99,6 +111,6 @@ entries reference the matching baseline hashes. Full originals remain locally:
 
 Only successful trials' disposable projects and volumes were removed, after
 their evidence was retained and validated. The old failed-attempt stack remains
-untouched. Cold-process collection is now recorded separately above. Next are
-warm API and browser phases under the same freeze. Detector accuracy and
-dense-crowd limitations have not changed.
+untouched. Cold-process and warm API collection are now recorded separately
+above. Browser collection is next under the same freeze. Detector accuracy
+and dense-crowd limitations have not changed.
